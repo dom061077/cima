@@ -22,5 +22,8 @@
 			<table style="z-index:1"  id="list"></table>
 			<div id="pager" ></div>
         </div>
+        
+        <a href="#">Exportar</a>
+        
     </body>
 </html>
