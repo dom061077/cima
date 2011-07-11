@@ -250,6 +250,13 @@ class ObraSocialController {
 		log.info "PARAMETROS: $params"	
 	}
 	
-	
+
+	def listado = {
+		log.info "INGRESANDO AL CLOSURE listado DEL CONTROLADOR ObraSocialController"
+		log.info "PARAMAMETROS: $params"
+
+		def obassociales = ObraSocial.list()
+		chain(controller:'jasper',action:'index',model:[data:obassociales],params:params)
+	}
 	
 }
