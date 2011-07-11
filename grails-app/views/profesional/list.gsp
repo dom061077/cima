@@ -54,7 +54,7 @@
 						jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true});
 	
 						jQuery("#list").jqGrid('navButtonAdd','#pager',{
-						       caption:"Excel", 
+						       caption:"Informe", 
 						       onClickButton : function () { 
 						           //jQuery("#list").excelExport();
 						           jQuery("#list").jqGrid("excelExport",{url:"excelexport"});
@@ -79,5 +79,11 @@
 			<table style="z-index:1"  id="list"></table>
 			<div id="pager" ></div>
         </div>
+        
+            <%-- Reporte --%>
+            <g:jasperReport controller="profesional" action="listado" 
+            	jasper="profesionales" format="HTML" name="profesionales">
+            </g:jasperReport>
+        
     </body>
 </html>
