@@ -1,5 +1,5 @@
 package com.medfire
-
+//
 import com.medfire.util.GUtilDomainClass
 
 
