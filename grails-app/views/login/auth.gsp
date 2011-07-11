@@ -8,13 +8,15 @@
 	height:300px;
 }
 #login .inner {
-	width:260px;
+	width:290px;
+	height: 130;
 	margin:0px auto;
 	text-align:left;
 	padding:10px;
 	border-top:1px  #499ede;
 	border-bottom:1px  #499ede;
-	background-color:#EEF;
+	background-color:#E6E6E6;
+	/*background: url(images/loginbackg.png) repeat-y top;*/
 }
 #login .inner .fheader {
 	padding:4px;margin:3px 0px 3px 0;color:#2e3741;font-size:14px;font-weight:bold;
@@ -37,6 +39,7 @@
 	margin-left: -105px;
 	width: 100px;
 }
+
 #login .inner .login_message {color:red;}
 #login .inner .text_ {width:120px;}
 #login .inner .chk {height:12px;}
