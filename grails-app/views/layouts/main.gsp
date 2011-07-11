@@ -226,7 +226,7 @@
 		</div>	
         <div id="footer"  class="clearfix ui-widget ui-corner-all ui-widget-content">
         	<p>
-            &copy; Copyright 2011 &lt;Medfire&gt; | Design by: Marca Registrada
+            &copy; Copyright 2011 | CIMA WEB Versi&oacute;n 1.5 | Todos los derechos reservados.
             </p>
         </div><!-- end footer -->
 
