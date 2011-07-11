@@ -51,10 +51,10 @@
 						jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true});
 
 						jQuery("#list").jqGrid('navButtonAdd','#pager',{
-						       caption:"Excel", 
+						       caption:"Informe", 
 						       onClickButton : function () { 
 						           //jQuery("#list").excelExport();
-						           jQuery("#list").jqGrid("excelExport",{url:"excelexport"});
+						           jQuery("#list").jqGrid("excelExport",{url:"listado"});
 						       } 
 						});
 						
@@ -73,5 +73,11 @@
 			<table style="z-index:1"  id="list"></table>
 			<div id="pager" ></div>
        </div>
+       
+            <%-- Reporte --%>
+            <g:jasperReport controller="obraSocial" action="listado" 
+            	jasper="obrassociales" format="HTML" name="obasSociales">
+            </g:jasperReport>
+       
     </body>
 </html>
