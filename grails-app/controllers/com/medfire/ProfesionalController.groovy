@@ -222,4 +222,13 @@ class ProfesionalController {
 		}
 	}
 	
+	def listado = {
+		log.info "INGRESANDO AL CLOSURE listado DEL CONTROLADOR ProfesionalController"
+		log.info "PARAMAMETROS: $params"
+
+		def profesionales = Profesional.list()
+		chain(controller:'jasper',action:'index',model:[data:profesionales],params:params)
+	}
+
+	
 }
