@@ -9,7 +9,6 @@ class Consulta {
 	Date fechaAlta
 	String contenido
 	Cie10 cie10
-	HistoriaClinica historiaClinica
 	Profesional profesional
 	EstadoConsultaEnum estado
 
@@ -31,7 +30,9 @@ class Consulta {
 	String facie
 
 	
-	static belongsTo = [historiaClinica:HistoriaClinica]
+	//static belongsTo = [historiaClinica:HistoriaClinica]
+	
+	static hasMany = [prescripciones:Prescripcion]
 	
     static constraints = {
     }

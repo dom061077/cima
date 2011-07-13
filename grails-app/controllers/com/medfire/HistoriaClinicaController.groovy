@@ -22,18 +22,14 @@ class HistoriaClinicaController {
     def create = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
-		def paciente = Paciente.load(params.paciente.id.toLong())
-        def historiaClinicaInstance = new HistoriaClinica()
-        historiaClinicaInstance.properties = params
-		historiaClinicaInstance.paciente = paciente
+		def pacienteInstance = Paciente.load(params.paciente.id.toLong())
 		def consultaInstance = new Consulta()
-        return [historiaClinicaInstance: historiaClinicaInstance, consultaInsttance:consultaInstance]
+        return [pacienteInstance: pacienteInstance, consultaInsttance:consultaInstance]
     }
 
     def save = {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
-        def historiaClinicaInstance = new HistoriaClinica(params.historiaClinica)
 		def consultaInstance = new Consulta(params.consulta)
 		
 		if (params.fechaConsulta){
@@ -160,7 +156,7 @@ class HistoriaClinicaController {
 			if (flagaddcomilla)
 				result=result+','
 			
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.apellido!=null?it.apellido:"")+'","'+(it.nombre!=null?it.nombre:"")+'","'+(it.historiaClinica?.numero!=null?it.historiaClinica?.numero:"")+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.apellido!=null?it.apellido:"")+'","'+(it.nombre!=null?it.nombre:"")+'","'+(it.id!=null?it.id:"")+'"]}'
 			 
 			flagaddcomilla=true
 		}

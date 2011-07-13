@@ -21,11 +21,9 @@ class Paciente {
 	TipoDocumentoEnum tipoDocumento
 	IvaEnum estadoIva
 	ObraSocial obraSocial
-	HistoriaClinica historiaClinica
-	
-	String borrar
 	
 	
+	static hasMany = [antecedentes:Antecedentes]
 	
 	//static belongsTo = [obrasocial:ObraSocial,estadocivil:EstadoCivil,localidad:Localidad,tipodocumento:TipoDocumento]
 	
