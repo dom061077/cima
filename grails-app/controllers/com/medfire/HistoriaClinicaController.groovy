@@ -15,8 +15,11 @@ class HistoriaClinicaController {
     }
  
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [historiaClinicaInstanceList: HistoriaClinica.list(params), historiaClinicaInstanceTotal: HistoriaClinica.count()]
+		log.info "INGRESANDO AL CLOSURE iist DEL CONTROLLER HistoriaClinicaController"
+		log.info "SOLO RENDERIZA LA PAGINA DE LIST"
+        //params.max = Math.min(params.max ? params.int('max') : 10, 100)
+       // [historiaClinicaInstanceList: HistoriaClinica.list(params), historiaClinicaInstanceTotal: HistoriaClinica.count()]
+		
     }
 
     def create = {
@@ -49,6 +52,7 @@ class HistoriaClinicaController {
 			params.fechaConsulta_day=gc.get(Calendar.DATE).toString()
 		}
 
+		def pacienteInstance = new Paciente(params)
 		historiaClinicaInstance.addToConsultas(consultaInstance)
 				
         if (historiaClinicaInstance.save(flush: true)) {

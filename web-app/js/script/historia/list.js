@@ -21,9 +21,9 @@ $(document).ready(function(){
 								for(var i=0;i < ids.length;i++){ 
 									var cl = ids[i];
 									row = jQuery('#listhistoria').getRowData(cl);
-									if(row.numero)
-										be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencilç' style='margin: 3px 3px 3px 10px'  ></span></a>";
-									else
+									//if(row.numero)
+									//	be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencilç' style='margin: 3px 3px 3px 10px'  ></span></a>";
+									//else
 										be = "<a href='create?paciente.id="+ids[i]+"'><span class='ui-icon ui-icon-plusthick' style='margin: 3px 3px 3px 10px'  ></span></a>";
 									jQuery("#listhistoria").jqGrid('setRowData',ids[i],{operaciones:be}); 
 									} 

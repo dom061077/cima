@@ -6,6 +6,7 @@ class Prescripcion {
 	String nombreComercial
 	String nombreGenerico
 	String presentacion
+	Integer secuencia
 	Integer cantidad
 	ImpresionVademecumEnum impresion
 	

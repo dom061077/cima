@@ -7,7 +7,7 @@ public enum ImpresionVademecumEnum{
 	
 	String name
 	
-	public ImpresionVademecEnum(String name){
+	public ImpresionVademecumEnum(String name){
 		this.name=name
 	}
 	

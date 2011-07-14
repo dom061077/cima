@@ -21,9 +21,10 @@ class Paciente {
 	TipoDocumentoEnum tipoDocumento
 	IvaEnum estadoIva
 	ObraSocial obraSocial
+	Antecedentes antecedentes
 	
 	
-	static hasMany = [antecedentes:Antecedentes]
+	
 	
 	//static belongsTo = [obrasocial:ObraSocial,estadocivil:EstadoCivil,localidad:Localidad,tipodocumento:TipoDocumento]
 	
@@ -63,6 +64,7 @@ class Paciente {
 		telefono(matches:'[0-9]{3}-[0-9]{7}')
 		obraSocial(blank:true,nullable:true)
 		localidad(blank:true,nullable:true)
+		antecedentes(nullable:true)
 		/*dateOfBirth(blank:false, validator: { val, obj ->
 			// Ensure that the date of birth is before the enrollment date
 			return ! val.after(obj.enrollmentDate)

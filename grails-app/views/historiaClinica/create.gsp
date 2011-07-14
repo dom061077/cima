@@ -33,17 +33,17 @@
             </div>
             </g:hasErrors>
             
-            <g:hasErrors bean="${historiaClinicaInstance}">
+            <g:hasErrors bean="${pacienteInstance}">
             <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-                <g:renderErrors bean="${historiaClinicaInstance}" as="list" />
+                <g:renderErrors bean="${pacienteInstance}" as="list" />
             </div>
             </g:hasErrors>
             
             <g:form action="save" >
            		<div>
-           			Historia Clínica: Sin Número
+           			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
            			<br/>
-           			Paciente: ${historiaClinicaInstance.paciente?.apellido+" - "+historiaClinicaInstance.paciente?.nombre}
+           			Paciente: ${pacienteInstance?.apellido+" - "+pacienteInstance?.nombre}
            		</div>
             
             	<div id="tabs">
@@ -57,11 +57,11 @@
             			<fieldset>
    							<label for="cie10Descripcion">CIE-10:</label>
    							<g:textField id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/><br/>
-   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${consultaInstance?.cie10?.id}"/>
+   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${cie10?.id}"/>
    							<label for="consulta.fechaConsulta">Fecha de Consulta:</label>
    							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fechaConsultaId" name="consulta.fechaConsulta" value="${g.formatDate(format:'dd/MM/yyyy',date:consultaInstance?.fechaConsulta)}"/><br/>
    							
-							<fckeditor:editor name="consulta.contenido" width="100%" height="400" toolbar="ed-limited" fileBrowser="default" value="">
+							<fckeditor:editor name="contenido" width="100%" height="400" toolbar="ed-limited" fileBrowser="default" value="">
 							</fckeditor:editor>            			
             			</fieldset>
             		</div>
@@ -72,66 +72,66 @@
             						<tr>
             							<td>
 										<label for=""><g:message code="historia.pulso.label" default="Pulso:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="historiaClinica.pulsoId" name="historiaClinica.pulso"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="historiaClinica.pulso">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="pulso"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="pulso">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="pulso"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pulso"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 										<label for=""><g:message code="historia.fc.label" default="FC:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="historiaClinica.fc"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="historiaClinica.fc">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="fc"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="fc">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="fc"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fc"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		
 										<label for=""><g:message code="historia.ta.label" default="TA:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="historiaClinica.ta"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="ta">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="ta"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="ta">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="ta"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ta"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		
 										<label for=""><g:message code="historia.fr.label" default="FR:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="historiaClinica.fr"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="fr">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="fr"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="fr">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="fr"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fr"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
                                 		</td>
                                 		<td>  	
 										<label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="historiaClinica.taxilar"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="taxilar">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="taxilar"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="taxilar">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="taxilar"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="taxilar"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		                                
 										<label for=""><g:message code="historia.trectal.label" default="T.Rectal:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="historiaClinica.trectal"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="historiaClinica.trectal">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="trectal"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="trectal">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="trectal"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="trectal"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		                                          
 										<label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="historiaClinica.pesoh"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="pesoh">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="pesoh"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="pesoh">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="pesoh"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoh"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		                                
 										<label for=""><g:message code="historia.pesoa.label" default="Peso actual:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="historiaClinica.pesoa"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="pesoa">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="pesoa"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="pesoa">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="pesoa"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoa"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		                                
@@ -142,62 +142,62 @@
                  		<fieldset>
                  			<legend>Otros datos</legend>
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
-							<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="historiaClinica.impresion"></g:textArea>
-                                		<g:hasErrors bean="${historiaClinicaInstance}" field="impresion">
+							<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="impresion"></g:textArea>
+                                		<g:hasErrors bean="${consultaInstance}" field="impresion">
                                 			<br/>
-	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="impresion"/></div>
+	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
                                     	</g:hasErrors>
                                <br/>
                             <table>
                             	<tr>
                             		<td>
 										<label for=""><g:message code="historia.habito.label" default="Hábito:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="habitoId" name="historiaClinica.habito"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="habito">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="habitoId" name="habito"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="habito">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="habito"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="habito"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 		                                
 										<label for=""><g:message code="historia.actitud.label" default="Actitud:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="atitudId" name="historiaClinica.actitud"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="actitud">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="atitudId" name="actitud"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="actitud">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="actitud"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="actitud"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>                            			
 
 										<label for=""><g:message code="historia.ubicacion.label" default="Ubicación:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="ubicacionId" name="historiaClinica.ubicacion"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="ubicacion">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="ubicacionId" name="ubicacion"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="ubicacion">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="ubicacion"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ubicacion"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>                            			
 		                                                            			
                             		</td>
                             		<td>
 										<label for=""><g:message code="historia.marcha.label" default="Marcha:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="marchaId" name="historiaClinica.marcha"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="marcha">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="marchaId" name="marcha"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="marcha">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="marcha"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="marcha"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>  
 		                                                          			
 										<label for=""><g:message code="historia.psiqui.label" default="Psiquismo:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="historiaClinica.psiqui"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="psiqui">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="psiqui"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="psiqui">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="psiqui"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="psiqui"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>                            			
 
 										<label for=""><g:message code="historia.facie.label" default="Facie:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="facieId" name="historiaClinica.facie"></g:textField>
-			                                		<g:hasErrors bean="${historiaClinicaInstance}" field="facie">
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="facieId" name="facie"></g:textField>
+			                                		<g:hasErrors bean="${consultaInstance}" field="facie">
 			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${historiaClinicaInstance}" as="list" field="facie"/></div>
+				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="facie"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>                            			
                             		
