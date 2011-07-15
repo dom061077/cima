@@ -52,9 +52,7 @@ class HistoriaClinicaController {
 			params.fechaConsulta_day=gc.get(Calendar.DATE).toString()
 		}
 
-		def pacienteInstance = new Paciente(params)
-		historiaClinicaInstance.addToConsultas(consultaInstance)
-				
+
         if (historiaClinicaInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
             redirect(action: "show", id: historiaClinicaInstance.id)

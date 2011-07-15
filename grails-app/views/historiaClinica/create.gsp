@@ -72,14 +72,14 @@
             						<tr>
             							<td>
 										<label for=""><g:message code="historia.pulso.label" default="Pulso:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="pulso"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="consulta.pulso"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pulso">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pulso"/></div>
 			                                    	</g:hasErrors>
 		                                <br/>
 										<label for=""><g:message code="historia.fc.label" default="FC:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="fc"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="consulta.fc"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="fc">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fc"/></div>
@@ -87,7 +87,7 @@
 		                                <br/>
 		
 										<label for=""><g:message code="historia.ta.label" default="TA:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="ta"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="consulta.ta"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="ta">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ta"/></div>
@@ -95,7 +95,7 @@
 		                                <br/>
 		
 										<label for=""><g:message code="historia.fr.label" default="FR:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="fr"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="consulta.fr"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="fr">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fr"/></div>
@@ -104,7 +104,7 @@
                                 		</td>
                                 		<td>  	
 										<label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="taxilar"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="consulta.taxilar"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="taxilar">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="taxilar"/></div>
@@ -112,7 +112,7 @@
 		                                <br/>
 		                                
 										<label for=""><g:message code="historia.trectal.label" default="T.Rectal:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="trectal"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="consulta.trectal"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="trectal">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="trectal"/></div>
@@ -120,7 +120,7 @@
 		                                <br/>
 		                                          
 										<label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="pesoh"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="consulta.pesoh"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pesoh">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoh"/></div>
@@ -128,7 +128,7 @@
 		                                <br/>
 		                                
 										<label for=""><g:message code="historia.pesoa.label" default="Peso actual:" /></label>
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="pesoa"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="consulta.pesoa"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pesoa">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoa"/></div>

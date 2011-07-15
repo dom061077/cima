@@ -159,10 +159,6 @@
 <div id="page" class="ui-widget ui-corner-all ui-widget-content">
         <div id="header" class="clearfix ui-widget ui-corner-all ui-widget-content">
 
-            <div id="branding">
-            
-            	 
-            </div><!-- end branding -->
             <g:isLoggedIn>
 				<div id="search">
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
