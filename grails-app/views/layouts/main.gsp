@@ -19,12 +19,13 @@
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'ui.jqgrid.css')}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'jquery.searchFilter.css')}" />
         
-            
-		<link rel="stylesheet" href="${resource(dir:'css/framework',file:'tools.css')}" type="text/css" />
+
 		
-		<link rel="stylesheet" href="${resource(dir:'css/framework',file:'typo.css')}" type="text/css" />
-		<link rel="stylesheet" href="${resource(dir:'css/framework',file:'layout-1col.css')}" type="text/css" />
-		<link rel="stylesheet" href="${resource(dir:'css/framework',file:'default.css')}" type="text/css" />		
+		<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'screen.css')}" type="text/css" media="screen, projections" />
+		<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'print.css')}" type="text/css" / media="print">
+		<!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+		
+				
 		
         <link rel="stylesheet" href="${resource(dir:'css/menu',file:'dropdown.css')}" type="text/css" media="screen, projection"/>        
 
@@ -156,26 +157,14 @@
 			</div>
 	
     
-<div id="page" class="ui-widget ui-corner-all ui-widget-content">
-        <div id="header" class="clearfix ui-widget ui-corner-all ui-widget-content">
+<div class="container showgrid">
+        <div>
 
             <g:isLoggedIn>
 				<div id="search">
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
 				</div>
 			</g:isLoggedIn>
-            <!-- div id="search">
-            	<g:isLoggedIn>
-	                <form method="post" action="">
-	
-						<div><label for="search-site">Buscar:</label>
-						<input type="text" name="search" id="search-site" />
-	                    <input type="submit" value="Ir" name="search" id="search" /></div>
-					</form>
-				</g:isLoggedIn>	
-            </div --><!-- end search -->
-            <div style="clear:left;">
-            </div>
             <div>
             	<g:isLoggedIn>
 		            <ul class="dropdown dropdown-horizontal" >
@@ -215,12 +204,12 @@
             
         </div><!-- end header -->
 
-		<div id="content" style="padding: 10px 10px 10px 10px" class="ui-widget ui-corner-all ui-widget-content">
+		<div>
 			<div id="main" >
 	        	<g:layoutBody />
 			</div>
 		</div>	
-        <div id="footer"  class="clearfix ui-widget ui-corner-all ui-widget-content">
+        <div>
         	<p>
             &copy; Copyright 2011 | CIMA WEB Versi&oacute;n 1.5 | Todos los derechos reservados.
             </p>
