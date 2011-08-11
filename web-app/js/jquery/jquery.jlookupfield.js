@@ -76,7 +76,7 @@ $(document).ready(function(){
 		            	//$('#searchDialogId').height('auto'); 
 		            	//$('#searchiDialogId').add(grid);	
 						
-		                $(this).after('<a id="searchlink" href="#"><span class="ui-icon ui-icon-search">...</span></a>');
+		                $(this).after('<label><a style="width:50px" id="searchlink" href="#"><span  class="ui-icon ui-icon-search">...</span></a></label>');
 		                $('#searchlink').click(function(){
 		                	showgriddialog();
 		                });

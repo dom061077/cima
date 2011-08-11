@@ -1,3 +1,6 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
 <%@ page import="org.codehaus.groovy.grails.plugins.springsecurity.AuthorizeTools"
 
 %>
@@ -7,6 +10,9 @@
 <html>
     <head>
         <title><g:layoutTitle default="Grails" /></title>
+	    <link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'screen.css')}" type="text/css" media="screen, projection">
+    	<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'print.css')}" media="print">
+    	<!--[if lt IE 8]><link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'ie.css')}" type="text/css" media="screen, projection"><![endif]-->
 
 
          <link rel="stylesheet" href="${resource(dir:'css',file:'jquery-ui-1.8.11.custom.css')}" />
@@ -21,14 +27,8 @@
         
 
 		
-		<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'screen.css')}" type="text/css" media="screen, projections" />
-		<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'print.css')}" type="text/css" / media="print">
-		<!--[if lt IE 8]><link rel="stylesheet" href="css/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
-		
-				
 		
         <link rel="stylesheet" href="${resource(dir:'css/menu',file:'dropdown.css')}" type="text/css" media="screen, projection"/>        
-
         <link rel="stylesheet" href="${resource(dir:'css/menu',file:'default.advanced.css')}" type="text/css" media="screen, projection"/>
             
                 
@@ -66,8 +66,7 @@
         <g:javascript library="application" />
         <style type="text/css">
         
-        
-        
+       
         
         				.ui-autocomplete-loading { background: white url('<%out << g.resource(dir:'images',file:'load.gif')%>') right center no-repeat; }
 
@@ -88,7 +87,10 @@
         </style>
 
     </head>
-    <body id="home">
+    <body>
+
+<div class="container showgrid">
+
     
 <div style="display:none" id="MenuJqGrid">
 
@@ -118,7 +120,7 @@
 			</div>		
 	</div>
 	
-			<div class="hidden" id="dialog-form" title="Cambiar estado turno">
+			<div style="display:none" id="dialog-form" title="Cambiar estado turno">
 				
 			
 				<form id="formturnosId">
@@ -157,14 +159,18 @@
 			</div>
 	
     
-<div class="container showgrid">
         <div>
 
+            <div>
+            
+            	 
+            </div><!-- end branding -->
             <g:isLoggedIn>
-				<div id="search">
+				<div>
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
 				</div>
 			</g:isLoggedIn>
+
             <div>
             	<g:isLoggedIn>
 		            <ul class="dropdown dropdown-horizontal" >
@@ -205,13 +211,13 @@
         </div><!-- end header -->
 
 		<div>
-			<div id="main" >
+			<div>
 	        	<g:layoutBody />
 			</div>
 		</div>	
         <div>
         	<p>
-            &copy; Copyright 2011 | CIMA WEB Versi&oacute;n 1.5 | Todos los derechos reservados.
+            &copy; Copyright 2011 &lt;Medfire&gt; | Design by: Marca Registrada
             </p>
         </div><!-- end footer -->
 

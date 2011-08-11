@@ -8,29 +8,29 @@ import java.text.ParseException
 
 class HistoriaClinicaController {
 
-    static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index = {
-        redirect(action: "list", params: params)
-    }
+	def index = {
+		redirect(action: "list", params: params)
+	}
  
-    def list = {
+	def list = {
 		log.info "INGRESANDO AL CLOSURE iist DEL CONTROLLER HistoriaClinicaController"
 		log.info "SOLO RENDERIZA LA PAGINA DE LIST"
-        //params.max = Math.min(params.max ? params.int('max') : 10, 100)
-       // [historiaClinicaInstanceList: HistoriaClinica.list(params), historiaClinicaInstanceTotal: HistoriaClinica.count()]
+		//params.max = Math.min(params.max ? params.int('max') : 10, 100)
+	   // [historiaClinicaInstanceList: HistoriaClinica.list(params), historiaClinicaInstanceTotal: HistoriaClinica.count()]
 		
-    }
+	}
 
-    def create = {
+	def create = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		def pacienteInstance = Paciente.load(params.paciente.id.toLong())
 		def consultaInstance = new Consulta()
-        return [pacienteInstance: pacienteInstance, consultaInsttance:consultaInstance]
-    }
+		return [pacienteInstance: pacienteInstance, consultaInsttance:consultaInstance]
+	}
 
-    def save = {
+	def save = {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		def consultaInstance = new Consulta(params.consulta)
@@ -53,87 +53,87 @@ class HistoriaClinicaController {
 		}
 
 
-        if (historiaClinicaInstance.save(flush: true)) {
-            flash.message = "${message(code: 'default.created.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
-            redirect(action: "show", id: historiaClinicaInstance.id)
-        }
-        else {
+		if (historiaClinicaInstance.save(flush: true)) {
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
+			redirect(action: "show", id: historiaClinicaInstance.id)
+		}
+		else {
 			
-            render(view: "create", model: [historiaClinicaInstance: historiaClinicaInstance,consultaInstace:consultaInstance])
-        }
-    }
+			render(view: "create", model: [historiaClinicaInstance: historiaClinicaInstance,consultaInstace:consultaInstance])
+		}
+	}
 
-    def show = {
-        def historiaClinicaInstance = HistoriaClinica.get(params.id)
-        if (!historiaClinicaInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            [historiaClinicaInstance: historiaClinicaInstance]
-        }
-    }
+	def show = {
+		def historiaClinicaInstance = HistoriaClinica.get(params.id)
+		if (!historiaClinicaInstance) {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+			redirect(action: "list")
+		}
+		else {
+			[historiaClinicaInstance: historiaClinicaInstance]
+		}
+	}
 
-    def edit = {
-        def historiaClinicaInstance = HistoriaClinica.get(params.id)
-        if (!historiaClinicaInstance) {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-            redirect(action: "list")
-        }
-        else {
-            return [historiaClinicaInstance: historiaClinicaInstance]
-        }
-    }
+	def edit = {
+		def historiaClinicaInstance = HistoriaClinica.get(params.id)
+		if (!historiaClinicaInstance) {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+			redirect(action: "list")
+		}
+		else {
+			return [historiaClinicaInstance: historiaClinicaInstance]
+		}
+	}
 
-    def update = {
-        def historiaClinicaInstance = HistoriaClinica.get(params.id)
-        if (historiaClinicaInstance) {
-            if (params.version) {
-                def version = params.version.toLong()
-                if (historiaClinicaInstance.version > version) {
-                    
-                    historiaClinicaInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
-                    render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
-                    return
-                }
-            }
-            historiaClinicaInstance.properties = params
-            if (!historiaClinicaInstance.hasErrors() && historiaClinicaInstance.save(flush: true)) {
-                flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
-                redirect(action: "show", id: historiaClinicaInstance.id)
-            }
-            else {
-                render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
-            }
-        }
-        else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-            redirect(action: "list")
-        }
-    }
+	def update = {
+		def historiaClinicaInstance = HistoriaClinica.get(params.id)
+		if (historiaClinicaInstance) {
+			if (params.version) {
+				def version = params.version.toLong()
+				if (historiaClinicaInstance.version > version) {
+					
+					historiaClinicaInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
+					render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
+					return
+				}
+			}
+			historiaClinicaInstance.properties = params
+			if (!historiaClinicaInstance.hasErrors() && historiaClinicaInstance.save(flush: true)) {
+				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
+				redirect(action: "show", id: historiaClinicaInstance.id)
+			}
+			else {
+				render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
+			}
+		}
+		else {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+			redirect(action: "list")
+		}
+	}
 
-    def delete = {
-        def historiaClinicaInstance = HistoriaClinica.get(params.id)
-        if (historiaClinicaInstance) {
-            try {
-                historiaClinicaInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-                redirect(action: "list")
-            }
-            catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-                redirect(action: "show", id: params.id)
-            }
-        }
-        else {
-            flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
-            redirect(action: "list")
-        }
-    }
+	def delete = {
+		def historiaClinicaInstance = HistoriaClinica.get(params.id)
+		if (historiaClinicaInstance) {
+			try {
+				historiaClinicaInstance.delete(flush: true)
+				flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+				redirect(action: "list")
+			}
+			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+				redirect(action: "show", id: params.id)
+			}
+		}
+		else {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+			redirect(action: "list")
+		}
+	}
 	
 	def listjson = {
 		log.info "INGRESANDO AL CLOSURE listjson DEL CONTROLLER HistoriaClinicaController"
-		log.info "PARAMETROS ${params}"	
+		log.info "PARAMETROS ${params}"
 		def list
 		def gud = new GUtilDomainClass(Paciente,params,grailsApplication)
 		list=gud.listrefactor(false)

@@ -1,6 +1,4 @@
 
-
-<%@ page import="com.medfire.HistoriaClinica" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -55,36 +53,48 @@
             		</ul>
             		<div id="tabs-1">
             			<fieldset>
-   							<label for="cie10Descripcion">CIE-10:</label>
-   							<g:textField id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/><br/>
-   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${cie10?.id}"/>
-   							<label for="consulta.fechaConsulta">Fecha de Consulta:</label>
-   							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fechaConsultaId" name="consulta.fechaConsulta" value="${g.formatDate(format:'dd/MM/yyyy',date:consultaInstance?.fechaConsulta)}"/><br/>
+            				<div class="span-8 colborder">
+            						
+		   							<label style="float:left;width:100px" for="cie10Descripcion">CIE-10:</label>
+		   							<input style="float:left" type="text" id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/>
+<!--	   								<label style="float:left" for="consulta.cie10Descripcion">-->
+<!--										<a  id="searchlink" href="#"><span class="ui-icon ui-icon-search">...</span></a>		   								-->
+<!--	   								</label>-->
+
+		   							
+		   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${consultaInstance?.cie10?.id}"/>
+   							</div>
    							
-							<fckeditor:editor name="contenido" width="100%" height="400" toolbar="ed-limited" fileBrowser="default" value="">
-							</fckeditor:editor>            			
+   							<div class="span-8">
+   							<label for="consulta.fechaConsulta">Fecha de Consulta:</label>
+   							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fechaConsultaId" name="consulta.fechaConsulta" value="${g.formatDate(format:'dd/MM/yyyy',date:consultaInstance?.fechaConsulta)}"/>
+   							</div>
+   							<div class="clearfix">
+							<fckeditor:editor name="consulta.contenido" width="100%" height="350" toolbar="ed-limited" fileBrowser="default" value="">
+							</fckeditor:editor>
+							</div>            			
+            			</fieldset>
             			</fieldset>
             		</div>
             		<div id="tabs-2">
             			<fieldset>
             				<legend>Signos Vitales</legend>
-            					<table>
-            						<tr>
-            							<td>
+            							<div class="span-8">
 										<label for=""><g:message code="historia.pulso.label" default="Pulso:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="consulta.pulso"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pulso">
-			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pulso"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
+			                            </div>        	
+			                            
+			                            <div class="span-8">
 										<label for=""><g:message code="historia.fc.label" default="FC:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="consulta.fc"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="fc">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fc"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
+			                            </div>        	
 		
 										<label for=""><g:message code="historia.ta.label" default="TA:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="consulta.ta"></g:textField>
@@ -92,7 +102,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ta"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
 		
 										<label for=""><g:message code="historia.fr.label" default="FR:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="consulta.fr"></g:textField>
@@ -100,16 +109,12 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fr"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
-                                		</td>
-                                		<td>  	
 										<label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="consulta.taxilar"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="taxilar">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="taxilar"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
 		                                
 										<label for=""><g:message code="historia.trectal.label" default="T.Rectal:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="consulta.trectal"></g:textField>
@@ -117,7 +122,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="trectal"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
 		                                          
 										<label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="consulta.pesoh"></g:textField>
@@ -125,7 +129,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoh"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
 		                                
 										<label for=""><g:message code="historia.pesoa.label" default="Peso actual:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="consulta.pesoa"></g:textField>
@@ -133,11 +136,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoa"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
-		                                
-		                                </td>
-                                	</tr>          
-                                </table>          
                  		</fieldset>
                  		<fieldset>
                  			<legend>Otros datos</legend>
@@ -147,17 +145,12 @@
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
                                     	</g:hasErrors>
-                               <br/>
-                            <table>
-                            	<tr>
-                            		<td>
 										<label for=""><g:message code="historia.habito.label" default="Hábito:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="habitoId" name="habito"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="habito">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="habito"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>
 		                                
 										<label for=""><g:message code="historia.actitud.label" default="Actitud:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="atitudId" name="actitud"></g:textField>
@@ -165,7 +158,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="actitud"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>                            			
 
 										<label for=""><g:message code="historia.ubicacion.label" default="Ubicación:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="ubicacionId" name="ubicacion"></g:textField>
@@ -173,17 +165,12 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ubicacion"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>                            			
-		                                                            			
-                            		</td>
-                            		<td>
 										<label for=""><g:message code="historia.marcha.label" default="Marcha:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="marchaId" name="marcha"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="marcha">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="marcha"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>  
 		                                                          			
 										<label for=""><g:message code="historia.psiqui.label" default="Psiquismo:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="psiqui"></g:textField>
@@ -191,7 +178,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="psiqui"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>                            			
 
 										<label for=""><g:message code="historia.facie.label" default="Facie:" /></label>
 										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="facieId" name="facie"></g:textField>
@@ -199,11 +185,6 @@
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="facie"/></div>
 			                                    	</g:hasErrors>
-		                                <br/>                            			
-                            		
-                            		</td>
-                            	</tr>
-                            </table>   
                  			
                  		</fieldset>
             		</div>
