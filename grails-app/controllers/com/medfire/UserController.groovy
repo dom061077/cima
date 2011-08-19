@@ -11,7 +11,7 @@ class UserController {
     def index = {  
         redirect(action: "list", params: params)
     }
- 
+  
     def list = { 
 		log.info "INGRESANDO AL CLOSURE list DEL CONTROLLER UserController"
 		log.info "PARAMETROS: ${params}"

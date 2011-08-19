@@ -46,6 +46,21 @@
             </div>
             </g:hasErrors>
             
+            <form id='prescripcionesFormId' name="FormPost" nosubmit="return false;" style="width: 100%; overflow: auto; position: relative; height: auto;" class="FormGrid">
+            	<label for="nombreComercial">Nombre Comercial</label>
+            	<input id="nombreComercial" name="nombreComercial" class="FormElement" type="text" role="textbox"></input> <br/>
+            	
+            	<label for="nombreGenerico">Nombre Comercial</label>
+            	<input id="nombreGenerico" name="nombreGenerico" class="FormElement" type="text" role="textbox"></input> <br/>
+
+            	<label for="cantidad">Nombre Comercial</label>
+            	<input id="cantidad" name="cantidad" class="FormElement" type="text" role="textbox"></input> <br/>
+
+            	<label for="imprimirPor">Nombre Comercial</label>
+            	<input id="imprimirPor" name="imprimirPor" class="FormElement" type="text" role="textbox"></input> <br/>
+            
+            </form>
+            
             <g:form action="save" enctype="multipart/form-data" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
@@ -322,7 +337,7 @@
 							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="presentacion"></g:textField>
                             </div>
                             <div class="clearfix"></div> 
-                            <div class="span-15">
+                            <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
                             </div>
                             <div id="pagerPrescripciones">	</div>

@@ -39,6 +39,7 @@ $(document).ready(function(){
 		url:'editprescripciones'
 		,editurl:'editprescripciones'
 		,datatype: "json"
+		,width:700
 		,colNames:['Id','Nombre Comercial', 'Nombre Generico', 'Cantidad','Imprimir Por']
 		,colModel:[ 
 			{name:'id',index:'id', width:55,editable:false	,editoptions:{readonly:true,size:10}}
@@ -56,7 +57,10 @@ $(document).ready(function(){
 		{height:280,reloadAfterSubmit:false}, // add options 
 		{reloadAfterSubmit:false}, // del options 
 		{} // search options 
-	); 	
+	);	
+	
+	$("#nombreComercial").after('<div>TEXTO HOLA</div>');
+	
 	
 	$("#testgrid").bind('click',function(){
 		var gridData = jQuery("#prescripcionesId").getRowData();
