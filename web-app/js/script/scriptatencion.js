@@ -138,7 +138,8 @@
 
 						
 				timer = $.timer(25000, function() {
-					//	if (refrescarflag)
-					//		$("#listturnos").trigger("reloadGrid");
+						if (refrescarflag)
+							$("#listturnos").trigger("reloadGrid")
+						;
 					});			
 			});                

@@ -187,7 +187,7 @@
 					
 					timer = $.timer(10000, function() {
 						if (refrescarflag)
-							//$('#calendar').fullCalendar('refetchEvents')
+							$('#calendar').fullCalendar('refetchEvents')
 							;
 					});
 					

@@ -89,7 +89,7 @@
     </head>
     <body>
 
-<div class="container showgrid">
+<div class="container">
 
     
 <div style="display:none" id="MenuJqGrid">

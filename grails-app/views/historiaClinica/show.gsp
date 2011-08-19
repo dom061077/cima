@@ -1,11 +1,21 @@
 
-<%@ page import="com.medfire.HistoriaClinica" %>
+<%@ page import="com.medfire.Consulta" %>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'historiaClinica.label', default: 'HistoriaClinica')}" />
+        <g:set var="entityName" value="${message(code: 'consulta.label', default: 'Consulta')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+        		CKEDITOR.on( 'instanceReady', function( ev )
+        				{
+        					editor = ev.editor;
+        					editor.setReadOnly( true );
+        				});            	
+            });
+        </script>
     </head>
     <body>
         <div class="nav">
@@ -23,17 +33,30 @@
                     <tbody>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="historiaClinica.id.label" default="Id" /></td>
+                            <td valign="top" class="name"><g:message code="consulta.id.label" default="Id" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: historiaClinicaInstance, field: "id")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: consultaInstance, field: "id")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="historiaClinica.numero.label" default="Numero" /></td>
+                            <td valign="top" class="name"><g:message code="consulta.numero.label" default="Numero" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: historiaClinicaInstance, field: "numero")}</td>
+                            <td valign="top" class="value">${fieldValue(bean: consultaInstance?.paciente, field: "id")}</td>
                             
+                        </tr>
+                        <tr class="prop">
+                        	<td>
+                        		contenido:
+                        	</td>
+                        	<td>
+                        	
+                        		<textarea class="ckeditor" id="contenidoId" cols="100" rows="10>
+                        			${consultaInstance?.contenido}
+                        		</textarea>
+                        		
+                        	</td>
+                        	
                         </tr>
                     
                     </tbody>
