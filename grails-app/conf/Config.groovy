@@ -85,15 +85,35 @@ environments {
 bi.Profesional = [
 	//outputDir: 'path/to/output/dir',
 	//prefix: 'mySuperImage',
-	images: ['large':[scale:[width:100, height:100, type:ScaleType.APPROXIMATE],
-					  //watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+	images: ['large':[scale:[width:100, height:100, type:ScaleType.APPROXIMATE]
+					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
 					  ],
-			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE],
-					  //watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
-					  ]],
+			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE]
+					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+					  ],
+				  ],
 	constraints:[
 		nullable:true,
 		maxSize:716800,
+		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg']
+	]
+]
+
+
+bi.EstudioComplementario = [
+	outputDir: 'imagenestudios',
+	//prefix: 'mySuperImage',
+	images: ['large':[scale:[width:300, height:300, type:ScaleType.APPROXIMATE]
+					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+					  ],
+			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE]
+					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+					  ],
+				  ]
+	//,outputDir: ['path':'/var/www/my-app/images/', 'alias':'/upload/']
+	,constraints:[
+		nullable:true,
+		maxSize:1024*5000,
 		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg']
 	]
 ]
