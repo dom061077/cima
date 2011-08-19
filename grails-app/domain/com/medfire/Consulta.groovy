@@ -10,6 +10,7 @@ class Consulta {
 	String contenido
 	Cie10 cie10
 	Profesional profesional
+	Paciente paciente
 	EstadoConsultaEnum estado
 
 	//examen fisico	
@@ -30,12 +31,17 @@ class Consulta {
 	String facie
 
 	
-	//static belongsTo = [historiaClinica:HistoriaClinica]
+	static belongsTo = [paciente:Paciente]
 	
-	static hasMany = [prescripciones:Prescripcion]
+	static hasMany = [prescripciones:Prescripcion,estudios:EstudioComplementario]
 	
     static constraints = {
+		cie10(nullable:true,blank:true)
     }
+	
+	static mapping = {
+		contenido type: "text"
+	}
 	
 	
 	

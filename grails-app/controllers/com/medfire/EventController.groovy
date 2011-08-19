@@ -116,8 +116,8 @@ class EventController {
     }
 
 	def operation = {
-		log.info "INGRESANDO AL METODO operation DEL CONTROLLER EventController"
-		log.info "PARAMETROS $params"
+		//log.info "INGRESANDO AL METODO operation DEL CONTROLLER EventController"
+		//log.info "PARAMETROS $params"
 		if(params.cmd.equals("read")){
 			return read(params)		
 		}
@@ -148,7 +148,7 @@ class EventController {
 	
 	
     private def read(def params){
-		log.info "INGRESANDO AL METODO PRIVADO read"
+		//log.info "INGRESANDO AL METODO PRIVADO read"
 		def eventos = Event.createCriteria().list(){
 			
 			profesional{
@@ -159,7 +159,6 @@ class EventController {
 		render(contentType:"text/json"){
 			array{
 				for(e in eventos){
-					log.debug "paciente: ${e.paciente}}"
 					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version
 				}
 			}
@@ -188,7 +187,7 @@ class EventController {
 			return
 		}
 		
-        eventInstance.fechaStart = gc.getTime()
+        eventInstance.fechaStart = new java.sql.Date(gc.getTime().getTime())
         
         gc.set(Integer.parseInt(params.endyear)
         		,Integer.parseInt(params.endmonth)
@@ -199,7 +198,7 @@ class EventController {
         
 		
 		
-        eventInstance.fechaEnd = gc.getTime()
+        eventInstance.fechaEnd = new java.sql.Date(gc.getTime().getTime())
 		eventInstance.start = new Integer(params.start)
 		eventInstance.end = new Integer(params.end)
 		eventInstance.allDay = false
@@ -345,7 +344,7 @@ class EventController {
 			eventInstance.end=new Integer(params.end)
 
 		        	
-	        eventInstance.fechaStart = gc.getTime()
+	        eventInstance.fechaStart = new java.sql.Date(gc.getTime().getTime())
 	        log.debug "SUPERADA VALIDACION DE FECHAS"
 	        gc.set(Integer.parseInt(params.endyear)
 	        		,Integer.parseInt(params.endmonth)
@@ -354,7 +353,7 @@ class EventController {
 	        		,Integer.parseInt(params.endminutes)
 	        		)
 	        
-	        eventInstance.fechaEnd = gc.getTime()
+	        eventInstance.fechaEnd = new java.sql.Date(gc.getTime().getTime())
 
 			
 			
@@ -470,9 +469,9 @@ class EventController {
 	}
 	
 	def atenciondeldia= {
-		log.info "INGRESANDO AL CLOSURE atenciondeldia"
-		log.info "PARAMETROS ${params}"
-		log.info "INGRESANDO"
+		//log.info "INGRESANDO AL CLOSURE atenciondeldia"
+		//log.info "PARAMETROS ${params}"
+		//log.info "INGRESANDO"
 		Calendar cal= Calendar.getInstance()
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
@@ -483,7 +482,7 @@ class EventController {
 		def filtersJson 
 		def oper
 		
-		log.debug "PROFESIONAL ASIGNADO ID: "+user?.profesionalAsignado?.id
+		//log.debug "PROFESIONAL ASIGNADO ID: "+user?.profesionalAsignado?.id
 		//def list = new GUtilDomainClass(Event,params,grailsApplication).listrefactor()
 		def criteria = Event.createCriteria()
 		def closure = {
@@ -491,7 +490,7 @@ class EventController {
 				criteria.profesional(){
 					criteria.eq('id',user.profesionalAsignado?.id)
 				}
-				criteria.gt('fechaStart',dateWithoutTime)
+				criteria.eq('fechaStart',dateWithoutTime)
 				if(Boolean.parseBoolean(params._search)){
 					if(params.filters){
 						filtersJson = JSON.parse(params.filters)
@@ -504,12 +503,14 @@ class EventController {
 					}
 				}
 			}
+			//log.debug("APLICANDO EL ORDENAMIENTO")
+			order("fechaStart","asc")
 		}
 		
 		def list = criteria.list(closure)
 
 		
-		log.debug "TOTAL DE LIST: "+list.size()
+		//log.debug "TOTAL DE LIST: "+list.size()
 		def totalregistros=list.size()
 		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
 		
@@ -517,7 +518,7 @@ class EventController {
 		
 		
 		def flagaddcomilla=false
-		log.debug "Total registros: "+totalregistros
+		//log.debug "Total registros: "+totalregistros
 		list.each{
 			if (flagaddcomilla)
 				result=result+','

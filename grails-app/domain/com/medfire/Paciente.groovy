@@ -28,6 +28,8 @@ class Paciente {
 	
 	//static belongsTo = [obrasocial:ObraSocial,estadocivil:EstadoCivil,localidad:Localidad,tipodocumento:TipoDocumento]
 	
+	static hasMany = [consultas:Consulta]
+	
 	def beforeInsert = {
 		apellido = apellido?.toUpperCase()
 		nombre = nombre?.toUpperCase()

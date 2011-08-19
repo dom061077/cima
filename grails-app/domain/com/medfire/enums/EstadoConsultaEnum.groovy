@@ -1,7 +1,7 @@
 package com.medfire.enums
 
 public enum EstadoConsultaEnum{
-	ESTADO_PUBLICO("Público"),
+	ESTADO_PUBLICO("PÃºblico"),
 	ESTADO_PRIVADO("Privado")
 	
 	String name

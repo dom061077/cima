@@ -8,6 +8,10 @@ import java.text.ParseException
 
 class HistoriaClinicaController {
 
+	def imageUploadService
+	def historiaClinicaService
+	def authenticateService 
+	
 	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
 	def index = {
@@ -25,21 +29,19 @@ class HistoriaClinicaController {
 	def create = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
-		def pacienteInstance = Paciente.load(params.paciente.id.toLong())
+		def pacienteInstance = Paciente.load(params.pacienteId.toLong())
 		def consultaInstance = new Consulta()
-		return [pacienteInstance: pacienteInstance, consultaInsttance:consultaInstance]
+		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance]
 	}
 
 	def save = {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
-		def consultaInstance = new Consulta(params.consulta)
-		
-		if (params.fechaConsulta){
+		if (params.consulta.fechaConsulta){
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 			def fecha
 			try{
-				fecha = df.parse(params.fechaConsulta)
+				fecha = df.parse(params.consulta.fechaConsulta)
 				log.debug "LA FECHA SE PARSEO BIEN"
 			}catch(ParseException e){
 				log.debug "LA FECHA NO SE PARSEO BIEN"
@@ -47,30 +49,46 @@ class HistoriaClinicaController {
 			def gc = Calendar.getInstance()
 			gc.setTime(fecha)
 			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-			params.fechaConsulta_year=gc.get(Calendar.YEAR).toString()
-			params.fechaConsulta_month=(gc.get(Calendar.MONTH)+1).toString()
-			params.fechaConsulta_day=gc.get(Calendar.DATE).toString()
+			params.consulta.fechaConsulta_year=gc.get(Calendar.YEAR).toString()
+			params.consulta.fechaConsulta_month=(gc.get(Calendar.MONTH)+1).toString()
+			params.consulta.fechaConsulta_day=gc.get(Calendar.DATE).toString()
+		}
+		def consultaInstance = new Consulta(params.consulta)
+		def userInstance = User.load(authenticateService.userDomain().id)
+		def profesionalInstance = Profesional.load(userInstance.profesionalAsignado.id)
+		consultaInstance.profesional=profesionalInstance
+		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
+		consultaInstance.paciente=pacienteInstance
+		def estudioImagen
+		log.debug "IMAGEN DE ARCHIVO: "+params.imagen
+		
+		params.imagen.each{
+			if(!it.value.isEmpty())
+				consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName())))
 		}
 
+		try{
+			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
+			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
+			redirect(action: "show", id: consultaInstance.id)
 
-		if (historiaClinicaInstance.save(flush: true)) {
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
-			redirect(action: "show", id: historiaClinicaInstance.id)
+		}catch(ConsultaException e){
+			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "
+			log.error "MENSAJE DE VALIDACION: "+e.message
+			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance])
 		}
-		else {
-			
-			render(view: "create", model: [historiaClinicaInstance: historiaClinicaInstance,consultaInstace:consultaInstance])
-		}
+		
+		
 	}
 
 	def show = {
-		def historiaClinicaInstance = HistoriaClinica.get(params.id)
-		if (!historiaClinicaInstance) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+		def consultaInstance = Consulta.get(params.id)
+		if (!consultaInstance) {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Consulta'), params.id])}"
 			redirect(action: "list")
 		}
 		else {
-			[historiaClinicaInstance: historiaClinicaInstance]
+			[consultaInstance: consultaInstance]
 		}
 	}
 
@@ -167,4 +185,14 @@ class HistoriaClinicaController {
 
 		
 	}
+	
+	def editprescripciones = {
+		render(contentType:"text/json"){
+			array{
+				
+			}
+		}
+		
+	}
+	
 }

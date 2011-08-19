@@ -4,11 +4,11 @@ import java.util.Map;
 
 import com.medfire.util.GUtilDomainClass
 
-class UserController {
+class UserController { 
 	def authenticateService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
-    def index = { 
+    def index = {  
         redirect(action: "list", params: params)
     }
  

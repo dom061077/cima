@@ -38,7 +38,7 @@ class PacienteController {
     def save = {
     	log.debug "INGRESANDO AL METODO save DEL CONTROLLER PacienteController"
     	log.debug "PARAMETROS $params"
-
+		def pacienteSalvado
         
     	
     	if (params.fechaNacimiento){
@@ -82,8 +82,10 @@ class PacienteController {
 							render(view:"create",model:[pacienteInstance])
 							return
 						}
-						if (pacienteInstance.save(flush: true)) {
-							eventInstance.paciente=pacienteInstance
+						pacienteSalvado = pacienteInstance.save(flush: true) 
+						if (pacienteSalvado) {
+							
+							eventInstance.paciente=pacienteSalvado
 							eventInstance.titulo=pacienteInstance.apellido+'-'+pacienteInstance.nombre
 							eventInstance.save()
 							flash.message = "${message(code: 'default.created.message', args: [message(code: 'paciente.label', default: 'Paciente'), pacienteInstance.id])}"
@@ -96,7 +98,8 @@ class PacienteController {
 								listlocalidades = Localidad.createCriteria().list(){
 									eq("id",new Long(params.localidad.id))
 								}
-							render(view: "create", model: [pacienteInstance: pacienteInstance,localidades:listlocalidades])
+							//redirect(controller:"paciente",action: "create",params:[eventId:eventInstance.id,eventVersion:eventInstance.version])
+							render(view: "create", model: [pacienteInstance: pacienteInstance,eventId:params.eventId,eventVersion:params.eventVersion,localidades:listlocalidades])
 							return
 						}
 			
