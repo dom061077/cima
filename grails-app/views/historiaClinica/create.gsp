@@ -12,6 +12,7 @@
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
+        	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
         	$(document).ready(
                 	function(){
                 		$("#estadoId").combobox() ;
@@ -23,7 +24,7 @@
       	<script type="text/javascript" src="${resource(dir:'js/script/historia',file:'create.js')}"></script>
     </head>
     <body>
-    
+    	
     	<div id="pagerPrescripciones">	</div>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
@@ -46,20 +47,6 @@
             </div>
             </g:hasErrors>
             
-            <form id='prescripcionesFormId' name="FormPost" nosubmit="return false;" style="width: 100%; overflow: auto; position: relative; height: auto;" class="FormGrid">
-            	<label for="nombreComercial">Nombre Comercial</label>
-            	<input id="nombreComercial" name="nombreComercial" class="FormElement" type="text" role="textbox"></input> <br/>
-            	
-            	<label for="nombreGenerico">Nombre Comercial</label>
-            	<input id="nombreGenerico" name="nombreGenerico" class="FormElement" type="text" role="textbox"></input> <br/>
-
-            	<label for="cantidad">Nombre Comercial</label>
-            	<input id="cantidad" name="cantidad" class="FormElement" type="text" role="textbox"></input> <br/>
-
-            	<label for="imprimirPor">Nombre Comercial</label>
-            	<input id="imprimirPor" name="imprimirPor" class="FormElement" type="text" role="textbox"></input> <br/>
-            
-            </form>
             
             <g:form action="save" enctype="multipart/form-data" >
            		<div>
@@ -314,29 +301,6 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-                            <div class="span-6">                             			
-							<label for=""><g:message code="historia.prescripcion.nombrecomercial.label" default="Nombre Comercial:" /></label>
-							</div>
-							<div class="span-10">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="nombrecomercial"></g:textField>
-                            </div>
-                            <div class="clearfix"></div>
-                            
-                            <div class="span-6">                             			
-							<label for=""><g:message code="historia.prescipcion.nombregenerico.label" default="Nombre Genérico:" /></label>
-							</div>
-							<div class="span-10">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="nombregenerico"></g:textField>
-                            </div>
-                            <div class="clearfix"></div>
-                             
-                            <div class="span-6"> 
-                            <label for=""><g:message code="historia.prescipcion.presentacion.label" default="Presentación:" /></label>
-							</div>
-							<div class="span-10">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="presentacion"></g:textField>
-                            </div>
-                            <div class="clearfix"></div> 
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
                             </div>

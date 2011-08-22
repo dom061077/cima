@@ -15,9 +15,9 @@ $(document).ready(function(){
 		                hiddenfield:'id',
 		                descfield:'descripcion'
 		            };
-		            function showgriddialog(){
+		            function showgriddialog(dialog){
 						//$('#searchDialogId').add(grid);
-		            	$('#searchDialogId').dialog('open');
+		            	$('#'+dialog).dialog('open');
 		            }
 		            var settings = $.extend(defaults, settings);
 		 
@@ -25,18 +25,22 @@ $(document).ready(function(){
 		 
 		                var s = settings;
 		                var b = $(this);
-						$('body').append('<div style="display:none" id="searchDialogId"></div>');
-		            	$('#searchDialogId').append('<table id="tablesearchId"></table><div id="pagersearchId"></div>');
-						var grid = $('#tablesearchId');
-		            	$('#searchDialogId').append(grid);
-						$("#tablesearchId").jqGrid({
+		                var tableSearchId = $(this).attr("id")+"tablesearchId";
+		                var searchDialogId = $(this).attr("id")+"searchDialogId";
+		                var pagerSearchId = $(this).attr("id")+"pagersearchId";
+		                var searchLinkId = $(this).attr("id")+"searchlinkId";
+						$('body').append('<div style="display:none" id="'+searchDialogId+'"></div>');
+		            	$('#'+searchDialogId).append('<table id="'+tableSearchId+'"></table><div id="'+pagerSearchId+'"></div>');
+						var grid = $('#'+tableSearchId);
+		            	$('#'+searchDialogId).append(grid);
+						$('#'+tableSearchId).jqGrid({
 							caption:settings.title,
 							width:380,
 							url:settings.source,
 							//postData:{profesionalId:$("#profesionalId").val()},
 							mtype:"POST",
 							rownumbers:false,
-							pager:'#pagersearchId',
+							pager:'#'+pagerSearchId,
 							datatype:"json",
 							/*colnames:['Id','D.N.I','Apellido','Nombre'],
 							colModel:[
@@ -51,16 +55,16 @@ $(document).ready(function(){
 							colModel:settings.colModel,
 									 
 							ondblClickRow: function(id){
-								var obj=$("#tablesearchId").getRowData(id);
+								var obj=$('#'+tableSearchId).getRowData(id);
 								$('#'+settings.hiddenid).val(obj[settings.hiddenfield]);
 								$('#'+settings.descid).val(obj[settings.descfield]);		 
-								$("#searchDialogId").dialog("close");
+								$('#'+searchDialogId).dialog("close");
 								
 							} 
 						});
-						jQuery("#tablesearchId").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
+						jQuery('#'+tableSearchId).jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
 		 
-		            	$('#searchDialogId').dialog({
+		            	$('#'+searchDialogId).dialog({
 		            		title:'Buscar',
 		            		modal:true,
 		            		resizable:false,
@@ -76,9 +80,9 @@ $(document).ready(function(){
 		            	//$('#searchDialogId').height('auto'); 
 		            	//$('#searchiDialogId').add(grid);	
 						
-		                $(this).after('<label><a style="width:50px" id="searchlink" href="#"><span  class="ui-icon ui-icon-search">...</span></a></label>');
-		                $('#searchlink').click(function(){
-		                	showgriddialog();
+		                $(this).after('<label><a style="width:50px" id="'+searchLinkId+'" href="#"><span  class="ui-icon ui-icon-search">...</span></a></label>');
+		                $('#'+searchLinkId).click(function(){
+		                	showgriddialog(searchDialogId);
 		                });
 		            });
 		        }
