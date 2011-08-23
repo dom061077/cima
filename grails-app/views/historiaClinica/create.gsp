@@ -24,6 +24,10 @@
       	<script type="text/javascript" src="${resource(dir:'js/script/historia',file:'create.js')}"></script>
     </head>
     <body>
+		<div style="display:none" id="busquedaVademecumDialogId">
+			<table id="tablaBusquedaVademecumId"></table><div id="pagerBusquedaVademecumId"></div>
+		</div>
+
     	
     	<div id="pagerPrescripciones">	</div>
         <div class="nav">

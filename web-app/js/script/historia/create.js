@@ -1,3 +1,4 @@
+//http://www.trirand.com/jqgridwiki/doku.php?id=wiki%3Acommon_rules
 $(document).ready(function(){
 	$( "#tabs" ).tabs();
 	 
@@ -42,11 +43,12 @@ $(document).ready(function(){
 		,width:700
 		,colNames:['Id','Nombre Comercial', 'Nombre Generico', 'Cantidad','Imprimir Por']
 		,colModel:[ 
-			{name:'id',index:'id', width:55,editable:false	,editoptions:{readonly:true,size:10}}
-			, {name:'nombreComercial',index:'nombreComercial', width:90,editable:true,editoptions:{size:25},editrules:{required:true}}
-			, {name:'nombreGenerico',index:'nombreGenerico', width:60, align:"right",editable:true,editoptions:{size:10}}
-			, {name:'cantidad',index:'cantidad', width:60, align:"right",editable:true,editoptions:{size:10}}
-			, {name:'imprimirPor',index:'imprimirPor', width:60,align:"right",editable:true,editoptions:{size:10}}
+			{name:'id',index:'id', width:55,editable:false	,editoptions:{readonly:true,size:10}, sortable:false}
+			, {name:'nombreComercial',index:'nombreComercial', width:100,editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
+			, {name:'nombreGenerico',index:'nombreGenerico', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
+			, {name:'cantidad',index:'cantidad', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
+			, {name:'imprimirPor',index:'imprimirPor', width:60,align:"right",editable:true,editoptions:{size:30,value:'IMPRIME_GENERICO:Nombre genérico;IMPRIME_COMERCIAL:Nombre Comercial;IMPRIME_AMBOS:Ambos'}
+					,edittype:'select',editrules:{required:true}, sortable:false}
 		]
 		//, rowNum:10, rowList:[10,20,30]
 		, pager: '#pagerPrescripciones', sortname: 'id'
@@ -54,53 +56,35 @@ $(document).ready(function(){
 		, caption:"Navigator Example",  height:210
 	}); 
 	
-	function busquedaVademecum(){
-						$('body').append('<div style="display:none" id="busquedaVademecumDialogId"></div>');
-		            	$('#busquedaVademecumDialogId').append('<table id="tablaBusquedaVademecumId"></table><div id="pagerBusquedaVademecumId"></div>');
-						var grid = $('#tablaBusquedaVademecumId');
-		            	$('#busquedaVademecumDialogId').append(grid);
-						$('#tablaBusquedaVademecumId').jqGrid({
-							caption:'Búsqueda de Vademecum',
-							width:380,
-							url:locvademec,
-						mtype:'POST',
-						width:550,
-						rownumbers:true,
-						pager:'pagerBusquedaVademecumId',
-						datatype:'json',
-						colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Grupo Terapeutico'],
-						colModel:[
-								{name:'id',index:'id',width:10,hidden:true},
-								{name:'nombreComercial',index:'nombreComercial',width:100,sorttype:'text',sortable:true},
-								{name:'principio_principioActivo',index:'principio_principioActivo',width:100,sorttype:'text',sortable:true},
-								{name:'laboratorio_nombre',index:'laboratorio_nombre',width:100,sorttype:'text',sortable:true},
-								{name:'grupo_nombre',index:'grupo_nombre',width:100,sorttype:'text',sortable:true}
-						],
-						ondblClickRow: function(id){
-								var obj=$('#tablaBusquedaVademecumId').getRowData(id);
-								//$('#'+settings.hiddenid).val(obj[settings.hiddenfield]);
-								//$('#'+settings.descid).val(obj[settings.descfield]);		 
-								//$('#'+searchDialogId).dialog("close");
-								
-							} 
-						});
-						jQuery('#tablaBusquedaVademecumId').jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
-		 
-		            	$('#busquedaVademecumDialogId').dialog({
-		            		title:'Buscar',
-		            		modal:true,
-		            		resizable:false,
-		            		autoOpen:true,
-		            		width : 600,
-		            		height: 'auto',
-		            		minHeight:350,
-		            		position:'center',
-		            		open: function(event,ui){
-		            			
-		            		}
-		            	});
-		
-	}
+	//---------------inicializacion de la grilla de busqueda del vademecum para sugerir las prescripciones
+	$('#tablaBusquedaVademecumId').jqGrid({
+		caption:'Búsqueda de Vademecum',
+		width:380,
+		url:locvademec,
+	mtype:'POST',
+	width:550,
+	rownumbers:true,
+	pager:'pagerBusquedaVademecumId',
+	datatype:'json',
+	colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Grupo Terapeutico'],
+	colModel:[
+			{name:'id',index:'id',width:10,hidden:true},
+			{name:'nombreComercial',index:'nombreComercial',width:100,sorttype:'text',sortable:true},
+			{name:'principio_principioActivo',index:'principio_principioActivo',width:100,sorttype:'text',sortable:true},
+			{name:'laboratorio_nombre',index:'laboratorio_nombre',width:100,sorttype:'text',sortable:true},
+			{name:'grupo_nombre',index:'grupo_nombre',width:100,sorttype:'text',sortable:true}
+	],
+	ondblClickRow: function(id){
+			var obj=$('#tablaBusquedaVademecumId').getRowData(id);
+			//$('#'+settings.hiddenid).val(obj[settings.hiddenfield]);
+			//$('#'+settings.descid).val(obj[settings.descfield]);		 
+			//$('#'+searchDialogId).dialog("close");
+			
+		} 
+	});
+	jQuery('#tablaBusquedaVademecumId').jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
+	
+	
 	
 	jQuery("#prescripcionesId").jqGrid('navGrid','#pagerPrescripciones', {}, //options 
 		{height:280,reloadAfterSubmit:false
@@ -118,7 +102,16 @@ $(document).ready(function(){
 			, beforeShowForm:function(form){
 				$('#TblGrid_prescripcionesId').before('<a style="width:50px" id="searchlinkformgridId" href="#"><span  class="ui-icon ui-icon-search"></span>Vademecum</a>');
 				$('#searchlinkformgridId').bind('click',function(){
-					busquedaVademecum();
+	            	$('#busquedaVademecumDialogId').dialog({
+	            		title:'Buscar',
+	            		modal:true,
+	            		resizable:false,
+	            		autoOpen:true,
+	            		width : 600,
+	            		height: 'auto',
+	            		minHeight:350,
+	            		position:'center'
+	            	});
 				});
 			}
 		
