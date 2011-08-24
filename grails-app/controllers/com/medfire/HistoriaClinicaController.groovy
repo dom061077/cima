@@ -37,6 +37,10 @@ class HistoriaClinicaController {
 	def save = {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
+		
+		//---pasear json de la grilla de prescripciones----
+		def prescripcionesjson = grails.converters.JSON.parse(params.prescripciones)
+		
 		if (params.consulta.fechaConsulta){
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 			def fecha
@@ -75,7 +79,7 @@ class HistoriaClinicaController {
 		}catch(ConsultaException e){
 			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "
 			log.error "MENSAJE DE VALIDACION: "+e.message
-			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance])
+			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
 		}
 		
 		

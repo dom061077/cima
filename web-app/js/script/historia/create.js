@@ -41,6 +41,7 @@ $(document).ready(function(){
 		,editurl:'editprescripciones'
 		,datatype: "json"
 		,width:700
+		,rownumbers:true
 		,colNames:['Id','Nombre Comercial', 'Nombre Generico', 'Cantidad','Imprimir Por']
 		,colModel:[ 
 			{name:'id',index:'id', width:55,editable:false	,editoptions:{readonly:true,size:10}, sortable:false}
@@ -120,6 +121,18 @@ $(document).ready(function(){
 		{} // search options 
 	);	
 	
+	//---inicializo los datos de la grilla si el create proviene de un redirect del save--
+	var strjson = $("#prescripcionesSerializedId").val();
+	strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
+	var data = jQuery.parseJSON(strjson);
+	
+
+		
+	$("#prescripcionesId").setRowData({id:1,nombreComercial:'nombre comercial',nombreGenerico:'nombre generico',cantidad:3,imprimirPor:'imprimir'});
+	/*if(data){
+		alert("SET ROW DATA: "+data);
+		$("#prescripcionesId").setRowData(data);
+	}*/
 		
 	
 	$("#testgrid").bind('click',function(){

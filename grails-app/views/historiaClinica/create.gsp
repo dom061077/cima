@@ -13,6 +13,13 @@
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
+        	function copyprescripciones(){
+        		var gridData = jQuery("#prescripcionesId").getRowData();
+            	var postData = JSON.stringify(gridData);
+            	$("#prescripcionesSerializedId").val(postData);
+            	alert($("#prescripcionesSerializedId").val());
+            	
+            }
         	$(document).ready(
                 	function(){
                 		$("#estadoId").combobox() ;
@@ -52,7 +59,7 @@
             </g:hasErrors>
             
             
-            <g:form action="save" enctype="multipart/form-data" >
+            <g:form onSubmit="copyprescripciones();return true;" action="save" enctype="multipart/form-data" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
            			<br/>
@@ -69,7 +76,7 @@
             		<div id="tabs-1">
             			<fieldset>
             				<g:hiddenField name="pacienteId" value="${pacienteInstance?.id}"></g:hiddenField>
-            				<div class="span-5 colborder">
+            				<div class="span-6">
             						
 		   							<label style="float:left;" for="cie10Descripcion">CIE-10:</label>
 		   							<input style="float:left" type="text" id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/>
@@ -85,14 +92,14 @@
 		   							<label for="consulta.estado">Estado:</label>
 		   							<g:select id="estadoId" name="consulta.estado" from="${com.medfire.enums.EstadoConsultaEnum.list()}" optionValue="name" value="${consultaInstance?.estado}"></g:select>
    							</div>
-   							<div class="clearfix">
+   							<div class="clearfix"></div>
    							<div class="span-20 colborder" >
+   									
 								<textArea class="ckeditor" id="contenidoId">
 									${consultaInstance?.contenido}
 								</textArea>
 							</div>
-							</div>            			
-            			</fieldset>
+							           			
             			</fieldset>
             		</div>
             		<div id="tabs-2">
@@ -281,21 +288,25 @@
             		<div id="tabs-3">
             			<fieldset>
             				<div class="span-6">
-            					<label for=""><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
+            					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
             				</div>
             				<div class="span-10">
             					<input type="file" name="imagen.1" />
             				</div>
             				
+            				<div class="clear"></div>
+            				
             				<div class="span-6">
-            					<label for=""><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
+            					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
             				</div>
             				<div class="span-10">
             					<input type="file" name="imagen.2" />
             				</div>
 
+            				<div class="clear"></div>
+
             				<div class="span-6">
-            					<label for=""><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
+            					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
             				</div>
             				<div class="span-10">
             					<input type="file" name="imagen.3" />
@@ -305,6 +316,8 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
+            				<g:hiddenField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones?.encodeAsHTML()}"></g:hiddenField>
+            				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
                             </div>
@@ -318,7 +331,7 @@
             
                 
                 <div class="buttons">
-                    <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                    <span class="button"><g:submitButton  name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
             </g:form>
         </div>
