@@ -17,7 +17,6 @@
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
             	$("#prescripcionesSerializedId").val(postData);
-            	alert($("#prescripcionesSerializedId").val());
             	
             }
         	$(document).ready(
@@ -284,14 +283,21 @@
                                     	</g:hasErrors>
                  			</div>
                  		</fieldset>
-            		</div>
+            		</div> 
             		<div id="tabs-3">
             			<fieldset>
+            				<div class="span-10">
+            					test file
+            					<input type="file" name="imagenxxx" value="${imagenxxx?.getStorageDescription()}" />
+            				</div>
+            			
+            			
             				<div class="span-6">
             					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
             				</div>
+            				
             				<div class="span-10">
-            					<input type="file" name="imagen.1" />
+            					<input type="file" name="imagen.1" value="${imagen}" />
             				</div>
             				
             				<div class="clear"></div>

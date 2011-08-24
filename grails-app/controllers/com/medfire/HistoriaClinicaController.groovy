@@ -70,6 +70,12 @@ class HistoriaClinicaController {
 			if(!it.value.isEmpty())
 				consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName())))
 		}
+		
+		prescripcionesjson.each{
+			log.debug "OBJETO JSON DE LA PRESCRIPCION: $it"
+			consultaInstance.addToPrescripciones(new Prescripcion(nombreComercial:it.nombreComercial
+					,nombreGenerico:it.nombreGenerico,presentacion:it.presentacion,cantidad:it.cantidad,secuencia:it.id))
+		}
 
 		try{
 			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
@@ -79,7 +85,8 @@ class HistoriaClinicaController {
 		}catch(ConsultaException e){
 			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "
 			log.error "MENSAJE DE VALIDACION: "+e.message
-			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
+			log.debug "ARCHIVO: "+params.imagenxxx.getStorageDescription()
+			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance,imagenxxx:params.imagenxxx, imagen:params.imagen, prescripciones:prescripcionesjson])
 		}
 		
 		
