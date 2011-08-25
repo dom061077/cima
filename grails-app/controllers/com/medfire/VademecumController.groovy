@@ -119,7 +119,7 @@ class VademecumController {
 			if (flagaddcomilla)
 				result=result+','
 			
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.nombreComercial+'","'+it.principio.principioActivo+'","'+it.laboratorio.nombre+'","'+it.grupo.nombre+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.nombreComercial+'","'+it.principio.principioActivo+'","'+it.laboratorio.nombre+'","'+it.presentacion+'","'+it.grupo.nombre+'"]}'
 			 
 			flagaddcomilla=true
 		}

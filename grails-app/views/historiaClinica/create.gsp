@@ -13,18 +13,14 @@
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
-        	function copyprescripciones(){
+        	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
+        	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
             	$("#prescripcionesSerializedId").val(postData);
             	
             }
-        	$(document).ready(
-                	function(){
-                		$("#estadoId").combobox() ;
-                    }
-
-            );
+                		
         </script>
         
       	<script type="text/javascript" src="${resource(dir:'js/script/historia',file:'create.js')}"></script>
@@ -58,7 +54,7 @@
             </g:hasErrors>
             
             
-            <g:form onSubmit="copyprescripciones();return true;" action="save" enctype="multipart/form-data" >
+            <g:form onSubmit="initsubmit();return true;" action="save" enctype="multipart/form-data" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
            			<br/>
@@ -94,7 +90,7 @@
    							<div class="clearfix"></div>
    							<div class="span-20 colborder" >
    									
-								<textArea class="ckeditor" id="contenidoId">
+								<textArea name="consulta.contenido"  id="contenidoId">
 									${consultaInstance?.contenido}
 								</textArea>
 							</div>
@@ -208,7 +204,7 @@
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
 							</div>
 							<div class="span-5 colborder">
-							<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" value="${consultaInstace?.impresion}"></g:textArea>
+							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" value="${consultaInstace?.impresion}"></textArea>
                                 		<g:hasErrors bean="${consultaInstance}" field="impresion">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
@@ -283,21 +279,17 @@
                                     	</g:hasErrors>
                  			</div>
                  		</fieldset>
-            		</div> 
+            		</div>  
             		<div id="tabs-3">
             			<fieldset>
-            				<div class="span-10">
-            					test file
-            					<input type="file" name="imagenxxx" value="${imagenxxx?.getStorageDescription()}" />
-            				</div>
-            			
-            			
+            				
+            				
+            				
             				<div class="span-6">
             					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
             				</div>
-            				
             				<div class="span-10">
-            					<input type="file" name="imagen.1" value="${imagen}" />
+            					<input type="file" id="imagenUnoId" name="imagen.1" />
             				</div>
             				
             				<div class="clear"></div>
@@ -322,7 +314,7 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-            				<g:hiddenField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones?.encodeAsHTML()}"></g:hiddenField>
+            				<g:textField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones?.encodeAsHTML()}"/>
             				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>

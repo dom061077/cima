@@ -64,6 +64,7 @@ class HistoriaClinicaController {
 		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
 		consultaInstance.paciente=pacienteInstance
 		def estudioImagen
+		log.debug "IMAGEN DE ARCHIVO: "+params.imagen["1"]?.name
 		log.debug "IMAGEN DE ARCHIVO: "+params.imagen
 		
 		params.imagen.each{
@@ -85,8 +86,8 @@ class HistoriaClinicaController {
 		}catch(ConsultaException e){
 			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "
 			log.error "MENSAJE DE VALIDACION: "+e.message
-			log.debug "ARCHIVO: "+params.imagenxxx.getStorageDescription()
-			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance,imagenxxx:params.imagenxxx, imagen:params.imagen, prescripciones:prescripcionesjson])
+			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
+			
 		}
 		
 		

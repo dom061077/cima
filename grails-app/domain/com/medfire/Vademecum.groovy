@@ -17,6 +17,7 @@ class Vademecum {
 	String embarazoyLactancia
 	String accionTerapeutica
 	String asoc2
+	String presentacion
 	PrincipioActivo principio
 	GrupoTerapeutico grupo
 	Laboratorio laboratorio

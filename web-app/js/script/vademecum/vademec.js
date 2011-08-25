@@ -7,12 +7,13 @@ $(document).ready(function(){
 		rownumbers:true,
 		pager:'pagervademec',
 		datatype:'json',
-		colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Grupo Terapeutico'],
+		colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Presentación','Grupo Terapeutico'],
 		colModel:[
 				{name:'id',index:'id',width:10,hidden:true},
 				{name:'nombreComercial',index:'nombreComercial',width:100,sorttype:'text',sortable:true},
 				{name:'principio_principioActivo',index:'principio_principioActivo',width:100,sorttype:'text',sortable:true},
 				{name:'laboratorio_nombre',index:'laboratorio_nombre',width:100,sorttype:'text',sortable:true},
+				{name:'presentacion',index:'presentacion',width:100,hidden:true,sorttype:'text'},
 				{name:'grupo_nombre',index:'grupo_nombre',width:100,sorttype:'text',sortable:true}
 		]
 		

@@ -1,7 +1,7 @@
 package com.medfire.enums
 
 public enum ImpresionVademecumEnum{
-	IMPRIME_GENERICO("Nombre genérico"),
+	IMPRIME_GENERICO("Nombre generico"),
 	IMPRIME_COMERCIAL("Nombre Comercial"),
 	IMPRIME_AMBOS("Ambos")
 	

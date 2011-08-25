@@ -1,5 +1,15 @@
 //http://www.trirand.com/jqgridwiki/doku.php?id=wiki%3Acommon_rules
+//http://jquery.malsup.com/form/#file-upload  --- este link me sirve para hacer ajaxsubmitform
 $(document).ready(function(){
+	
+	var strjson = $("#prescripcionesSerializedId").val();
+	
+	strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
+	var data = jQuery.parseJSON(strjson);
+	alert($("#prescripcionesSerializedId").val());
+	
+	$("#estadoId").combobox() ;
+    	
 	$( "#tabs" ).tabs();
 	 
 	$("#fechaConsultaId" ).datepicker($.datepicker.regional[ "es" ]);	
@@ -42,13 +52,14 @@ $(document).ready(function(){
 		,datatype: "json"
 		,width:700
 		,rownumbers:true
-		,colNames:['Id','Nombre Comercial', 'Nombre Generico', 'Cantidad','Imprimir Por']
+		,colNames:['Id','Nombre Comercial', 'Nombre Genérico','Presentación', 'Cantidad','Imprimir Por']
 		,colModel:[ 
 			{name:'id',index:'id', width:55,editable:false,hidden:true	,editoptions:{readonly:true,size:10}, sortable:false}
 			, {name:'nombreComercial',index:'nombreComercial', width:100,editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
 			, {name:'nombreGenerico',index:'nombreGenerico', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
+			, {name:'presentacion',index:'presentacion', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}			
 			, {name:'cantidad',index:'cantidad', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
-			, {name:'imprimirPor',index:'imprimirPor', width:60,align:"right",editable:true,editoptions:{size:30,value:'IMPRIME_GENERICO:Nombre genérico;IMPRIME_COMERCIAL:Nombre Comercial;IMPRIME_AMBOS:Ambos'}
+			, {name:'imprimirPor',index:'imprimirPor', width:60,align:"right",editable:true,editoptions:{size:30,value:'IMPRIME_GENERICO:Nombre generico;IMPRIME_COMERCIAL:Nombre Comercial;IMPRIME_AMBOS:Ambos'}
 					,edittype:'select',editrules:{required:true}, sortable:false}
 		]
 		//, rowNum:10, rowList:[10,20,30]
@@ -68,20 +79,22 @@ $(document).ready(function(){
 	rownumbers:true,
 	pager:'pagerBusquedaVademecumId',
 	datatype:'json',
-	colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Grupo Terapeutico'],
+	colNames:['Id','Nombre Comercial','Principio Activo','Laboratorio','Presentación','Grupo Terapeutico'],
 	colModel:[
 			{name:'id',index:'id',width:10,hidden:true},
 			{name:'nombreComercial',index:'nombreComercial',width:100,sorttype:'text',sortable:true},
 			{name:'principio_principioActivo',index:'principio_principioActivo',width:100,sorttype:'text',sortable:true},
 			{name:'laboratorio_nombre',index:'laboratorio_nombre',width:100,sorttype:'text',sortable:true},
+			{name:'presentacion',index:'presentacion',width:100,sorttyp:'text',sortable:false},
 			{name:'grupo_nombre',index:'grupo_nombre',width:100,sorttype:'text',sortable:true}
 	],
 	ondblClickRow: function(id){
 			var obj=$('#tablaBusquedaVademecumId').getRowData(id);
-			//$('#'+settings.hiddenid).val(obj[settings.hiddenfield]);
-			//$('#'+settings.descid).val(obj[settings.descfield]);		 
-			//$('#'+searchDialogId).dialog("close");
-			
+			$('#nombreComercial').val(obj.nombreComercial);
+			$('#nombreGenerico').val(obj.principio_principioActivo);
+			$('#presentacion').val(obj.presentacion)
+			$('#busquedaVademecumDialogId').dialog("close");
+			$('#cantidad').focus();
 		} 
 	});
 	jQuery('#tablaBusquedaVademecumId').jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
@@ -94,7 +107,16 @@ $(document).ready(function(){
 			, beforeShowForm:function(form){
 				$('#TblGrid_prescripcionesId').before('<a style="width:50px" id="searchlinkformgridId" href="#"><span  class="ui-icon ui-icon-search"></span>Vademecum</a>');
 				$('#searchlinkformgridId').bind('click',function(){
-					$('<div>HOLA</div>').dialog({});
+	            	$('#busquedaVademecumDialogId').dialog({
+	            		title:'Buscar',
+	            		modal:true,
+	            		resizable:false,
+	            		autoOpen:true,
+	            		width : 600,
+	            		height: 'auto',
+	            		minHeight:350,
+	            		position:'center'
+	            	});
 				});
 			}
 		
@@ -133,23 +155,20 @@ $(document).ready(function(){
 	);	
 	
 	//---inicializo los datos de la grilla si el create proviene de un redirect del save--
-	var strjson = $("#prescripcionesSerializedId").val();
-	strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
-	var data = jQuery.parseJSON(strjson);
-	var i=0;
-	if(data)
+	var i=1;
+	
+	if(data){
+		
 		jQuery.each(data,function(){
 			$("#prescripcionesId").jqGrid('addRowData',i,this);
 			i++;
+			
 		});
+	}
 	
 
 		
-	$("#prescripcionesId").setRowData({id:1,nombreComercial:'nombre comercial',nombreGenerico:'nombre generico',cantidad:3,imprimirPor:'imprimir'});
-	/*if(data){
-		alert("SET ROW DATA: "+data);
-		$("#prescripcionesId").setRowData(data);
-	}*/
+
 		
 	
 	$("#testgrid").bind('click',function(){
