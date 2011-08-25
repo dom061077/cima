@@ -14,6 +14,7 @@
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
         	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
+        	var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
         	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);

@@ -2,11 +2,6 @@
 //http://jquery.malsup.com/form/#file-upload  --- este link me sirve para hacer ajaxsubmitform
 $(document).ready(function(){
 	
-	var strjson = $("#prescripcionesSerializedId").val();
-	
-	strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
-	var data = jQuery.parseJSON(strjson);
-	alert($("#prescripcionesSerializedId").val());
 	
 	$("#estadoId").combobox() ;
     	
@@ -155,16 +150,6 @@ $(document).ready(function(){
 	);	
 	
 	//---inicializo los datos de la grilla si el create proviene de un redirect del save--
-	var i=1;
-	
-	if(data){
-		
-		jQuery.each(data,function(){
-			$("#prescripcionesId").jqGrid('addRowData',i,this);
-			i++;
-			
-		});
-	}
 	
 
 		
@@ -176,6 +161,22 @@ $(document).ready(function(){
     	var postData = JSON.stringify(gridData);
     	alert("JSON serialized jqGrid data:\n" + postData);
 	});
+
+	//var strjson = $("#prescripcionesSerializedId").val();
+	
+	//strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
+	var data = jQuery.parseJSON(strjson);
+	var i=1;
+	
+	if(data){
+		//alert(this);
+		jQuery.each(data,function(){
+			$("#prescripcionesId").jqGrid('addRowData',i,this);
+			i++;
+			
+		});
+	}
+	
 	
 			
 	});//end function ready
