@@ -1,9 +1,10 @@
 package com.medfire
 
+import com.medfire.enums.ImpresionVademecumEnum 
 import com.medfire.util.GUtilDomainClass
 import java.text.SimpleDateFormat
 import java.text.DateFormat
-import java.text.ParseException
+import java.text.ParseException;
 
 
 class HistoriaClinicaController {
@@ -17,7 +18,7 @@ class HistoriaClinicaController {
 	def index = {
 		redirect(action: "list", params: params)
 	}
- 
+  
 	def list = {
 		log.info "INGRESANDO AL CLOSURE iist DEL CONTROLLER HistoriaClinicaController"
 		log.info "SOLO RENDERIZA LA PAGINA DE LIST"
@@ -64,31 +65,38 @@ class HistoriaClinicaController {
 		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
 		consultaInstance.paciente=pacienteInstance
 		def estudioImagen
-		log.debug "IMAGEN DE ARCHIVO: "+params.imagen["1"]?.name
-		log.debug "IMAGEN DE ARCHIVO: "+params.imagen
 		
 		params.imagen.each{
 			if(!it.value.isEmpty())
-				consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName())))
+				consultaInstance.addToEstudios(new EstudioComplementario(imagen:it.value))
 		}
 		
-		prescripcionesjson.each{
+		prescripcionesjson.each{ 
 			log.debug "OBJETO JSON DE LA PRESCRIPCION: $it"
 			consultaInstance.addToPrescripciones(new Prescripcion(nombreComercial:it.nombreComercial
-					,nombreGenerico:it.nombreGenerico,presentacion:it.presentacion,cantidad:it.cantidad,secuencia:it.id))
+					,nombreGenerico:it.nombreGenerico,presentacion:it.presentacion,impresion:ImpresionVademecumEnum."${it.imprimirPorValue}",cantidad:it.cantidad,secuencia:it.id))
 		}
 
 		try{
 			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
-			redirect(action: "show", id: consultaInstance.id)
+			//redirect(action: "show", id: consultaInstance.id)
+			render "<input id='consultasalvadaId' type='text' value='${consultaInstance.id}' />"
 
 		}catch(ConsultaException e){
-			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "
+			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
 			log.error "MENSAJE DE VALIDACION: "+e.message
-			render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
+			//render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
+			def consultaE=e.consulta
+			render	g.renderErrors(bean:e.consulta)
+					/*errors{
+						g.eachError(bean:consultaE){
+							title g.message(error:it)
+						}
+					}*/
+					//errors consultaE.errors.allErrors
 			
-		}
+		} 
 		
 		
 	}
@@ -122,7 +130,8 @@ class HistoriaClinicaController {
 				def version = params.version.toLong()
 				if (historiaClinicaInstance.version > version) {
 					
-					historiaClinicaInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
+					historiaClinicaInstance.
+					errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
 					render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
 					return
 				}

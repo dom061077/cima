@@ -8,13 +8,14 @@
 <!--        <fckeditor:config CustomConfigurationsPath="${resource(dir:'js/jquery',file:'fckeditconfig.js')}"/>-->
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>        
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
+      	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
         	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
-        	var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
+        	//var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
         	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
@@ -42,6 +43,12 @@
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
+            
+            <div id="outputId" class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                <g:renderErrors bean="${consultaInstance}" as="list" />
+            </div>
+            
+            
             <g:hasErrors bean="${consultaInstance}">
             <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
                 <g:renderErrors bean="${consultaInstance}" as="list" />
@@ -55,7 +62,7 @@
             </g:hasErrors>
             
             
-            <g:form onSubmit="initsubmit();return true;" action="save" enctype="multipart/form-data" >
+            <form onSubmit="initsubmit();return true;" action="save" enctype="multipart/form-data" id="historiaFormId" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
            			<br/>
@@ -91,7 +98,7 @@
    							<div class="clearfix"></div>
    							<div class="span-20 colborder" >
    									
-								<textArea name="consulta.contenido"  id="contenidoId">
+								<textArea name="consulta.contenido" class="ckeditor"  id="contenidoId">
 									${consultaInstance?.contenido}
 								</textArea>
 							</div>
@@ -315,7 +322,7 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-            				<g:textField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones?.encodeAsHTML()}"/>
+            				<g:textField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones}"/>
             				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
@@ -332,7 +339,7 @@
                 <div class="buttons">
                     <span class="button"><g:submitButton  name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
-            </g:form>
+            </form>
         </div>
 		        
     </body>

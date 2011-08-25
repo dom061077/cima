@@ -47,13 +47,14 @@ $(document).ready(function(){
 		,datatype: "json"
 		,width:700
 		,rownumbers:true
-		,colNames:['Id','Nombre Comercial', 'Nombre Genérico','Presentación', 'Cantidad','Imprimir Por']
+		,colNames:['Id','Nombre Comercial', 'Nombre Genérico','Presentación', 'Cantidad','Imprimir Por Valor','Imprimir Por']
 		,colModel:[ 
 			{name:'id',index:'id', width:55,editable:false,hidden:true	,editoptions:{readonly:true,size:10}, sortable:false}
 			, {name:'nombreComercial',index:'nombreComercial', width:100,editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
 			, {name:'nombreGenerico',index:'nombreGenerico', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
 			, {name:'presentacion',index:'presentacion', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}			
 			, {name:'cantidad',index:'cantidad', width:100, align:"right",editable:true,editoptions:{size:30},editrules:{required:true}, sortable:false}
+			, {name:'imprimirPorValue', index:'imprimirPorValue',hidden:true,editable:true}
 			, {name:'imprimirPor',index:'imprimirPor', width:60,align:"right",editable:true,editoptions:{size:30,value:'IMPRIME_GENERICO:Nombre generico;IMPRIME_COMERCIAL:Nombre Comercial;IMPRIME_AMBOS:Ambos'}
 					,edittype:'select',editrules:{required:true}, sortable:false}
 		]
@@ -118,17 +119,11 @@ $(document).ready(function(){
 		}, // edit options 
 		{height:280,reloadAfterSubmit:false
 			,recreateForm:true
-			,onclickSubmit : function(eparams) { 
-				/*var retarr = {}; // we can use all the grid methods here 
-				//to obtain some data
-				var sr = jQuery("#grid_id").getGridParam('selrow'); 
-				rowdata = jQuery("#grid_id").getRowData(sr); 
-				if(rowdata.somevalue=='aa') {
-					retarr = {myname:"myvalue"}; 
-				} 
-				return retarr;*/ 
-			},
-			beforeShowForm:function(form){
+			,beforeSubmit: function(postData,formId){
+				postData.imprimirPorValue= $("#imprimirPor").val();
+				return [true,'']
+			}
+			,beforeShowForm:function(form){
 				$('#TblGrid_prescripcionesId').before('<a style="width:50px" id="searchlinkformgridId" href="#"><span  class="ui-icon ui-icon-search"></span>Vademecum</a>');
 				$('#searchlinkformgridId').bind('click',function(){
 	            	$('#busquedaVademecumDialogId').dialog({
@@ -159,15 +154,21 @@ $(document).ready(function(){
 	$("#testgrid").bind('click',function(){
 		var gridData = jQuery("#prescripcionesId").getRowData();
     	var postData = JSON.stringify(gridData);
-    	alert("JSON serialized jqGrid data:\n" + postData);
+    	if(data){
+			/*jQuery.each(data,function(){
+				$("#prescripcionesId").jqGrid('addRowData',i,this);
+				i++;
+				//alert('dato cargado');				
+			});*/
+    	}
 	});
 
-	//var strjson = $("#prescripcionesSerializedId").val();
+	/*var strjson = $("#prescripcionesSerializedId").val();
 	
-	//strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
+	strjson = strjson.replace(new RegExp('&quot;', 'g'),'"');
 	var data = jQuery.parseJSON(strjson);
 	var i=1;
-	
+				
 	if(data){
 		//alert(this);
 		jQuery.each(data,function(){
@@ -175,8 +176,21 @@ $(document).ready(function(){
 			i++;
 			
 		});
-	}
+	}*/
 	
 	
+	
+	var options={
+		target: '#outputId',
+		//dataType: 'json',
+		success: function(){
+			var retorno = $("#consultasalvadaId").val();
+			if(retorno)
+				window.location='show/'+retorno;
+		}
+	};
+	
+	
+	$('#historiaFormId').ajaxForm(options);
 			
 	});//end function ready
