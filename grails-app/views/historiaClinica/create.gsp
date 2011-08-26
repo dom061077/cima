@@ -44,8 +44,8 @@
             <div class="message">${flash.message}</div>
             </g:if>
             
-            <div id="outputId" class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-                <g:renderErrors bean="${consultaInstance}" as="list" />
+            <div id="outputId">
+                
             </div>
             
             
@@ -322,7 +322,7 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-            				<g:textField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones}"/>
+            				<g:hiddenField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones}"/>
             				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
@@ -336,8 +336,8 @@
             	
             
                 
-                <div class="buttons">
-                    <span class="button"><g:submitButton  name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
+                <div style="padding: 10px 15px 15px 15px;">
+                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </div>
             </form>
         </div>

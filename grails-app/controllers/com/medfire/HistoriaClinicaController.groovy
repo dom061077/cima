@@ -13,7 +13,7 @@ class HistoriaClinicaController {
 	def historiaClinicaService
 	def authenticateService 
 	
-	static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
+	static allowedMethods = [update: "POST", delete: "POST"]
 
 	def index = {
 		redirect(action: "list", params: params)
@@ -81,14 +81,14 @@ class HistoriaClinicaController {
 			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
 			//redirect(action: "show", id: consultaInstance.id)
-			render "<input id='consultasalvadaId' type='text' value='${consultaInstance.id}' />"
+			render "<input type='hidden' id='consultasalvadaId' type='text' value='${consultaInstance.id}' />"
 
 		}catch(ConsultaException e){
 			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
 			log.error "MENSAJE DE VALIDACION: "+e.message
 			//render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
 			def consultaE=e.consulta
-			render	g.renderErrors(bean:e.consulta)
+			render" <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)} </div>"
 					/*errors{
 						g.eachError(bean:consultaE){
 							title g.message(error:it)
@@ -214,6 +214,29 @@ class HistoriaClinicaController {
 			}
 		}
 		
+	}
+	
+	def listprescripciones = {
+		log.info "INGRESANDO AL CLOSURE listprescripciones"
+		log.info "PARAMETROS: $params"
+		def consultaInstance
+		def totalRegistros = 0
+		if(params.id){
+			consultaInstance = Consulta.load(params.id.toLong())
+			totalRegistros = consultaInstance.prescripciones?.size()
+		}
+			
+		def result='{"page":"1","total":"'+totalRegistros+'","records":"'+totalRegistros+'","rows":['
+		def flagaddcomilla=false
+		consultaInstance?.prescripciones?.each { 
+			if (flagaddcomilla)
+				result=result+','
+
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.nombreComercial!=null?it.nombreComercial:"")+'","'+(it.nombreGenerico!=null?it.nombreGenerico:"")+'","'+(it.presentacion!=null?it.presentacion:"")+'","'+(it.cantidad!=null?it.cantidad:"")+'","'+(it.impresion!=null?it.impresion:"")+'","'+(it.impresion.name!=null?it.impresion.name:"")+'"]}'
+			flagaddcomilla=true
+		}
+		result=result+']}'
+		render result
 	}
 	
 }

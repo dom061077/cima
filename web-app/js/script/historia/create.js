@@ -42,7 +42,7 @@ $(document).ready(function(){
 	});
 	
 	jQuery("#prescripcionesId").jqGrid({ 
-		url:'editprescripciones'
+		url:'listprescripciones'
 		,editurl:'editprescripciones'
 		,datatype: "json"
 		,width:700
