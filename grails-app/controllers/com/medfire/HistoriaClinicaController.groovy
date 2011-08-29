@@ -13,7 +13,7 @@ class HistoriaClinicaController {
 	def historiaClinicaService
 	def authenticateService 
 	
-	static allowedMethods = [update: "POST", delete: "POST"]
+	static allowedMethods = [save:"POST",update: "POST", delete: "POST"]
 
 	def index = {
 		redirect(action: "list", params: params)
@@ -40,7 +40,9 @@ class HistoriaClinicaController {
 		log.info "PARAMETROS $params"
 		
 		//---pasear json de la grilla de prescripciones----
-		def prescripcionesjson = grails.converters.JSON.parse(params.prescripciones)
+		def prescripcionesjson
+		if(params.prescripciones)
+			prescripcionesjson = grails.converters.JSON.parse(params.prescripciones)
 		
 		if (params.consulta.fechaConsulta){
 			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
@@ -67,8 +69,12 @@ class HistoriaClinicaController {
 		def estudioImagen
 		
 		params.imagen.each{
-			if(!it.value.isEmpty())
+			if(!it.value.isEmpty()){
+				log.debug "IMAGEN AGREGADA "+it.value.class+" it: "+it.class
+				//consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName)))
 				consultaInstance.addToEstudios(new EstudioComplementario(imagen:it.value))
+			}else
+				log.debug "IMAGEN VACIA"	
 		}
 		
 		prescripcionesjson.each{ 
@@ -81,6 +87,7 @@ class HistoriaClinicaController {
 			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
 			//redirect(action: "show", id: consultaInstance.id)
+			log.debug "REENDERIZANDO EL INPUT TEXT CON EL ID CARGADO, CONSULTA GUARDADA ${consultaInstance.id}"
 			render "<input type='hidden' id='consultasalvadaId' type='text' value='${consultaInstance.id}' />"
 
 		}catch(ConsultaException e){

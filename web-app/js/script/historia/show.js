@@ -27,5 +27,7 @@ $(document).ready(function(){
 				, {name:'imprimirPor',index:'imprimirPor', width:60}
 		]
 		});
+		
+	//$('#estudioscomplementariosId').jcarousel();	
 	
 });
