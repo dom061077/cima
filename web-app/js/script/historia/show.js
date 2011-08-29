@@ -1,10 +1,10 @@
 $(document).ready(function(){
-	/*CKEDITOR.on( 'instanceReady', function( ev )
+	CKEDITOR.on( 'instanceReady', function( ev )
 			{
 				editor = ev.editor;
 				editor.setReadOnly( true );
 			}); 	
-	*/
+	
 	$("#tabs").tabs();
 	
 	$('#prescripcionesId').jqGrid({
@@ -28,6 +28,16 @@ $(document).ready(function(){
 		]
 		});
 		
-	//$('#estudioscomplementariosId').jcarousel();	
+	$('#estudioscomplementariosId').jcarousel({
+		/*vertical: true,
+	    easing: 'easeInOutQuad',
+	    scroll: 4,
+	    auto: 5,
+	    wrap: 'circular',
+	    animation: 3000*/
+		itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback}
+
+
+	});	
 	
 });

@@ -6,11 +6,36 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'consulta.label', default: 'Consulta')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css/skins/tango',file:'skin.css')}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jcarousel.min.js')}"></script>        
+      	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>      	
         <script type="text/javascript" src="${resource(dir:'js/script/historia',file:'show.js')}"></script>
         <script type="text/javascript">
         	var locprescripciones='<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones',params:[id:consultaInstance.id])%>';
+        	function mycarousel_itemLoadCallback(carousel, state)
+        	{
+        	    for (var i = carousel.first; i <= carousel.last; i++) {
+        	        if (carousel.has(i)) {
+        	            continue;
+        	        }
+
+        	        if (i > mycarousel_itemList.length) {
+        	            break;
+        	        }
+
+        	        // Create an object from HTML
+        	        var item = jQuery(mycarousel_getItemHTML(mycarousel_itemList[i-1])).get(0);
+
+        	        // Apply thickbox
+        	        tb_init(item);
+
+        	        carousel.add(i, item);
+        	    }
+        	};
+        	        	
         </script>
     </head>
     <body>
@@ -22,7 +47,7 @@
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
             </g:if>
             <div id="tabs">
             		<ul>
@@ -34,10 +59,10 @@
             		<div id="tabs-1">
             			<fieldset>
             				<div class="span-2"><label style="float:left;" for="cie10Descripcion">CIE-10:</label></div>
-            				<div class="span-4">${consultaInstance.cie10?.cie10+" "+consultaInstance.cie10?.descripcion }</div>
+            				<div class="span-4">${fieldValue(bean: consultaInstance.cie10, field: "cie10")} ${fieldValue(bean: consultaInstance.cie10, field: "descripcion")}</div>
    							
    							<div class="span-4"><label for="consulta.fechaConsulta">Fecha de Consulta:</label></div>
-   							<div class="span-3">${consultaInstance.fechaConsulta}</div>
+   							<div class="span-3"><g:formatDate format="dd/MM/yyyy" style="SHORT" date="${consultaInstance.fechaConsulta}"/></div>
    							
    							<div class="span-2"><label for="consulta.estado">Estado:</label></div>
    							<div class="span-2">${consultaInstance.estado.name}</div>
@@ -117,13 +142,13 @@
             		</div>
 
             		<div id="tabs-3">
-            			<ul id='estudioscomplementariosId'>
+            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
 	            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
-	            				<li>	
-			            			<bi:hasImage bean="${estudio}">
-			    							<bi:img size="large" bean="${estudio}" />
--									</bi:hasImage>
-								</li>	
+		            			<bi:hasImage bean="${estudio}">
+		            				<li>	
+			    						<a href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
+									</li>
+								</bi:hasImage>
 	            			</g:each>
 						</ul>            		
             		</div>
@@ -143,8 +168,8 @@
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${historiaClinicaInstance?.id}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
+                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Está seguro ?')}');" />
                 </g:form>
             </div>
         </div>

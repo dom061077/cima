@@ -184,9 +184,13 @@ $(document).ready(function(){
 		target: '#outputId',
 		//dataType: 'json',
 		success: function(){
+			
 			var retorno = $("#consultasalvadaId").val();
-			if(retorno)
+			if(retorno){
+				$("#outputId").hide();
 				window.location='show/'+retorno;
+			}
+				
 		}
 	};
 	

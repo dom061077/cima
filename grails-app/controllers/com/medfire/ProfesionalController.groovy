@@ -53,6 +53,8 @@ class ProfesionalController {
 		if(params.localidad.id){
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
 		}
+		//profesionalInstance.photo = request.getFile("photo")
+		log.debug "VALOR DE FOTO, nombre: ${profesionalInstance.photo.contentType}"
         if (profesionalInstance.save()) {
 			if (!profesionalInstance.photo.isEmpty()){
 				log.debug "EXISTE EL CONTENIDO DE LA FOTO DEL PROFESIONAL"
@@ -67,6 +69,7 @@ class ProfesionalController {
             redirect(action: "show", id: profesionalInstance.id)
         }
         else {
+			log.debug "ERROR DE VALIDACION: "+profesionalInstance.errors.allErrors
             render(view: "create", model: [profesionalInstance: profesionalInstance])
         }
     }

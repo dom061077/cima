@@ -9,7 +9,17 @@ class HistoriaClinicaService {
 		log.info "PARAMETRO consulta: "+consultaInstance
 		def errorMessage=""
 		consultaInstance.fechaAlta = new java.sql.Date((new java.util.Date()).getTime())
-		if(consultaInstance.save()){
+		/*def flagvalid = true
+		consultaInstance.estudios.each{
+			if(!it.validate()){
+				flagvalid=false
+				log.debug "HUBO UN ERROR EN LA VALIDACION: "+it.errors.allErrors
+			}
+		}*/
+		
+		
+		
+		if(consultaInstance.validate() && consultaInstance.save()){
 			consultaInstance.estudios.each {
 				imageUploadService.save(it) 
 			}

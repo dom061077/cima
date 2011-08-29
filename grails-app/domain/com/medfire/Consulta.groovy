@@ -37,11 +37,17 @@ class Consulta {
 	
     static constraints = {
 		cie10(nullable:true,blank:true)
+		contenido(blank:false)
+		estudios validator: {
+			it?.every { it?.validate() }
+		}
+
     }
 	
 	static mapping = {
 		contenido type: "text"
 	}
+	
 	
 	
 	
