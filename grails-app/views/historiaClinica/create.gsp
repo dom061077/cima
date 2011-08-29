@@ -62,7 +62,7 @@
             </g:hasErrors>
             
             
-            <form onSubmit="initsubmit();return true;" action="save" enctype="multipart/form-data" id="historiaFormId" >
+            <form onSubmit="initsubmit();return true;" method="post" action="save" enctype="multipart/form-data" id="historiaFormId" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${pacienteInstance.id}" format="000000" />
            			<br/>
@@ -208,6 +208,7 @@
                  		</fieldset>
                  		<fieldset>
                  			<legend>Otros datos</legend>
+                 			<div class="clear"></div>
                  			<div class="span-3">
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
 							</div>
@@ -218,7 +219,7 @@
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
                                     	</g:hasErrors>
                             </div>
-                            <div class="clearfix"></div>
+                            <div class="clear"></div>
                             
                             <div class="span-3">        	
 							<label for=""><g:message code="historia.habito.label" default="Hábito:" /></label>
@@ -242,7 +243,7 @@
                                     	</g:hasErrors>
                             </div>
                             
-                            <div class="clearfix"></div>
+                            <div class="clear"></div>
 
 							<div class="span-3">
 							<label for=""><g:message code="historia.ubicacion.label" default="Ubicación:" /></label>
@@ -264,7 +265,7 @@
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="marcha"/></div>
                                     	</g:hasErrors>
                             </div>        	
-                            <div class="clearfix"></div>        	
+                            <div class="clear"></div>        	
                              
                             <div class="span-3">                             			
 							<label for=""><g:message code="historia.psiqui.label" default="Psiquismo:" /></label>

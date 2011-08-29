@@ -7,6 +7,7 @@
         <g:set var="entityName" value="${message(code: 'consulta.label', default: 'Consulta')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
+      	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jcarousel.min.js')}"></script>        
         <script type="text/javascript" src="${resource(dir:'js/script/historia',file:'show.js')}"></script>
         <script type="text/javascript">
         	var locprescripciones='<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones',params:[id:consultaInstance.id])%>';
@@ -55,73 +56,76 @@
             			<fieldset>
             				<legend>Signos Vitales</legend>
             							<div class="span-3"><label for=""><g:message code="historia.pulso.label" default="Pulso:" /></label></div>
-            							<div class="span-3">${consultaInstace?.pulso}</div>
+            							<div class="span-3">${consultaInstance?.pulso}</div>
 			                            
 			                            <div class="span-3"><label for=""><g:message code="historia.fc.label" default="FC:" /></label></div>
-			                            <div class="span-3">${consultaInstace?.fc}</div>
+			                            <div class="span-3">${consultaInstance?.fc}</div>
 			                            <div class="clearfix"></div>        
 			                                    	
 										<div class="span-3"><label for=""><g:message code="historia.ta.label" default="TA:" /></label></div>
-										<div class="span-3">${consultaInstace?.ta}</div>
+										<div class="span-3">${consultaInstance?.ta}</div>
 										
 										<div class="span-3"><label for=""><g:message code="historia.fr.label" default="FR:" /></label></div>
-										<div class="span-3">${consultaInstace?.fr}</div>
+										<div class="span-3">${consultaInstance?.fr}</div>
 										<div class="clearfix"></div>
 										
 										<div class="span-3"><label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label></div>
-										<div class="span-3">${consultaInstace?.taxilar}</div>
+										<div class="span-3">${consultaInstance?.taxilar}</div>
 										
 		                                <div class="span-3"><label for=""><g:message code="historia.trectal.label" default="T.Rectal:" /></label></div>
-		                                <div class="span-3">${consultaInstace?.trectal}</div>
+		                                <div class="span-3">${consultaInstance?.trectal}</div>
 		                                <div class="clearfix"></div>      
 		                                
 		                                <div class="span-3"><label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label></div>
-		                                <div class="span-3">${consultaInstace?.pesoh}</div>
+		                                <div class="span-3">${consultaInstance?.pesoh}</div>
 		                                
 		                                <div class="span-3"><label for=""><g:message code="historia.pesoa.label" default="Peso actual:" /></label></div>
-		                                <div class="span-3">${consultaInstace?.pesoa}</div>
+		                                <div class="span-3">${consultaInstance?.pesoa}</div>
 										<div class="clearfix"></div>
                  		</fieldset>
                  		<fieldset>
                  			<legend>Otros datos</legend>
+                 			<div class="clear"></div>
                  			<div class="span-3"><label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label></div>
 							<div class="span-5 colborder">
-							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" value="${consultaInstace?.impresion}"></textArea>
+							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" >
+								${consultaInstance?.impresion}
+							</textArea>
                             </div>
                             <div class="clearfix"></div>
                             
                             <div class="span-3"><label for=""><g:message code="historia.habito.label" default="Hábito:" /></label></div>
-							<div class="span-4">${consultaInstace?.habito}</div>
+							<div class="span-4">${consultaInstance?.habito}</div>
                             
                             <div class="span-3"><label for=""><g:message code="historia.actitud.label" default="Actitud:" /></label></div>
-							<div class="span-4">${consultaInstace?.actitud}</div>
+							<div class="span-4">${consultaInstance?.actitud}</div>
                             <div class="clearfix"></div>
 
 							<div class="span-3"><label for=""><g:message code="historia.ubicacion.label" default="Ubicación:" /></label></div>
-							<div class="span-4">${consultaInstace?.ubicacion}</div>
+							<div class="span-4">${consultaInstance?.ubicacion}</div>
 
                             <div class="span-3"><label for=""><g:message code="historia.marcha.label" default="Marcha:" /></label></div>
-							<div class="span-4">${consultaInstace?.marcha}</div>
+							<div class="span-4">${consultaInstance?.marcha}</div>
                             <div class="clearfix"></div>        	
                              
                             <div class="span-3"><label for=""><g:message code="historia.psiqui.label" default="Psiquismo:" /></label></div>
-							<div class="span-4">${consultaInstace?.psiqui}</div>
+							<div class="span-4">${consultaInstance?.psiqui}</div>
 
                             <div class="span-3"><label for=""><g:message code="historia.facie.label" default="Facie:" /></label></div>
-							<div class="span-4">${consultaInstace?.facie}</div>
+							<div class="span-4">${consultaInstance?.facie}</div>
                  		</fieldset>
             		</div>
 
             		<div id="tabs-3">
-            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
-            				<div class="span-18">
-		            			<bi:hasImage bean="${estudio}">
-		    							<bi:img size="large" bean="${estudio}" />
-								</bi:hasImage>
-							</div>
-							<div class="clearfix"></div>
-            			</g:each>
-            		
+            			<ul id='estudioscomplementariosId'>
+	            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
+	            				<li>	
+			            			<bi:hasImage bean="${estudio}">
+			    							<bi:img size="large" bean="${estudio}" />
+-									</bi:hasImage>
+								</li>	
+	            			</g:each>
+						</ul>            		
             		</div>
 
             		<div id="tabs-4">
