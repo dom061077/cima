@@ -1,4 +1,8 @@
 $(document).ready(function(){
+	$('#estudioscomplementariosId').jcarousel({
+		itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback}
+	});	
+	
 	CKEDITOR.on( 'instanceReady', function( ev )
 			{
 				editor = ev.editor;
@@ -28,16 +32,6 @@ $(document).ready(function(){
 		]
 		});
 		
-	$('#estudioscomplementariosId').jcarousel({
-		/*vertical: true,
-	    easing: 'easeInOutQuad',
-	    scroll: 4,
-	    auto: 5,
-	    wrap: 'circular',
-	    animation: 3000*/
-		itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback}
-
-
-	});	
+		
 	
 });

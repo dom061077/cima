@@ -75,6 +75,7 @@
             			<li><a href="#tabs-2">Examen Fisico </a></li>
             			<li><a href="#tabs-3">Estudios Complementarios</a></li>
             			<li><a href="#tabs-4">Prescripciones</a></li>            			
+            			<li><a href="#tabs-5">Antecedentes</a></li>
             		</ul>
             		<div id="tabs-1">
             			<fieldset>
@@ -95,7 +96,7 @@
 		   							<label for="consulta.estado">Estado:</label>
 		   							<g:select id="estadoId" name="consulta.estado" from="${com.medfire.enums.EstadoConsultaEnum.list()}" optionValue="name" value="${consultaInstance?.estado}"></g:select>
    							</div>
-   							<div class="clearfix"></div>
+   							<div class="clear"></div>
    							<div class="span-20 colborder" >
    									
 								<textArea name="consulta.contenido" class="ckeditor"  id="contenidoId">
@@ -129,7 +130,7 @@
 			                                    	</g:hasErrors>
 			                            </div>
 
-			                            <div class="clearfix"></div>        
+			                            <div class="clear"></div>        
 			                                    	
 										<div class="span-3">
 										<label for=""><g:message code="historia.ta.label" default="TA:" /></label>
@@ -153,7 +154,7 @@
 			                                    	</g:hasErrors>
 										</div>
 										
-										<div class="clearfix"></div>
+										<div class="clear"></div>
 										
 										<div class="span-3">
 										<label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label>
@@ -177,7 +178,7 @@
 			                                    	</g:hasErrors>
 		                                </div>    
 		                                
-		                                <div class="clearfix"></div>      
+		                                <div class="clear"></div>      
 		                                
 		                                <div class="span-3">          
 										<label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label>
@@ -200,7 +201,7 @@
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoa"/></div>
 			                                    	</g:hasErrors>
 			                            </div>         	
-										<div class="clearfix"></div>
+										<div class="clear"></div>
 										<div class="span-20 colborder">
 											
 										</div>
@@ -329,12 +330,73 @@
                             	<table id="prescripcionesId"></table>
                             </div>
                             <div id="pagerPrescripciones">	</div>
-                            <button id="testgrid" onClick="return false;"></button>
             			</fieldset>
             		</div>
-            	
-            	</div>
-            	
+            		
+            		<div id="tabs-5">
+            			<div class="span-22">
+	            				<fieldset>
+	            					<legend>Personales</legend>
+	            					<div class="span-3 colborder">
+	            						<label for="paciente.antecedente.consulta">Consulta:</label>
+	            					</div>
+	            					<div class="span-6 colborder">
+	            						<g:textField name="paciente.antecedente.consulta"></g:textField>
+	            					</div>
+	            					<div class="span-2 colborder">
+	            						<label for="paciente.antecedente.hipertension">Hiper.:</label>
+	            					</div>
+	            					<div class="span-4 colborder">
+	            						<g:textField name="paciente.antecedente.hipertension"></g:textField>
+	            					</div>
+	            					<div class="clear"></div>
+	            					
+	            					<div class="span-3 colborder">
+	            						<label for="paciente.antecedente.coronariopatia">Coronariopatia:</label>
+	            					</div>
+	            					<div class="span-6 colborder">
+	            						<g:textField name="paciente.antecedente.coronariopatia"></g:textField>
+	            					</div>
+
+	            					<div class="span-2 colborder">
+	            						<label for="paciente.antecedente.dislipidemia">Dislipidemia:</label>
+	            					</div>
+	            					<div class="span-4 colborder">
+	            						<g:textField name="paciente.antecedente.dislipidemia"></g:textField>
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-3 colborder">
+	            						<label for="paciente.antecedente.asmaBronquial">Asma Bronquial:</label>
+	            					</div>
+	            					<div class="span-6 colborder">
+	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					</div>
+	            					<div class="span-2 colborder">
+	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
+	            					</div>
+	            					<div class="span-5 colborder">
+	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					</div>
+
+
+	            					
+	            					
+	            				</fieldset>
+	            				<fieldset>
+	            					<legend>Familiares</legend>
+	            					<div class="span-4">
+	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
+            						</div>
+            						<div class="span-4">
+	            						<g:textArea name="paciente.antecedente.antecedenteFamiliar"></g:textArea>
+	            					</div>
+	            				</fieldset>
+						</div>					
+            		</div><!-- cierre div tabs-5 -->
+            		<div class="clear"></div>
+            		
+       			</div><!-- cierre div tabs -->   	
             
                 
                 <div style="padding: 10px 15px 15px 15px;">

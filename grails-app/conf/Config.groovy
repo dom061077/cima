@@ -94,8 +94,8 @@ bi.Profesional = [
 				  ],
 	constraints:[
 		nullable:true,
-		maxSize:716800,
-		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg']
+		maxSize:1024*250,
+		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/x-png']
 	]
 ]
 
@@ -103,7 +103,7 @@ bi.Profesional = [
 bi.EstudioComplementario = [
 	outputDir: 'imagenestudios',
 	//prefix: 'mySuperImage',
-	images: ['large':[scale:[width:300, height:300, type:ScaleType.APPROXIMATE]
+	images: ['large':[scale:[width:500, height:500, type:ScaleType.APPROXIMATE]
 					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
 					  ],
 			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE]
@@ -114,6 +114,6 @@ bi.EstudioComplementario = [
 	,constraints:[
 		nullable:true,
 		maxSize:1024*5000,
-		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg']
+		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/x-png']
 	]
 ]

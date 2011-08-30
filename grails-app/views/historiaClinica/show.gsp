@@ -8,31 +8,56 @@
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css/skins/tango',file:'skin.css')}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
-        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jcarousel.min.js')}"></script>        
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>      	
         <script type="text/javascript" src="${resource(dir:'js/script/historia',file:'show.js')}"></script>
         <script type="text/javascript">
         	var locprescripciones='<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones',params:[id:consultaInstance.id])%>';
+        	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
+			var mycarouselList=[
+			  		<%	def flagcolon = false;
+			  			consultaInstance.estudios?.each{
+							  if(flagcolon)
+							  	out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:''}"
+							  else
+							  	out<< "{url:'${bi.resource(size:'large', bean:it)}',title:''}"
+							  flagcolon = true
+						  }
+			  		%>			
+			  ];
+
+			function mycarousel_getItemHTML(item)
+			{
+			  
+			    return '<a   href="' + item.url + '" title="' + item.title + '"><img src="' + item.url + '" width="600" height="600" border="0" alt="' + item.title + '" /></a>';
+			};
+
+			
         	function mycarousel_itemLoadCallback(carousel, state)
         	{
+            	var ul = document.getElementById("estudioscomplementariosId");
+            	var	item;
         	    for (var i = carousel.first; i <= carousel.last; i++) {
-        	        if (carousel.has(i)) {
+        	    	item = $(mycarousel_getItemHTML(mycarouselList[i-1])).get(0);
+        	    	tb_init(item);
+
+        	    	
+        	        /*if (carousel.has(i)) {
         	            continue;
         	        }
 
         	        if (i > mycarousel_itemList.length) {
         	            break;
-        	        }
+        	        }*/
 
         	        // Create an object from HTML
-        	        var item = jQuery(mycarousel_getItemHTML(mycarousel_itemList[i-1])).get(0);
+        	        //var item = jQuery(mycarousel_getItemHTML(mycarousel_itemList[i-1])).get(0);
 
         	        // Apply thickbox
-        	        tb_init(item);
+        	        
 
-        	        carousel.add(i, item);
+        	        //carousel.add(i, item);
         	    }
         	};
         	        	
@@ -146,10 +171,11 @@
 	            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
 		            			<bi:hasImage bean="${estudio}">
 		            				<li>	
-			    						<a href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
+			    						<a class="thickbox" href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
 									</li>
 								</bi:hasImage>
 	            			</g:each>
+	            			
 						</ul>            		
             		</div>
 
