@@ -41,9 +41,18 @@ class GUtilDomainClass{
 	
 	
 	def parseValue(def rawValue, def mp, def params) {
-		log.info "INGRESANDO AL METODO parseValue DE LA CLASE GUtilDomainClass"
+		log.info "INGRESANDO AL METODO parseValue DE LA CLASE GUtilDomainClass METAPROPERTY: $mp"
 		def val = rawValue
-
+		if(mp == Long){
+			try{
+				log.info "LA PROPIEDAD ES UN ID"
+				return val.toLong()	
+			}catch(Exception e){
+				log.info "LA PROPIEDAD ES UN ID EL Y EL VALOR NO PUDO SER VOLCADO A UN LONG, RETORNO CERO POR DEFECTO"
+				return "0".toLong()
+			}
+		}
+			
 		if (val) {
 			Class cls = mp.type //mc.theClass.getDeclaredField(prop).type
 			if (cls.isEnum()) {

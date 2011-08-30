@@ -379,6 +379,20 @@
 	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
 	            					</div>
 
+	            					<div class="clear"></div>
+	            					<div class="span-3 colborder">
+	            						<label for="paciente.antecedente.asmaBronquial">Alergia:</label>
+	            					</div>
+	            					<div class="span-6 colborder">
+	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					</div>
+	            					<div class="span-2 colborder">
+	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
+	            					</div>
+	            					<div class="span-5 colborder">
+	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					</div>
+
 
 	            					
 	            					

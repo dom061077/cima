@@ -3,7 +3,8 @@ $(document).ready(function(){
 		caption:'Historia Clínica',
 		url:lochistoria,
 		mtype:'POST',
-		width:600,
+		width:800,
+		height:400,
 		rownumbers:true,
 		pager:'pagerhistoria',
 		datatype:'json',
@@ -30,34 +31,46 @@ $(document).ready(function(){
 									} 
 							}	
 		,subGridRowExpanded: function(subgrid_id, row_id) {
-			// we pass two parameters
-			// subgrid_id is a id of the div tag created whitin a table data
-			// the id of this elemenet is a combination of the "sg_" + id of the row
-			// the row_id is the id of the row
-			// If we wan to pass additinal parameters to the url we can use
-			// a method getRowData(row_id) - which returns associative array in type name-value
-			// here we can easy construct the flowing
 			var subgrid_table_id, pager_id;
 			subgrid_table_id = subgrid_id+"_t";
 			pager_id = "p_"+subgrid_table_id;
+			var obj=$('#listhistoria').getRowData(row_id);
 			$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
 			jQuery("#"+subgrid_table_id).jqGrid({
-				url:"subgrid.php?q=2&id="+row_id,
-				datatype: "xml",
-				colNames: ['Fecha Consulta','Cie10','Ambito','Contenido'],
+				url:locsubgridconsulta+'?pacienteId='+obj.id,
+				datatype: "json",
+				mtype:'POST',
+				colNames: ['Id','Fecha Consulta','Cie10','Cie10 Desc.','Profesional','Ambito','Paciente ID','Operaciones'],
 				colModel: [
-					{name:"fechaConsulta",index:"fechaConsulta",width:80,key:true},
-					{name:"cie10",index:"cie10",width:130},
-					{name:"ambito",index:"ambito",width:70,align:"right"},
-					{name:"contenido",index:"contenido",width:70,align:"right"}
+					{name:"id",index:"id",width:80,key:true,hidden:true},				           
+					{name:"fechaConsulta",index:"fechaConsulta",width:80,sorttype:'date', formatter:'date'},
+					{name:"cie10_cie10",index:"cie10_cie10",width:70},
+					{name:"cie10_descripcion",index:"cie10_descripcion",width:130},					
+					{name:"profesional_nombre",index:"profesional_nombre",width:130},					
+					{name:"estado",index:"estado",width:70,align:"left"},
+					{name:"paciente_id",index:"paciente_id",width:70,align:"left"},					
+					{name:'operaciones',index:'operaciones',width:75,sorttype:'text',sortable:false,search:false}
 				],
 			   	rowNum:20,
 			   	pager: pager_id,
-			   	sortname: 'num',
-			    sortorder: "asc",
-			    height: '100%'
+			   	sortname: 'fechaConsulta',
+			    sortorder: "desc",
+			    height: '100%',
+			    gridComplete: function(){
+					var ids = jQuery('#'+subgrid_table_id).jqGrid('getDataIDs');
+					var be;
+					var row
+					for(var i=0;i < ids.length;i++){ 
+						var cl = ids[i];
+						row = jQuery('#'+subgrid_table_id).getRowData(cl);
+						be = "<a href='"+locconsultaedit+"/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'</span></a>";
+						se = "<a href='"+locconsultadel+"/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
+						jQuery("#"+subgrid_table_id).jqGrid('setRowData',ids[i],{operaciones:be+se}); 
+						} 
+			    }
 			});
-			jQuery("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{edit:false,add:false,del:false})
+			jQuery("#"+subgrid_table_id).jqGrid('navGrid',"#"+pager_id,{search:false,edit:false,add:false,del:false});
+			//jQuery("#"+subgrid_table_id).jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
 		},
 		subGridRowColapsed: function(subgrid_id, row_id) {
 			// this function is called before removing the data

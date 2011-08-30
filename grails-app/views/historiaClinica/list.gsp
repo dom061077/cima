@@ -10,7 +10,9 @@
         <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js',file:'jquery.jqGrid.min.js')}"></script>
         <script type="text/javascript">
         	var lochistoria = '<%out << "${g.createLink(controller:'historiaClinica',action:'listjson')}"%>;';
-        	var locconsulta = '<%out << "${g.createLink(controller:'consulta',action:'create')}"%>';
+        	var locsubgridconsulta = '<%out << "${g.createLink(controller:'consulta',action:'listjson')}"%>';
+        	var locconsultaedit = '<%out << "${g.createLink(controller:'consulta',action:'edit')}"%>';
+        	var locconsultadel = '<%out << "${g.createLink(controller:'consulta',action:'delete')}"%>';
         </script>
         <script type="text/javascript" src="${g.resource(dir:'js/script/historia',file:'list.js')}"></script>        
         

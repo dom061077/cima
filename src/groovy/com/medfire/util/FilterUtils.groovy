@@ -21,11 +21,15 @@ class FilterUtils {
 	
 
 	static def getNestedMetaProperty(def grailsApplication,def domainClass, String propertyName) {
+		log.info "INGRESANDO AL METODO getMestedMetaProperty"
+		log.info "PARAMETROS domainClass: $domainClass, propertyName: $propertyName"
         def nest = propertyName.tokenize('_')
         def thisDomainClass = grailsApplication.getDomainClass(domainClass.name)
         def thisDomainProp = null
+		def lastProp
         
         nest.each() {egg ->
+			lastProp = egg	
             if(thisDomainClass){
                 thisDomainProp =thisDomainClass.persistentProperties.find {
                     
@@ -35,8 +39,14 @@ class FilterUtils {
             }
      
         }
-		log.info "FILTER UTILS : metaproperty devuelta: ${thisDomainProp}"
-        return thisDomainProp
+		log.info "FILTER UTILS : metaproperty devuelta: ${thisDomainProp}, ultimo egg: $lastProp"
+		if (lastProp.equals("id")){
+			log.info "RETORNO CON CLASE Long PROPIEDAD ID"
+			return Long
+		}else{	
+			log.info "RETORNO DE Domain Prop"
+        	return thisDomainProp
+		}
 	}
 
 	static java.util.Date parseDateFromDatePickerParams(def paramProperty, def params) {

@@ -3,6 +3,8 @@ package com.medfire
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.text.ParseException
+import com.medfire.util.GUtilDomainClass
+import grails.converters.JSON
 
 class ConsultaController {
 
@@ -126,4 +128,42 @@ class ConsultaController {
             redirect(action: "list")
         }
     }
+	
+	def listjson = {
+		log.info "INGRESANDO AL CLOSURE listjson"
+		params.filters = """{'groupOp':'AND','rules':[{'field':'paciente_id','op':'eq','data':'${params.pacienteId}'}]}"""
+		params._search = "true"
+		log.info "PARAMETROS $params"
+		
+
+		def result
+
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def gud = new GUtilDomainClass(Consulta,params,grailsApplication)
+		def list=gud.listrefactor(false)
+		totalregistros=gud.listrefactor(true)
+
+
+		if(list){
+			totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+			if (totalpaginas>0 && totalpaginas<1)
+				totalpaginas=1
+			totalpaginas = totalpaginas.intValue()
+			result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+			list.each{
+				if(flagcomilla)
+					result=result+','
+				result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'","'+(it.profesional?.nombre!=null?it.profesional?.nombre:"")+'","'+(it.estado.name!=null?it.estado.name:"")+'"]}'	
+				flagcomilla=true
+			}
+			result=result+']}'
+			render result
+		}else{
+			result='{"page":0,"total":"0","records":"0","rows":['
+			result=result+']}'
+			render result
+		}
+	}
 }
