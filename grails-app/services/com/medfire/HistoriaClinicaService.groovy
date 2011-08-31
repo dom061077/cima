@@ -19,7 +19,7 @@ class HistoriaClinicaService {
 		
 		
 		
-		if(consultaInstance.validate() && consultaInstance.save()){
+		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save()){
 			consultaInstance.estudios.each {
 				imageUploadService.save(it) 
 			}

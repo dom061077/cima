@@ -74,12 +74,19 @@
             <g:if test="${flash.message}">
             <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
             </g:if>
+            
+			<div>
+           		Historia Clínica: <g:formatNumber number="${consultaInstance.paciente.id}" format="000000" />
+           		<br/>
+           		Paciente: ${consultaInstance.paciente?.apellido+" - "+consultaInstance.paciente?.nombre}
+           	</div>            
             <div id="tabs">
             		<ul>
             			<li><a href="#tabs-1">Consulta </a></li>
             			<li><a href="#tabs-2">Examen Fisico </a></li>
             			<li><a href="#tabs-3">Estudios Complementarios</a></li>
             			<li><a href="#tabs-4">Prescripciones</a></li>            			
+            			<li><a href="#tabs-5">Antecedentes</a></li>
             		</ul>
             		<div id="tabs-1">
             			<fieldset>
@@ -188,12 +195,157 @@
             		
             		</div>
             		
+            		<div id="tabs-5">
+            			<div class="span-22">
+	            				<fieldset>
+	            					<legend>Personales</legend>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.consulta">Consulta:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "consulta")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.hipertension">Hiper.:</label>
+	            						<br/>	            						
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "hipertension")}
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.coronariopatia">Coronariopatia:</label>
+	            						<br/>	            						
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "coronariopatia")}	            						
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.dislipidemia">Dislipidemia:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "dislipidemia")}	            						
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.asmaBronquial">Asma Bronquial:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "asmaBronquial")}	            						
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "psocopatia")}	            						
+	            					</div>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.alergia">Alergia:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "alergia")}	            						
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.tuberculosis">Tuberculosis:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "tuberculosis")}	            						
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.atipia">Atipia:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "atipia")}	            						
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.gota">Gota:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "gota")}	            						
+	            					</div>
+
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.afeccionBroncopulmonar">Afecciones Broncopul.:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "afeccionBroncopulmonar")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.nefropatia">Nefropatías:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "nefropatia")}
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.uropatia">Uropatías:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "uropatia")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.hemopatia">Hemopatías:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "hemopatia")}
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.ets">E.T.S:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "ets")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.ulceraGastroduodenal">Ulcera Gastroduodenal:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "ulceraGastroduodenal")}
+	            					</div>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.hepatitis">Hepatitis:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "hepatitis")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.colecistopatia">Colecistopatía:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "colecistopatia")}
+	            					</div>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.enfermedadNeurologica">Enferm. Neurológicas:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "efermedadNeurologica")}
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.fiebreProlongada">Fiebre Prolongada:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "fiebreProlongada")}
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.colagenopatia">Colagenopatías:</label>
+	            						<br/>
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "colagenopatia")}
+	            					</div>
+
+	            					
+	            				</fieldset>
+	            				<fieldset>
+	            					<legend>Familiares</legend>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
+	            						<br/>
+	            						<g:textArea class="title" name="paciente.antecedente.antecedenteFamiliar" value="${consultaInstance?.paciente?.antecedente?.antecedenteFamiliar}"></g:textArea>
+	            					</div>
+	            				</fieldset>
+						</div>					
+            		</div><!-- cierre div tabs-5 -->
+            		<div class="clear"></div>
+            		
             
             </div>
             
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${historiaClinicaInstance?.id}" />
+                    <g:hiddenField name="id" value="${historiaInstance?.id}" />
                     <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
                     <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Está seguro ?')}');" />
                 </g:form>

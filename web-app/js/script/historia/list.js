@@ -63,8 +63,8 @@ $(document).ready(function(){
 					for(var i=0;i < ids.length;i++){ 
 						var cl = ids[i];
 						row = jQuery('#'+subgrid_table_id).getRowData(cl);
-						be = "<a href='"+locconsultaedit+"/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'</span></a>";
-						se = "<a href='"+locconsultadel+"/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
+						be = "<a href='edit/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'></span></a>";
+						se = "<a href='delete/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
 						jQuery("#"+subgrid_table_id).jqGrid('setRowData',ids[i],{operaciones:be+se}); 
 						} 
 			    }

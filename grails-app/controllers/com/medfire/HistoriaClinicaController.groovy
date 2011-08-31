@@ -65,6 +65,7 @@ class HistoriaClinicaController {
 		def profesionalInstance = Profesional.load(userInstance.profesionalAsignado.id)
 		consultaInstance.profesional=profesionalInstance
 		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
+		pacienteInstance.properties = params.paciente
 		consultaInstance.paciente=pacienteInstance
 		def estudioImagen
 		
@@ -95,7 +96,7 @@ class HistoriaClinicaController {
 			log.error "MENSAJE DE VALIDACION: "+e.message
 			//render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
 			def consultaE=e.consulta
-			render" <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)} </div>"
+			render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)}<br/> ${g.renderErrors(bean:e.consulta.paciente)} </div>	"
 					/*errors{
 						g.eachError(bean:consultaE){
 							title g.message(error:it)
@@ -120,13 +121,13 @@ class HistoriaClinicaController {
 	}
 
 	def edit = {
-		def historiaClinicaInstance = HistoriaClinica.get(params.id)
-		if (!historiaClinicaInstance) {
-			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
+		def consultaInstance = Consulta.get(params.id)
+		if (!consultaInstance) {
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Historia Clinica'), params.id])}"
 			redirect(action: "list")
 		}
 		else {
-			return [historiaClinicaInstance: historiaClinicaInstance]
+			return [consultaInstance: consultaInstance]
 		}
 	}
 

@@ -5,11 +5,17 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'historiaClinica.label', default: 'HistoriaClinica')}" />
         <title><g:message code="default.create.label" args="[entityName]" /></title>
-<!--        <fckeditor:config CustomConfigurationsPath="${resource(dir:'js/jquery',file:'fckeditconfig.js')}"/>-->
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>        
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
+<!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
+        <style type="text/css">
+        	.inputlarge{
+        		width: 350px;
+        	}
+        </style>
+        
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
@@ -337,73 +343,141 @@
             			<div class="span-22">
 	            				<fieldset>
 	            					<legend>Personales</legend>
-	            					<div class="span-3 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.consulta">Consulta:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.consulta" value="${pacienteInstance.antecedente?.consulta}"></g:textField>
 	            					</div>
-	            					<div class="span-6 colborder">
-	            						<g:textField name="paciente.antecedente.consulta"></g:textField>
-	            					</div>
-	            					<div class="span-2 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.hipertension">Hiper.:</label>
+	            						<br/>	            						
+	            						<g:textField class="inputlarge" name="paciente.antecedente.hipertension" value="${pacienteInstance.antecedente?.hipertension}"></g:textField>
 	            					</div>
-	            					<div class="span-4 colborder">
-	            						<g:textField name="paciente.antecedente.hipertension"></g:textField>
-	            					</div>
+
 	            					<div class="clear"></div>
-	            					
-	            					<div class="span-3 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.coronariopatia">Coronariopatia:</label>
+	            						<br/>	            						
+	            						<g:textField class="inputlarge" name="paciente.antecedente.coronariopatia" value="${pacienteInstance.antecedente?.hipertension}"></g:textField>
 	            					</div>
-	            					<div class="span-6 colborder">
-	            						<g:textField name="paciente.antecedente.coronariopatia"></g:textField>
-	            					</div>
-
-	            					<div class="span-2 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.dislipidemia">Dislipidemia:</label>
-	            					</div>
-	            					<div class="span-4 colborder">
-	            						<g:textField name="paciente.antecedente.dislipidemia"></g:textField>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.dislipidemia" value="${pacienteInstance.antecedente?.dislipidemia}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
-	            					<div class="span-3 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.asmaBronquial">Asma Bronquial:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.asmaBronquial" value="${pacienteInstance.antecedente?.asmaBronquial}"></g:textField>
 	            					</div>
-	            					<div class="span-6 colborder">
-	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
-	            					</div>
-	            					<div class="span-2 colborder">
+	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.psocopatia" value="${pacienteInstance.antecedente?.psocopatia}"></g:textField>
 	            					</div>
-	            					<div class="span-5 colborder">
-	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.alergia">Alergia:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.alergia" value="${pacienteInstance.antecedente?.alergia}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.tuberculosis">Tuberculosis:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.tuberculosis" value="${pacienteInstance.antecedente?.tuberculosis}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
-	            					<div class="span-3 colborder">
-	            						<label for="paciente.antecedente.asmaBronquial">Alergia:</label>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.atipia">Atipia:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.atipia" value="${pacienteInstance.antecedente?.atipia}"></g:textField>
 	            					</div>
-	            					<div class="span-6 colborder">
-	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
-	            					</div>
-	            					<div class="span-2 colborder">
-	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
-	            					</div>
-	            					<div class="span-5 colborder">
-	            						<g:textField name="paciente.antecedente.asmaBronquial"></g:textField>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.gota">Gota:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.gota" value="${pacienteInstance.antecedente?.gota}"></g:textField>
 	            					</div>
 
 
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.afeccionBroncopulmonar">Afecciones Broncopul.:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.afeccionBroncopulmonar" value="${pacienteInstance.antecedente?.endicronopatia}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.nefropatia">Nefropatías:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.nefropatia" value="${pacienteInstance.antecedente?.nefropatia}"></g:textField>
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.uropatia">Uropatías:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.uropatia" value="${pacienteInstance.antecedente?.uropatia}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.hemopatia">Hemopatías:</label>
+	            						<br/>
+	            						<g:textField name="paciente.antecedente.hemopatia" value="${pacienteInstance.antecedente?.hemopatia}"></g:textField>
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.ets">E.T.S:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.ets" value="${pacienteInstance.antecedente?.ets}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.ulceraGastroduodenal">Ulcera Gastroduodenal:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.ulceraGastroduodenal" value="${pacienteInstance.antecedente?.ulceraGastroduodenal}"></g:textField>
+	            					</div>
 	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.hepatitis">Hepatitis:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.hepatitis" value="${pacienteInstance.antecedente?.hepatitis}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.colecistopatia">Colecistopatía:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.colecistopatia" value="${pacienteInstance.antecedente?.colecistopatia}"></g:textField>
+	            					</div>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.enfermedadNeurologica">Enferm. Neurológicas:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.enfermedadNeurologica" value="${pacienteInstance.antecedente?.enfermedadNeurologica}"></g:textField>
+	            					</div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.fiebreProlongada">Fiebre Prolongada:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.fiebreProlongada" value="${pacienteInstance.antecedente?.fiebreProlongada}"></g:textField>
+	            					</div>
+
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.colagenopatia">Colagenopatías:</label>
+	            						<br/>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.colagenopatia" value="${pacienteInstance.antecedente?.colagenopatia}"></g:textField>
+	            					</div>
+
 	            					
 	            				</fieldset>
 	            				<fieldset>
 	            					<legend>Familiares</legend>
-	            					<div class="span-4">
+	            					<div class="span-9">
 	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
-            						</div>
-            						<div class="span-4">
-	            						<g:textArea name="paciente.antecedente.antecedenteFamiliar"></g:textArea>
+	            						<br/>
+	            						<g:textArea class="title" name="paciente.antecedente.antecedenteFamiliar" value="${pacienteInstance.antecedente?.antecedenteFamiliar}"></g:textArea>
 	            					</div>
 	            				</fieldset>
 						</div>					

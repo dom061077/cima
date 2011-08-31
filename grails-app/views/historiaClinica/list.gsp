@@ -11,8 +11,6 @@
         <script type="text/javascript">
         	var lochistoria = '<%out << "${g.createLink(controller:'historiaClinica',action:'listjson')}"%>;';
         	var locsubgridconsulta = '<%out << "${g.createLink(controller:'consulta',action:'listjson')}"%>';
-        	var locconsultaedit = '<%out << "${g.createLink(controller:'consulta',action:'edit')}"%>';
-        	var locconsultadel = '<%out << "${g.createLink(controller:'consulta',action:'delete')}"%>';
         </script>
         <script type="text/javascript" src="${g.resource(dir:'js/script/historia',file:'list.js')}"></script>        
         
@@ -22,6 +20,11 @@
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div --%>
+        
+        <g:if test="${flash.message}">
+        <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
+        </g:if>
+        
         <div class="body">
 	        <h1><g:message code="default.list.label" args="[entityName]" /></h1>
 	        <div class="body">

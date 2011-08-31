@@ -33,6 +33,30 @@ class Antecedente {
 	
 	
     static constraints = {
+		 consulta(nullable:true,blank:true)
+		 hipertension(nullable:true,blank:true)
+		 coronariopatia(nullable:true,blank:true)
+		 dislipidemia(nullable:true,blank:true)
+		 asmaBronquial(nullable:true,blank:true)
+		 psocopatia(nullable:true,blank:true)
+		 alergia(nullable:true,blank:true)
+		 tuberculosis(nullable:true,blank:true)
+		 atipia(nullable:true,blank:true)
+		 gota(nullable:true,blank:true)
+		 afeccionBroncopulmonar(nullable:true,blank:true)
+		 endicronopatia(nullable:true,blank:true)
+		 nefropatia(nullable:true,blank:true)
+		 uropatia(nullable:true,blank:true)
+		 hemopatia(nullable:true,blank:true)
+		 ets(nullable:true,blank:true)
+		 ulceraGastroduodenal(nullable:true,blank:true)
+		 hepatitis(nullable:true,blank:true)
+		 colecistopatia(nullable:true,blank:true)
+		 efermedadNeurologica(nullable:true,blank:true)
+		 fiebreProlongada(nullable:true,blank:true)
+		 colagenopatia(nullable:true,blank:true)
+		 antecedenteFamiliar(nullable:true,blank:true)
+	
     }
 	
 	static mapping = {
