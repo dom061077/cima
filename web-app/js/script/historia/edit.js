@@ -42,8 +42,8 @@ $(document).ready(function(){
 	});
 	
 	jQuery("#prescripcionesId").jqGrid({ 
-		url:'listprescripciones'
-		,editurl:'editprescripciones'
+		url:locprescripciones+'/'+consultaId
+		,editurl:loceditprescripciones
 		,datatype: "json"
 		,width:700
 		,rownumbers:true
@@ -146,15 +146,6 @@ $(document).ready(function(){
 	
 	//---inicializo los datos de la grilla si el create proviene de un redirect del save--
 	
-
-		
-
-		
-	
-	
-
-	
-	
 	
 	var options={
 		target: '#outputId',
@@ -172,5 +163,13 @@ $(document).ready(function(){
 	
 	
 	$('#historiaFormId').ajaxForm(options);
+	//------------reubicacion de imagenes----------------------
+	//var trickimg = '<a   href="' + item.url + '" title="' + item.title + '"><img src="' + item.url + '" width="600" height="600" border="0" alt="' + item.title + '" /></a>';
+	var i=1;
+	$.each(imagenList,function(index,value){
+		$('#imagen'+i+'Id').html('<a class="thickbox"   href="' + value.url + '" title="' + value.title 
+							+ '"><img src="' + value.url 
+							+ '" width="50" height="50" border="0" alt="' + value.title + '" /></a>');
+	});	
 			
-	});//end function ready
+});//end function ready

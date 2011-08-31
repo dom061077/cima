@@ -3,13 +3,16 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
-        <g:set var="entityName" value="${message(code: 'historiaClinica.label', default: 'HistoriaClinica')}" />
-        <title><g:message code="default.create.label" args="[entityName]" /></title>
+        <g:set var="entityName" value="${message(code: 'historiaClinica.label', default: 'Historia Clinica')}" />
+        <title><g:message code="default.edit.label" args="[entityName]" /></title>
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>        
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
+
         <style type="text/css">
         	.inputlarge{
         		width: 350px;
@@ -20,6 +23,9 @@
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
+        	var consultaId = <%out << "${consultaInstance.id}"%>;
+        	var locprescripciones =  "<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones')%>";
+        	var loceditprescripciones = "<%out << g.createLink(controller:'historiaClinica',action:'editprescripciones')%>"; 
         	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
         	//var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
         	function initsubmit(){
@@ -28,12 +34,29 @@
             	$("#prescripcionesSerializedId").val(postData);
             	
             }
+
+        	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
+			var imagenList=[
+			  		<%	def flagcolon = false;
+					  	def  i=1
+			  			consultaInstance.estudios?.each{
+							  if(flagcolon)
+							  	out<< ",{url:'${bi.resource(size:'trash', bean:it)}',title:'${'Imagen '+i}'}"
+							  else
+							  	out<< "{url:'${bi.resource(size:'trash', bean:it)}',title:'${'Imagen '+i}'}"
+							  flagcolon = true
+						  }
+			  		%>			
+			  ];
+        	
                 		
         </script>
         
       	<script type="text/javascript" src="${resource(dir:'js/script/historia',file:'edit.js')}"></script>
     </head>
     <body>
+    
+
 		<div style="display:none" id="busquedaVademecumDialogId">
 			<table id="tablaBusquedaVademecumId"></table><div id="pagerBusquedaVademecumId"></div>
 		</div>
@@ -45,7 +68,7 @@
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
 		<div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>
@@ -116,7 +139,7 @@
 										<label for=""><g:message code="historia.pulso.label" default="Pulso:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="consulta.pulso" value="${consultaInstace?.pulso}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pulsoId" name="consulta.pulso" value="${consultaInstance?.pulso}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pulso">
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pulso"/></div>
 			                                    	</g:hasErrors>
@@ -126,7 +149,7 @@
 										<label for=""><g:message code="historia.fc.label" default="FC:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="consulta.fc" value="${consultaInstace?.fc}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fcId" name="consulta.fc" value="${consultaInstance?.fc}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="fc">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fc"/></div>
@@ -139,7 +162,7 @@
 										<label for=""><g:message code="historia.ta.label" default="TA:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="consulta.ta" value="${consultaInstace?.ta}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taId" name="consulta.ta" value="${consultaInstance?.ta}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="ta">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ta"/></div>
@@ -150,7 +173,7 @@
 										<label for=""><g:message code="historia.fr.label" default="FR:" /></label>
 										</div>
 										<div class="span-4 ">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="consulta.fr" value="${consultaInstace?.fr}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="frId" name="consulta.fr" value="${consultaInstance?.fr}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="fr">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="fr"/></div>
@@ -163,7 +186,7 @@
 										<label for=""><g:message code="historia.taxilar.label" default="T.Axilar:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="consulta.taxilar" value="${consultaInstace?.taxilar}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="taxilarId" name="consulta.taxilar" value="${consultaInstance?.taxilar}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="taxilar">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="taxilar"/></div>
@@ -174,7 +197,7 @@
 										<label for=""><g:message code="historia.trectal.label" default="T.Rectal:" /></label>
 										</div>
 										<div class="span-4 ">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="consulta.trectal" value="${consultaInstace?.trectal}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="trectalId" name="consulta.trectal" value="${consultaInstance?.trectal}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="trectal">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="trectal"/></div>
@@ -187,7 +210,7 @@
 										<label for=""><g:message code="historia.pesoh.label" default="Peso habitual:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="consulta.pesoh" value="${consultaInstace?.pesoh}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesohId" name="consulta.pesoh" value="${consultaInstance?.pesoh}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pesoh">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoh"/></div>
@@ -198,7 +221,7 @@
 										<label for=""><g:message code="historia.pesoa.label" default="Peso actual:" /></label>
 										</div>
 										<div class="span-4">
-										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="consulta.pesoa" value="${consultaInstace?.pesoa}"></g:textField>
+										<g:textField class="ui-widget ui-corner-all ui-widget-content" id="pesoaId" name="consulta.pesoa" value="${consultaInstance?.pesoa}"></g:textField>
 			                                		<g:hasErrors bean="${consultaInstance}" field="pesoa">
 			                                			<br/>
 				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="pesoa"/></div>
@@ -217,7 +240,9 @@
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
 							</div>
 							<div class="span-5 colborder">
-							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" value="${consultaInstace?.impresion}"></textArea>
+							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion">
+								${consultaInstance?.impresion}
+							</textArea>
                                 		<g:hasErrors bean="${consultaInstance}" field="impresion">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
@@ -229,7 +254,7 @@
 							<label for=""><g:message code="historia.habito.label" default="Hábito:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="habitoId" name="consulta.habito" value="${consultaInstace?.habito}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="habitoId" name="consulta.habito" value="${consultaInstance?.habito}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="habito">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="habito"/></div>
@@ -240,7 +265,7 @@
 							<label for=""><g:message code="historia.actitud.label" default="Actitud:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="atitudId" name="consulta.actitud" value="${consultaInstace?.actitud}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="atitudId" name="consulta.actitud" value="${consultaInstance?.actitud}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="actitud">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="actitud"/></div>
@@ -253,7 +278,7 @@
 							<label for=""><g:message code="historia.ubicacion.label" default="Ubicación:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="ubicacionId" name="consulta.ubicacion" value="${consultaInstace?.ubicacion}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="ubicacionId" name="consulta.ubicacion" value="${consultaInstance?.ubicacion}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="ubicacion">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="ubicacion"/></div>
@@ -263,7 +288,7 @@
 							<label for=""><g:message code="historia.marcha.label" default="Marcha:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="marchaId" name="consulta.marcha" value="${consultaInstace?.marcha}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="marchaId" name="consulta.marcha" value="${consultaInstance?.marcha}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="marcha">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="marcha"/></div>
@@ -275,7 +300,7 @@
 							<label for=""><g:message code="historia.psiqui.label" default="Psiquismo:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="consulta.psiqui" value="${consultaInstace?.psiqui}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="psiquiId" name="consulta.psiqui" value="${consultaInstance?.psiqui}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="psiqui">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="psiqui"/></div>
@@ -285,7 +310,7 @@
 							<label for=""><g:message code="historia.facie.label" default="Facie:" /></label>
 							</div>
 							<div class="span-4">
-							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="facieId" name="consulta.facie" value="${consultaInstace?.facie}"></g:textField>
+							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="facieId" name="consulta.facie" value="${consultaInstance?.facie}"></g:textField>
                                 		<g:hasErrors bean="${consultaInstance}" field="facie">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="facie"/></div>
@@ -295,33 +320,49 @@
             		</div>  
             		<div id="tabs-3">
             			<fieldset>
+	           				<div class="span-10">
+	           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
+	           					<br/>
+	           					<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+	            						${consultaInstance?.estudioComplementarioObs}
+	           					</g:textArea>
+	           				</div>
+	            			<div class="clear"> </div>
+            			
+            			
+<%--            				<g:each var="estudio" in = "${consultaInstance?.estudios}">--%>
+<%--	           					<bi:hasImage bean="${estudio}">--%>
+<%--	            						<bi:img size="medium" bean="${estudio}"/>--%>
+<%--	           					</bi:hasImage>--%>
+<%--            				</g:each>--%>
             				
-            				
-            				
-            				<div class="span-6">
+            				<div class="span-6 colborder">
             					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
-            				</div>
-            				<div class="span-10">
+            					<br/>
             					<input type="file" id="imagenUnoId" name="imagen.1" />
             				</div>
+            				<div id="imagen1Id" class="span-6 colborder">
+            				</div>
             				
             				<div class="clear"></div>
-            				
-            				<div class="span-6">
+            				<div class="span-6 colborder">
             					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
-            				</div>
-            				<div class="span-10">
+            					<br/>
             					<input type="file" name="imagen.2" />
             				</div>
+            				<div id="imagen2Id" class="span-6 colborder">
+            				</div>
+
 
             				<div class="clear"></div>
-
-            				<div class="span-6">
+            				<div class="span-6 colborder">
             					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
-            				</div>
-            				<div class="span-10">
+            					<br/>
             					<input type="file" name="imagen.3" />
             				</div>
+            				<div id="imagen3Id" class="span-6 colborder">
+            				</div>
+            				
             				
             			</fieldset>
             		</div>
@@ -452,7 +493,7 @@
 	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.enfermedadNeurologica">Enferm. Neurológicas:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="paciente.antecedente.enfermedadNeurologica" value="${consultaInstance.paciente.antecedente?.efermedadNeurologica}"></g:textField>
+	            						<g:textField class="inputlarge" name="paciente.antecedente.enfermedadNeurologica" value="${consultaInstance.paciente.antecedente?.enfermedadNeurologica}"></g:textField>
 	            					</div>
 	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.fiebreProlongada">Fiebre Prolongada:</label>
@@ -485,7 +526,7 @@
             
                 
                 <div style="padding: 10px 15px 15px 15px;">
-                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
                 </div>
             </form>
         </div>

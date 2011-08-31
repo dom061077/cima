@@ -69,6 +69,7 @@ class BootStrap {
 			new Requestmap(url:"/event/updateestado",configAttribute:"ROLE_ADMIN,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/event/editpaciente/**",configAttribute:"ROLE_ADMIN,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/obraSocial/listjsonautocomplete",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
+			new Requestmap(url:"/obraSocial/listsearchjson",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/vademecum/list",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/principioActivo/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/grupoTerapeutico/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()

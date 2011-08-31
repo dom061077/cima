@@ -174,16 +174,26 @@
             		</div>
 
             		<div id="tabs-3">
-            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
-	            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
-		            			<bi:hasImage bean="${estudio}">
-		            				<li>	
-			    						<a class="thickbox" href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
-									</li>
-								</bi:hasImage>
-	            			</g:each>
-	            			
-						</ul>            		
+           				<div class="span-10">
+           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
+           					<br/>
+           					<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+            						${consultaInstance?.estudioComplementarioObs}
+           					</g:textArea>
+           				</div>
+            			<div class="clear"> </div>
+            			<div class="span-5">
+	            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
+		            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
+			            			<bi:hasImage bean="${estudio}">
+			            				<li>	
+				    						<a class="thickbox" href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
+										</li>
+									</bi:hasImage>
+		            			</g:each>
+		            			
+							</ul>            		
+						</div>
             		</div>
 
             		<div id="tabs-4">
@@ -311,7 +321,7 @@
 	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.enfermedadNeurologica">Enferm. Neurológicas:</label>
 	            						<br/>
-	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "efermedadNeurologica")}
+	            						${fieldValue(bean: consultaInstance?.paciente?.antecedente, field: "enfermedadNeurologica")}
 	            					</div>
 	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.fiebreProlongada">Fiebre Prolongada:</label>
@@ -345,7 +355,7 @@
             
             <div class="buttons">
                 <g:form>
-                    <g:hiddenField name="id" value="${historiaInstance?.id}" />
+                    <g:hiddenField name="id" value="${consultaInstance?.id}" />
                     <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
                     <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Está seguro ?')}');" />
                 </g:form>

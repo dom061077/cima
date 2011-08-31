@@ -22,7 +22,7 @@ class Antecedente {
 	String ulceraGastroduodenal
 	String hepatitis
 	String colecistopatia
-	String efermedadNeurologica
+	String enfermedadNeurologica
 	String fiebreProlongada
 	String colagenopatia
 	String antecedenteFamiliar
@@ -52,7 +52,7 @@ class Antecedente {
 		 ulceraGastroduodenal(nullable:true,blank:true)
 		 hepatitis(nullable:true,blank:true)
 		 colecistopatia(nullable:true,blank:true)
-		 efermedadNeurologica(nullable:true,blank:true)
+		 enfermedadNeurologica(nullable:true,blank:true)
 		 fiebreProlongada(nullable:true,blank:true)
 		 colagenopatia(nullable:true,blank:true)
 		 antecedenteFamiliar(nullable:true,blank:true)

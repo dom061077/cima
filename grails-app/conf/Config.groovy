@@ -106,10 +106,15 @@ bi.EstudioComplementario = [
 	images: ['large':[scale:[width:500, height:500, type:ScaleType.APPROXIMATE]
 					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
 					  ],
-			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE]
-					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+			 'small':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
+					  //,watermark:[sign:'images/trash.gif', offset:[top:10, left:10]]
 					  ],
-				  ]
+			 'medium':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
+				 		],
+			 'trash':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
+				 		,watermark:[sign:'images/deleted.png', offset:[top:10, left:10]]
+					 ]
+		  	]
 	//,outputDir: ['path':'/var/www/my-app/images/', 'alias':'/upload/']
 	,constraints:[
 		nullable:true,

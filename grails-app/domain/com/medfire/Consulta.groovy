@@ -29,6 +29,8 @@ class Consulta {
 	String marcha
 	String psiqui
 	String facie
+	
+	String estudioComplementarioObs
 
 	
 	static belongsTo = [paciente:Paciente]
