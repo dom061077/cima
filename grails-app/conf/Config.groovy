@@ -112,7 +112,7 @@ bi.EstudioComplementario = [
 			 'medium':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
 				 		],
 			 'trash':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
-				 		,watermark:[sign:'images/deleted.png', offset:[top:10, left:10]]
+				 		,watermark:[sign:'images/deleted.png']
 					 ]
 		  	]
 	//,outputDir: ['path':'/var/www/my-app/images/', 'alias':'/upload/']

@@ -25,13 +25,16 @@
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
         	var consultaId = <%out << "${consultaInstance.id}"%>;
         	var locprescripciones =  "<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones')%>";
-        	var loceditprescripciones = "<%out << g.createLink(controller:'historiaClinica',action:'editprescripciones')%>"; 
+        	var loceditprescripciones = "<%out << g.createLink(controller:'historiaClinica',action:'editprescripciones')%>";
+        	var deletedImage = '<%out << g.resource(dir:'images',file:'deleted.png')%>'; 
         	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
         	//var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
         	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
+            	var deletedImg = JSON.stringify(arrayDeletedImg);
             	$("#prescripcionesSerializedId").val(postData);
+            	$("#deletedImgSerializedId").val(deletedImg);
             	
             }
 
@@ -41,9 +44,9 @@
 					  	def  i=1
 			  			consultaInstance.estudios?.each{
 							  if(flagcolon)
-							  	out<< ",{url:'${bi.resource(size:'trash', bean:it)}',title:'${'Imagen '+i}'}"
+							  	out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"
 							  else
-							  	out<< "{url:'${bi.resource(size:'trash', bean:it)}',title:'${'Imagen '+i}'}"
+							  	out<< "{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"
 							  flagcolon = true
 						  }
 			  		%>			
@@ -104,7 +107,7 @@
             		</ul>
             		<div id="tabs-1">
             			<fieldset>
-            				<g:hiddenField name="pacienteId" value="${consultaInstance?.id}"></g:hiddenField>
+            				<g:hiddenField name="id" value="${consultaInstance?.id}"></g:hiddenField>
             				<g:hiddenField name="version" value="${consultaInstance?.version}"></g:hiddenField>
             				<div class="span-6">
             						
@@ -335,34 +338,40 @@
 <%--	            						<bi:img size="medium" bean="${estudio}"/>--%>
 <%--	           					</bi:hasImage>--%>
 <%--            				</g:each>--%>
-            				
-            				<div class="span-6 colborder">
-            					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
-            					<br/>
-            					<input type="file" id="imagenUnoId" name="imagen.1" />
+           					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1:"/></label>
+           					<br/>
+            				<div id="imagen1IdInp" class="span-6 colborder">
+            					<input codigo="" type="file" id="imagen1InpId" name="imagen.1" />
             				</div>
-            				<div id="imagen1Id" class="span-6 colborder">
+            				<div id="imagen1Id" class="span-2 colborder">
+            				</div>
+            				<div id="imagen1IdOp" calss="span-2 colborder">
             				</div>
             				
             				<div class="clear"></div>
-            				<div class="span-6 colborder">
-            					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
-            					<br/>
-            					<input type="file" name="imagen.2" />
+           					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2:"/></label>
+           					<br/>
+            				<div id="imagen2IdInp" class="span-6 colborder">
+            					<input codigo="" type="file" id="imagen2InpId" name="imagen.2" />
             				</div>
-            				<div id="imagen2Id" class="span-6 colborder">
+            				<div id="imagen2Id" class="span-2 colborder">
+            				</div>
+            				<div id="imagen2IdOp" calss="span-2 colborder">
             				</div>
 
 
             				<div class="clear"></div>
-            				<div class="span-6 colborder">
-            					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
-            					<br/>
-            					<input type="file" name="imagen.3" />
+           					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3:"/></label>
+           					<br/>
+            				<div id="imagen3IdInp" class="span-6 colborder">
+            					<input codigo="" type="file" id="imagen3InpId" name="imagen.3" />
             				</div>
-            				<div id="imagen3Id" class="span-6 colborder">
+            				<div id="imagen3Id" class="span-2 colborder">
+            				</div>
+            				<div id="imagen3IdOp" calss="span-2 colborder">
             				</div>
             				
+            				<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"></g:hiddenField>
             				
             			</fieldset>
             		</div>

@@ -1,5 +1,30 @@
 //http://www.trirand.com/jqgridwiki/doku.php?id=wiki%3Acommon_rules
 //http://jquery.malsup.com/form/#file-upload  --- este link me sirve para hacer ajaxsubmitform
+
+	function descartarImg(self){
+		var indexImg = $(self).attr('indice');
+		$('#imagen'+indexImg+'Id').hide();
+		$('#imagen'+indexImg+'IdOp').html('<a indice="'+indexImg+'"  onClick="cancelarImg(this)">Cancelar</a>');
+		$('#imagen'+indexImg+'IdInp').show();
+		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
+		arrayDeletedImg.push({id:id});
+		
+		
+	}
+	
+	function cancelarImg(self){
+		var indexImg = $(self).attr('indice');
+		$('#imagen'+indexImg+'Id').show();		
+		$('#imagen'+indexImg+'IdOp').html('<a indice="'+indexImg+'"  onClick="descartarImg(this)">Descartar</a>');
+		$('#imagen'+indexImg+'IdInp').hide();
+		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
+		arrayDeletedImg = $.grep(arrayDeletedImg,function(value){
+			return value.id!=id;
+		});
+	}
+	
+	var arrayDeletedImg=[];
+
 $(document).ready(function(){
 	
 	
@@ -15,7 +40,7 @@ $(document).ready(function(){
 		colModel:[
 				{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
 				{name:'cie10',index:'cie10', width:100,  sortable:true,search:true},				
-				{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true},	
+				{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true}	
 			],
 		hiddenid:'cie10Id',
 		descid:'cie10DescripcionId',
@@ -165,11 +190,27 @@ $(document).ready(function(){
 	$('#historiaFormId').ajaxForm(options);
 	//------------reubicacion de imagenes----------------------
 	//var trickimg = '<a   href="' + item.url + '" title="' + item.title + '"><img src="' + item.url + '" width="600" height="600" border="0" alt="' + item.title + '" /></a>';
-	var i=1;
+	
+	//------------funciones para manejar el descartar y cancelar de cada imagen---------
+	
+	
 	$.each(imagenList,function(index,value){
-		$('#imagen'+i+'Id').html('<a class="thickbox"   href="' + value.url + '" title="' + value.title 
+		var i = index+1;
+		$('#imagen'+i+'Id').html('<a indice="'+index+'" id="imagen'+i+'Idthick" class="thickbox"   href="' + value.url + '" title="' + value.title 
 							+ '"><img src="' + value.url 
 							+ '" width="50" height="50" border="0" alt="' + value.title + '" /></a>');
+		$('#imagen'+i+'Idthick').click(function(){
+				var t = this.title || this.name || null;
+				var a = this.href || this.alt;
+				var g = this.rel || false;
+				//alert('INDICE: '+$(this).attr('indice'));
+				tb_show(t,a,g);
+				this.blur();
+				return false;
+			});		
+		$('#imagen'+i+'IdOp').html('<a indice="'+i+'"  onClick="descartarImg(this)">Descartar</a>');
+		$('#imagen'+i+'IdInp').hide();
+		$('#imagen'+i+'InpId').attr('codigo',value.codigo);
 	});	
 			
 });//end function ready

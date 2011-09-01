@@ -22,7 +22,8 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.5.1.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'jquery-ui-1.8.11.custom.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui',file:'jquery-ui-i18n.js')}"></script>
-        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'json2.js')}"></script>                
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'json2.js')}"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'custom.css')}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'ui.jqgrid.css')}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'jquery.searchFilter.css')}" />
         

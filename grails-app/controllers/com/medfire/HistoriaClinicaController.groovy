@@ -132,22 +132,26 @@ class HistoriaClinicaController {
 	}
 
 	def update = {
-		def historiaClinicaInstance = HistoriaClinica.get(params.id)
-		if (historiaClinicaInstance) {
+		log.info "INGRESANDO AL CLOSURE update"
+		log.info "PARAMS: $params"
+		def consultaInstance = consultaInstance.get(params.id)
+		if (consultaInstance) {
 			if (params.version) {
 				def version = params.version.toLong()
-				if (historiaClinicaInstance.version > version) {
+				if (consultaInstance.version > version) {
 					
-					historiaClinicaInstance.
+					consultaInstance.
 					errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
-					render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
+					//render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
+					render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:ocnsultaInstance)}<br/> ${g.renderErrors(bean:consultaInstance.paciente)} </div>	"
 					return
 				}
 			}
-			historiaClinicaInstance.properties = params
-			if (!historiaClinicaInstance.hasErrors() && historiaClinicaInstance.save(flush: true)) {
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), historiaClinicaInstance.id])}"
-				redirect(action: "show", id: historiaClinicaInstance.id)
+			consultaInstance.properties = params
+			//--------preparo los estudios complementarios a salvar y eliminar como asi tambien las prescripciones----
+			if (!consultaInstance.hasErrors() && consultaInstance.save(flush: true)) {
+				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), consultaInstance.id])}"
+				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
 			}
 			else {
 				render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
