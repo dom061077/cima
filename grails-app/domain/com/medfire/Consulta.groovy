@@ -48,6 +48,7 @@ class Consulta {
 	
 	static mapping = {
 		contenido type: "text"
+		paciente lazy:false
 	}
 	
 	

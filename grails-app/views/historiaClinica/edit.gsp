@@ -26,6 +26,7 @@
         	var consultaId = <%out << "${consultaInstance.id}"%>;
         	var locprescripciones =  "<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones')%>";
         	var loceditprescripciones = "<%out << g.createLink(controller:'historiaClinica',action:'editprescripciones')%>";
+        	var locshow = "<%out << g.createLink(controller:'historicaClinica',action:'show')%>"+"/"+consultaId;
         	var deletedImage = '<%out << g.resource(dir:'images',file:'deleted.png')%>'; 
         	$("#imagenUnoId").val('<%out << "${imagen1}"; %>');
         	//var strjson='[{"id":"2","imprimirPor":"Nombre Comercial","nombreComercial":"DIAMOX","nombreGenerico":"Acetazolamida","cantidad":"4","presentacion":"null"},{"id":"1","imprimirPor":"Nombre generico","nombreComercial":"ACEMUK","nombreGenerico":"Acetilciste&iacute;na","cantidad":"8","presentacion":"null"}]';
@@ -90,7 +91,7 @@
 
             
             
-            <form onSubmit="initsubmit();return true;" method="post" action="save" enctype="multipart/form-data" id="historiaFormId" >
+            <form onSubmit="initsubmit();return true;" method="post" enctype="multipart/form-data" id="historiaFormId" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${consultaInstance.paciente?.id}" format="000000" />
            			<br/>
@@ -377,7 +378,7 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-            				<g:hiddenField id="prescripcionesSerializedId" name="prescripciones" value="${prescripciones}"/>
+            				<g:hiddenField id="prescripcionesSerializedId" name="prescripcionesSerialized" value="${prescripciones}"/>
             				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
@@ -535,7 +536,8 @@
             
                 
                 <div style="padding: 10px 15px 15px 15px;">
-                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
+<%--                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />--%>
+                    <g:actionSubmit action="update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
                 </div>
             </form>
         </div>

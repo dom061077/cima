@@ -93,9 +93,8 @@ class HistoriaClinicaController {
 
 		}catch(ConsultaException e){
 			log.error "ERROR DE AL TRATAR DE GUARDAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
-			log.error "MENSAJE DE VALIDACION: "+e.message
+			log.error "MENSAJE DE ERROR: "+e.message
 			//render(view:"create", model:[consultaInstance: e.consulta, pacienteInstance:pacienteInstance, prescripciones:prescripcionesjson])
-			def consultaE=e.consulta
 			render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)}<br/> ${g.renderErrors(bean:e.consulta.paciente)} </div>	"
 					/*errors{
 						g.eachError(bean:consultaE){
@@ -121,6 +120,8 @@ class HistoriaClinicaController {
 	}
 
 	def edit = {
+		log.info "INGRESANDO AL CLOSURE edit"
+		log.info "PARAMETROS: $params"
 		def consultaInstance = Consulta.get(params.id)
 		if (!consultaInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Historia Clinica'), params.id])}"
@@ -134,7 +135,8 @@ class HistoriaClinicaController {
 	def update = {
 		log.info "INGRESANDO AL CLOSURE update"
 		log.info "PARAMS: $params"
-		def consultaInstance = consultaInstance.get(params.id)
+		log.debug "ID: ${params.id}"
+		def consultaInstance = Consulta.get(params.id)
 		if (consultaInstance) {
 			if (params.version) {
 				def version = params.version.toLong()
@@ -147,14 +149,18 @@ class HistoriaClinicaController {
 					return
 				}
 			}
-			consultaInstance.properties = params
-			//--------preparo los estudios complementarios a salvar y eliminar como asi tambien las prescripciones----
-			if (!consultaInstance.hasErrors() && consultaInstance.save(flush: true)) {
+			consultaInstance.properties = params.consulta
+			log.debug "CONTENIDO ENRIQUECIDO: "+consultaInstance.contenido+" desde params params.consulta.contenido"
+			log.debug "OBSERVACION DE ESTUDIO: "+consultaInstance.estudioComplementarioObs+" desde params params.consulta.estudioComplementarioObs"
+			try{
+				consultaInstance=historiaClinicaService.updateVisita(consultaInstance,params)
 				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), consultaInstance.id])}"
-				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
-			}
-			else {
-				render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
+				//render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
+				redirect(action: "show", id: consultaInstance.id)
+			}catch(ConsultaException e){
+				log.error "ERROR AL TRATAR DE MODIFICAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
+				log.error "MENSAJE DE ERROR: "+e.message
+				render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)}<br/> ${g.renderErrors(bean:e.consulta.paciente)} </div>	"
 			}
 		}
 		else {

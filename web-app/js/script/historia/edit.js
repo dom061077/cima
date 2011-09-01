@@ -180,7 +180,7 @@ $(document).ready(function(){
 			var retorno = $("#consultasalvadaId").val();
 			if(retorno){
 				$("#outputId").hide();
-				window.location='show/'+retorno;
+				window.location=locshow;
 			}
 				
 		}
