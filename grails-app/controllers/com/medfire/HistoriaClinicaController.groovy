@@ -30,6 +30,12 @@ class HistoriaClinicaController {
 	def create = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
+		def userInstance = User.load(authenticateService.userDomain().id)
+		if(!userInstance.profesionalAsignado){
+			flash.message = "No tiene un profesional asignado"
+			redirect(action: "list", params: params)
+			return
+		}
 		def pacienteInstance = Paciente.load(params.pacienteId.toLong())
 		def consultaInstance = new Consulta()
 		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance]
@@ -136,6 +142,25 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE update"
 		log.info "PARAMS: $params"
 		log.debug "ID: ${params.id}"
+		
+		if (params.consulta.fechaConsulta){
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+			def fecha
+			try{
+				fecha = df.parse(params.consulta.fechaConsulta)
+				log.debug "LA FECHA SE PARSEO BIEN"
+			}catch(ParseException e){
+				log.debug "LA FECHA NO SE PARSEO BIEN"
+			}
+			def gc = Calendar.getInstance()
+			gc.setTime(fecha)
+			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
+			params.consulta.fechaConsulta_year=gc.get(Calendar.YEAR).toString()
+			params.consulta.fechaConsulta_month=(gc.get(Calendar.MONTH)+1).toString()
+			params.consulta.fechaConsulta_day=gc.get(Calendar.DATE).toString()
+		}
+
+		
 		def consultaInstance = Consulta.get(params.id)
 		if (consultaInstance) {
 			if (params.version) {
@@ -169,19 +194,24 @@ class HistoriaClinicaController {
 	}
 
 	def delete = {
-		def historiaClinicaInstance = HistoriaClinica.get(params.id)
-		if (historiaClinicaInstance) {
+		log.info "INGRESANDO EL CLOSURE delete"
+		log.info "PARAMETROS: $params"
+		def consultaInstance = Consulta.get(params.id)
+		if (consultaInstance) {
 			try {
-				historiaClinicaInstance.delete(flush: true)
+				historiaClinicaService.deleteVisita(consultaInstance)
+				log.info "OPERACION EJECUTADA CORRECTAMENTE"
 				flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
 				redirect(action: "list")
 			}
 			catch (org.springframework.dao.DataIntegrityViolationException e) {
+				log.error "CONSTRAINT VIOLATION PARA ID: ${consultaInstance.id} - "+e.message
 				flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
 				redirect(action: "show", id: params.id)
 			}
 		}
 		else {
+			log.warn "NO SE ENCONTRO LA INSTANCIA CON ID ${consultaInstance.id} - DELETE CANCELADO"
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), params.id])}"
 			redirect(action: "list")
 		}

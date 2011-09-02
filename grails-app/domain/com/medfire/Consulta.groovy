@@ -48,6 +48,8 @@ class Consulta {
 	
 	static mapping = {
 		contenido type: "text"
+		estudioComplementarioObs type:"text"
+		impresion type:"text"
 		paciente lazy:false
 	}
 	

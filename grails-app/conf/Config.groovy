@@ -85,7 +85,7 @@ environments {
 bi.Profesional = [
 	//outputDir: 'path/to/output/dir',
 	//prefix: 'mySuperImage',
-	images: ['large':[scale:[width:100, height:100, type:ScaleType.APPROXIMATE]
+	images: ['large':[scale:[width:700, height:500, type:ScaleType.APPROXIMATE]
 					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
 					  ],
 			 'small':[scale:[width:25, height:25, type:ScaleType.ACCURATE]

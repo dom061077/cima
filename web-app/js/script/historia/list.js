@@ -64,7 +64,7 @@ $(document).ready(function(){
 						var cl = ids[i];
 						row = jQuery('#'+subgrid_table_id).getRowData(cl);
 						be = "<a href='edit/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'></span></a>";
-						se = "<a href='delete/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
+						se = "<a href='show/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
 						jQuery("#"+subgrid_table_id).jqGrid('setRowData',ids[i],{operaciones:be+se}); 
 						} 
 			    }

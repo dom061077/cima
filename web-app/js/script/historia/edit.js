@@ -198,7 +198,7 @@ $(document).ready(function(){
 		var i = index+1;
 		$('#imagen'+i+'Id').html('<a indice="'+index+'" id="imagen'+i+'Idthick" class="thickbox"   href="' + value.url + '" title="' + value.title 
 							+ '"><img src="' + value.url 
-							+ '" width="50" height="50" border="0" alt="' + value.title + '" /></a>');
+							+ '" width="25" height="25" border="0" alt="' + value.title + '" /></a>');
 		$('#imagen'+i+'Idthick').click(function(){
 				var t = this.title || this.name || null;
 				var a = this.href || this.alt;

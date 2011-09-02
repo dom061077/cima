@@ -34,7 +34,6 @@ class HistoriaClinicaService {
 	
 	def updateVisita(def consultaInstance, def params){
 		log.info "INGRESANDO AL METODO updateVisita"
-		log.info "PARAMETROS: $params"
 
 		def errorMessage = ""
 		// elimino todas las prescripciones para volverlas a cargar
@@ -49,9 +48,6 @@ class HistoriaClinicaService {
 			it.delete()
 		}
 		
-		if(!params.imagepropia.isEmpty()){
-			consultaInstance.addToEstudios(new EstudioComplementario(imagen:params.imagepropia))
-		}
 				
 		def prescripcionesjson
 		if(params.prescripcionesSerialized){
@@ -66,42 +62,42 @@ class HistoriaClinicaService {
 		def estudioInstance
 
 				// elimino las imagenes marcadas para la eliminacion
-//		if(params.deletedImgSerialized){
-//			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
-//			deletedimgjson?.each{
-//				estudioInstance = EstudioComplementario.get(it.id.toLong())
-//				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
-//				
-//				consultaInstance.removeFromEstudios(estudioInstance)
-//				estudioInstance.delete()
-//			}
-//		}
-		
-		
-		//log.debug "CANTIDAD DE IMAGENES: "+params.imagen.size()
-//		params.imagen.each{
-//			log.debug "getTypeContent de la imagen "+it.value.contentType
-//			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
-//			if(!it.value.isEmpty()){
-//				estudioInstance = new EstudioComplementario(consulta:consultaInstance,imagen:it.value)
-//				consultaInstance.addToEstudios(estudioInstance)
-//			}
-//		}
-		if(!params.imagepropia.isEmpty()){
-			
-			estudioInstance = new EstudioComplementario(imagen:params.imagepropia,consulta:consultaInstance)
-			log.debug "CLASS DE LA IMAGEN ANTES DE ADD TO ESTUDIOS"+estudioInstance.imagen.class
-			estudioInstance.validate()
-			log.debug "errores: "+estudioInstance.errors.allErrors
-			consultaInstance.addToEstudios(estudioInstance)
-		}
-
-		if(consultaInstance.validate() && consultaInstance.save(flush:true)){
-			consultaInstance.estudios.each {
-					log.debug "IMAGEN SALVADA CON imageUploadService "+it.id+" "+it.imagen?.class
-					if(!it.id)
-						imageUploadService.save(it)
+		if(params.deletedImgSerialized){
+			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
+			deletedimgjson?.each{
+				estudioInstance = EstudioComplementario.get(it.id.toLong())
+				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
+				
+				consultaInstance.removeFromEstudios(estudioInstance)
+				imageUploadService.delete(estudioInstance)
+				estudioInstance.delete()
 			}
+		}
+		
+		
+		params.imagen.each{
+			log.debug "getTypeContent de la imagen "+it.value.contentType
+			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
+			if(!it.value.isEmpty()){
+				estudioInstance = new EstudioComplementario(consulta:consultaInstance,imagen:it.value)
+				consultaInstance.addToEstudios(estudioInstance)
+				estudioInstance.save()
+				imageUploadService.save(estudioInstance)
+				
+			}
+		}
+		
+//		if(!params.imagepropia.isEmpty()){
+//			
+//			estudioInstance = new EstudioComplementario(imagen:params.imagepropia,consulta:consultaInstance)
+//			estudioInstance.validate()
+//			consultaInstance.addToEstudios(estudioInstance)
+//			estudioInstance.save()
+//			imageUploadService.save(estudioInstance)
+//		}
+		consultaInstance.properties = params.consulta
+		if(!consultaInstance.hasErrors() && consultaInstance.save()){
+
 			return consultaInstance
 		}else{
 			errorMessage="ERROR AL SALVAR LA INSTANCIA DE consultaInstance EN registrarVisita EN HistoriaClinicaService"
@@ -111,4 +107,22 @@ class HistoriaClinicaService {
 	
 		
 	}
+	
+	void deleteVisita(def consultaInstance){
+		log.info "INGRESANDO AL METODO deleteVisita "
+		log.info "PARAMETROS: $consultaInstance"
+//		consultaInstance.removeFromEstudios(estudioInstance)
+//		imageUploadService.delete(estudioInstance)
+//		estudioInstance.delete()
+		def listEstudios = EstudioComplementario.createCriteria().list{
+			eq("id",consultaInstance.id)
+		}
+		listEstudios.each{
+			consultaInstance.removeFromEstudios(it)
+			imageUploadService.delete(it)
+			it.delete()
+		}
+		consultaInstance.delete(flush:true)
+	}
+	
 }

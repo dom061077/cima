@@ -205,7 +205,7 @@ class GUtilDomainClass{
 					rowCount()
 				}
 			}else{
-				firstResult(params.page.toInteger()-1)
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
 				maxResults(params.rows.toInteger())
 				if(params.sidx && params.sord)
 					order(params.sidx,params.sord)
