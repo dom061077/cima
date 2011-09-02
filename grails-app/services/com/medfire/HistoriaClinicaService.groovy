@@ -32,11 +32,9 @@ class HistoriaClinicaService {
 		}
     }
 	
-	def updateVisita( def params,def request){
+	def updateVisita(def consultaInstance, def params){
 		log.info "INGRESANDO AL METODO updateVisita"
 		log.info "PARAMETROS: $params"
-		def consultaInstance = Consulta.get(params.id)
-		consultaInstance.properties = params.consulta
 
 		def errorMessage = ""
 		// elimino todas las prescripciones para volverlas a cargar
@@ -49,6 +47,10 @@ class HistoriaClinicaService {
 		listPrescripciones.each{
 			consultaInstance.removeFromPrescripciones(it)
 			it.delete()
+		}
+		
+		if(!params.imagepropia.isEmpty()){
+			consultaInstance.addToEstudios(new EstudioComplementario(imagen:params.imagepropia))
 		}
 				
 		def prescripcionesjson
@@ -64,19 +66,19 @@ class HistoriaClinicaService {
 		def estudioInstance
 
 				// elimino las imagenes marcadas para la eliminacion
-		if(params.deletedImgSerialized){
-			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
-			deletedimgjson?.each{
-				estudioInstance = EstudioComplementario.get(it.id.toLong())
-				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
-				
-				consultaInstance.removeFromEstudios(estudioInstance)
-				estudioInstance.delete()
-			}
-		}
+//		if(params.deletedImgSerialized){
+//			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
+//			deletedimgjson?.each{
+//				estudioInstance = EstudioComplementario.get(it.id.toLong())
+//				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
+//				
+//				consultaInstance.removeFromEstudios(estudioInstance)
+//				estudioInstance.delete()
+//			}
+//		}
 		
 		
-		log.debug "CANTIDAD DE IMAGENES: "+params.imagen.size()
+		//log.debug "CANTIDAD DE IMAGENES: "+params.imagen.size()
 //		params.imagen.each{
 //			log.debug "getTypeContent de la imagen "+it.value.contentType
 //			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
@@ -85,18 +87,20 @@ class HistoriaClinicaService {
 //				consultaInstance.addToEstudios(estudioInstance)
 //			}
 //		}
-		def archivo
-		if(!params.imagenxxx.isEmpty()){
-			archivo = request.getFile(params.imagenxxx.name)
-			log.debug "clase del archivo: "+archivo.class
-			estudioInstance = new EstudioComplementario(imagen:archivo)
+		if(!params.imagepropia.isEmpty()){
+			
+			estudioInstance = new EstudioComplementario(imagen:params.imagepropia,consulta:consultaInstance)
+			log.debug "CLASS DE LA IMAGEN ANTES DE ADD TO ESTUDIOS"+estudioInstance.imagen.class
+			estudioInstance.validate()
+			log.debug "errores: "+estudioInstance.errors.allErrors
 			consultaInstance.addToEstudios(estudioInstance)
 		}
 
 		if(consultaInstance.validate() && consultaInstance.save(flush:true)){
 			consultaInstance.estudios.each {
-					log.debug "IMAGEN SALVADA CON imageUploadService "+it.id
-					imageUploadService.save(it)
+					log.debug "IMAGEN SALVADA CON imageUploadService "+it.id+" "+it.imagen?.class
+					if(!it.id)
+						imageUploadService.save(it)
 			}
 			return consultaInstance
 		}else{

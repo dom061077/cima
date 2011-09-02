@@ -340,28 +340,12 @@
 <%--	            						<bi:img size="medium" bean="${estudio}"/>--%>
 <%--	           					</bi:hasImage>--%>
 <%--            				</g:each>--%>
-           					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1:"/></label>
-           					<br/>
-            				<div id="imagen1IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen1InpId" name="imagen.1" />
-            				</div>
-            				<div id="imagen1Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen1IdOp" calss="span-2 colborder">
-            				</div>
+
+            				<input  type="file" name="imagepropia" />
+
+
             				
-            				<div class="clear"></div>
-           					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2:"/></label>
-           					<br/>
-            				<div id="imagen2IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen2InpId" name="imagen.2" />
-            				</div>
-            				<div id="imagen2Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen2IdOp" calss="span-2 colborder">
-            				</div>
             				
-            				<input  type="file" id="imagen2InpId" name="imagenxxx" />
 
 
             				<div class="clear"></div>
