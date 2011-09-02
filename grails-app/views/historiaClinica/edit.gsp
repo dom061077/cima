@@ -33,6 +33,7 @@
         	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
+
             	var deletedImg = JSON.stringify(arrayDeletedImg);
             	$("#prescripcionesSerializedId").val(postData);
             	$("#deletedImgSerializedId").val(deletedImg);
@@ -91,7 +92,7 @@
 
             
             
-            <form onSubmit="initsubmit();return true;" method="post" enctype="multipart/form-data" id="historiaFormId" >
+            <form onSubmit="initsubmit();return true;" method="post" action="${g.createLink(controller:'historiaClinica',action:'update')}" enctype="multipart/form-data" id="historiaFormId" >
            		<div>
            			Historia Clínica: <g:formatNumber number="${consultaInstance.paciente?.id}" format="000000" />
            			<br/>
@@ -359,18 +360,20 @@
             				</div>
             				<div id="imagen2IdOp" calss="span-2 colborder">
             				</div>
+            				
+            				<input  type="file" id="imagen2InpId" name="imagenxxx" />
 
 
             				<div class="clear"></div>
-           					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3:"/></label>
-           					<br/>
-            				<div id="imagen3IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen3InpId" name="imagen.3" />
-            				</div>
-            				<div id="imagen3Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen3IdOp" calss="span-2 colborder">
-            				</div>
+<!--           					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3:"/></label>-->
+<!--           					<br/>-->
+<!--            				<div id="imagen3IdInp" class="span-6 colborder">-->
+<!--            					<input codigo="" type="file" id="imagen3InpId" name="imagen.3" />-->
+<!--            				</div>-->
+<!--            				<div id="imagen3Id" class="span-2 colborder">-->
+<!--            				</div>-->
+<!--            				<div id="imagen3IdOp" calss="span-2 colborder">-->
+<!--            				</div>-->
             				
             				<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"></g:hiddenField>
             				
@@ -378,7 +381,7 @@
             		</div>
             		<div id="tabs-4">
             			<fieldset>
-            				<g:hiddenField id="prescripcionesSerializedId" name="prescripcionesSerialized" value="${prescripciones}"/>
+            				<g:hiddenField id="prescripcionesSerializedId" name="prescripcionesSerialized" value=""/>
             				<div class="clear"></div>
                             <div class="span-18 colborder">
                             	<table id="prescripcionesId"></table>
@@ -536,8 +539,8 @@
             
                 
                 <div style="padding: 10px 15px 15px 15px;">
-<%--                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />--%>
-                    <g:actionSubmit action="update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
+                <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
+<!--                 <g:actionSubmit action="update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />-->
                 </div>
             </form>
         </div>

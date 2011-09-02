@@ -4,6 +4,7 @@ import com.medfire.enums.ImpresionVademecumEnum
 
 
 
+
 class HistoriaClinicaService {
 	def imageUploadService
     static transactional = true
@@ -31,9 +32,12 @@ class HistoriaClinicaService {
 		}
     }
 	
-	def updateVisita(Consulta consultaInstance, def params){
+	def updateVisita( def params,def request){
 		log.info "INGRESANDO AL METODO updateVisita"
 		log.info "PARAMETROS: $params"
+		def consultaInstance = Consulta.get(params.id)
+		consultaInstance.properties = params.consulta
+
 		def errorMessage = ""
 		// elimino todas las prescripciones para volverlas a cargar
 		
@@ -42,14 +46,15 @@ class HistoriaClinicaService {
 				eq("id",consultaInstance.id)
 			}
 		}
-		
-		listPrescripciones.each {
-			consultaInstance.removeFromPrescripciones(it) 
+		listPrescripciones.each{
+			consultaInstance.removeFromPrescripciones(it)
+			it.delete()
 		}
-		
+				
 		def prescripcionesjson
 		if(params.prescripcionesSerialized){
 			prescripcionesjson = grails.converters.JSON.parse(params.prescripcionesSerialized)
+			
 			prescripcionesjson?.each{
 				consultaInstance.addToPrescripciones(new Prescripcion(nombreComercial:it.nombreComercial
 					,nombreGenerico:it.nombreGenerico,presentacion:it.presentacion,impresion:ImpresionVademecumEnum."${it.imprimirPorValue}",cantidad:it.cantidad,secuencia:it.id))
@@ -62,19 +67,35 @@ class HistoriaClinicaService {
 		if(params.deletedImgSerialized){
 			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
 			deletedimgjson?.each{
-				estudioInstance = EstudioComplementario.get(deletedimgjson.id.toLong())
+				estudioInstance = EstudioComplementario.get(it.id.toLong())
+				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
+				
 				consultaInstance.removeFromEstudios(estudioInstance)
+				estudioInstance.delete()
 			}
 		}
-		params.imagen.each{
-			if(!it.value.isEmpty()){
-				consultaInstance.addToEstudios(new EstudioComplementario(imagen:it.value))
-			}
+		
+		
+		log.debug "CANTIDAD DE IMAGENES: "+params.imagen.size()
+//		params.imagen.each{
+//			log.debug "getTypeContent de la imagen "+it.value.contentType
+//			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
+//			if(!it.value.isEmpty()){
+//				estudioInstance = new EstudioComplementario(consulta:consultaInstance,imagen:it.value)
+//				consultaInstance.addToEstudios(estudioInstance)
+//			}
+//		}
+		def archivo
+		if(!params.imagenxxx.isEmpty()){
+			archivo = request.getFile(params.imagenxxx.name)
+			log.debug "clase del archivo: "+archivo.class
+			estudioInstance = new EstudioComplementario(imagen:archivo)
+			consultaInstance.addToEstudios(estudioInstance)
 		}
 
-		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save()){
+		if(consultaInstance.validate() && consultaInstance.save(flush:true)){
 			consultaInstance.estudios.each {
-				if(!it.id)
+					log.debug "IMAGEN SALVADA CON imageUploadService "+it.id
 					imageUploadService.save(it)
 			}
 			return consultaInstance
