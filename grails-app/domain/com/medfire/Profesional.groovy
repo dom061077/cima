@@ -28,6 +28,8 @@ class Profesional {
 	Boolean activo
 	String tipoMatricula//tipo enum
 	Boolean sexo
+	
+	AntecedenteLabel antecedenteLabel
 
     static constraints = {
 		matricula(nullable:false,blank:false)
@@ -49,6 +51,7 @@ class Profesional {
 		activo(nullable:true,blank:true)
 		tipoMatricula(nullable:true,blank:true)
 		sexo(nullable:true,blank:true)
+		
     }
 
 	void setNombre(String s){
@@ -64,6 +67,7 @@ class Profesional {
 
 	static mapping = {
 		sort nombre:"desc"
+		antecedenteLabel lazy:false
 	}		
 	
 }

@@ -67,8 +67,9 @@
         <g:layoutHead />
         <g:javascript library="application" />
         <style type="text/css">
-        
-       
+        	body{
+       			font-size:65%;
+       			}
         
         				.ui-autocomplete-loading { background: white url('<%out << g.resource(dir:'images',file:'load.gif')%>') right center no-repeat; }
 

@@ -9,6 +9,7 @@ import com.medfire.Provincia
 import com.medfire.Localidad
 import com.medfire.Paciente
 import com.medfire.Profesional
+import com.medfire.AntecedenteLabel
 import org.apache.commons.io.FileUtils;
 import groovy.sql.Sql;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
@@ -71,6 +72,7 @@ class BootStrap {
 			new Requestmap(url:"/obraSocial/listjsonautocomplete",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/obraSocial/listsearchjson",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/vademecum/list",configAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
+			new Requestmap(url:"/antecedenteLabel/**",configAttribute:"ROLE_ADMIN,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/principioActivo/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/grupoTerapeutico/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/laboratorio/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
@@ -87,7 +89,7 @@ class BootStrap {
 			def user = new User(username:"admin",passwd: authenticateService.encodePassword('admin')
 				,email:"dom061077@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false).save()
 			
-			def prof = new Profesional(nombre:"RUBEN ZALAZAR",matricula:new Integer(22334)).save(failOnError:true)
+			def prof = new Profesional(nombre:"RUBEN ZALAZAR",matricula:new Integer(22334),antecedenteLabel:new AntecedenteLabel(t1:"Consulta")).save(failOnError:true)
 				
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
@@ -95,14 +97,14 @@ class BootStrap {
 			userprof = new User(username:"ortega",passwd: authenticateService.encodePassword("ortega")
 				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"ORTEGA ANDRES DAVID",esProfesional:true).save()
 			
-			prof=new Profesional(nombre:"DANIEL GONZALEZ",matricula:new Integer(77689)).save(failOnError:true)	
+			prof=new Profesional(nombre:"DANIEL GONZALEZ",matricula:new Integer(77689),antecedenteLabel:new AntecedenteLabel(t1Label:"Consulta")).save(failOnError:true)	
 					 	
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
 					
 			userprof = new User(username:"skiby",passwd: authenticateService.encodePassword("skiby")
 				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"JORGE SKIBY",esProfesional:true).save()
-			prof=new Profesional(nombre:"skiby",matricula:new Integer(9999)).save()		
+			prof=new Profesional(nombre:"skiby",matricula:new Integer(9999),antecedenteLabel:new AntecedenteLabel(t1Label:"Consulta")).save()		
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
 						

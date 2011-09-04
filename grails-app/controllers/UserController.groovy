@@ -5,7 +5,7 @@ import com.medfire.Role
  * User controller.
  */
 class UserController {
-
+   
 	def authenticateService
 
 	// the delete, save and update actions only accept POST requests
@@ -67,11 +67,13 @@ class UserController {
 	}
 
 	def edit = {
-
+		log.info "INGRESANDO AL CLOSURE edit"
+		log.info "PARAMETROS: $params"
 		def person = User.get(params.id)
 		if (!person) {
-			flash.message = "User not found with id $params.id"
+			flash.message = "Usuario no encontrado $params.id"
 			redirect action: list
+			log.info "USUARIO NO ENCONTRADO"
 			return
 		}
 
@@ -82,21 +84,25 @@ class UserController {
 	 * Person update action.
 	 */
 	def update = {
-
+		log.info "INGRESANDO AL CLOSURE update"
+		log.info "PARAMETROS: $params"
 		def person = User.get(params.id)
 		if (!person) {
-			flash.message = "User not found with id $params.id"
+			flash.message = "Usuario no encontrado con el id: $params.id"
 			redirect action: edit, id: params.id
+			log.warn "USUARIO NO ENCONTRADO CON EL ID: $params.id"
 			return
 		}
 
 		long version = params.version.toLong()
 		if (person.version > version) {
+			log.warn  "OTRO USUARIO ESTA MODIFICANDO ESTE REGISTRO"
 			person.errors.rejectValue 'version', "person.optimistic.locking.failure",
 				"Another user has updated this User while you were editing."
 				render view: 'edit', model: buildPersonModel(person)
 			return
 		}
+		
 
 		def oldPassword = person.passwd
 		person.properties = params
@@ -104,16 +110,19 @@ class UserController {
 			person.passwd = authenticateService.encodePassword(params.passwd)
 		}
 		if (person.save()) {
+			log.info "REGISTRO MODIFICADO"
 			Role.findAll().each { it.removeFromPeople(person) }
 			addRoles(person)
 			redirect action: show, id: person.id
 		}
 		else {
+			log.warn "ERRORES DE VALIDACION ENCONTRADOS"
 			render view: 'edit', model: buildPersonModel(person)
 		}
 	}
 
 	def create = {
+		log.info "INGRESANDO AL CLOSURE create"
 		[person: new User(params), authorityList: Role.list()]
 	}
 
@@ -121,15 +130,18 @@ class UserController {
 	 * Person save action.
 	 */
 	def save = {
-
+		log.info "INGRESANDO AL CLOSURE save"
+		log.info "PARAMETROS: $params"
 		def person = new User()
 		person.properties = params
 		person.passwd = authenticateService.encodePassword(params.passwd)
 		if (person.save()) {
+			log.info "REGISTRO SALVADO"
 			addRoles(person)
 			redirect action: show, id: person.id
 		}
 		else {
+			log.warn "ERRORES DE VALIDACION"
 			render view: 'create', model: [authorityList: Role.list(), person: person]
 		}
 	}
@@ -143,7 +155,7 @@ class UserController {
 	}
 
 	private Map buildPersonModel(person) {
-
+		log.info "METODO PRIVADO buildPersonModel"
 		List roles = Role.list()
 		roles.sort { r1, r2 ->
 			r1.authority <=> r2.authority
@@ -156,7 +168,8 @@ class UserController {
 		for (role in roles) {
 			roleMap[(role)] = userRoleNames.contains(role.authority)
 		}
+		log.info "MODELO DEVUELTO: ${person.id} ${person.username}, roles: roleMap"
 
-		return [person: person, roleMap: roleMap]
+		return [userInstance: person, roleMap: roleMap]
 	}
 }

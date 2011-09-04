@@ -76,7 +76,7 @@
 		                            </g:hasErrors>	
                                     <label for="passwd"><g:message code="user.passwd.label" default="Passwd" /></label>
                                     
-                                    <g:passwordField class="ui-widget ui-corner-all ui-widget-content" name="passwd" value="${userInstance?.passwd}" />
+                                    <g:passwordField  class="ui-widget ui-corner-all ui-widget-content" name="passwd" value="${userInstance?.passwd}" />
 	                                    <g:hasErrors bean="${userInstance}" field="passwd">
 	                                    	<br/>
                                     		<g:renderErrors bean="${userInstance}" as="list" field="passwd"/>
@@ -134,7 +134,7 @@
                         			<br/>
                 
                             <br/>
-							<g:each var="entry" in="${authorityList}">
+							<g:each var="entry" in="${rolesList}">
 								${entry.key.authority.encodeAsHTML()}
 								<g:checkBox name="${entry.key.authority}" value="${entry.value}"/>
 								<br/>								
@@ -145,7 +145,7 @@
                 </div>
                 <br/>
                 <div class="buttons">
-                    <span class="button"><g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
+                    <span class="button"><g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="updaterefactor" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </div>
             </g:form>

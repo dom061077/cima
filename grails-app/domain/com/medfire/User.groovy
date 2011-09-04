@@ -37,5 +37,7 @@ class User {
 		profesionalAsignado(blank:true, nullable:true)
 	}
 	
-	//static mapping = {medicos sort:"nombre"}
+	static mapping = {
+		profesionalAsignado lazy:false
+	}
 }

@@ -41,7 +41,7 @@
 									var obj; 
 									for(var i=0;i < ids.length;i++){ 
 										var cl = ids[i];
-										be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
+										be = "<a href='editrefactor/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
 										jQuery("#list").jqGrid('setRowData',ids[i],{operaciones:be}); 
 										} 
 								}, 						    

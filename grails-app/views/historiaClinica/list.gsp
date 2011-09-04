@@ -22,7 +22,7 @@
         </div --%>
         
         <g:if test="${flash.message}">
-        <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
+        <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
         </g:if>
         
         <div class="body">
