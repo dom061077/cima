@@ -94,38 +94,34 @@
 
 <div class="container">
 
-    
-<div style="display:none" id="MenuJqGrid">
-
-        <ul>
-            <li id="atendido">
-                <img src="themes/contextMenu/edit.png" />
-                Atendido</li>
-            <li id="ausente">
-                <img src="themes/contextMenu/cut.png" />
-                Ausente</li>
-            <li id="anulado">
-                <img src="themes/contextMenu/copy.png" />
-                Anulado</li>
-            <li id="pendiente">
-                <img src="themes/contextMenu/paste.png" />
-                Pendiente</li>
-            <li id="datosdelpaciente">
-                <img src="themes/contextMenu/delete.png" />
-                Datos del Paciente</li>
-
-        </ul>
-    </div>
-    
-	<div style="position:absolute;top:200px;left:10px; id="exploradorId">
-			<div id="turnosesperaId">
-					<table id="listturnos"></table>
-			</div>		
-	</div>
+			<div style="display:none" id="MenuJqGrid">
+		        <ul>
+		            <li id="atendido">
+		                <img src="themes/contextMenu/edit.png" />
+		                Atendido</li>
+		            <li id="ausente">
+		                <img src="themes/contextMenu/cut.png" />
+		                Ausente</li>
+		            <li id="anulado">
+		                <img src="themes/contextMenu/copy.png" />
+		                Anulado</li>
+		            <li id="pendiente">
+		                <img src="themes/contextMenu/paste.png" />
+		                Pendiente</li>
+		            <li id="datosdelpaciente">
+		                <img src="themes/contextMenu/delete.png" />
+		                Datos del Paciente</li>
+		
+		        </ul>
+		    </div> <!-- tag cierre del div MenuJqGrid -->
+		    
+			<div style="position:absolute;top:200px;left:10px; id="exploradorId">
+					<div id="turnosesperaId">
+							<table id="listturnos"></table>
+					</div>		
+			</div>
 	
 			<div style="display:none" id="dialog-form" title="Cambiar estado turno">
-				
-			
 				<form id="formturnosId">
 					<table>
 						<tr class="prop">
@@ -147,7 +143,6 @@
 								<input type="text" disabled id="fechaturnoId"/>
 							</td>
 						</tr>								
-						
 						<tr class="prop">
 							<td valign="top" class="name">
 								<label for='estado'>Estado del Turno:</label>	
@@ -160,22 +155,17 @@
 					</table>									
 				</form>
 			</div>
-	
-    
-        <div>
 
-            <div>
-            
-            	 
-            </div><!-- end branding -->
+
+
+<div class="span-24 last append-bottom colborder">
+	<div class="span-11 colborder prepend-2 append-6">    
             <g:isLoggedIn>
 				<div>
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
 				</div>
 			</g:isLoggedIn>
-
-            <div>
-            	<g:isLoggedIn>
+           	<g:isLoggedIn>
 		            <ul class="dropdown dropdown-horizontal" >
 						<li><a href="./" class="dir">Archivo</a>
 							<ul>
@@ -203,23 +193,20 @@
 									</g:ifAnyGranted>
 								</ul>
 							</li>
-						
 						<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>
 					</ul>
-				</g:isLoggedIn>	
-            </div>
-			
-            <hr />
-            
-        </div><!-- end header -->
-
-		<div>
+			</g:isLoggedIn>	
+	</div><!-- div cierre del menu -->
+	<div class="span-7 append-1 last">
+	</div>            
+</div> <!-- cierre del div de la cabecera -->
+		<div class="span-20 prepend-2 colborder">
 			<div>
 	        	<g:layoutBody />
 			</div>
 		</div>	
-        <div>
-        	<p>
+        <div class="span-24 last prepend-top">
+        	<p style="text-align:center">
             &copy; Copyright 2011 &lt;Medfire&gt; | Design by: Marca Registrada
             </p>
         </div><!-- end footer -->
