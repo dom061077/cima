@@ -30,6 +30,69 @@
                         </tr>
                     
                         <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t1Label.label" default="T1 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t1Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t2Label.label" default="T2 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t2Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t3Label.label" default="T3 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t3Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t4Label.label" default="T4 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t4Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t5Label.label" default="T5 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t5Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t6Label.label" default="T6 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t6Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t7Label.label" default="T7 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t7Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t8Label.label" default="T8 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t8Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.t9Label.label" default="T9 Label" /></td>
+                            
+                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t9Label")}</td>
+                            
+                        </tr>
+                    
+                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="antecedenteLabel.t10Label.label" default="T10 Label" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t10Label")}</td>
@@ -100,13 +163,6 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t1Label.label" default="T1 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t1Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
                             <td valign="top" class="name"><g:message code="antecedenteLabel.t20Label.label" default="T20 Label" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t20Label")}</td>
@@ -128,58 +184,9 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t2Label.label" default="T2 Label" /></td>
+                            <td valign="top" class="name"><g:message code="antecedenteLabel.profesional.label" default="Profesional" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t2Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t3Label.label" default="T3 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t3Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t4Label.label" default="T4 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t4Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t5Label.label" default="T5 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t5Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t6Label.label" default="T6 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t6Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t7Label.label" default="T7 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t7Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t8Label.label" default="T8 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t8Label")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="antecedenteLabel.t9Label.label" default="T9 Label" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: antecedenteLabelInstance, field: "t9Label")}</td>
+                            <td valign="top" class="value"><g:link controller="profesional" action="show" id="${antecedenteLabelInstance?.profesional?.id}">${antecedenteLabelInstance?.profesional?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

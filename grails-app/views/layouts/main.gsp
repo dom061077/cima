@@ -177,22 +177,31 @@
 								<li><a href="./">Cambiar Contraseña</a></li>
 							</ul>
 						</li>
-							<li><a href="./" class="dir">Actualizaciones</a>
+						<g:ifAnyGranted role="ROLE_PROFESIONAL">
+							<li><a href="./" class="dir">Edición</a>
 								<ul>
-									<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER">
-										<li><a href="${createLink(controller:'obraSocial',action:'list')}">Obra Social</a></li>
-										<li><a href="${createLink(controller:'event',action:'create')}">Turnos</a></li>
-										<li><a href="${createLink(controller:'profesional',action:'list')}">Profesionales</a> </li>
-										<li><a href="${createLink(controller:'laboratorio',action:'list')}">Laboratorios</a> </li>
-										<li><a href="${createLink(controller:'especialidadMedica',action:'list')}">Especialidades</a> </li>			
-									</g:ifAnyGranted>
-									<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">				
-										<li><a href="${createLink(controller:'paciente',action:'list')}">Pacientes</a></li>
-										<li><a href="${createLink(controller:'vademecum',action:'list')}">Vademecum</a></li>
-										<li><a href="${createLink(controller:'historiaClinica',action:'list')}">Historia Cínica</a> </li>
-									</g:ifAnyGranted>
-								</ul>
+<%--									<g:antecedenteLabel label="t1Label"/>--%>
+									<li><a href="${createLink(controller:'antecedenteLabel',action:response.encodeURL('/edit'))}">Etiquetas de Ficha Clínica</a></li>	
+								
+								</ul>							
 							</li>
+						</g:ifAnyGranted>
+						<li><a href="./" class="dir">Actualizaciones</a>
+							<ul>
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER">
+									<li><a href="${createLink(controller:'obraSocial',action:'list')}">Obra Social</a></li>
+									<li><a href="${createLink(controller:'event',action:'create')}">Turnos</a></li>
+									<li><a href="${createLink(controller:'profesional',action:'list')}">Profesionales</a> </li>
+									<li><a href="${createLink(controller:'laboratorio',action:'list')}">Laboratorios</a> </li>
+									<li><a href="${createLink(controller:'especialidadMedica',action:'list')}">Especialidades</a> </li>			
+								</g:ifAnyGranted>
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">				
+									<li><a href="${createLink(controller:'paciente',action:'list')}">Pacientes</a></li>
+									<li><a href="${createLink(controller:'vademecum',action:'list')}">Vademecum</a></li>
+									<li><a href="${createLink(controller:'historiaClinica',action:'list')}">Historia Cínica</a> </li>
+								</g:ifAnyGranted>
+							</ul>
+						</li>
 						<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>
 					</ul>
 			</g:isLoggedIn>	
@@ -200,12 +209,10 @@
 	<div class="span-7 append-1 last">
 	</div>            
 </div> <!-- cierre del div de la cabecera -->
-		<div class="span-20 prepend-2 colborder">
-			<div>
+		<div class="span-22 prepend-2 colborder last">
 	        	<g:layoutBody />
-			</div>
 		</div>	
-        <div class="span-24 last prepend-top">
+        <div class="span-24 last prepend-top colborder">
         	<p style="text-align:center">
             &copy; Copyright 2011 &lt;Medfire&gt; | Design by: Marca Registrada
             </p>

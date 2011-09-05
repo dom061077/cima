@@ -30,6 +30,87 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
+                                    <label for="t1Label"><g:message code="antecedenteLabel.t1Label.label" default="T1 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't1Label', 'errors')}">
+                                    <g:textField name="t1Label" value="${antecedenteLabelInstance?.t1Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t2Label"><g:message code="antecedenteLabel.t2Label.label" default="T2 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't2Label', 'errors')}">
+                                    <g:textField name="t2Label" value="${antecedenteLabelInstance?.t2Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t3Label"><g:message code="antecedenteLabel.t3Label.label" default="T3 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't3Label', 'errors')}">
+                                    <g:textField name="t3Label" value="${antecedenteLabelInstance?.t3Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t4Label"><g:message code="antecedenteLabel.t4Label.label" default="T4 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't4Label', 'errors')}">
+                                    <g:textField name="t4Label" value="${antecedenteLabelInstance?.t4Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t5Label"><g:message code="antecedenteLabel.t5Label.label" default="T5 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't5Label', 'errors')}">
+                                    <g:textField name="t5Label" value="${antecedenteLabelInstance?.t5Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t6Label"><g:message code="antecedenteLabel.t6Label.label" default="T6 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't6Label', 'errors')}">
+                                    <g:textField name="t6Label" value="${antecedenteLabelInstance?.t6Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t7Label"><g:message code="antecedenteLabel.t7Label.label" default="T7 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't7Label', 'errors')}">
+                                    <g:textField name="t7Label" value="${antecedenteLabelInstance?.t7Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t8Label"><g:message code="antecedenteLabel.t8Label.label" default="T8 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't8Label', 'errors')}">
+                                    <g:textField name="t8Label" value="${antecedenteLabelInstance?.t8Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="t9Label"><g:message code="antecedenteLabel.t9Label.label" default="T9 Label" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't9Label', 'errors')}">
+                                    <g:textField name="t9Label" value="${antecedenteLabelInstance?.t9Label}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
                                     <label for="t10Label"><g:message code="antecedenteLabel.t10Label.label" default="T10 Label" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't10Label', 'errors')}">
@@ -120,15 +201,6 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="t1Label"><g:message code="antecedenteLabel.t1Label.label" default="T1 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't1Label', 'errors')}">
-                                    <g:textField name="t1Label" value="${antecedenteLabelInstance?.t1Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                     <label for="t20Label"><g:message code="antecedenteLabel.t20Label.label" default="T20 Label" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't20Label', 'errors')}">
@@ -156,73 +228,10 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="t2Label"><g:message code="antecedenteLabel.t2Label.label" default="T2 Label" /></label>
+                                    <label for="profesional"><g:message code="antecedenteLabel.profesional.label" default="Profesional" /></label>
                                 </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't2Label', 'errors')}">
-                                    <g:textField name="t2Label" value="${antecedenteLabelInstance?.t2Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t3Label"><g:message code="antecedenteLabel.t3Label.label" default="T3 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't3Label', 'errors')}">
-                                    <g:textField name="t3Label" value="${antecedenteLabelInstance?.t3Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t4Label"><g:message code="antecedenteLabel.t4Label.label" default="T4 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't4Label', 'errors')}">
-                                    <g:textField name="t4Label" value="${antecedenteLabelInstance?.t4Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t5Label"><g:message code="antecedenteLabel.t5Label.label" default="T5 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't5Label', 'errors')}">
-                                    <g:textField name="t5Label" value="${antecedenteLabelInstance?.t5Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t6Label"><g:message code="antecedenteLabel.t6Label.label" default="T6 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't6Label', 'errors')}">
-                                    <g:textField name="t6Label" value="${antecedenteLabelInstance?.t6Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t7Label"><g:message code="antecedenteLabel.t7Label.label" default="T7 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't7Label', 'errors')}">
-                                    <g:textField name="t7Label" value="${antecedenteLabelInstance?.t7Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t8Label"><g:message code="antecedenteLabel.t8Label.label" default="T8 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't8Label', 'errors')}">
-                                    <g:textField name="t8Label" value="${antecedenteLabelInstance?.t8Label}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="t9Label"><g:message code="antecedenteLabel.t9Label.label" default="T9 Label" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 't9Label', 'errors')}">
-                                    <g:textField name="t9Label" value="${antecedenteLabelInstance?.t9Label}" />
+                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 'profesional', 'errors')}">
+                                    <g:select name="profesional.id" from="${com.medfire.Profesional.list()}" optionKey="id" value="${antecedenteLabelInstance?.profesional?.id}"  />
                                 </td>
                             </tr>
                         

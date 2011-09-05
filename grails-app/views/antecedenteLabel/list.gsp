@@ -24,15 +24,15 @@
                         
                             <g:sortableColumn property="id" title="${message(code: 'antecedenteLabel.id.label', default: 'Id')}" />
                         
-                            <g:sortableColumn property="t10Label" title="${message(code: 'antecedenteLabel.t10Label.label', default: 'T10 Label')}" />
+                            <g:sortableColumn property="t1Label" title="${message(code: 'antecedenteLabel.t1Label.label', default: 'T1 Label')}" />
                         
-                            <g:sortableColumn property="t11Label" title="${message(code: 'antecedenteLabel.t11Label.label', default: 'T11 Label')}" />
+                            <g:sortableColumn property="t2Label" title="${message(code: 'antecedenteLabel.t2Label.label', default: 'T2 Label')}" />
                         
-                            <g:sortableColumn property="t12Label" title="${message(code: 'antecedenteLabel.t12Label.label', default: 'T12 Label')}" />
+                            <g:sortableColumn property="t3Label" title="${message(code: 'antecedenteLabel.t3Label.label', default: 'T3 Label')}" />
                         
-                            <g:sortableColumn property="t13Label" title="${message(code: 'antecedenteLabel.t13Label.label', default: 'T13 Label')}" />
+                            <g:sortableColumn property="t4Label" title="${message(code: 'antecedenteLabel.t4Label.label', default: 'T4 Label')}" />
                         
-                            <g:sortableColumn property="t14Label" title="${message(code: 'antecedenteLabel.t14Label.label', default: 'T14 Label')}" />
+                            <g:sortableColumn property="t5Label" title="${message(code: 'antecedenteLabel.t5Label.label', default: 'T5 Label')}" />
                         
                         </tr>
                     </thead>
@@ -42,15 +42,15 @@
                         
                             <td><g:link action="show" id="${antecedenteLabelInstance.id}">${fieldValue(bean: antecedenteLabelInstance, field: "id")}</g:link></td>
                         
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t10Label")}</td>
+                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t1Label")}</td>
                         
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t11Label")}</td>
+                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t2Label")}</td>
                         
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t12Label")}</td>
+                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t3Label")}</td>
                         
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t13Label")}</td>
+                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t4Label")}</td>
                         
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t14Label")}</td>
+                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t5Label")}</td>
                         
                         </tr>
                     </g:each>
