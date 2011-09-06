@@ -13,11 +13,6 @@
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
 
-        <style type="text/css">
-        	.inputlarge{
-        		width: 350px;
-        	}
-        </style>
         
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
@@ -75,7 +70,7 @@
 		<div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="message"><h3>${flash.message}</h3></div>
             </g:if>
             
             <div id="outputId">
@@ -128,7 +123,7 @@
 		   							<g:select id="estadoId" name="consulta.estado" from="${com.medfire.enums.EstadoConsultaEnum.list()}" optionValue="name" value="${consultaInstance?.estado}"></g:select>
    							</div>
    							<div class="clear"></div>
-   							<div class="span-20 colborder" >
+   							<div class="span-20" >
    									
 								<textArea name="consulta.contenido" class="ckeditor"  id="contenidoId">
 									${consultaInstance?.contenido}
@@ -233,9 +228,6 @@
 			                                    	</g:hasErrors>
 			                            </div>         	
 										<div class="clear"></div>
-										<div class="span-20 colborder">
-											
-										</div>
 										
                  		</fieldset>
                  		<fieldset>
@@ -392,140 +384,162 @@
             		</div>
             		
             		<div id="tabs-5">
-            			<div class="span-22">
+            			<div class="span-21">
 	            				<fieldset>
 	            					<legend>Personales</legend>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.consulta">Consulta:</label>
+	            						<label for="paciente.antecedente.t1"><g:antecedenteLabel field="t1Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.consulta" value="${consultaInstance.paciente.antecedente?.consulta}"></g:textField>
+	            						<input type="checkbox" id="checklabel1Id" indice="1" name="consulta.paciente.antecedente.t1Check" />
+	            						<g:textField id="antecedentet1Id" class="inputlarge" name="consulta.paciente.antecedente.t1" value="${consultaInstance.paciente.antecedente?.t1}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.hipertension">Hiper.:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t2"><g:antecedenteLabel field="t2Label"/>:</label>
 	            						<br/>	            						
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.hipertension" value="${consultaInstance.paciente.antecedente?.hipertension}"></g:textField>
+	            						<g:checkBox id="checklabel2Id" indice="2"   name="consulta.paciente.antecedente.t2Check" value="${consultaInstance.paciente.antecedente?.t2Check}"></g:checkBox>
+	            						<g:textField id="antecedentet2Id" class="inputlarge" name="consulta.paciente.antecedente.t2" value="${consultaInstance.paciente.antecedente?.t2}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.coronariopatia">Coronariopatia:</label>
-	            						<br/>	            						
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.coronariopatia" value="${consultaInstance.paciente.antecedente?.hipertension}"></g:textField>
-	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.dislipidemia">Dislipidemia:</label>
+	            						<label for="paciente.antecedente.t3"><g:antecedenteLabel field="t3Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.dislipidemia" value="${consultaInstance.paciente.antecedente?.dislipidemia}"></g:textField>
+	            						<g:checkBox id="checklabel3Id" indice="3"   name="consulta.paciente.antecedente.t3Check" value="${consultaInstance.paciente.antecedente?.t3Check}" ></g:checkBox>
+	            						<g:textField id="antecedentet3Id" class="inputlarge" name="consulta.paciente.antecedente.t3" value="${consultaInstance.paciente.antecedente?.t3}"></g:textField>
+	            					</div>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t4"><g:antecedenteLabel field="t4Label"/>:</label>
+	            						<br/>
+	            						<g:checkBox id="checklabel4Id" indice="4"   name="consulta.paciente.antecedente.t4Check" value="${consultaInstance.paciente.antecedente?.t4Check}"></g:checkBox>
+	            						<g:textField id="antecedentet4Id" class="inputlarge" name="consulta.paciente.antecedente.t4" value="${consultaInstance.paciente.antecedente?.t4}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.asmaBronquial">Asma Bronquial:</label>
+	            						<label for="paciente.antecedente.t5"><g:antecedenteLabel field="t5Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.asmaBronquial" value="${consultaInstance.paciente.antecedente?.asmaBronquial}"></g:textField>
+	            						<g:checkBox id="checklabel5Id" indice="5"   name="consulta.paciente.antecedente.t5Check" value="${consultaInstance.paciente.antecedente?.t5Check}"></g:checkBox>
+	            						<g:textField id="antecedentet5Id" class="inputlarge" name="consulta.paciente.antecedente.asmaBronquial" value="${consultaInstance.paciente.antecedente?.t5}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.psocopatia">Psocopatía:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t6"><g:antecedenteLabel field="t6Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.psocopatia" value="${consultaInstance.paciente.antecedente?.psocopatia}"></g:textField>
+	            						<g:checkBox id="checklabel6Id" indice="6"   name="consulta.paciente.antecedente.t6Check" value="${consultaInstance.paciente.antecedente?.t6Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet6Id" class="inputlarge" name="consulta.paciente.antecedente.t6" value="${consultaInstance.paciente.antecedente?.t6}"></g:textField>
 	            					</div>
 	            					
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.alergia">Alergia:</label>
+	            						<label for="paciente.antecedente.t7"><g:antecedenteLabel field="t7Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.alergia" value="${consultaInstance.paciente.antecedente?.alergia}"></g:textField>
+	            						<g:checkBox id="checklabel7Id" indice="7"   name="consulta.paciente.antecedente.t7Check" value="${consultaInstance.paciente.antecedente?.t7Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet7Id" class="inputlarge" name="consulta.paciente.antecedente.t7" value="${consultaInstance.paciente.antecedente?.t7}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.tuberculosis">Tuberculosis:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t8"><g:antecedenteLabel field="t8Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.tuberculosis" value="${consultaInstance.paciente.antecedente?.tuberculosis}"></g:textField>
+	            						<g:checkBox id="checklabel8Id" indice="8"   name="consulta.paciente.antecedente.t8Check" value="${consultaInstance.paciente.antecedente?.t8Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet8Id" class="inputlarge" name="consulta.paciente.antecedente.t8" value="${consultaInstance.paciente.antecedente?.t8}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.atipia">Atipia:</label>
+	            						<label for="paciente.antecedente.t9"><g:antecedenteLabel field="t9Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.atipia" value="${consultaInstance.paciente.antecedente?.atipia}"></g:textField>
+	            						<g:checkBox id="checklabel9Id" indice="9"   name="consulta.paciente.antecedente.t9Check" value="${consultaInstance.paciente.antecedente?.t9Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet9Id" class="inputlarge" name="consulta.paciente.antecedente.t9" value="${consultaInstance.paciente.antecedente?.t9}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.gota">Gota:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t10"><g:antecedenteLabel field="t10Label"  />:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.gota" value="${consultaInstance.paciente.antecedente?.gota}"></g:textField>
+	            						<g:checkBox id="checklabel10Id" indice="10"   name="consulta.paciente.antecedente.t10Check" value="${consultaInstance.paciente.antecedente?.t10Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet10Id" class="inputlarge" name="consulta.paciente.antecedente.t10" value="${consultaInstance.paciente.antecedente?.t10}"></g:textField>
 	            					</div>
 
 
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.afeccionBroncopulmonar">Afecciones Broncopul.:</label>
+	            						<label for="paciente.antecedente.t11"><g:antecedenteLabel field="t11Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.afeccionBroncopulmonar" value="${consultaInstance.paciente.antecedente?.endicronopatia}"></g:textField>
+	            						<g:checkBox id="checklabel11Id" indice="11"   name="consulta.paciente.antecedente.t11Check"  value="${consultaInstance.paciente.antecedente?.t11Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet11Id" class="inputlarge" name="consulta.paciente.antecedente.t11" value="${consultaInstance.paciente.antecedente?.t11}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.endicronopatia">Endicronopatías:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t12"><g:antecedenteLabel field="t12Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.endicronopatia" value="${consultaInstance.paciente.antecedente?.endicronopatia}"></g:textField>
+	            						<g:checkBox id="checklabel12Id" indice="12"   name="consulta.paciente.antecedente.t12Check"  value="${consultaInstance.paciente.antecedente?.t12Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet12Id" class="inputlarge" name="consulta.paciente.antecedente.t12" value="${consultaInstance.paciente.antecedente?.t12}"></g:textField>
 	            					</div>
 	            					
+	            					<div class="clear"></div>	            					
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.nefropatia"><g:antecedenteLabel field="t13Label"/>:</label>
+	            						<br/>
+	            						<g:checkBox id="checklabel13Id" indice="13"   name="consulta.paciente.antecedente.t13Check"  value="${consultaInstance.paciente.antecedente?.t13Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet13Id" class="inputlarge" name="consulta.paciente.antecedente.t13" value="${consultaInstance.paciente.antecedente?.t13}"></g:textField>
+	            					</div>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t14"><g:antecedenteLabel field="t14Label"/>:</label>
+	            						<br/>
+	            						<g:checkBox id="checklabel14Id" indice="14"   name="consulta.paciente.antecedente.t14Check"  value="${consultaInstance.paciente.antecedente?.t14Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet14Id" class="inputlarge" name="consulta.paciente.antecedente.t14" value="${consultaInstance.paciente.antecedente?.t14}"></g:textField>
+	            					</div>
 	            					
+
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.nefropatia">Nefropatías:</label>
+	            						<label for="paciente.antecedente.t15"><g:antecedenteLabel field="t15Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.nefropatia" value="${consultaInstance.paciente.antecedente?.nefropatia}"></g:textField>
+	            						<g:checkBox id="checklabel15Id" indice="15"   name="consulta.paciente.antecedente.t15Check" value="${consultaInstance.paciente.antecedente?.t15Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet15Id" class="inputlarge" name="consulta.paciente.antecedente.t15" value="${consultaInstance.paciente.antecedente?.t15}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.uropatia">Uropatías:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t16"><g:antecedenteLabel field="t16Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.uropatia" value="${consultaInstance.paciente.antecedente?.uropatia}"></g:textField>
+	            						<g:checkBox id="checklabel16Id" indice="16"   name="consulta.paciente.antecedente.t16Check" value="${consultaInstance.paciente.antecedente?.t16Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet16Id" class="inputlarge" name="consulta.paciente.antecedente.t16" value="${consultaInstance.paciente.antecedente?.t16}"></g:textField>
 	            					</div>
 
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.hemopatia">Hemopatías:</label>
+	            						<label for="paciente.antecedente.t17"><g:antecedenteLabel field="t17Label"/>:</label>
 	            						<br/>
-	            						<g:textField name="consulta.paciente.antecedente.hemopatia" value="${consultaInstance.paciente.antecedente?.hemopatia}"></g:textField>
+	            						<g:checkBox id="checklabel17Id" indice="17"   name="consulta.paciente.antecedente.t17Check" value="${consultaInstance.paciente.antecedente?.t17Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet17Id" class="inputlarge" name="consulta.paciente.antecedente.t17" value="${consultaInstance.paciente.antecedente?.t17}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.ets">E.T.S:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t18"><g:antecedenteLabel field="t18Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.ets" value="${consultaInstance.paciente.antecedente?.ets}"></g:textField>
-	            					</div>
-
-	            					<div class="clear"></div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.ulceraGastroduodenal">Ulcera Gastroduodenal:</label>
-	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.ulceraGastroduodenal" value="${consultaInstance.paciente.antecedente?.ulceraGastroduodenal}"></g:textField>
-	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.hepatitis">Hepatitis:</label>
-	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.hepatitis" value="${consultaInstance.paciente.antecedente?.hepatitis}"></g:textField>
-	            					</div>
-
-	            					<div class="clear"></div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.colecistopatia">Colecistopatía:</label>
-	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.colecistopatia" value="${consultaInstance.paciente.antecedente?.colecistopatia}"></g:textField>
-	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.enfermedadNeurologica">Enferm. Neurológicas:</label>
-	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.enfermedadNeurologica" value="${consultaInstance.paciente.antecedente?.enfermedadNeurologica}"></g:textField>
+	            						<g:checkBox id="checklabel18Id" indice="18"   name="consulta.paciente.antecedente.t18Check" value="${consultaInstance.paciente.antecedente?.t18Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet18Id" class="inputlarge" name="consulta.paciente.antecedente.t18" value="${consultaInstance.paciente.antecedente?.t18}"></g:textField>
 	            					</div>
 	            					
 	            					<div class="clear"></div>
 	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.fiebreProlongada">Fiebre Prolongada:</label>
+	            						<label for="paciente.antecedente.t19"><g:antecedenteLabel field="t19Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.fiebreProlongada" value="${consultaInstance.paciente.antecedente?.fiebreProlongada}"></g:textField>
+	            						<g:checkBox id="checklabel19Id" indice="19"   name="consulta.paciente.antecedente.t19Check"  value="${consultaInstance.paciente.antecedente?.t19Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet19Id" class="inputlarge" name="consulta.paciente.antecedente.t19" value="${consultaInstance.paciente.antecedente?.t19}"></g:textField>
 	            					</div>
-	            					<div class="span-9 colborder">
-	            						<label for="paciente.antecedente.colagenopatia">Colagenopatías:</label>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t20"><g:antecedenteLabel field="t20Label"/>:</label>
 	            						<br/>
-	            						<g:textField class="inputlarge" name="consulta.paciente.antecedente.colagenopatia" value="${consultaInstance.paciente.antecedente?.colagenopatia}"></g:textField>
+	            						<g:checkBox id="checklabel20Id" indice="20"   name="consulta.paciente.antecedente.t20Check" value="${consultaInstance.paciente.antecedente?.t20Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet20Id" class="inputlarge" name="consulta.paciente.antecedente.t20" value="${consultaInstance.paciente.antecedente?.t20}"></g:textField>
+	            					</div>
+	            					
+	            					<div class="clear"></div>
+	            					<div class="span-9 colborder">
+	            						<label for="paciente.antecedente.t21"><g:antecedenteLabel field="t21Label"/>:</label>
+	            						<br/>
+	            						<g:checkBox id="checklabel21Id" indice="21"   name="consulta.paciente.antecedente.t21Check" value="${consultaInstance.paciente.antecedente?.t21Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet21Id" class="inputlarge" name="consulta.paciente.antecedente.t21" value="${consultaInstance.paciente.antecedente?.t21}"></g:textField>
+	            					</div>
+	            					<div class="span-9">
+	            						<label for="paciente.antecedente.t22"><g:antecedenteLabel field="t22Label"/>:</label>
+	            						<br/>
+	            						<g:checkBox id="checklabel22Id" indice="22"   name="consulta.paciente.antecedente.t22Check"  value="${consultaInstance.paciente.antecedente?.t22Check}"></g:checkBox>	            						
+	            						<g:textField id="antecedentet22Id" class="inputlarge" name="consulta.paciente.antecedente.t22" value="${consultaInstance.paciente.antecedente?.t22}"></g:textField>
 	            					</div>
 
 	            					
@@ -535,10 +549,11 @@
 	            					<div class="span-9">
 	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
 	            						<br/>
-	            						<g:textArea class="title" name="consulta.paciente.antecedente.antecedenteFamiliar" value="${consultaInstance.paciente.antecedente?.antecedenteFamiliar}"></g:textArea>
+	            						<g:textArea  class="title" name="consulta.paciente.antecedente.antecedenteFamiliar" value="${consultaInstance.paciente.antecedente?.antecedenteFamiliar}"></g:textArea>
 	            					</div>
 	            				</fieldset>
 						</div>					
+            		
             		</div><!-- cierre div tabs-5 -->
             		<div class="clear"></div>
             		

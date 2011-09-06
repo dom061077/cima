@@ -45,7 +45,7 @@ $(document).ready(function(){
 		url:'listprescripciones'
 		,editurl:'editprescripciones'
 		,datatype: "json"
-		,width:700
+		,width:800
 		,rownumbers:true
 		,colNames:['Id','Nombre Comercial', 'Nombre Genérico','Presentación', 'Cantidad','Imprimir Por Valor','Imprimir Por']
 		,colModel:[ 
@@ -181,7 +181,8 @@ $(document).ready(function(){
 			if(retorno){
 				$("#outputId").hide();
 				window.location='show/'+retorno;
-			}
+			}else
+				scroll(0,0);	
 				
 		}
 	};

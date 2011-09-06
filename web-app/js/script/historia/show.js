@@ -16,7 +16,7 @@ $(document).ready(function(){
 		width:380,
 		url:locprescripciones,
 		mtype:'POST',
-		width:550,
+		width:800,
 		rownumbers:true,
 		//pager:'pagerPrescripciones',
 		datatype:'json'
@@ -32,6 +32,11 @@ $(document).ready(function(){
 		]
 		});
 		
-		
+
+	for(var i=1;i<=22;i++){
+		$('#checklabel'+i+'Id').attr('disabled','disabled');
+	}
+	
+	
 	
 });
