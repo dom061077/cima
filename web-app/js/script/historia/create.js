@@ -144,10 +144,26 @@ $(document).ready(function(){
 		{} // search options 
 	);	
 	
-	//---inicializo los datos de la grilla si el create proviene de un redirect del save--
 	
+	//--------incializo eventos de los checkboxes de los antecedentes familiares------
+	for(var i=1;i<=22;i++){
+		$('#checklabel'+i+'Id').click(function (){
+			var indice = $(this).attr('indice');
+			
+			var check = $('#checklabel'+indice+'Id').is(':checked');
+    		if (check==true) {
+    			$('#antecedentet'+indice+'Id').removeAttr('disabled');
+    			$('#antecedentet'+indice+'Id').focus();
+    		}else{
+    			$('#antecedentet'+indice+'Id').val('');
+    			$('#antecedentet'+indice+'Id').attr('disabled','disabled');
+    		}
+			
+		});
+		$('#antecedentet'+i+'Id').attr('disabled','disabled');
+	}
 
-		
+			
 
 		
 	

@@ -31,13 +31,22 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		def userInstance = User.load(authenticateService.userDomain().id)
+
 		if(!userInstance.profesionalAsignado){
 			flash.message = "No tiene un profesional asignado"
 			redirect(action: "list", params: params)
 			return
+		} 
+		def pacienteInstance
+		pacienteInstance= Paciente.get(params.pacienteId)
+		if(!pacienteInstance){
+			log.error "PACIENTE CON $params.pacienteId NO ENCONTRADO"
+			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'paciente.label', default: 'Paciente'), params.id])}"
+			redirect(action: "list")
+			return
 		}
-		def pacienteInstance = Paciente.load(params.pacienteId.toLong())
 		def consultaInstance = new Consulta()
+		log.debug "RENDER CREATE GSP"
 		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance]
 	}
 

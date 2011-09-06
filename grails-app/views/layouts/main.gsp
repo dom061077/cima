@@ -181,7 +181,7 @@
 							<li><a href="./" class="dir">Edición</a>
 								<ul>
 <%--									<g:antecedenteLabel label="t1Label"/>--%>
-									<li><a href="${createLink(controller:'antecedenteLabel',action:response.encodeURL('/edit'))}">Etiquetas de Ficha Clínica</a></li>	
+									<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'edit')+g.antecedenteLabel(field:'id',url:true))}">Etiquetas de Ficha Clínica</a></li>	
 								
 								</ul>							
 							</li>

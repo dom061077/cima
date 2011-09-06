@@ -21,12 +21,13 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div --%>
         
-        <g:if test="${flash.message}">
-        <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
-        </g:if>
         
         <div class="body">
 	        <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+	        <g:if test="${flash.message}">
+	        <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
+	        </g:if>
+	        
 	        <div class="body">
 				<table style="z-index:1"  id="listhistoria"></table>
 				<div id="pagerhistoria" ></div>

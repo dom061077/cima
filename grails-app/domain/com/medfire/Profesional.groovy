@@ -53,6 +53,8 @@ class Profesional {
 		sexo(nullable:true,blank:true)
 		
     }
+	
+
 
 	void setNombre(String s){
 		nombre = s?.toUpperCase()
