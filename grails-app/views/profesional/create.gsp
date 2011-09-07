@@ -170,81 +170,106 @@
                 	</ul>
                 	<div id="tabs-1">
                 		<fieldset>
+                				<div class="span-3 spanlabel">
 		                                	<g:hasErrors bean="${profesionalInstance}" field="matricula">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="matricula"><g:message code="profesional.matricula.label" default="Matricula" /></label>
+		                                    <label for="matricula"><g:message code="profesional.matricula.label" default="Matricula:" /></label>
+		                        </div>
+		                        <div class="span-4">             
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="matricula" value="${fieldValue(bean: profesionalInstance, field: 'matricula')}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="matricula">
 				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="matricula"/>
 			                                    	</div>
 				                                    </g:hasErrors>	
-		                                    <br/>
-
+								</div>
+								
+								
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">								
 		                                	<g:hasErrors bean="${profesionalInstance}" field="nombre">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="nombre"><g:message code="profesional.nombre.label" default="Nombre" /></label>
+		                                    <label for="nombre"><g:message code="profesional.nombre.label" default="Nombre:" /></label>
+								</div>
+		                        <div class="span-4">										                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${profesionalInstance?.nombre}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="nombre">
 				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="nombre"/>
 			                                    	</div>
 				                                    </g:hasErrors>	
-		                                    
-		                                    <br/>	
-		                                    	                        
+								</div>		
+								
+								                                    
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">										                                    
 		                                	<g:hasErrors bean="${profesionalInstance}" field="domicilio">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="domicilio"><g:message code="profesional.domicilio.label" default="Domicilio" /></label>
+		                                    <label for="domicilio"><g:message code="profesional.domicilio.label" default="Domicilio:" /></label>
+								</div>
+		                        <div class="span-4">																						                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${profesionalInstance?.domicilio}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="domicilio">
 				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="domicilio"/>
 			                                    	</div>
-			                                    	
-				                                    </g:hasErrors>	
-		                                    <br/>
-		                                    
-		                                    
+				                                    </g:hasErrors>
+								</div>		
+										                                    	
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">										                                    
 		                                	<g:hasErrors bean="${profesionalInstance}" field="codigoPostal">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
 		                                    <label for="codigoPostal"><g:message code="profesional.codigoPostal.label" default="Codigo Postal" /></label>
+								</div>
+								<div class="span-4">										                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="codigoPostal" value="${profesionalInstance?.codigoPostal}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="codigoPostal">
 				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="codigoPostal"/>
 			                                    	</div>
 			                                    	
-				                                    </g:hasErrors>	
-		                                    <br/>		                            
-		                            
+				                                    </g:hasErrors>
+				               	</div>     
+				               	                	
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">										                                    
 		                            		<label><g:message code="profesional.provincia.label" default="Provincia:"/></label>
+		                        </div>
+		                        <div class="span-3">    		
 		                            		<g:textField class="ui-widget ui-corner-all ui-widget-content" name="provinciadesc" id="provinciadescId" value="${profesionalInstance.localidad?.provincia?.nombre}" />
 		                            		<g:hiddenField id="provinciaId" name="provincia" value="${profesionalInstance.localidad?.provincia?.id}"/>
-		                                    <br/>	
-		                                    	                        
 		                                	<g:hasErrors bean="${profesionalInstance}" field="localidad">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
+		                                    </g:hasErrors>
+								</div>
+								
+								<div class="clear"></div>		                                    
+								<div class="span-3 spanlabel">		                                    	
 		                                    <label for="localidad"><g:message code="profesional.localidad.label" default="Localidad" /></label>
+								</div>
+								<div class="span-4">		                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" id="localidaddescId" name="localidaddesc" value="${profesionalInstance?.localidad?.nombre}" />
 		                                    <g:hiddenField id="localidadId" name="localidad.id" value="${profesionalInstance.localidad?.id}"/>
 				                                    <g:hasErrors bean="${profesionalInstance}" field="localidad">
 				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="localidad"/>
 			                                    	</div>
-			                                    	
 				                                    </g:hasErrors>	
-		                                    <br/>		                        
-		                        
+								</div>		      
+								
+								<div class="clear"></div>      
+								<div class="span-3 spanlabel">            
 		                                	<g:hasErrors bean="${profesionalInstance}" field="telefono">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
 		                                    <label for="telefono"><g:message code="profesional.telefono.label" default="Telefono" /></label>
+								</div>
+								<div class="span-4">		                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefono" value="${profesionalInstance?.telefono}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="telefono">
 				                                    	<br/>
@@ -252,12 +277,16 @@
 			                                    	</div>
 			                                    	
 				                                    </g:hasErrors>	
-  		                                    <br/>
-		                        
+								</div>
+								
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">
 		                                	<g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
 		                                    <label for="fechaNacimiento"><g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento" /></label>
+								</div>	
+								<div class="span-4">	                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaNacimientoId' name='fechaNacimiento' value="${g.formatDate(format:'dd/MM/yyyy',date:profesionalInstance?.fechaNacimiento)}" / noSelection="['': '']"/>
 				                                    <g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
 				                                    	<br/>
@@ -265,12 +294,16 @@
 			                                    	</div>
 			                                    	
 				                                    </g:hasErrors>	
-		                                    <br/>
-		                        
+								</div>	
+									                        
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">										                                    
 		                                	<g:hasErrors bean="${profesionalInstance}" field="numeroDocumento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
+		                                    </g:hasErrors>
 		                                    <label for="numeroDocumento"><g:message code="profesional.numeroDocumento.label" default="Numero Documento" /></label>
+		                        </div>
+		                        <div class="span-4">            
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="numeroDocumento" value="${fieldValue(bean: profesionalInstance, field: 'numeroDocumento')}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="numeroDocumento">
 				                                    	<br/>
@@ -278,13 +311,16 @@
 			                                    	</div>
 			                                    	
 				                                    </g:hasErrors>	
-		                                    <br/>
+								</div>
 
-
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">
 		                                	<g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
 		                                    <label for="tipoDocumento"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento" /></label>
+								</div>
+								<div class="span-4">		                                    	
 		                                    <g:select id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
 				                                    	<br/>
@@ -292,8 +328,7 @@
 			                                    	</div>
 			                                    	
 				                                    </g:hasErrors>	
-		                                    <br/>		                        
-		                        
+								</div>		                        
                 		</fieldset>
 		            </div>
 		            <div id="tabs-2">
