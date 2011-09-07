@@ -112,6 +112,7 @@ class GUtilDomainClass{
 				val= "%${val}%"
 		}
 		//println "== Parsing value ${rawValue} from param ${paramName}. type is ${mp.type}.  Final value ${val}. Type ${val?.class}"
+		log.info "VALOR RETORNADO: "+val
 		return val
 	}
 

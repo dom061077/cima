@@ -181,8 +181,8 @@ $(document).ready(function(){
 			if(retorno){
 				$("#outputId").hide();
 				window.location='show/'+retorno;
-			}else
-				scroll(0,0);	
+			}
+			scroll(0,0);	
 				
 		}
 	};

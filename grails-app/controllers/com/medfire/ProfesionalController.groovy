@@ -48,11 +48,33 @@ class ProfesionalController {
 			params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
 		}
 
+		
+		if (params.fechaIngreso){
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+			log.debug "FECHA REEMPLAZADA: "+params.fechaIngreso
+			def fecha
+			try{
+				fecha = df.parse(params.fechaIngreso)
+				log.debug "LA FECHA SE PARSEO BIEN"
+			}catch(ParseException e){
+				log.debug "LA FECHA NO SE PARSEO BIEN"
+			}
+			def gc = Calendar.getInstance()
+			gc.setTime(fecha)
+			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
+			params.fechaIngreso_year=gc.get(Calendar.YEAR).toString()
+			params.fechaIngreso_month=(gc.get(Calendar.MONTH)+1).toString()
+			params.fechaIngreso_day=gc.get(Calendar.DATE).toString()
+		}
+
 				
         def profesionalInstance = new Profesional(params)
 		if(params.localidad.id){
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
 		}
+		
+		profesionalInstance.antecedenteLabel= new AntecedenteLabel()
+		
 		//profesionalInstance.photo = request.getFile("photo")
 		log.debug "VALOR DE FOTO, nombre: ${profesionalInstance.photo.contentType}"
         if (profesionalInstance.save()) {
@@ -127,6 +149,25 @@ class ProfesionalController {
 				params.fechaNacimiento_month=(gc.get(Calendar.MONTH)+1).toString()
 				params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
 			}
+			
+			if (params.fechaIngreso){
+				DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+				log.debug "FECHA REEMPLAZADA: "+params.fechaIngreso
+				def fecha
+				try{
+					fecha = df.parse(params.fechaIngreso)
+					log.debug "LA FECHA SE PARSEO BIEN"
+				}catch(ParseException e){
+					log.debug "LA FECHA NO SE PARSEO BIEN"
+				}
+				def gc = Calendar.getInstance()
+				gc.setTime(fecha)
+				log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
+				params.fechaIngreso_year=gc.get(Calendar.YEAR).toString()
+				params.fechaIngreso_month=(gc.get(Calendar.MONTH)+1).toString()
+				params.fechaIngreso_day=gc.get(Calendar.DATE).toString()
+			}
+	
 			
             profesionalInstance.properties = params
             if (!profesionalInstance.hasErrors() && profesionalInstance.save(flush: true)) {

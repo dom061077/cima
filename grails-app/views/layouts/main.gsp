@@ -17,7 +17,7 @@
 
          <link rel="stylesheet" href="${resource(dir:'css',file:'jquery-ui-1.8.11.custom.css')}" />
         
-        <link rel="shortcut icon" href="${resource(dir:'images',file:'favicon.ico')}" type="image/x-icon" />
+        <link rel="shortcut icon" href="${resource(dir:'images',file:'cima.ico')}" type="image/x-icon" />
         
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.5.1.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'jquery-ui-1.8.11.custom.min.js')}"></script>
@@ -158,8 +158,8 @@
 
 
 
-<div class="span-24 last append-bottom colborder">
-	<div class="span-11 colborder prepend-2 append-6">    
+<div class="span-24 last append-bottom" >
+	<div class="span-11 prepend-2">    
             <g:isLoggedIn>
 				<div>
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
@@ -167,7 +167,7 @@
 			</g:isLoggedIn>
            	<g:isLoggedIn>
 		            <ul class="dropdown dropdown-horizontal" >
-						<li><a href="./" class="dir">Archivo</a>
+						<li><a href="#" class="dir">Archivo</a>
 							<ul>
 								<g:ifAnyGranted role="ROLE_ADMIN">
 									<li><a href="${createLink(controller:'user')}">Usuarios</a></li>
@@ -178,7 +178,7 @@
 							</ul>
 						</li>
 						<g:ifAnyGranted role="ROLE_PROFESIONAL">
-							<li><a href="./" class="dir">Edición</a>
+							<li><a href="#" class="dir">Edición</a>
 								<ul>
 <%--									<g:antecedenteLabel label="t1Label"/>--%>
 									<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'edit')+g.antecedenteLabel(field:'id',url:true))}">Etiquetas de Ficha Clínica</a></li>	
@@ -186,7 +186,7 @@
 								</ul>							
 							</li>
 						</g:ifAnyGranted>
-						<li><a href="./" class="dir">Actualizaciones</a>
+						<li><a href="#" class="dir">Actualizaciones</a>
 							<ul>
 								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER">
 									<li><a href="${createLink(controller:'obraSocial',action:'list')}">Obra Social</a></li>
@@ -206,15 +206,17 @@
 					</ul>
 			</g:isLoggedIn>	
 	</div><!-- div cierre del menu -->
-	<div class="span-7 append-1 last">
-	</div>            
+	<g:isLoggedIn>
+		<div class="span-7 prepend-3 last">
+		</div>
+	</g:isLoggedIn>	            
 </div> <!-- cierre del div de la cabecera -->
-		<div class="span-22 prepend-2 colborder last">
+		<div class="span-22 prepend-2 last">
 	        	<g:layoutBody />
 		</div>	
-        <div class="span-24 last prepend-top colborder">
+        <div class="span-24 last prepend-top">
         	<p style="text-align:center">
-            &copy; Copyright 2011 &lt;Medfire&gt; | Design by: Marca Registrada
+            &copy; Copyright 2011 &lt;INAP&gt; | Design by: Marca Registrada
             </p>
         </div><!-- end footer -->
 

@@ -4,23 +4,24 @@
 	function descartarImg(self){
 		var indexImg = $(self).attr('indice');
 		$('#imagen'+indexImg+'Id').hide();
-		$('#imagen'+indexImg+'IdOp').html('<a indice="'+indexImg+'"  onClick="cancelarImg(this)">Cancelar</a>');
+		$('#imagen'+indexImg+'IdOp').html('<a href="" indice="'+indexImg+'"  onClick="cancelarImg(this);return false">Cancelar</a>');
 		$('#imagen'+indexImg+'IdInp').show();
 		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
 		arrayDeletedImg.push({id:id});
 		
-		
+		return false;	
 	}
 	
 	function cancelarImg(self){
 		var indexImg = $(self).attr('indice');
 		$('#imagen'+indexImg+'Id').show();		
-		$('#imagen'+indexImg+'IdOp').html('<a indice="'+indexImg+'"  onClick="descartarImg(this)">Descartar</a>');
+		$('#imagen'+indexImg+'IdOp').html('<a href="" indice="'+indexImg+'"  onClick="descartarImg(this);return false">Descartar</a>');
 		$('#imagen'+indexImg+'IdInp').hide();
 		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
 		arrayDeletedImg = $.grep(arrayDeletedImg,function(value){
 			return value.id!=id;
 		});
+		return false
 	}
 	
 	var arrayDeletedImg=[];
@@ -182,7 +183,7 @@ $(document).ready(function(){
 				$("#outputId").hide();
 				window.location=locshow;
 			}
-				
+			scroll(0,0);
 		}
 	};
 	
@@ -203,6 +204,8 @@ $(document).ready(function(){
 			
 		});
 		$('#antecedentet'+i+'Id').attr('disabled','disabled');
+		if($('#checklabel'+i+'Id').is(':checked'))
+			$('#antecedentet'+i+'Id').removeAttr('disabled');
 	}
 	
 	
@@ -227,7 +230,7 @@ $(document).ready(function(){
 				this.blur();
 				return false;
 			});		
-		$('#imagen'+i+'IdOp').html('<a indice="'+i+'"  onClick="descartarImg(this)">Descartar</a>');
+		$('#imagen'+i+'IdOp').html('<a href=""  indice="'+i+'"  onClick="descartarImg(this);return false">Descartar</a>');
 		$('#imagen'+i+'IdInp').hide();
 		$('#imagen'+i+'InpId').attr('codigo',value.codigo);
 	});	

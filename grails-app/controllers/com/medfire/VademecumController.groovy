@@ -113,6 +113,7 @@ class VademecumController {
 
 		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 		log.debug "TOTAL DE REGISTROS: ${totalregistros}"
+		log.debug "TOTAL EN LIST: "+list.size()
 		def flagaddcomilla=false
 		list.each{
 			

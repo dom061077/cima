@@ -39,7 +39,7 @@ class UserController {
         if (userInstance.save(flush: true)) {
 			addRoles(userInstance)
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
-            redirect(action: "show", id: userInstance.id)
+            redirect(action: "showrefactor", id: userInstance.id)
         }
         else {
 			
@@ -97,7 +97,7 @@ class UserController {
 				if (userInstance.version > version) {
 					
 					userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
-					render(view: "edit", model: [userInstance: userInstance])
+					render(view: "editfactor", model: [userInstance: userInstance])
 					return
 				}
 			}
@@ -118,7 +118,7 @@ class UserController {
 			}
 			else {
 				log.warn "ERROR DE VALIDACION"
-				render(view: "edit", model: [userInstance: userInstance])
+				render(view: "editrefactor", model: [userInstance: userInstance])
 			}
 		}
 		else {
@@ -140,7 +140,7 @@ class UserController {
                 if (userInstance.version > version) {
                     
                     userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
-                    render(view: "edit", model: [userInstance: userInstance])
+                    render(view: "editrefactor", model: [userInstance: userInstance])
                     return
                 }
             }
@@ -162,10 +162,10 @@ class UserController {
 				log.info "despues de addRoles"
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
 				log.info "REGISTRO MODIFICADO"
-                redirect(action: "show", id: userInstance.id)
+                redirect(action: "showrefactor", id: userInstance.id)
             }
             else {
-                render(view: "edit", model: [userInstance: userInstance])
+                render(view: "editfactor", model: [userInstance: userInstance])
             }
         }
         else {
@@ -186,7 +186,7 @@ class UserController {
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'user.label', default: 'User'), params.id])}"
-                redirect(action: "show", id: params.id)
+                redirect(action: "showrefactor", id: params.id)
             }
         }
         else {

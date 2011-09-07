@@ -104,6 +104,14 @@
     <priority value='INFO' />
     <appender-ref ref='ORM_LOG' />
   </category>
+  <category name='org.hibernate' additivity='false'>
+    <priority value='INFO' />
+    <appender-ref ref='ORM_LOG' />
+  </category>
+  <category name='org.codehaus.groovy.grails.orm.hibernate' additivity='false'>
+    <priority value='INFO' />
+    <appender-ref ref='ORM_LOG' />
+  </category>
   <category name='org.hibernate.SQL' additivity='false'>
     <priority value='DEBUG' />
     <appender-ref ref='ORM_SQL_LOG' />

@@ -253,7 +253,7 @@ class HistoriaClinicaController {
 			if (flagaddcomilla)
 				result=result+','
 			
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.apellido!=null?it.apellido:"")+'","'+(it.nombre!=null?it.nombre:"")+'","'+(it.id!=null?it.id:"")+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+g.formatNumber(number:it.id,format:'000000')+'","'+(it.apellido!=null?it.apellido:"")+'","'+(it.nombre!=null?it.nombre:"")+'"]}'
 			 
 			flagaddcomilla=true
 		}

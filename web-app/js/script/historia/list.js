@@ -8,12 +8,12 @@ $(document).ready(function(){
 		rownumbers:true,
 		pager:'pagerhistoria',
 		datatype:'json',
-		colNames:['Id','Apellido','Nombre','Nro.Hist. Clínica','Operaciones'],
+		colNames:['Nro.Hist. Clínica','Apellido','Nombre','Operaciones'],
 		colModel:[
-				{name:'id',index:'id',width:10,hidden:true},
+				{name:'id',index:'id',width:40,hidden:false,sorttype:'int',sortable:true,searchoptions:{sopt:['eq']}},
 				{name:'apellido',index:'apellido',width:100,sorttype:'text',sortable:true},
 				{name:'nombre',index:'nombre',width:100,sorttype:'text',sortable:true},
-				{name:'numero',index:'numero',width:40,sorttype:'text',sortable:true},
+				//{name:'id',index:'id',width:40,sorttype:'text',sortable:true,search:true},
 				{name:'operaciones',index:'operaciones',width:40,sorttype:'text',sortable:false,search:false}
 		],
 		subGrid:true,

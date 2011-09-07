@@ -73,7 +73,7 @@
 		  'priority'(value: 'DEBUG'); 'appender-ref'('ref': "APP_LOG"); 'appender-ref'('ref': "CONSOLE")}
 	  }
 	
-	  def orm = ['org.springframework.transaction', 'org.springframework.orm', 'org.apache.openjpa', 'openjpa', 'org.h2', 'h2database']
+	  def orm = ['org.springframework.transaction', 'org.springframework.orm', 'org.apache.openjpa', 'openjpa', 'org.h2', 'h2database','org.hibernate','org.codehaus.groovy.grails.orm.hibernate']
 	  orm.each {
 		'category'(name: it, additivity: 'false') { 'priority'(value: 'INFO'); 'appender-ref'('ref': "ORM_LOG")}
 	  }
