@@ -53,6 +53,7 @@
                 });    
 				$("#tipodocumentoId").combobox();
 				$("#codigoivaId").combobox();
+				$("#sexoId").combobox();
 				$("#provinciadescId").autocomplete({
 						source: "<% out << g.createLink(controller:"provincia",action:'listjsonautocomplete')%>",
 						minLength:2,
@@ -170,66 +171,72 @@
                 	</ul>
                 	<div id="tabs-1">
                 		<fieldset>
+                            	<g:hasErrors bean="${profesionalInstance}" field="matricula">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
                 				<div class="span-3 spanlabel">
-		                                	<g:hasErrors bean="${profesionalInstance}" field="matricula">
-		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
-		                                    <label for="matricula"><g:message code="profesional.matricula.label" default="Matricula:" /></label>
+		                                    <label for="matricula"><g:message code="profesional.matricula.label" default="Matrícula:" /></label>
 		                        </div>
 		                        <div class="span-4">             
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="matricula" value="${fieldValue(bean: profesionalInstance, field: 'matricula')}" />
-				                                    <g:hasErrors bean="${profesionalInstance}" field="matricula">
-				                                    	<br/>
-			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="matricula"/>
-			                                    	</div>
-				                                    </g:hasErrors>	
 								</div>
+                                <g:hasErrors bean="${profesionalInstance}" field="matricula">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="matricula"/>
+                               		</div>
+                                </g:hasErrors>	
 								
 								
 								<div class="clear"></div>
+								<div class="span-3 spanlabel">                  
+		                                    <label for="tipoMatricula"><g:message code="profesional.tipoMatricula.label" default="Tipo Matricula:" /></label>
+								</div>		                
+								<div class="span-4">                    
+		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="tipoMatricula" value="${profesionalInstance?.tipoMatricula}" />
+								</div>		                                    
+								
+								
+								<div class="clear"></div>
+                            	<g:hasErrors bean="${profesionalInstance}" field="nombre">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
 		                        <div class="span-3 spanlabel">								
-		                                	<g:hasErrors bean="${profesionalInstance}" field="nombre">
-		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
 		                                    <label for="nombre"><g:message code="profesional.nombre.label" default="Nombre:" /></label>
 								</div>
 		                        <div class="span-4">										                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${profesionalInstance?.nombre}" />
-				                                    <g:hasErrors bean="${profesionalInstance}" field="nombre">
-				                                    	<br/>
-			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="nombre"/>
-			                                    	</div>
-				                                    </g:hasErrors>	
 								</div>		
+                                <g:hasErrors bean="${profesionalInstance}" field="nombre">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="nombre"/>
+                               		</div>
+                                </g:hasErrors>	
 								
 								                                    
 								<div class="clear"></div>
+                            	<g:hasErrors bean="${profesionalInstance}" field="domicilio">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
 		                        <div class="span-3 spanlabel">										                                    
-		                                	<g:hasErrors bean="${profesionalInstance}" field="domicilio">
-		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
 		                                    <label for="domicilio"><g:message code="profesional.domicilio.label" default="Domicilio:" /></label>
 								</div>
 		                        <div class="span-4">																						                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${profesionalInstance?.domicilio}" />
-				                                    <g:hasErrors bean="${profesionalInstance}" field="domicilio">
-				                                    	<br/>
-			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="domicilio"/>
-			                                    	</div>
-				                                    </g:hasErrors>
-								</div>		
+								</div>
+                               <g:hasErrors bean="${profesionalInstance}" field="domicilio">
+                              		<g:renderErrors bean="${profesionalInstance}" as="list" field="domicilio"/>
+	                              	</div>
+                               </g:hasErrors>
+										
 										                                    	
 								<div class="clear"></div>
 		                        <div class="span-3 spanlabel">										                                    
 		                                	<g:hasErrors bean="${profesionalInstance}" field="codigoPostal">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="codigoPostal"><g:message code="profesional.codigoPostal.label" default="Codigo Postal" /></label>
+		                                    <label for="codigoPostal"><g:message code="profesional.codigoPostal.label" default="Código Postal" /></label>
 								</div>
 								<div class="span-4">										                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="codigoPostal" value="${profesionalInstance?.codigoPostal}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="codigoPostal">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="codigoPostal"/>
 			                                    	</div>
 			                                    	
@@ -256,7 +263,6 @@
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" id="localidaddescId" name="localidaddesc" value="${profesionalInstance?.localidad?.nombre}" />
 		                                    <g:hiddenField id="localidadId" name="localidad.id" value="${profesionalInstance.localidad?.id}"/>
 				                                    <g:hasErrors bean="${profesionalInstance}" field="localidad">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="localidad"/>
 			                                    	</div>
 				                                    </g:hasErrors>	
@@ -267,12 +273,11 @@
 		                                	<g:hasErrors bean="${profesionalInstance}" field="telefono">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="telefono"><g:message code="profesional.telefono.label" default="Telefono" /></label>
+		                                    <label for="telefono"><g:message code="profesional.telefono.label" default="Teléfono:" /></label>
 								</div>
 								<div class="span-4">		                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefono" value="${profesionalInstance?.telefono}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="telefono">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="telefono"/>
 			                                    	</div>
 			                                    	
@@ -284,12 +289,11 @@
 		                                	<g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="fechaNacimiento"><g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento" /></label>
+		                                    <label for="fechaNacimiento"><g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento:" /></label>
 								</div>	
 								<div class="span-4">	                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaNacimientoId' name='fechaNacimiento' value="${g.formatDate(format:'dd/MM/yyyy',date:profesionalInstance?.fechaNacimiento)}" / noSelection="['': '']"/>
 				                                    <g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="fechaNacimiento"/>
 			                                    	</div>
 			                                    	
@@ -301,12 +305,11 @@
 		                                	<g:hasErrors bean="${profesionalInstance}" field="numeroDocumento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>
-		                                    <label for="numeroDocumento"><g:message code="profesional.numeroDocumento.label" default="Numero Documento" /></label>
+		                                    <label for="numeroDocumento"><g:message code="profesional.numeroDocumento.label" default="Numero Documento:" /></label>
 		                        </div>
 		                        <div class="span-4">            
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="numeroDocumento" value="${fieldValue(bean: profesionalInstance, field: 'numeroDocumento')}" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="numeroDocumento">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="numeroDocumento"/>
 			                                    	</div>
 			                                    	
@@ -318,12 +321,11 @@
 		                                	<g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
 		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                                    </g:hasErrors>	
-		                                    <label for="tipoDocumento"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento" /></label>
+		                                    <label for="tipoDocumento"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento:" /></label>
 								</div>
 								<div class="span-4">		                                    	
 		                                    <g:select id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
-				                                    	<br/>
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="tipoDocumento"/>
 			                                    	</div>
 			                                    	
@@ -333,49 +335,71 @@
 		            </div>
 		            <div id="tabs-2">
 		            	<fieldset>
-		                                    <label for="observaciones"><g:message code="profesional.observaciones.label" default="Observaciones" /></label>
-		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="observaciones" value="${profesionalInstance?.observaciones}" />
-		                                    <br/>
-
-		                                    <label for="ultimaSecuencia"><g:message code="profesional.ultimaSecuencia.label" default="Ultima Secuencia" /></label>
-		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="ultimaSecuencia" value="${fieldValue(bean: profesionalInstance, field: 'ultimaSecuencia')}" />
-		                                    <br/>		                            
-		                            
-		                                    <label for="codigoIva"><g:message code="profesional.codigoIva.label" default="Codigo Iva" /></label>
-		                                    <g:select id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
-		                                    <br/>		                        
+		            			<div class="span-3 spanlabel">
+		                                    <label for="observaciones"><g:message code="profesional.observaciones.label" default="Observaciones:" /></label>
+		                        </div>
+		                        <div class="span-4">            
+		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content inputlarge" name="observaciones" value="${profesionalInstance?.observaciones}" />
+								</div>
+								
+								<div class="clear"></div>
+		                        <div class="span-3 spanlabel">    
+		                                    <label  for="codigoIva"><g:message code="profesional.codigoIva.label" default="Codigo I.V.A:" /></label>
+		                        </div>
+		                        <div class="span-4">            
+		                                    <g:select  id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
+		                        </div>     		                        
 		                        
-		                        
-		                                    <label for="cuit"><g:message code="profesional.cuit.label" default="Cuit" /></label>
+		                        <div class="clear"></div>
+								<div class="span-3 spanlabel">		                        
+		                                    <label for="cuit"><g:message code="profesional.cuit.label" default="C.U.I.T:" /></label>
+		                        </div>
+		                        <div class="span-4">            
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${profesionalInstance?.cuit}" />
-		                                    <br/>		                        
-		                                    
-		                                    <label for="fechaIngreso"><g:message code="profesional.fechaIngreso.label" default="Fecha Ingreso" /></label>
+								</div>
+								
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">		                                    
+		                                    <label for="fechaIngreso"><g:message code="profesional.fechaIngreso.label" default="Fecha Ingreso:" /></label>
+								</div>
+								<div class="span-4">		                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaIngresoId' name='fechaIngreso' value="${g.formatDate(format:'dd/MM/yyyy',date:profesionalInstance?.fechaIngreso)}" / noSelection="['': '']"/>
-		                                    <br/>		                        
-		                        
-		                        
-		                                    <label for="especialidad"><g:message code="profesional.especialidad.label" default="Especialidad" /></label>
-		                                    
-											<g:textField id="especialidadDescId" class="ui-widget ui-corner-all ui-widget-content" name="especialidadDesc" value="${profesionalInstance?.especialidad?.descripcion}" />
+		                        </div>
+
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">		                                    
+		                                    <label style="float:left" for="especialidad"><g:message code="profesional.especialidad.label" default="Especialidad:" /></label>
+								</div>
+								<div class="span-4">		                                    
+											<g:textField style="float:left" id="especialidadDescId" class="ui-widget ui-corner-all ui-widget-content" name="especialidadDesc" value="${profesionalInstance?.especialidad?.descripcion}" />
 		                                    <g:hiddenField name="especialidad.id" id="especialidadId" value="${profesionalInstance?.especialidad?.id}"></g:hiddenField>		                                    
-		                                    <br/>		                        
-		                        
-		                                    <label for="activo"><g:message code="profesional.activo.label" default="Activo" /></label>
-		                                    <g:checkBox name="activo" value="${profesionalInstance?.activo}" />
-		                                    <br/>		                        
-		                        
-		                                    <label for="tipoMatricula"><g:message code="profesional.tipoMatricula.label" default="Tipo Matricula" /></label>
-		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="tipoMatricula" value="${profesionalInstance?.tipoMatricula}" />
-		                                    <br/>		                        
-		                        
-		                                    <label for="sexo"><g:message code="profesional.sexo.label" default="Sexo" /></label>
-		                                    <g:checkBox name="sexo" value="${profesionalInstance?.sexo}" />
-		                                    <br/>
-		                                    <label for="photo"><g:message code="profesional.sexo.label" default="Foto" /></label>
-		                                    <input type="file" name="photo" />
-		                                    <br/>		                            
-		            			
+								</div>		      
+								<br/>
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">                 
+		                                    <label for="activo"><g:message code="profesional.activo.label" default="Activo:" /></label>
+								</div>		                
+								<div class="span-4">                    
+		                                    <g:checkBox class="ui-widget ui-corner-all ui-widget-content" name="activo" value="${profesionalInstance?.activo}" />
+								</div>		      
+								
+
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">		                        
+		                                    <label for="sexo"><g:message code="profesional.sexo.label" default="Sexo:" /></label>
+								</div>		                
+								<div class="span-4">                    
+		                                    <g:select  id="sexoId" name="sexo" from="${com.medfire.enums.SexoEnum?.list()}" 
+		                                    	optionValue="name" value="${profesionalInstance?.sexo}" noSelection="['': '']" />
+								</div>		                                    	
+		                                    	
+		                        <div class="clear"></div>
+		                        <div class="span-3 spanlabel">            	
+		                                    <label for="photo"><g:message code="profesional.photo.label" default="Foto:" /></label>
+								</div>		                
+								<div class="span-4">                    
+		                                    <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="photo" />
+		            			</div>
 		            	</fieldset>
 		            </div>        
 		        </div>

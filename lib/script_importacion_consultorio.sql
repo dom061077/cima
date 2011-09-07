@@ -1,3 +1,6 @@
+INSERT INTO medfireweb.especialidad_medica(VERSION,descripcion)
+SELECT 0,descripcion FROM especialidadesmedicas;
+
 INSERT INTO medfireweb.cie10(VERSION,cie10,descripcion) 
 SELECT 0,cie10,descripcion FROM consultorio.cie10;
 
@@ -24,7 +27,7 @@ SELECT Id_PrincipioA,contraindicaciones,embarazo_lactancia,interacciones,Precauc
 ALTER TABLE `medfireweb`.`principio_activo`     CHANGE `id` `id` BIGINT(20) NOT NULL AUTO_INCREMENT;
 /*--------------------------------------*/
 ALTER TABLE `medfireweb`.`grupo_Terapeutico`     CHANGE `id` `id` BIGINT(20) NOT NULL;
-INSERT INTO grupo_Terapeutico(id,grupo,nombre)
+INSERT INTO `medfireweb`.grupo_Terapeutico(id,grupo,nombre)
 SELECT Id_GrupoT,GrupoTerapeutico,Nombre FROM consultorio.grupoterapeutico;
 ALTER TABLE `medfireweb`.`grupo_Terapeutico`     CHANGE `id` `id` BIGINT(20) NOT NULL AUTO_INCREMENT;
 
@@ -34,29 +37,34 @@ conservacion
 ,contra_indicacion_id,
 dosificacion,embarazoy_lactancia,farmacocinetica,farmacodinamia,farmacologia,grupo_id,indicaciones
 ,laboratorio_id
-,nombre_comercial,prestaciones,principio_id,reacciones_adversas,sobre_dosificacion)
+,nombre_comercial,prestaciones,principio_id,reacciones_adversas,sobre_dosificacion
+,presentacion)
 SELECT 	
-	`AcciónTerapéutica`, 
-	`Advertencias`, 
-	`Asoc2`, 
-	`Composición`, 
-	`Conservación`, 
-	`Contraindicaciones`,
-	`Dosificación`, 
-	`EmbarazoyLactancia`,
-	`Farmacocinética`,  
-	`Farmacodinamia`, 
-	`Farmacología`, 
-	`Grupo_Terapeutico`,
-	`Indicaciones`, 
-	`Laboratorio`,  
-	`Nombre_Comercial`, 
-	`Presentaciones`, 
-	`Principio_Activo`, 
-	`ReaccionesAdversas`, 
-	`Sobredosificación` 	
+	nc.`AcciónTerapéutica`, 
+	nc.`Advertencias`, 
+	nc.`Asoc2`, 
+	nc.`Composicion`, 
+	nc.`Conservación`, 
+	nc.`Contraindicaciones`,
+	nc.`Dosificación`, 
+	nc.`EmbarazoyLactancia`,
+	nc.`Farmacocinética`,  
+	nc.`Farmacodinamia`, 
+	nc.`Farmacología`, 
+	nc.`Grupo_Terapeutico`,
+	nc.`Indicaciones`, 
+	nc.`Laboratorio`,  
+	nc.`Nombre_Comercial`, 
+	nc.`Presentaciones`, 
+	nc.`Principio_Activo`, 
+	nc.`ReaccionesAdversas`, 
+	nc.`Sobredosificación`, 	
+	nc.`Presentaciones`	
 	FROM 
-	`consultorio`.`nombrecomercial` ;
-	
+	`consultorio`.`nombrecomercial` nc
+INNER JOIN consultorio.principioactivo p ON nc.principio_activo=p.id_PrincipioA
+INNER JOIN consultorio.laboratorio l ON nc.laboratorio=l.id_lab
+
+
 
 

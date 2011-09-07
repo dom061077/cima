@@ -11,6 +11,10 @@ h1,h2{
 }
 
 .spanlabel{
-	padding: 6px;
+		padding: 7px 0px 0px 0px;
 	
+}
+
+.buttons{
+	padding: 15px 0px 0px 0px;
 }

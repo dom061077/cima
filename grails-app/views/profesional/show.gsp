@@ -50,12 +50,6 @@
                             
                         </tr>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.ultimaSecuencia.label" default="Ultima Secuencia" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "ultimaSecuencia")}</td>
-                            
-                        </tr>
                     
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="profesional.domicilio.label" default="Domicilio" /></td>

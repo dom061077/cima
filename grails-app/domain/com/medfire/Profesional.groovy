@@ -11,7 +11,6 @@ class Profesional {
 	Integer matricula
 	String nombre
 	String observaciones
-	Long ultimaSecuencia
 	String domicilio
 	String codigoPostal
 	Localidad localidad
@@ -25,9 +24,9 @@ class Profesional {
 	//User usuarioAsignado
 	EspecialidadMedica especialidad
 	//foto agregar la foto
-	Boolean activo
+	Boolean activo = true
 	String tipoMatricula//tipo enum
-	Boolean sexo
+	SexoEnum sexo
 	
 	AntecedenteLabel antecedenteLabel
 
@@ -35,7 +34,6 @@ class Profesional {
 		matricula(nullable:false,blank:false)
 		nombre(nullable:false,blank:false)
 		observaciones(nullable:true,blank:true)
-		ultimaSecuencia(nullable:true,blank:true)
 		domicilio(nullable:true,blank:true)
 		codigoPostal(nullable:true,blank:true)
 		localidad(nullable:true,blank:true)

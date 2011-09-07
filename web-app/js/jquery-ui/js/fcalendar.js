@@ -102,7 +102,7 @@ function guiCreate(start, end, allDay) {
 				//if (!paciente) {
 				//	return;
 				//}
-				if  (ev.title.trim()==""){
+				if  ($.trim(ev.title)==""){
 					$('<div><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>Ingrese algún texto descriptivo para el turno</div>').dialog({
 						title: 'Error',
 						modal:true,
