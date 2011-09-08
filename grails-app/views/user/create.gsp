@@ -44,7 +44,7 @@
             </div>
             </g:hasErrors>
             <br/>
-            <g:form id="formuser" action="save" >
+            <g:form   action="saverefactor" >
 	                               <g:hasErrors bean="${userInstance}" field="username">
 		                              	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
 		                           </g:hasErrors>	
@@ -123,9 +123,17 @@
                                     <label for="emailShow"><g:message code="user.emailShow.label" default="Email Show" /></label>
                                     <g:checkBox name="emailShow" value="${userInstance?.emailShow}" />
                         			<br/>
-                        
+
+	                                <g:hasErrors bean="${userInstance}" field="esProfesional">
+		                              	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+		                            </g:hasErrors>	
                                     <label for="esProfesional"><g:message code="user.esProfesional.label" default="Es Profesional" /></label>
                                     <g:checkBox name="esProfesional" value="${userInstance?.esProfesional}" />
+	                                    <g:hasErrors bean="${userInstance}" field="esProfesional">
+	                                    	<br/>
+                                    		<g:renderErrors bean="${userInstance}" as="list" field="esProfesional"/>
+                                    	</div>
+	                                    </g:hasErrors>	
                         			<br/>
   
                                    <label for="enabled"><g:message code="user.enabled.label" default="Enabled" /></label>

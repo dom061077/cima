@@ -34,7 +34,14 @@ class User {
 		userRealName(blank: false)
 		passwd(blank: false)
 		enabled()
-		profesionalAsignado(blank:true, nullable:true)
+		profesionalAsignado(blank:true, nullable:true,validator:{val,obj->
+				if(obj.profesionalAsignado && !obj.esProfesional)
+					return ['invalid.activation']
+			})
+		esProfesional(validator:{val,obj->
+				if(obj.esProfesional && !obj.profesionalAsignado)
+					return ['invalid.activation']
+		})
 	}
 	
 	static mapping = {

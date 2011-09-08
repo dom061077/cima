@@ -69,7 +69,7 @@ class ProfesionalController {
 
 				
         def profesionalInstance = new Profesional(params)
-		if(params.localidad.id){
+		if(params.localidad?.id){
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
 		}
 		
@@ -238,7 +238,7 @@ class ProfesionalController {
 			try{		
 				urlimg = bi.resource(size:'small',bean:it)
 			}catch(Exception e){	
-				urlimg = ''	
+				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')	
 			}
     		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.cuit==null?"":it.cuit)+'","'+(it.matricula==null?"":it.matricula)+'","'+(it.nombre==null?"":it.nombre)+'","'+(it.telefono==null?"":it.telefono)+'","'+urlimg+'"]}'
     		 

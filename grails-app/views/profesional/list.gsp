@@ -21,14 +21,14 @@
 						   	colNames:['Id','C.U.I.T', 'Matricula', 'Nombre','Telófono','Url','Foto','Operaciones'],
 						   	colModel:[
 						   		
-						   		{name:'id',index:'id', width:40},
-						   		{name:'cuit',index:'cuit', width:92,sortable:false},
-						   		{name:'matricula',index:'matricula', width:100},
+						   		{name:'id',index:'id', width:40,searchoptions:{sopt:['eq']}},
+						   		{name:'cuit',index:'cuit', width:92,sortable:false,searchoptions:{sopt:['eq']}},
+						   		{name:'matricula',index:'matricula', width:100,search:false,searchoptions:{sopt:['eq']}},
 						   		{name:'nombre',index:'nombre', width:150, sortable:true},
-						   		{name:'telefono',index:'telefono', width:80, align:"right", sortable:false},
-						   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80, align:"right", sortable:false},						   		
-						   		{name:'foto',index:'foto', width:80, align:"center", sortable:false},						   		
-						   		{name:'operaciones',index:'operaciones', width:55,sortable:false}
+						   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
+						   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
+						   		{name:'foto',index:'foto', width:80, align:"center",search:false, sortable:false},						   		
+						   		{name:'operaciones',index:'operaciones', width:55,search:false,sortable:false}
 						   	],
 						   	
 						   	rowNum:10,
@@ -51,7 +51,7 @@
 							}, 						    
 						    caption:"Listado de Profesionales"
 						});
-						jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true});
+						jQuery("#list").jqGrid('navGrid','#pager',{search:false,edit:false,add:false,del:false,pdf:true});
 	
 						jQuery("#list").jqGrid('navButtonAdd','#pager',{
 						       caption:"Informe", 
@@ -60,6 +60,8 @@
 						           jQuery("#list").jqGrid("excelExport",{url:"excelexport"});
 						       } 
 						});
+
+						jQuery("#list").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});						
 						
 					}
 	        );
@@ -74,7 +76,7 @@
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
 			<table style="z-index:1"  id="list"></table>
 			<div id="pager" ></div>

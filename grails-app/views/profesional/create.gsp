@@ -51,9 +51,9 @@
 						}
 					}
                 });    
-				$("#tipodocumentoId").combobox();
-				$("#codigoivaId").combobox();
-				$("#sexoId").combobox();
+				//$("#tipodocumentoId").combobox();
+				//$("#codigoivaId").combobox();
+				//$("#sexoId").combobox();
 				$("#provinciadescId").autocomplete({
 						source: "<% out << g.createLink(controller:"provincia",action:'listjsonautocomplete')%>",
 						minLength:2,
@@ -324,7 +324,7 @@
 		                                    <label for="tipoDocumento"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento:" /></label>
 								</div>
 								<div class="span-4">		                                    	
-		                                    <g:select id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content" id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="tipoDocumento"/>
 			                                    	</div>
@@ -347,7 +347,7 @@
 		                                    <label  for="codigoIva"><g:message code="profesional.codigoIva.label" default="Codigo I.V.A:" /></label>
 		                        </div>
 		                        <div class="span-4">            
-		                                    <g:select  id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
 		                        </div>     		                        
 		                        
 		                        <div class="clear"></div>
@@ -389,7 +389,7 @@
 		                                    <label for="sexo"><g:message code="profesional.sexo.label" default="Sexo:" /></label>
 								</div>		                
 								<div class="span-4">                    
-		                                    <g:select  id="sexoId" name="sexo" from="${com.medfire.enums.SexoEnum?.list()}" 
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="sexoId" name="sexo" from="${com.medfire.enums.SexoEnum?.list()}" 
 		                                    	optionValue="name" value="${profesionalInstance?.sexo}" noSelection="['': '']" />
 								</div>		                                    	
 		                                    	

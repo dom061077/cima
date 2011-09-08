@@ -22,9 +22,33 @@
 							hiddenid:'usuarioAsignadoId',
 							descid:'usuarioAsignadoDescId'	
 		            	});*/
-					$("#tipodocumentoId").combobox();
-					$("#codigoivaId").combobox();
-					$("#sexoId").combobox();
+		                $("#especialidadDescId").lookupfield({
+		                	source:"<% out << g.createLink(controller:"especialidadMedica",action:'listjson')%>",
+							title:'Búsqueda de Especialidades',
+							colnames:['Id','Descripción'],
+							colModel:[
+									{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+									{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true},	
+								],
+							hiddenid:'especialidadId',
+							descid:'especialidadDescId',
+							hiddenfield:'id',
+							descfield:'descripcion'	
+		                 });	
+						
+		                $("#especialidadDescId").autocomplete({
+							source: "<% out << g.createLink(controller:"especialidadMedica",action:'listjsonautocomplete')%>",
+							minLength:2,
+							select: function(event,ui){
+								if(ui.item){
+									$("#especialidadId").val(ui.item.id);
+								}
+							}
+		                });    
+		            	
+					//$("#tipodocumentoId").combobox();
+					//$("#codigoivaId").combobox();
+					//$("#sexoId").combobox();
 					$("#provinciadescId").autocomplete({
 							source: "<% out << g.createLink(controller:"provincia",action:'listjsonautocomplete')%>",
 							minLength:2,

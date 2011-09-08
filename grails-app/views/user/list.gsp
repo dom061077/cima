@@ -72,7 +72,7 @@
         <div class="body">
             <h1><g:message code="default.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
 			<table style="z-index:1"  id="list"></table>
 			<div id="pager" ></div>

@@ -6,6 +6,11 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'profesional.label', default: 'Profesional')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+        		$("#tabs").tabs();
+            });
+        </script>
     </head>
     <body>
         <div class="nav">
@@ -16,148 +21,162 @@
         <div class="body">
             <h1><g:message code="default.show.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
-            <div class="dialog">
-                <table>
-                    <tbody>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.id.label" default="Id" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "id")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.matricula.label" default="Matricula" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "matricula")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.nombre.label" default="Nombre" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "nombre")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.observaciones.label" default="Observaciones" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "observaciones")}</td>
-                            
-                        </tr>
-                    
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.domicilio.label" default="Domicilio" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "domicilio")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.codigoPostal.label" default="Codigo Postal" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "codigoPostal")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.localidad.label" default="Localidad" /></td>
-                            
-                            <td valign="top" class="value"><g:link controller="localidad" action="show" id="${profesionalInstance?.localidad?.id}">${profesionalInstance?.localidad?.encodeAsHTML()}</g:link></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.telefono.label" default="Telefono" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "telefono")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${profesionalInstance?.fechaNacimiento}" /></td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.numeroDocumento.label" default="Numero Documento" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "numeroDocumento")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento" /></td>
-                            
-                            <td valign="top" class="value">${profesionalInstance?.tipoDocumento?.encodeAsHTML()}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.codigoIva.label" default="Codigo Iva" /></td>
-                            
-                            <td valign="top" class="value">${profesionalInstance?.codigoIva?.encodeAsHTML()}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.cuit.label" default="Cuit" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "cuit")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.fechaIngreso.label" default="Fecha Ingreso" /></td>
-                            
-                            <td valign="top" class="value"><g:formatDate date="${profesionalInstance?.fechaIngreso}" /></td>
-                            
-                        </tr>
+             <div id="tabs">
+             	<ul>
+					<li><a href="#tabs-1">Datos Generales</a></li>
+					<li><a href="#tabs-2">Datos Complementarios</a></li>
+             	</ul>
+             	<div id="tabs-1">
+             		<fieldset>
+						<div class="span-3">                    	
+                            <g:message code="profesional.id.label" default="Id:" />
+						</div>                                                 
+						<div class="span-4">						       
+                            ${fieldValue(bean: profesionalInstance, field: "id")}
+						</div>                            
+
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.matricula.label" default="Matricula:" />
+                        </div>    
+                        <div class="span-4">
+                            ${fieldValue(bean: profesionalInstance, field: "matricula")}
+                        </div>    
+                        
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.nombre.label" default="Nombre:" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "nombre")}
+                        </div>    
+                        
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.observaciones.label" default="Observaciones:" />
+                        </div>
+                        <div class="span-4">     
+                            ${fieldValue(bean: profesionalInstance, field: "observaciones")}
+                        </div>    
                     
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.especialidad.label" default="Especialidad" /></td>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.codigoPostal.label" default="Codigo Postal:" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "codigoPostal")}
+						</div>
+						                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.localidad.label" default="Localidad:" />
+						</div>
+						<div class="span-4">                            
+                           ${profesionalInstance?.localidad?.nombre?.encodeAsHTML()}
+						</div>
+						                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.telefono.label" default="Telefono:" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "telefono")}
+						</div>                        
                             
-                            <td valign="top" class="value"><g:link controller="especialidadMedica" action="show" id="${profesionalInstance?.especialidad?.id}">${profesionalInstance?.especialidad?.encodeAsHTML()}</g:link></td>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento:" />
+						</div>
+						<div class="span-4">                            
+                            <g:formatDate format="dd/MM/yyyy" style="SHORT" date="${profesionalInstance?.fechaNacimiento}" />
+						</div>                            
                             
-                        </tr>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.numeroDocumento.label" default="Numero Documento:" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "numeroDocumento")}
+						</div>                            
+                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.tipoDocumento.label" default="Tipo Documento:" />
+						</div>
+						<div class="span-4">                            
+                            ${profesionalInstance?.tipoDocumento?.name?.encodeAsHTML()}
+						</div>
+					</fieldset>						
+				</div>						                            
+             	<div id="tabs-2">						                            
+					<fieldset>						                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.codigoIva.label" default="Codigo I.V.A:" />
+						</div>
+						<div class="span-4">                            
+                            ${profesionalInstance?.codigoIva?.encodeAsHTML()}
+						</div>                        
+                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.cuit.label" default="Cuit" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "cuit")}
+						</div>                            
+                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.fechaIngreso.label" default="Fecha Ingreso:" />
+						</div>
+						<div class="span-4">                            
+                            <g:formatDate format="dd/MM/yyyy" style="SHORT" date="${profesionalInstance?.fechaIngreso}" />
+						</div>                            
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.activo.label" default="Activo" /></td>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.especialidad.label" default="Especialidad:" />
+						</div>
+						<div class="span-4">                            
+                            ${profesionalInstance?.especialidad?.descripcion?.encodeAsHTML()}
+						</div>                            
                             
-                            <td valign="top" class="value"><g:formatBoolean boolean="${profesionalInstance?.activo}" /></td>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.activo.label" default="Activo:" />
+						</div>
+						<div class="span-4">                            
+                            <g:formatBoolean true="SI" false="NO" boolean="${profesionalInstance?.activo}" />
+						</div>                            
                             
-                        </tr>
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.tipoMatricula.label" default="Tipo Matricula:" />
+						</div>
+						<div class="span-4">                            
+                            ${fieldValue(bean: profesionalInstance, field: "tipoMatricula")}
+						</div>                            
+                            
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.sexo.label" default="Sexo:" />
+						</div>
+						<div class="span-4">                            
+                            <g:formatBoolean boolean="${profesionalInstance?.sexo}" />
+						</div>
+					</fieldset>						                      
+				</div>	      
+			</div>
                     
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.tipoMatricula.label" default="Tipo Matricula" /></td>
-                            
-                            <td valign="top" class="value">${fieldValue(bean: profesionalInstance, field: "tipoMatricula")}</td>
-                            
-                        </tr>
-                    
-                        <tr class="prop">
-                            <td valign="top" class="name"><g:message code="profesional.sexo.label" default="Sexo" /></td>
-                            
-                            <td valign="top" class="value"><g:formatBoolean boolean="${profesionalInstance?.sexo}" /></td>
-                            
-                        </tr>
-                    
-                    </tbody>
-                </table>
-            </div>
             <div class="buttons">
                 <g:form>
                     <g:hiddenField name="id" value="${profesionalInstance?.id}" />
-                    <span class="button"><g:actionSubmit class="edit" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <span class="button"><g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" /></span>
+                    <span class="button"><g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </g:form>
             </div>
         </div>

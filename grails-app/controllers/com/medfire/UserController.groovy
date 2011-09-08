@@ -1,4 +1,4 @@
-package com.medfire
+	package com.medfire
     
 import java.util.Map; 
 
@@ -30,7 +30,7 @@ class UserController {
         return [userInstance: userInstance,authorityList:roles]
     }
 
-    def save = {
+    def saverefactor = { 
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER UserController"
 		log.info "PARAMETROS: $params"
         def userInstance = new User(params)
@@ -41,9 +41,9 @@ class UserController {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
             redirect(action: "showrefactor", id: userInstance.id)
 			
-        }
+        } 
         else {
-			
+			log.warn "ERRORES DE VALIDACION: "+userInstance.errors.allErrors
             render(view: "create", model: [userInstance: userInstance,authorityList:roles])
         }
     }
@@ -118,7 +118,7 @@ class UserController {
 				redirect(action: "showrefactor", id: userInstance.id)
 			}
 			else {
-				log.warn "ERROR DE VALIDACION"
+				log.warn "ERROR DE VALIDACION: "+userInstance.errors.allErrors
 				render(view: "editrefactor", model: [userInstance: userInstance])
 			}
 		}
