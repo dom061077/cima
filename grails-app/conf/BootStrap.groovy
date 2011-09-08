@@ -95,7 +95,7 @@ class BootStrap {
 			roleprofesional.addToPeople(userprof)
 							
 			userprof = new User(username:"ortega",passwd: authenticateService.encodePassword("ortega")
-				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"ORTEGA ANDRES DAVID",esProfesional:true).save()
+				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"ORTEGA ANDRES DAVID",esProfesional:false).save()
 			
 			prof=new Profesional(nombre:"DANIEL GONZALEZ",matricula:new Integer(77689),antecedenteLabel:new AntecedenteLabel(t1Label:"Consulta")).save(failOnError:true)	
 					 	
@@ -103,7 +103,7 @@ class BootStrap {
 			roleprofesional.addToPeople(userprof)
 					
 			userprof = new User(username:"skiby",passwd: authenticateService.encodePassword("skiby")
-				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"JORGE SKIBY",esProfesional:true).save()
+				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"JORGE SKIBY",esProfesional:false).save()
 			prof=new Profesional(nombre:"skiby",matricula:new Integer(9999),antecedenteLabel:new AntecedenteLabel(t1Label:"Consulta")).save()		
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
