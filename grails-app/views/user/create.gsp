@@ -27,7 +27,7 @@
 					hiddenid:'profesionalId',
 					descid:'profesionalDescId',
 					hiddenfield:'id',
-					descfield:'nombre'	
+					descfield:['nombre']	
                  });	
 
                	

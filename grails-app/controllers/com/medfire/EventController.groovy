@@ -28,9 +28,12 @@ class EventController {
 		
 		
 		def usuario = User.load( authenticateService.userDomain()?.id)
-		def profList = Profesional.list() //usuario?.medicos
+		def profList = Profesional.createCriteria().list{
+			eq("activo",true)
+			order("nombre","asc")
+		}
 		log.debug "cantidad de profesionales que atiende: "+profList.size()
-        return [profesionales:profList,profesionalId:params.profesionalId]
+        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profList.get(0)]
     }
 
     def save = {

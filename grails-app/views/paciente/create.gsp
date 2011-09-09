@@ -57,7 +57,7 @@
 									hiddenid:'osId',
 									descid:'osDescripcionId',
 									hiddenfield:'id',
-									descfield:'descripcion'	
+									descfield:['descripcion']	
 										
 								});
 

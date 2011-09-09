@@ -13,7 +13,7 @@ $(document).ready(function(){
 		                colnames:[],
 		                colModel:[],
 		                hiddenfield:'id',
-		                descfield:'descripcion'
+		                descfield:['descripcion']
 		            };
 		            function showgriddialog(dialog){
 						//$('#searchDialogId').add(grid);
@@ -56,8 +56,13 @@ $(document).ready(function(){
 									 
 							ondblClickRow: function(id){
 								var obj=$('#'+tableSearchId).getRowData(id);
+								var descriptions = "";
+								$.each(settings.descfield,function(index,value){
+									descriptions=descriptions+"-"+obj[value];
+								});
+								descriptions = descriptions.substring(1,descriptions.length);
 								$('#'+settings.hiddenid).val(obj[settings.hiddenfield]);
-								$('#'+settings.descid).val(obj[settings.descfield]);		 
+								$('#'+settings.descid).val(descriptions);		 
 								$('#'+searchDialogId).dialog("close");
 								
 							} 

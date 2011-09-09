@@ -14,8 +14,7 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fcalendar.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fullcalendar.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>
-        <script type="text/javascript" src="${resource(dir:'js/script',file:'jquery.jlookupfield.js')}"></script>
-        
+		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>        
 
         
         <style type="text/css">
@@ -70,7 +69,7 @@
 					selectHelper : true,
 					select : guiCreate,
 					editable : true,
-					disableResizing:true,
+					disableResizing:false,
 					//minTime:7,
 					//maxTime:'10pm',
 					eventDragStart: dragStart,
@@ -215,37 +214,33 @@
 					        } // selected
  						}); // combo*/
 
- 					$("#profesionalId").bind('selected',function(event,ui){
+ 					$("#profesionalId").change(function(){
  								document.profesionales.submit();
  	 					});
  						
 					
-					$("#pacienteseventId").jqGrid({
-						caption:'Pacientes registrados',
-						width:430,
-						url:'<% out << g.createLink(controller:'paciente',action:'listjson'); %>',
-						postData:{profesionalId:$("#profesionalId").val()},
-						mtype:"POST",
-						rownumbers:false,
-						pager:'#pagerpacienteeventId',
-						datatype:"json",
-						colnames:['Id','D.N.I','Apellido','Nombre'],
-						colModel:[
-									{name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true,search:false},
-									{name:'dni',index:'dni', width:100, sorttype:"int", sortable:false,search:true, searchoptions: {sopt:['eq']} },	
-									{name:'apellido',index:'apellido', width:100,sortable:false,search:true},
-									{name:'nombre',index:'nombre', width:100, sortable:false,search:true}
-								 ],
-						ondblClickRow: function(id){
-							var obj=$("#pacienteseventId").getRowData(id);
-							$("#paciente").val(obj.apellido+"-"+obj.nombre);
-							$("#pacienteId").val(obj.id);		 
-							$("#pacienteeventdialogId").dialog("close");
-						} 
-					});
+ 	                $("#paciente").lookupfield({
+ 	                	source:"<% out << g.createLink(controller:"paciente",action:'listjson')%>",
+ 						title:'Búsqueda de Pacientes',
+ 						colNames:['Id','D.N.I', 'Apellido', 'Nombre','Domicilio','Telófono','C.P'],
+ 						colModel:[
+ 							   		{name:'id',index:'id', width:40},
+ 							   		{name:'dni',index:'dni', width:92,sortable:false},
+ 							   		{name:'apellido',index:'apellido', width:100,sortable:true},
+ 							   		{name:'nombre',index:'nombre', width:100,sortable:true},
+ 							   		{name:'domicilio',index:'domicilio', width:150,hidden:true, sortable:false},
+ 							   		{name:'telefono',index:'telefono', width:80,hidden:true, align:"right", sortable:false},
+ 							   		{name:'codigoPostal',index:'codigoPostal', hidden:true ,width:40, align:"right", sortable:false}
+ 							],
+ 						hiddenid:'pacienteId',
+ 						descid:'paciente',
+ 						hiddenfield:'id',
+ 						descfield:['apellido',['nombre']]
+							
+ 	                 });	
 
-					jQuery("#pacienteseventId").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
-					jQuery("#pacienteseventId").jqGrid('navGrid',"#pagerpacienteeventId",{del:false,add:false,edit:false,search:false}); 			
+					
+
 					$("#buscarpacienteId").button();
 					$("#buscarpacienteId").click(function(){
 							$("#pacienteeventdialogId").dialog({
@@ -276,24 +271,27 @@
 		<div id="pacienteeventdialogId" style="float:left; padding: 5px 5px 5px 5px;display: none">
 					<table id="pacienteseventId"></table>
 		</div>
-		<div id="pagerpacienteeventId" ></div>
 		
 		
 		<div style="float:left">
 		<div id='datepicker'></div>
 		</div>
-		<div style="float:left;padding-left:50px; ">
+		<div class="span-8">
 						<form name="profesionales">
-							<fieldset class="ingresodialogfieldset">
-								<label for="profesional">Profesional:</label>
-								<g:select name="profesionalId" id="profesionalId" from="${profesionales}" 
-										value="${profesionalId}"  
-										optionKey="id"
-										optionValue="nombre"   /><br/>
+							<fieldset>
+								<div class="span-2 spanlabel">
+									<label for="profesional">Profesional:</label>
+								</div>
+								<div>
+									<g:select class="ui-widget ui-corner-all ui-widget-content" name="profesionalId" id="profesionalId" from="${profesionales}" 
+											value="${profesionalId}"  
+											optionKey="id"
+											optionValue="nombre"/>
+								</div>		
 							</fieldset>		
 						</form>									
 		</div>
-		
+		<div class="clear"></div>
 		
 		<div id='calendars' style="padding: 5px 5px 5px 15px">
 			<div style="clear: left"></div>
@@ -307,17 +305,46 @@
         <div style="display: none" id="event-form" title="Crear Turno" >
         	
         	<form  onsubmit="return false">
-        			  
-								      	
-				<div style="float:left; padding: 5px 5px 5px 5px">
-					<label for="pacienteId" style="width:50px">Id:</label>
-					<input readonly="true" class="ui-widget ui-corner-all ui-widget-content" type="text" name="pacienteId" id="pacienteId"/><br/>
+
+				<div class="span-2 spanlabel"> 
+					Profesional:
+				</div>
+				<div class="span-4 spanlabel">
+					${profsel.nombre}
+				</div>
 					
-        			<label for="paciente" style="width:50px" for="paciente">Paciente:</label>
-        			<input class="ui-widget ui-corner-all ui-widget-content" name="paciente" id="paciente"/>
-        			<a id="buscarpacienteId" href="#">...</a>
-        			
+				<div class="clear"></div>				      	
+				<div class="span-2 spanlabel">
+					<label for="pacienteId">H.C Nro.:</label>
+				</div>
+				<div class="span-4">	
+					<input readonly="true" class="ui-widget ui-corner-all ui-widget-content" type="text" name="pacienteId" id="pacienteId"/><br/>
+				</div>
+				
+        		<div class="clear"></div>
+				<div class="span-2 spanlabel">
+        			<label for="paciente" for="paciente">Paciente:</label>
         		</div>	
+        		<div class="span-4 spanlabel">
+        			<input class="ui-widget ui-corner-all ui-widget-content" name="paciente" id="paciente"/>
+        		</div>
+        		
+<%--        		<div class="clear"></div>--%>
+<%--        		<div class="span-2 spanlabel">--%>
+<%--        			Inicio:--%>
+<%--        		</div>--%>
+<%--        		<div class="span-8 colborder">--%>
+<%--        			<g:datePicker class="ui-widget ui-corner-all ui-widget-content" name="fechaInicio" value="${new Date()}" noSelection="['':'-Seleccione-']"/>--%>
+<%--        		</div>--%>
+<%--        			--%>
+<%--        		<div class="clear"></div>--%>
+<%--        		<div class="span-2 spanlabel">--%>
+<%--        			Fin:--%>
+<%--        		</div>--%>
+<%--        		<div class="span-8 colborder">--%>
+<%--        			<g:datePicker class="ui-widget ui-corner-all ui-widget-content" name="fechaFin" value="${new Date()}" noSelection="['':'-Seleccione-']"/>--%>
+<%--        		</div>--%>
+<%--        			--%>
         		
         	</form>
         		

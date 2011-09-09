@@ -33,7 +33,7 @@
 							hiddenid:'especialidadId',
 							descid:'especialidadDescId',
 							hiddenfield:'id',
-							descfield:'descripcion'	
+							descfield:['descripcion']	
 		                 });	
 						
 		                $("#especialidadDescId").autocomplete({
