@@ -46,7 +46,7 @@ class BootStrap {
 	void createAdminIfRequired(){
 		if (!User.findByUsername("admin")){
 			def role = new Role(authority:"ROLE_ADMIN",description:"Rol Administrador").save()//usuario adminstrador
-			def roleregular = new Role(authority:"ROLE_USER",description:"Rol regular").save()//usuario secretaria
+			def roleregular = new Role(authority:"ROLE_USER",description:"Rol Secretaria").save()//usuario secretaria
 			def roleprofesional = new Role(authority:"ROLE_PROFESIONAL",description:"Rol de Profesionales").save()//usuario profesional médico
 			
 			new Requestmap(url:"/js/**",configAttribute:"IS_AUTHENTICATED_ANONYMOUSLY").save()

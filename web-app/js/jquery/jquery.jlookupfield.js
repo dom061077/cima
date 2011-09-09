@@ -80,7 +80,8 @@ $(document).ready(function(){
 		            	//$('#searchDialogId').height('auto'); 
 		            	//$('#searchiDialogId').add(grid);	
 						
-		                $(this).after('<label><a style="width:50px" id="'+searchLinkId+'" href="#"><span  class="ui-icon ui-icon-search">...</span></a></label>');
+		                $(this).after('<div style="float:left;padding:5px 0px 0px 0px"><a href="" onclick="return false" style="width:50px" id="'+searchLinkId+'" href="#"><span  class="ui-icon ui-icon-search">...</span></a></dov>');
+		                $(this).css('float','left');
 		                $('#'+searchLinkId).click(function(){
 		                	showgriddialog(searchDialogId);
 		                });

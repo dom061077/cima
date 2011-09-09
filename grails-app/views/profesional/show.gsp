@@ -166,7 +166,7 @@
                             <g:message code="profesional.sexo.label" default="Sexo:" />
 						</div>
 						<div class="span-4">                            
-                            <g:formatBoolean boolean="${profesionalInstance?.sexo}" />
+                            ${profesionalInstance?.sexo?.name?.encodeAsHTML()}
 						</div>
 					</fieldset>						                      
 				</div>	      

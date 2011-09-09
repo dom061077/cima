@@ -209,11 +209,16 @@
 						});*/	
 					
 					
-					 $("#profesionalId").combobox({
+					 /*$("#profesionalId").combobox({
 					        selected: function(event, ui) {
 					        	document.profesionales.submit();
 					        } // selected
- 						}); // combo	
+ 						}); // combo*/
+
+ 					$("#profesionalId").bind('selected',function(event,ui){
+ 								document.profesionales.submit();
+ 	 					});
+ 						
 					
 					$("#pacienteseventId").jqGrid({
 						caption:'Pacientes registrados',

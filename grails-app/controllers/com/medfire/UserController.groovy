@@ -222,7 +222,7 @@ class UserController {
 				result=result+','
 
 
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.username==null?"":it.username)+'","'+(it.userRealName==null?"":it.userRealName)+'","'+(it.enabled==null?"":it.enabled)+'","'+(it.esProfesional==null?"":it.esProfesional)+'","'+(it.email==null?"":it.email)+'","'+(it.profesionalAsignado?.nombre==null?"":it.profesionalAsignado?.nombre)+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.username==null?"":it.username)+'","'+(it.userRealName==null?"":it.userRealName)+'","'+(it.enabled==null?"":(it.enabled==true?'SI':'NO'))+'","'+(it.esProfesional==null?"":it.esProfesional)+'","'+(it.email==null?"":it.email)+'","'+(it.profesionalAsignado?.nombre==null?"":it.profesionalAsignado?.nombre)+'"]}'
 			 
 			flagaddcomilla=true
 		}

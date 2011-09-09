@@ -24,7 +24,7 @@
 							   		{name:'userRealName',index:'userRealName', width:100,sortable:true},
 							   		{name:'habilitado',index:'habilitado', width:80, align:"right", sortable:false,search:false},
 							   		{name:'esprofesional',index:'esprofesional', hidden:true, width:80, align:"right", sortable:false,search:false},						   		
-							   		{name:'email',index:'mail', width:80, align:"center", sortable:false},						   		
+							   		{name:'email',index:'mail', width:80, search:false, align:"center", sortable:false},						   		
 							   		{name:'profasignado',index:'profasignado', width:80, align:"center", sortable:false,search:false},							   		
 							   		{name:'operaciones',index:'operaciones', width:55,sortable:false,search:false}
 							   	],
@@ -47,8 +47,8 @@
 								}, 						    
 							    caption:"Listado de Usuarios"
 							});
-							jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true});
-		
+							jQuery("#list").jqGrid('navGrid','#pager',{search:false,edit:false,add:false,del:false,pdf:true});
+							jQuery("#list").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
 							jQuery("#list").jqGrid('navButtonAdd','#pager',{
 							       caption:"Excel", 
 							       onClickButton : function () { 
@@ -56,6 +56,7 @@
 							           jQuery("#list").jqGrid("excelExport",{url:"excelexport"});
 							       } 
 							});
+							
 							
 						}
 		        );
@@ -70,7 +71,7 @@
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1><g:message code="user.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
             <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
