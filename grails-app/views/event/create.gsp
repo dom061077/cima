@@ -11,11 +11,11 @@
         <script type="text/javascript">
         	var loc='<%out<< g.createLink(controller:'event',action:'operation');%>';
         </script>
+		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.dateFormat-1.0.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fcalendar.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fullcalendar.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>
 		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>        
-
         
         <style type="text/css">
         	//div.ui-datepicker {
@@ -339,10 +339,24 @@
 				
         		<div class="clear"></div>
 				<div class="span-2 spanlabel">
-        			<label for="paciente" for="paciente">Paciente:</label>
+        			<label for="paciente">Paciente:</label>
         		</div>	
         		<div class="span-4">
         			<input class="ui-widget ui-corner-all ui-widget-content" name="paciente" id="paciente"/>
+        		</div>
+        		<div class="clear"></div>
+        		<div class="span-2">
+        			<label for="fechaStart">Fecha Inicio:</label>
+        		</div>
+        		<div class="span4">
+        			<input disabled="disabled" name="fechaStart" id="fechaStartId"/>
+        		</div>
+        		<div class="clear"></div>
+        		<div class="span-2">
+        			<label for="fechaEnd">Fecha Fin:</label>
+        		</div>
+        		<div class="span4">
+        			<input disabled="disabled" name="fechaEnd" id="fechaEndId"/>
         		</div>
         		
 <%--        		<div class="clear"></div>--%>

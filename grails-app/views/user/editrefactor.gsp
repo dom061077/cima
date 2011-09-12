@@ -173,9 +173,9 @@
                             <div class="clear"></div>
                             <fieldset>
                             	<legend>Roles:</legend>
-								<g:each var="entry" in="${rolesList}">
+								<g:each var="entry" in="${authorityList}">
 									
-									${entry.key.description.encodeAsHTML()}
+									${entry.key.description?.encodeAsHTML()}
 									<g:checkBox name="${entry.key.authority}" value="${entry.value}"/>
 								</g:each> 
 							</fieldset>                           

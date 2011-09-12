@@ -3,7 +3,7 @@
 $(document).ready(function(){
 	
 	
-	$("#estadoId").combobox() ;
+	//$("#estadoId").combobox() ;
     	
 	$( "#tabs" ).tabs();
 	 

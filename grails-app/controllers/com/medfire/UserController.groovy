@@ -84,7 +84,7 @@ class UserController {
 			for (role in roles) {
 				roleMap[(role)] = userRoleNames.contains(role.authority)
 			}
-			return [userInstance: userInstance, rolesList: roleMap]
+			return [userInstance: userInstance, authorityList: roleMap]
         }
     }
 
@@ -92,13 +92,26 @@ class UserController {
 		log.info "INGRESANDO AL CLOSURE updaterector"
 		log.info "PARAMETROS: $params"
 		def userInstance = User.get (params.id)
+		def	roles = Role.list()
+		roles.sort { r1, r2 ->
+			r1.authority <=> r2.authority
+		}
+		Set userRoleNames = []
+		for (role in userInstance.authorities) {
+			userRoleNames << role.authority
+		}
+		LinkedHashMap<Role, Boolean> roleMap = [:]
+		for (role in roles) {
+			roleMap[(role)] = userRoleNames.contains(role.authority)
+		}
+
 		if (userInstance) {
 			if (params.version) {
 				def version = params.version.toLong()
 				if (userInstance.version > version) {
 					
 					userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
-					render(view: "editfactor", model: [userInstance: userInstance])
+					render(view: "editfactor", model: [userInstance: userInstance,authorityList:roleMap])
 					return
 				}
 			}
@@ -119,7 +132,7 @@ class UserController {
 			}
 			else {
 				log.warn "ERROR DE VALIDACION: "+userInstance.errors.allErrors
-				render(view: "editrefactor", model: [userInstance: userInstance])
+				render(view: "editrefactor", model: [userInstance: userInstance,authorityList:roleMap])
 			}
 		}
 		else {

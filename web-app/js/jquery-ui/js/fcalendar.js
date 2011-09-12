@@ -70,6 +70,8 @@ function guiCreate(start, end, allDay) {
 			refrescarflag=false;
 			$("#paciente").val("");
 			$("#pacienteId").val("");
+			$("#fechaStartId").val($.format.date(start,"dd/MM/yyyy hh:mm"));
+			$("#fechaEndId").val($.format.date(end,"dd/MM/yyyy hh:mm"));
 		},
 		close : function(event, ui) {
 			/*$(id).html('');*/
@@ -234,6 +236,8 @@ function guiUpdateClick(calEvent, jsEvent, view) {
 			refrescarflag=false;
 			$("#paciente").val(calEvent.title)
 			$("#pacienteId").val(calEvent.pacienteId);
+			$("#fechaStartId").val(calEvent.fechaStart);
+			$("#fechaEndId").val(calEvent.fechaEnd);			
 		},
 		width : "340px",
 		close : function() {

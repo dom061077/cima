@@ -164,7 +164,9 @@ class EventController {
 		render(contentType:"text/json"){
 			array{
 				for(e in eventos){
-					backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
+					
+					if(e.estado==EstadoEvent.EVENT_PENDIENTE)
+						backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
 					if(e.estado==EstadoEvent.EVENT_ATENDIDO)
 						backgroundColor=grailsApplication.config.event.COLOR_ATENDIDO
 					if(e.estado==EstadoEvent.EVENT_AUSENTE)
@@ -172,7 +174,7 @@ class EventController {
 					if(e.estado==EstadoEvent.EVENT_ANULADO)
 						backgroundColor=grailsApplication.config.event.COLOR_ANULADO
 
-					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor
+					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
 				}
 			}
 		}
@@ -490,7 +492,12 @@ class EventController {
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
-		def dateWithoutTime = cal.getTime();
+		def dateStart = cal.getTime();
+		cal.set(Calendar.HOUR_OF_DAY, 24);
+		cal.set(Calendar.MINUTE, 0);
+		cal.set(Calendar.SECOND, 0);
+		cal.set(Calendar.MILLISECOND, 0);
+		def dateEnd = cal.getTime()
 		def user = User.load(authenticateService.userDomain().id)
 		def filtersJson 
 		def oper
@@ -503,7 +510,7 @@ class EventController {
 				criteria.profesional(){
 					criteria.eq('id',user.profesionalAsignado?.id)
 				}
-				criteria.eq('fechaStart',dateWithoutTime)
+				criteria.between('fechaStart',dateStart,dateEnd)
 				if(Boolean.parseBoolean(params._search)){
 					if(params.filters){
 						filtersJson = JSON.parse(params.filters)

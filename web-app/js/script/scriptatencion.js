@@ -1,5 +1,5 @@
 	var timer;
-	var refrescarflag=true;
+	var refrescarAtencion=true;
 	function updateestadoturno(id,estado){
 		$.ajax({
 			url:locupdturnos,
@@ -52,13 +52,13 @@
 			jQuery("#listturnos").jqGrid({ 
 						caption:'Turnos en Espera', 
 						//height:200, 
-						width: 150,
+						width: 200,
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
 						//postData: {profesionalId : profesionalId,cmd:'list'},
         				mtype:"POST",
-        				rownumbers:true,
+        				//rownumbers:true,
 				   		//rowList:[10,20,30],
 				   		//rowTotal:2000,
 				   		
@@ -66,14 +66,14 @@
 						//scrollOffset:0,
 						//viewrecords: true,
 						datatype: "json",
-						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Fecha/Hora','Fecha Fin'],
+						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin'],
 						colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
 								   {name:'titulo',index:'titulo', width:100,sorttype:'text',sortable:false},	
 								   {name:'cod_estado',index:'cod_estado', width:60,sortable:false,hidden:true,search:false},
 								   {name:'estado',index:'estado', width:60,sortable:false,hidden:false,search:false},
 								   {name:'version',index:'version', width:60,sortable:false,hidden:true,search:false},								   
-								   {name:'fechaStart',index:'fechaStart', width:80,sortable:false,hidden:true,search:false},
-								   {name:'fechaEnd',index:'fechaEnd', width:80,sortable:false,hidden:true,search:false}
+								   {name:'fechaStart',index:'fechaStart', width:60,sortable:false,hidden:false,search:false},
+								   {name:'fechaEnd',index:'fechaEnd', width:60,sortable:false,hidden:false,search:false}
 								 ], 
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
 				                        $('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
@@ -92,7 +92,7 @@
 									autoOpen: true,
 									modal: true,
 									open:function(event,ui){
-										refrescarflag=false;
+										refrescarAtencion=false;
 									},
 									buttons: {
 										"Guardar": function() {
@@ -125,7 +125,7 @@
 										}
 									},
 									close: function() {
-										refrescarflag=true;
+										refrescarAtencion=true;
 									}
 								});
 						},
@@ -138,7 +138,7 @@
 
 						
 				timer = $.timer(25000, function() {
-						if (refrescarflag)
+						if (refrescarAtencion)
 							$("#listturnos").trigger("reloadGrid")
 						;
 					});			

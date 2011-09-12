@@ -81,21 +81,26 @@
             		<div id="tabs-1">
             			<fieldset>
             				<g:hiddenField name="pacienteId" value="${pacienteInstance?.id}"></g:hiddenField>
-            				<div class="span-6">
-            						
-		   							<label style="float:left;" for="cie10Descripcion">CIE-10:</label>
-		   							<input style="float:left" type="text" id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/>
+            				<div class="span-1 spanlabel">
+		   							<label for="cie10Descripcion">CIE-10:</label>
+		   					</div>		
+		   					<div class="span-4">		
+		   							<input  type="text" id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/>
 		   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${consultaInstance?.cie10?.id}"/>
    							</div>
    							
-   							<div class="span-7 colborder">
+   							<div class="span-3 spanlabel">
 		  							<label for="consulta.fechaConsulta">Fecha de Consulta:</label>
+		  					</div>
+		  					<div class="span-3  append-1">		
 		  							<g:textField class="ui-widget ui-corner-all ui-widget-content" id="fechaConsultaId" name="consulta.fechaConsulta" value="${g.formatDate(format:'dd/MM/yyyy',date:consultaInstance?.fechaConsulta)}"/>
    							</div>
    							
-   							<div class="span-6 colborder">
+   							<div class="span-1 spanlabel">
 		   							<label for="consulta.estado">Estado:</label>
-		   							<g:select id="estadoId" name="consulta.estado" from="${com.medfire.enums.EstadoConsultaEnum.list()}" optionValue="name" value="${consultaInstance?.estado}"></g:select>
+		   					</div>
+		   					<div class="span-3">
+		   							<g:select class="ui-widget ui-corner-all ui-widget-content" id="estadoId" name="consulta.estado" from="${com.medfire.enums.EstadoConsultaEnum.list()}" optionValue="name" value="${consultaInstance?.estado}"></g:select>
    							</div>
    							<div class="clear"></div>
    							<div class="span-18" >

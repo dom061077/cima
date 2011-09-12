@@ -1,5 +1,5 @@
 package com.medfire
-import java.sql.Date
+import java.util.Date
 
 import com.medfire.enums.EstadoEvent;
 
