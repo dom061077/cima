@@ -58,6 +58,11 @@ grails.plugin.cloudfoundry.username = "dom061077@gmail.com"
 grails.plugin.cloudfoundry.password = "aCZytfim"
 grails.plugin.cloudfoundry.appname = "medfireweb"
 grails.plugin.cloudfoundry.http_proxy = "http://proxy.vmware.com:3128vmc target api.cloudfoundry.com"
+event.COLOR_ATENDIDO="#54de25"
+event.COLOR_AUSENTE="#fab7a0"
+event.COLOR_ANULADO="#ff0000"
+event.COLOR_PENDIENTE="#8c94f0"
+
 
 // set per-environment serverURL stem for creating absolute links
 environments {
