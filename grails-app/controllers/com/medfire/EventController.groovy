@@ -1,5 +1,6 @@
 package com.medfire
 
+import com.medfire.enums.EstadoEvent;
 import com.medfire.util.FilterUtils
 import java.util.Calendar;
 import java.util.Date
@@ -33,7 +34,7 @@ class EventController {
 			order("nombre","asc")
 		}
 		log.debug "cantidad de profesionales que atiende: "+profList.size()
-        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profList.get(0)]
+        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profList.get(0),intervalo:(params.intervalo?params.intervalo:30)]
     }
 
     def save = {
@@ -158,11 +159,20 @@ class EventController {
 				eq('id',new Long(params.profesionalId?:0))
 			}
 		}
+		def backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
 		
 		render(contentType:"text/json"){
 			array{
 				for(e in eventos){
-					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version
+					backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
+					if(e.estado==EstadoEvent.EVENT_ATENDIDO)
+						backgroundColor=grailsApplication.config.event.COLOR_ATENDIDO
+					if(e.estado==EstadoEvent.EVENT_AUSENTE)
+						backgroundColor=grailsApplication.config.event.COLOR_AUSENTE
+					if(e.estado==EstadoEvent.EVENT_ANULADO)
+						backgroundColor=grailsApplication.config.event.COLOR_ANULADO
+
+					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor
 				}
 			}
 		}

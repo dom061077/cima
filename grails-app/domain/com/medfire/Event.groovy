@@ -4,6 +4,8 @@ import java.sql.Date
 import com.medfire.enums.EstadoEvent;
 
 class Event {
+
+	
 	Date fechaStart
 	Date fechaEnd
 	Integer start

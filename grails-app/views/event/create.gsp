@@ -57,9 +57,10 @@
 					},	
 					allDayText:'todo el día',
 					weekends: true,
-					slotMinutes: 30,
+					slotMinutes: <%out<< "${intervalo}"%>,
 						
 					/***************/
+					eventColor:'#8c94f0',
 					allDaySlot:false,
 					timeFormat : 'H:mm',
 					axisFormat : 'H:mm',
@@ -70,7 +71,7 @@
 					select : guiCreate,
 					editable : true,
 					disableResizing:false,
-					//minTime:7,
+					minTime:7,
 					//maxTime:'10pm',
 					eventDragStart: dragStart,
 					eventDragStop: dragStop,
@@ -183,6 +184,7 @@
 						//$("#datepicker").datepicker('setDate', d);
 					//$('#calendar').fullCalendar('gotoDate', d);
 					});*/
+
 					
 					timer = $.timer(10000, function() {
 						if (refrescarflag)
@@ -217,7 +219,9 @@
  					$("#profesionalId").change(function(){
  								document.profesionales.submit();
  	 					});
- 						
+ 					$("#intervalosId").change(function(){
+ 	 							document.intervalo.submit();
+ 	 				});	
 					
  	                $("#paciente").lookupfield({
  	                	source:"<% out << g.createLink(controller:"paciente",action:'listjson')%>",
@@ -273,6 +277,7 @@
 		</div>
 		
 		
+		
 		<div style="float:left">
 		<div id='datepicker'></div>
 		</div>
@@ -282,26 +287,37 @@
 								<div class="span-2 spanlabel">
 									<label for="profesional">Profesional:</label>
 								</div>
-								<div>
+								<div class="span-4">
 									<g:select class="ui-widget ui-corner-all ui-widget-content" name="profesionalId" id="profesionalId" from="${profesionales}" 
 											value="${profesionalId}"  
 											optionKey="id"
 											optionValue="nombre"/>
-								</div>		
-							</fieldset>		
+								</div>
+							</fieldset>
 						</form>									
 		</div>
-		<div class="clear"></div>
+			
 		
-		<div id='calendars' style="padding: 5px 5px 5px 15px">
-			<div style="clear: left"></div>
-			<div id='calendar'></div>
-		</div>
-        
-        <div id="">
-        
+		<div class="clear"></div>
+		<div class="span-2" style="padding: 100px 0px 0px 0px">
+				<g:colorsList/>								
+		</div>	
+		<div class="span-17">
+			<div id='calendars' style="padding: 5px 5px 5px 15px">
+				<div style="clear: left"></div>
+				<div id='calendar'></div>
+			</div>
         </div>
-        
+		<div class="span-2" style="padding: 100px 0px 0px 0px">
+			<form method="POST" name="intervalo">
+				<fieldset>
+					<label>Intervalos:</label><br/>
+					<g:select id="intervalosId" class="ui-widget ui-corner-all ui-widget-content" name="intervalo" value="${intervalo}"
+					 	from="${['60','30','15','10','5'] }"></g:select>
+				</fieldset>
+			</form>	
+		</div>
+		        
         <div style="display: none" id="event-form" title="Crear Turno" >
         	
         	<form  onsubmit="return false">
@@ -318,14 +334,14 @@
 					<label for="pacienteId">H.C Nro.:</label>
 				</div>
 				<div class="span-4">	
-					<input readonly="true" class="ui-widget ui-corner-all ui-widget-content" type="text" name="pacienteId" id="pacienteId"/><br/>
+					<input readonly="true" style="float:left" class="ui-widget ui-corner-all ui-widget-content" type="text" name="pacienteId" id="pacienteId"/><br/>
 				</div>
 				
         		<div class="clear"></div>
 				<div class="span-2 spanlabel">
         			<label for="paciente" for="paciente">Paciente:</label>
         		</div>	
-        		<div class="span-4 spanlabel">
+        		<div class="span-4">
         			<input class="ui-widget ui-corner-all ui-widget-content" name="paciente" id="paciente"/>
         		</div>
         		

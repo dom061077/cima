@@ -33,7 +33,7 @@ function isInteger(iString) {
 function guiCreate(start, end, allDay) {
 	refrescarflag=false;
 	
-	if((end-start)!=1800000){
+	/*if((end-start)!=1800000){
 		$('<div><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>El turno no puede ser mayor a 30 minutos</div>').dialog({
 			title: 'Error',
 			modal:true,
@@ -43,7 +43,7 @@ function guiCreate(start, end, allDay) {
 			}
 		});
 		return
-	}
+	}*/
 	if(allDay){
 		$('<div><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>No se puede crear un turno jornada completa</div>').dialog({
 			title: 'Error',
