@@ -9,6 +9,7 @@
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.fieldsetcollapsible.js')}"></script>
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
         
         <script type="text/javascript">
@@ -212,7 +213,7 @@
 										
                  		</fieldset>
                  		<fieldset>
-                 			<legend>Otros datos</legend>
+                 			<legend >Otros datos</legend>
                  			<div class="clear"></div>
                  			<div class="span-3">
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
@@ -296,13 +297,19 @@
                  		</div><!-- div del span en la pesta�a  -->
             		</div>  
             		<div id="tabs-3">
-            			<fieldset>
-            				
+            			<div class="span-3 append-bottom"><a id="agregarEstudioId" onClick="return false" href="">Agregar Estudio</a></div>
+            			<div class="clear"></div>
+            			<fieldset id="estudio1" class="coolfieldset">
+            				<legend>Estudio 1</legend>
             				<div class="span-10">
+            					<label for="">Pedido:</label>
+            					<br/>
+            					<g:textField class="ui-widget ui-corner-all ui-widget-content inputlarge" name="consulta." />
+            					<br/>
             					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
             					<br/>
-            					<div class="span-4">
-	            					<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+            					<div class="span-19">
+	            					<g:textArea  class="textareastudio ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
 	            						${consultaInstance?.estudioComplementarioObs}
 	            					</g:textArea>
                                		<g:hasErrors bean="${consultaInstance}" field="estudioComplementarioObs">

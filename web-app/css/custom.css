@@ -18,3 +18,54 @@ h1,h2{
 .buttons{
 	padding: 15px 0px 0px 0px;
 }
+
+.spanplus{
+	right:10%;
+	position: relative;
+	top: 10%; 
+	padding: 1px;	
+}
+
+.textareastudio{
+	width:500px;
+	height:100px;
+}
+
+.estudiocomp{
+	padding-left: 20px;
+	padding-right:20px;
+	border:solid;
+}
+
+
+/*******************************************************/
+.coolfieldset, .coolfieldset.expanded{
+	border:1px solid #aaa;   
+}
+
+.coolfieldset.collapsed{
+	border:0;
+	border-top:1px solid #aaa;
+}
+
+.coolfieldset legend{
+	padding-left:15px;
+	font-weight:bold;
+	cursor:pointer;
+}
+
+.coolfieldset legend, .coolfieldset.expanded legend{
+	/*width: 16px; height: 16px; */
+	/*background-image: url(../images/jquery/ui-icons_469bdd_256x240.png) ;*/
+	background-position: 0 -192px;
+	
+}
+
+.coolfieldset.collapsed legend{
+	/*width: 16px; height: 16px;*/ 
+	/*background-image: url(../images/jquery/ui-icons_469bdd_256x240.png) ;*/
+	background-position: -16px -192px;
+	
+
+}
+/********************************************************/

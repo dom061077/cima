@@ -4,7 +4,7 @@ $(document).ready(function(){
 	
 	
 	//$("#estadoId").combobox() ;
-    	
+    var arrayEstudios=[];	
 	$( "#tabs" ).tabs();
 	 
 	$("#fechaConsultaId" ).datepicker($.datepicker.regional[ "es" ]);	
@@ -164,14 +164,6 @@ $(document).ready(function(){
 	}
 
 			
-
-		
-	
-	
-
-	
-	
-	
 	var options={
 		target: '#outputId',
 		//dataType: 'json',
@@ -189,5 +181,16 @@ $(document).ready(function(){
 	
 	
 	$('#historiaFormId').ajaxForm(options);
-			
+	//****************************************/
+	$('#estudio1').coolfieldset({speed:"fast"});
+	
+	$('#agregarEstudioId').click(function(){
+		
+		$('#tabs-3').append('<fieldset id="estudio2"></fieldset>');
+		$('#tabs-3').find('fieldset#estudio2').append('<legend>Estudio #</legend>');
+		$('#estudio2').coolfieldset({speed:'fast'});
+		
+		return false;
+	});
+	
 	});//end function ready
