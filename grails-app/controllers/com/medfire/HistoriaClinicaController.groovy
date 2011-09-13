@@ -54,6 +54,11 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		
+		params.consulta.estudio.each{
+			log.debug "PARAMETRO DE ESTUDIO: "+it
+		}
+
+		
 		//---pasear json de la grilla de prescripciones----
 		def prescripcionesjson
 		if(params.prescripciones)
@@ -83,6 +88,7 @@ class HistoriaClinicaController {
 		pacienteInstance.properties = params.paciente
 		consultaInstance.paciente=pacienteInstance
 		def estudioImagen
+		
 		
 		params.imagen.each{
 			if(!it.value.isEmpty()){

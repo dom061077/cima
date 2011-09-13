@@ -2,7 +2,7 @@
    "http://www.w3.org/TR/html4/strict.dtd">
 
 <%@ page import="org.codehaus.groovy.grails.plugins.springsecurity.AuthorizeTools"
-
+		 import= "com.medfire.enums.EstadoEvent"
 %>
 
 
@@ -10,6 +10,7 @@
 <html>
     <head>
         <title><g:layoutTitle default="Grails" /></title>
+		<META HTTP-EQUIV="Cache-Control" CONTENT ="no-cache"/>        
 	    <link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'screen.css')}" type="text/css" media="screen, projection">
     	<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'print.css')}" media="print">
     	<!--[if lt IE 8]><link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'ie.css')}" type="text/css" media="screen, projection"><![endif]-->
@@ -96,21 +97,11 @@
 
 			<div style="display:none" id="MenuJqGrid">
 		        <ul>
-		            <li id="atendido">
-		                <img src="themes/contextMenu/edit.png" />
-		                Atendido</li>
-		            <li id="ausente">
-		                <img src="themes/contextMenu/cut.png" />
-		                Ausente</li>
-		            <li id="anulado">
-		                <img src="themes/contextMenu/copy.png" />
-		                Anulado</li>
-		            <li id="pendiente">
-		                <img src="themes/contextMenu/paste.png" />
-		                Pendiente</li>
-		            <li id="datosdelpaciente">
-		                <img src="themes/contextMenu/delete.png" />
-		                Datos del Paciente</li>
+		            <li id="atendido"><g:colorsList event='COLOR_ATENDIDO'/>${EstadoEvent.EVENT_ATENDIDO.name}</li>
+		            <li id="ausente"><g:colorsList event='COLOR_AUSENTE'/>${EstadoEvent.EVENT_AUSENTE.name}</li>
+		            <li id="anulado"><g:colorsList event='COLOR_ANULADO'/>${EstadoEvent.EVENT_ANULADO.name}</li>
+		            <li id="pendiente"><g:colorsList event='COLOR_PENDIENTE'/>${EstadoEvent.EVENT_PENDIENTE.name}</li>
+		            <li id="datosdelpaciente"><span style="float:left" class="ui-icon ui-icon-person"></span>Datos del Paciente</li>
 		
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->

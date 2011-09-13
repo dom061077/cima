@@ -17,7 +17,7 @@ class User {
 	/** MD5 Password */
 	String passwd
 	/** enabled */
-	boolean enabled
+	boolean enabled=true
 	boolean esProfesional=false
 
 	String email

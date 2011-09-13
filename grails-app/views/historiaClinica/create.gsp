@@ -9,7 +9,6 @@
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
-        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.fieldsetcollapsible.js')}"></script>
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
         
         <script type="text/javascript">
@@ -299,53 +298,55 @@
             		<div id="tabs-3">
             			<div class="span-3 append-bottom"><a id="agregarEstudioId" onClick="return false" href="">Agregar Estudio</a></div>
             			<div class="clear"></div>
-            			<fieldset id="estudio1" class="coolfieldset">
-            				<legend>Estudio 1</legend>
-            				<div class="span-10">
-            					<label for="">Pedido:</label>
-            					<br/>
-            					<g:textField class="ui-widget ui-corner-all ui-widget-content inputlarge" name="consulta." />
-            					<br/>
-            					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
-            					<br/>
-            					<div class="span-19">
-	            					<g:textArea  class="textareastudio ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
-	            						${consultaInstance?.estudioComplementarioObs}
-	            					</g:textArea>
-                               		<g:hasErrors bean="${consultaInstance}" field="estudioComplementarioObs">
-                               			<br/>
-                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="estudioComplementarioObs"/></div>
-                                   	</g:hasErrors>
-            					</div>		
-            				</div>
-            				<div class="clear"/>
-            				
-            				<div class="span-6">
-            					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
-            				</div>
-            				<div class="span-10">
-            					<input type="file" id="imagenUnoId" name="imagen.1" />
-            				</div>
-            				
-            				<div class="clear"></div>
-            				
-            				<div class="span-6">
-            					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
-            				</div>
-            				<div class="span-10">
-            					<input type="file" name="imagen.2" />
-            				</div>
-
-            				<div class="clear"></div>
-
-            				<div class="span-6">
-            					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
-            				</div>
-            				<div class="span-10">
-            					<input type="file" name="imagen.3" />
-            				</div>
-            				
-            			</fieldset>
+            			<div id="tabs-estudios">
+            					<ul>
+            						<li><a href="#tab-estudio1">Estudio 1</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>
+            					</ul>
+            					<div id="tab-estudio1">
+				           			<fieldset id="estudio1">
+				           				<div class="span-10">
+				           					<label for="consulta.estudio.1.pedido">Pedido:</label>
+				           					<br/>
+				           					<g:textField id="estudio.1.pedido" class="ui-widget ui-corner-all ui-widget-content inputlarge" name="consulta.estudio.1.pedido" />
+				           					<br/>
+				           					<label for="consulta.estudio.1.resultado"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
+				           					<br/>
+				           					<div class="span-19">
+				            					<g:textArea id="estudio.1.resultado" class="textareastudio ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudio.1.resultado">
+				            						${consultaInstance?.estudioComplementarioObs}
+				            					</g:textArea>
+				                              		<g:hasErrors bean="${consultaInstance}" field="estudioComplementarioObs">
+				                              			<br/>
+				                                   	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="estudioComplementarioObs"/></div>
+				                                  	</g:hasErrors>
+				           					</div>		
+				           				</div>
+				           				<div class="clear"/>
+				           				
+				           				<div class="span-6">
+				           					<label for="estudio.1.imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
+				           				</div>
+				           				<div class="span-10">
+				           					<input type="file" id="imagenUnoId" name="estudio.1.imagen.1" />
+				           				</div>
+				           				<div class="clear"></div>
+				           				<div class="span-6">
+				           					<label for="estudio.1.imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
+				           				</div>
+				           				<div class="span-10">
+				           					<input type="file" name="estudio.1.imagen.2" />
+				           				</div>
+				           				<div class="clear"></div>
+				
+				           				<div class="span-6">
+				           					<label for="estudio.3.imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
+				           				</div>
+				           				<div class="span-10">
+				           					<input type="file" name="estudio.3.imagen.3" />
+				           				</div>
+				           			</fieldset>
+				           		</div>	
+            			</div>
             		</div>
             		<div id="tabs-4">
             			<fieldset>

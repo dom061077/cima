@@ -26,7 +26,7 @@ $(document).ready(function(){
 									//if(row.numero)
 									//	be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencilç' style='margin: 3px 3px 3px 10px'  ></span></a>";
 									//else
-										be = "<a href='create?pacienteId="+ids[i]+"'><span class='ui-icon ui-icon-plusthick' style='margin: 3px 3px 3px 10px'  ></span></a>";
+										be = "<a href='create?pacienteId="+ids[i]+"'><span class='ui-icon ui-icon-contact' style='margin: 3px 3px 3px 10px'  ></span></a>";
 									jQuery("#listhistoria").jqGrid('setRowData',ids[i],{operaciones:be}); 
 									} 
 							}	
@@ -40,7 +40,7 @@ $(document).ready(function(){
 				url:locsubgridconsulta+'?pacienteId='+obj.id,
 				datatype: "json",
 				mtype:'POST',
-				colNames: ['Id','Fecha Consulta','Cie10','Cie10 Desc.','Profesional','Ambito','Paciente ID','Operaciones'],
+				colNames: ['Id','Fecha Consulta','Cie10','Cie10 Desc.','Profesional','Ambito','Hist.Nro.','Operaciones'],
 				colModel: [
 					{name:"id",index:"id",width:80,key:true,hidden:true},				           
 					{name:"fechaConsulta",index:"fechaConsulta",width:80,sorttype:'date', formatter:'date'},

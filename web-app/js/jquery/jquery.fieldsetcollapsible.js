@@ -18,10 +18,10 @@
 		
 		obj.removeClass("expanded");
 		obj.addClass("collapsed");
-		var spanlegend = obj.children('legend').find('span');
-		spanlegend.addClass("ui-icon ui-icon-circle-plus");
-		spanlegend.removeClass("ui-icon-circle-minus");
-		spanlegend.css('float','left');
+		//var spanlegend = obj.children('legend').find('span');
+		//spanlegend.addClass("ui-icon ui-icon-circle-plus");
+		//spanlegend.removeClass("ui-icon-circle-minus");
+		//spanlegend.css('float','left');
 	}
 	
 	function showFieldsetContent(obj, options){
@@ -32,10 +32,10 @@
 		
 		obj.removeClass("collapsed");
 		obj.addClass("expanded");
-		var spanlegend = obj.children('legend').find('span');
-		spanlegend.addClass("ui-icon ui-icon-circle-minus");
-		spanlegend.removeClass("ui-icon-circle-plus");
-		spanlegend.css('float','left');
+		//var spanlegend = obj.children('legend').find('span');
+		//spanlegend.addClass("ui-icon ui-icon-circle-minus");
+		//spanlegend.removeClass("ui-icon-circle-plus");
+		//spanlegend.css('float','left');
 		
 	}
 	
@@ -46,7 +46,7 @@
 		this.each(function(){
 			var fieldset=$(this);
 			var legend=fieldset.children('legend');
-			legend.append('<span style="float:left" class="ui-icon ui-icon-circle-minus"></span>');
+			//legend.append('<span style="float:left" class="ui-icon ui-icon-circle-minus"></span>');
 			if(setting.collapsed==true){
 				legend.toggle(
 					function(){

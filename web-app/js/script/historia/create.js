@@ -4,7 +4,8 @@ $(document).ready(function(){
 	
 	
 	//$("#estadoId").combobox() ;
-    var arrayEstudios=[];	
+    //var arrayEstudios=[{id}];
+	var countEstudios=1;
 	$( "#tabs" ).tabs();
 	 
 	$("#fechaConsultaId" ).datepicker($.datepicker.regional[ "es" ]);	
@@ -182,15 +183,42 @@ $(document).ready(function(){
 	
 	$('#historiaFormId').ajaxForm(options);
 	//****************************************/
-	$('#estudio1').coolfieldset({speed:"fast"});
 	
 	$('#agregarEstudioId').click(function(){
-		
-		$('#tabs-3').append('<fieldset id="estudio2"></fieldset>');
+		//arrayEstudios.push({id:0});		
+		countEstudios++;
+		/*$('#tabs-3').append('<fieldset class="coolfieldset" id="estudio2"></fieldset>');
 		$('#tabs-3').find('fieldset#estudio2').append('<legend>Estudio #</legend>');
-		$('#estudio2').coolfieldset({speed:'fast'});
+		$('#estudio2').append('<div>contenido de div</div>');
+		$('#estudio2').coolfieldset({speed:'fast'});*/
+		/*var clon = $('#estudio1').clone();
+		clon.attr('id','estudio'+countEstudios);
+		clon.children('legend').toggle();
+		clon.coolfieldset({speed:'fast'});
+		clon.appendTo('#tabs-3');*/
 		
-		return false;
+		$("#tabs-estudios").tabs( "add", "#tab-estudio" + countEstudios, "Estudio "+countEstudios );
+
 	});
 	
-	});//end function ready
+	//-----------inicializacion de tabas estudios-----------
+	var $tabs = $( "#tabs-estudios").tabs({
+			tabTemplate: "<li><a href='#{href}'>#{label}</a><span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
+			add: function( event, ui ) {
+				//var tab_content = $tab_content_input.val() || "Tab " + tab_counter + " content.";
+				var clon = $('#estudio1').clone();
+				clon.attr('id','estudio'+countEstudios);
+				clon.appendTo('#tab-estudio'+countEstudios);
+				clon.children('#estudio.1.pedido').attr('name','consulta.estudio.'+contEstudios+'.pedido');
+				clon.children('#estudio.1.pedido').attr('id','estudio.'+contEstudios+'.pedido');
+				
+			}
+		});
+
+	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
+				var index = $( "li", $tabs ).index( $( this ).parent() );
+				$tabs.tabs( "remove", index );
+			});
+		
+	
+});//end function ready
