@@ -54,9 +54,6 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		
-		params.consulta.estudio.each{
-			log.debug "PARAMETRO DE ESTUDIO: "+it
-		}
 
 		
 		//---pasear json de la grilla de prescripciones----
@@ -89,14 +86,21 @@ class HistoriaClinicaController {
 		consultaInstance.paciente=pacienteInstance
 		def estudioImagen
 		
-		
-		params.imagen.each{
-			if(!it.value.isEmpty()){
-				log.debug "IMAGEN AGREGADA "+it.value.class+" it: "+it.class
-				//consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName)))
-				consultaInstance.addToEstudios(new EstudioComplementario(imagen:it.value))
-			}else
-				log.debug "IMAGEN VACIA"	
+		def i=1
+		params.consulta.estudio.each{
+			log.debug "ESTRUCTURA ESTUDIO ${it.properties}"
+			it.imagen.each{
+				log.debug ""
+			}
+//			it.value.imagen.each{
+//				if(!it.value.isEmpty()){
+//					log.debug "IMAGEN AGREGADA "+it.value.class+" it: "+it.class
+//					//consultaInstance.addToEstudios(new EstudioComplementario(imagen:request.getFile(it.value.getName)))
+//					consultaInstance.addToEstudios(new EstudioComplementario(imagen:it.value))
+//				}else
+//					log.debug "IMAGEN VACIA"
+//				log.debug "IMAGEN: $i"		
+//			}
 		}
 		
 		prescripcionesjson.each{ 

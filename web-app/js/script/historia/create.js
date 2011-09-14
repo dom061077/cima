@@ -209,9 +209,21 @@ $(document).ready(function(){
 				var clon = $('#estudio1').clone();
 				clon.attr('id','estudio'+countEstudios);
 				clon.appendTo('#tab-estudio'+countEstudios);
-				clon.children('#estudio.1.pedido').attr('name','consulta.estudio.'+contEstudios+'.pedido');
-				clon.children('#estudio.1.pedido').attr('id','estudio.'+contEstudios+'.pedido');
 				
+				clon.find('#estudio1pedido').attr('name','consulta.estudio.'+countEstudios+'.pedido');
+				clon.find('#estudio1pedido').attr('id','estudio'+countEstudios+'pedido');
+				
+				clon.find('#estudio1resultado').attr('name','consulta.estudio.'+countEstudios+'.resultado');
+				clon.find('#estudio1resultado').attr('id','estudio'+countEstudios+'resultado')
+				
+				clon.find('#estudio1imagen1').attr('name','estudio.'+countEstudios+'.imagen.1');
+				clon.find('#estudio1imagen1').attr('id','estudio'+countEstudios+'imagen1');
+				
+				clon.find('#estudio1imagen2').attr('name','estudio.'+countEstudios+'.imagen.2');
+				clon.find('#estudio1imagen2').attr('id','estudio'+countEstudios+'imagen2');
+				
+				clon.find('#estudio1imagen3').attr('name','estudio.'+countEstudios+'.imagen.3');
+				clon.find('#estudio1imagen3').attr('id','estudio'+countEstudios+'imagen3');
 			}
 		});
 
