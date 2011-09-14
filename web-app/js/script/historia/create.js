@@ -21,7 +21,7 @@ $(document).ready(function(){
 		hiddenid:'cie10Id',
 		descid:'cie10DescripcionId',
 		hiddenfield:'id',
-		descfield:'descripcion'	
+		descfield:['descripcion']	
 			
 	});
 
@@ -216,14 +216,15 @@ $(document).ready(function(){
 				clon.find('#estudio1resultado').attr('name','consulta.estudio.'+countEstudios+'.resultado');
 				clon.find('#estudio1resultado').attr('id','estudio'+countEstudios+'resultado')
 				
-				clon.find('#estudio1imagen1').attr('name','estudio.'+countEstudios+'.imagen.1');
-				clon.find('#estudio1imagen1').attr('id','estudio'+countEstudios+'imagen1');
+				clon.find('#estudio1imagen1').attr('name','consulta.estudio.'+countEstudios+'.imagen.1');
+				clon.find('#estudio1imagen1').attr('id','consulta.estudio'+countEstudios+'imagen1');
 				
-				clon.find('#estudio1imagen2').attr('name','estudio.'+countEstudios+'.imagen.2');
+				clon.find('#estudio1imagen2').attr('name','consulta.estudio.'+countEstudios+'.imagen.2');
 				clon.find('#estudio1imagen2').attr('id','estudio'+countEstudios+'imagen2');
 				
-				clon.find('#estudio1imagen3').attr('name','estudio.'+countEstudios+'.imagen.3');
+				clon.find('#estudio1imagen3').attr('name','consulta.estudio.'+countEstudios+'.imagen.3');
 				clon.find('#estudio1imagen3').attr('id','estudio'+countEstudios+'imagen3');
+				clon.show();
 			}
 		});
 
@@ -231,6 +232,6 @@ $(document).ready(function(){
 				var index = $( "li", $tabs ).index( $( this ).parent() );
 				$tabs.tabs( "remove", index );
 			});
-		
+	$("#estudio1").hide();	
 	
 });//end function ready

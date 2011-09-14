@@ -1,5 +1,5 @@
 INSERT INTO medfireweb.especialidad_medica(VERSION,descripcion)
-SELECT 0,descripcion FROM especialidadesmedicas;
+SELECT 0,descripcion FROM consultorio.especialidadesmedicas;
 
 INSERT INTO medfireweb.cie10(VERSION,cie10,descripcion) 
 SELECT 0,cie10,descripcion FROM consultorio.cie10;
@@ -63,7 +63,7 @@ SELECT
 	FROM 
 	`consultorio`.`nombrecomercial` nc
 INNER JOIN consultorio.principioactivo p ON nc.principio_activo=p.id_PrincipioA
-INNER JOIN consultorio.laboratorio l ON nc.laboratorio=l.id_lab
+INNER JOIN consultorio.laboratorio l ON nc.laboratorio=l.id_lab;
 
 
 

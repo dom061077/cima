@@ -1,8 +1,8 @@
 dataSource {
     pooled = true
     driverClassName = "com.mysql.jdbc.Driver"
-    username = "root"
-    password = ""
+    username="root"//username = "inapcom_root"
+    password="exito"//password = "DomPomoSkiby2011"
 }
 hibernate {
     cache.use_second_level_cache = true
@@ -25,8 +25,8 @@ environments {
     }
     production {
         dataSource {
-            //dbCreate = "update"
-            url = "jdbc:mysql://localhost/medfireweb"
+            dbCreate = "update"
+            url = "jdbc:mysql://localhost/inapcom_medfireweb"
         }
     }
 	

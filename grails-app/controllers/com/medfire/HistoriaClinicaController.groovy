@@ -88,9 +88,12 @@ class HistoriaClinicaController {
 		
 		def i=1
 		params.consulta.estudio.each{
-			log.debug "ESTRUCTURA ESTUDIO ${it.properties}"
-			it.imagen.each{
-				log.debug ""
+			log.debug "propiedades: ${it.properties}"
+			if(it.value instanceof HashMap){
+				log.debug "PEDIDO: ${it.value.pedido}, RESULTADO: ${it.value.resultado}"
+				it.value.imagen{image->
+					log.debug "IMAGEN: $image"
+				}
 			}
 //			it.value.imagen.each{
 //				if(!it.value.isEmpty()){
