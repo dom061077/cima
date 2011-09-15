@@ -32,7 +32,7 @@ $(document).ready(function(){
 	$("#estadoId").combobox() ;
     	
 	$( "#tabs" ).tabs();
-	 
+	$("#tabs-estudios").tabs();	 
 	$("#fechaConsultaId" ).datepicker($.datepicker.regional[ "es" ]);	
 	$("#cie10DescripcionId").lookupfield({
 		source:loccie10search,
@@ -216,9 +216,9 @@ $(document).ready(function(){
 	//------------funciones para manejar el descartar y cancelar de cada imagen---------
 	
 	
-	$.each(imagenList,function(index,value){
+	$.each(estudioList,function(index,value){
 		var i = index+1;
-		$('#imagen'+i+'Id').html('<a indice="'+index+'" id="imagen'+i+'Idthick" class="thickbox"   href="' + value.url + '" title="' + value.title 
+		/*$('#imagen'+i+'Id').html('<a indice="'+index+'" id="imagen'+i+'Idthick" class="thickbox"   href="' + value.url + '" title="' + value.title 
 							+ '"><img src="' + value.url 
 							+ '" width="25" height="25" border="0" alt="' + value.title + '" /></a>');
 		$('#imagen'+i+'Idthick').click(function(){
@@ -232,7 +232,13 @@ $(document).ready(function(){
 			});		
 		$('#imagen'+i+'IdOp').html('<a href=""  indice="'+i+'"  onClick="descartarImg(this);return false">Descartar</a>');
 		$('#imagen'+i+'IdInp').hide();
-		$('#imagen'+i+'InpId').attr('codigo',value.codigo);
+		$('#imagen'+i+'InpId').attr('codigo',value.codigo);*/
 	});	
+	//----------------para manejo de pestañas de estudios------------
+	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
+				var index = $( "li", $tabs ).index( $( this ).parent() );
+				$tabs.tabs( "remove", index );
+			});
+	
 			
 });//end function ready

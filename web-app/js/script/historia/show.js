@@ -1,7 +1,7 @@
 $(document).ready(function(){
-	$('#estudioscomplementariosId').jcarousel({
+	/*$('#estudioscomplementariosId').jcarousel({
 		itemLoadCallback: {onBeforeAnimation: mycarousel_itemLoadCallback}
-	});	
+	});*/	
 	
 	CKEDITOR.on( 'instanceReady', function( ev )
 			{
@@ -10,7 +10,7 @@ $(document).ready(function(){
 			}); 	
 	
 	$("#tabs").tabs();
-	
+	$("#tabs-estudios").tabs();
 	$('#prescripcionesId').jqGrid({
 		caption:'Prescripciones',
 		width:380,

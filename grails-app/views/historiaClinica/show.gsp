@@ -167,27 +167,50 @@
             		</div>
 
             		<div id="tabs-3">
-           				<div class="span-10">
-           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
-           					<br/>
-           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
-           					</g:textArea>
-           				</div>
-            			<div class="clear"> </div>
-            			<div class="span-5">
-	            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
-		            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
-		            				<g:each var="imagen" in="${estudio?.imagenes}">
-				            			<bi:hasImage bean="${imagen}">
-				            				<li>	
-					    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'large', bean:imagen)}" width="150" height="150" alt=""> </img></a>
-											</li>
-										</bi:hasImage>
-									</g:each>
-		            			</g:each>
-		            			
-							</ul>            		
-						</div>
+            			<div id="tabs-estudios">
+           					<ul>
+           						<g:set var="i" value="${1}" />
+           						<g:each var="estudio" in="${consultaInstance?.estudios}">
+           							<li><a href="#tab-estudio${i}">Estudio ${i}</a></li>
+									<g:set var="i" value="${i+1}"/>   
+           						</g:each>
+           					</ul>
+						    <g:set var="i" value="${0}" />
+							<g:each var="estudio" in ="${consultaInstance?.estudios}">
+								<g:set var="i" value="${i+1}"/>
+	           					<div id="tab-estudio${i}">
+					           				<div class="span-10">
+											    <label for="consulta.estudio.1.pedido">Pedido:</label>
+											    <br/>
+												${estudio?.pedido}
+												<br/>	
+					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
+					           					<br/>
+					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+												 	${estudio?.resultado}  
+					           					</g:textArea>
+					           				</div>
+					            			<div class="clear"> </div>
+					            			<div class="span-5">
+					            				<fieldset>
+					            					<legend>Imagenes de estudio</legend>
+							            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
+								            				<g:each var="imagen" in="${estudio?.imagenes}">
+										            			<bi:hasImage bean="${imagen}">
+										            				<li>	
+											    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+																	</li>
+																</bi:hasImage>
+															</g:each>
+													</ul>     
+												</fieldset>       		
+											</div>
+					            			<div class="clear"> </div>
+											
+		            			</div>
+	            			</g:each>
+	            			
+	            		</div>	
             		</div>
 
             		<div id="tabs-4">

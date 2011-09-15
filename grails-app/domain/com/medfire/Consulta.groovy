@@ -49,6 +49,7 @@ class Consulta {
 		contenido type: "text"
 		impresion type:"text"
 		paciente lazy:false
+		estudios sort:'id'
 	}
 	
 	

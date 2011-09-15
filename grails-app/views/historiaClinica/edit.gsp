@@ -36,15 +36,25 @@
             }
 
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
-			var imagenList=[
-			  		<%	def flagcolon = false;
+			var estudioList=[
+			  		<%	def flagcolonest = false;
+					  	def flagcolonimg = false
 					  	def  i=1
 			  			consultaInstance.estudios?.each{
-							  if(flagcolon)
-							  	out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"
+							  if(flagcolonest)
+							  	out<<",{id:${it.id},secuencia:${i},img:["
 							  else
-							  	out<< "{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"
-							  flagcolon = true
+							  	out<<"{id:${it.id},secuencia:${i},img:["		  
+							  it.imagenes?.each{imagen:
+								  if(flagcolonimg)
+								  		out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"
+								  else
+								  		out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:'${'Imagen '+i}',codigo:'${it.id}'}"		  
+								  flagcolonimg = true
+							  }
+							  out<<"]}"
+							  flagcolonest = true
+							  i++
 						  }
 			  		%>			
 			  ];
@@ -316,61 +326,51 @@
                  		</fieldset>
             		</div>  
             		<div id="tabs-3">
-            			<fieldset>
-	           				<div class="span-10">
-	           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
-	           					<br/>
-	           					<g:textArea class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
-	            						${consultaInstance?.estudioComplementarioObs}
-	           					</g:textArea>
-	           				</div>
-	            			<div class="clear"> </div>
-            			
-            			
-<%--            				<g:each var="estudio" in = "${consultaInstance?.estudios}">--%>
-<%--	           					<bi:hasImage bean="${estudio}">--%>
-<%--	            						<bi:img size="medium" bean="${estudio}"/>--%>
-<%--	           					</bi:hasImage>--%>
-<%--            				</g:each>--%>
-
-
-
-            				<div class="clear"></div>
-           					<label for="imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1:"/></label>
-           					<br/>
-            				<div id="imagen1IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen1InpId" name="imagen.1" />
-            				</div>
-            				<div id="imagen1Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen1IdOp" calss="span-2 colborder">
--            				</div>            				
-
-            				<div class="clear"></div>            				
-           					<label for="imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2:"/></label>
-           					<br/>
-            				<div id="imagen2IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen2InpId" name="imagen.2" />
-            				</div>
-            				<div id="imagen2Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen2IdOp" calss="span-2 colborder">
--            				</div>            				
-            				
-            				<div class="clear"></div>            				
-           					<label for="imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3:"/></label>
-           					<br/>
-            				<div id="imagen3IdInp" class="span-6 colborder">
-            					<input codigo="" type="file" id="imagen3InpId" name="imagen.3" />
-            				</div>
-            				<div id="imagen3Id" class="span-2 colborder">
-            				</div>
-            				<div id="imagen3IdOp" calss="span-2 colborder">
--            				</div>
-            				
-            				<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"></g:hiddenField>
-            				
-            			</fieldset>
+            			<div class="span-3 append-bottom"><a id="agregarEstudioId" onClick="return false" href="">Agregar Estudio</a></div>
+            			<div class="clear"></div>
+            			<div id="tabs-estudios">
+           					<ul>
+           						<g:set var="i" value="${1}" />
+           						<g:each var="estudio" in="${consultaInstance?.estudios}">
+           							<li><a href="#tab-estudio${i}">Estudio ${i}</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>
+									<g:set var="i" value="${i+1}"/>   
+           						</g:each>
+           					</ul>
+						    <g:set var="i" value="${0}" />
+							<g:each var="estudio" in ="${consultaInstance?.estudios}">
+								<g:set var="i" value="${i+1}"/>
+	           					<div id="tab-estudio${i}">
+					           				<div class="span-10">
+											    <label for="consulta.estudio.1.pedido">Pedido:</label>
+											    <br/>
+												${estudio?.pedido}
+												<br/>	
+					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
+					           					<br/>
+					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+												 	${estudio?.resultado}  
+					           					</g:textArea>
+					           				</div>
+					            			<div class="clear"> </div>
+					            			<div class="span-5">
+					            				<fieldset>
+					            					<legend>Imagenes de estudio</legend>
+							            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
+								            				<g:each var="imagen" in="${estudio?.imagenes}">
+										            			<bi:hasImage bean="${imagen}">
+										            				<li>	
+											    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+																	</li>
+																</bi:hasImage>
+															</g:each>
+													</ul>     
+												</fieldset>       		
+											</div>
+					            			<div class="clear"> </div>
+											
+		            			</div>
+	            			</g:each>
+	            		</div>	
             		</div>
             		<div id="tabs-4">
             			<fieldset>
