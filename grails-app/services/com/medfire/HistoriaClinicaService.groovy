@@ -23,7 +23,11 @@ class HistoriaClinicaService {
 		}*/
 		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save()){
 			consultaInstance.estudios.each {
-				imageUploadService.save(it) 
+				log.info "ITERANDO ESTUDIO "+it
+				it.imagenes.each{imagen->
+					log.info "ITERANDO IMAGEN "+imagen.class
+					imageUploadService.save(imagen)
+				} 
 			}
 			return consultaInstance
 		}else{

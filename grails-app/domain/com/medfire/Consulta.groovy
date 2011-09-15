@@ -30,7 +30,6 @@ class Consulta {
 	String psiqui
 	String facie
 	
-	String estudioComplementarioObs
 
 	
 	static belongsTo = [paciente:Paciente]
@@ -48,7 +47,6 @@ class Consulta {
 	
 	static mapping = {
 		contenido type: "text"
-		estudioComplementarioObs type:"text"
 		impresion type:"text"
 		paciente lazy:false
 	}

@@ -84,16 +84,25 @@ class HistoriaClinicaController {
 		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
 		pacienteInstance.properties = params.paciente
 		consultaInstance.paciente=pacienteInstance
-		def estudioImagen
 		
 		def i=1
+		def estudioImagen
+		def estudio
 		params.consulta.estudio.each{
-			log.debug "propiedades: ${it.properties}"
-			if(it.value instanceof HashMap){
-				log.debug "PEDIDO: ${it.value.pedido}, RESULTADO: ${it.value.resultado}"
-				it.value.imagen{image->
-					log.debug "IMAGEN: $image"
+			try{
+				log.debug "PEDIDO: "+it.value.pedido
+				log.debug "RESULTADO: "+it.value.resultado
+				estudio = new EstudioComplementario(pedido:it.value.pedido,resultado:it.value.resultado) 	
+				it.value?.imagen?.each{ image ->
+					log.debug "ITERANDO IMAGENES: "+image.class
+					if(!image.value.isEmpty()){
+						log.debug "IMAGEN AGREGADA"
+						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value))
+					}
 				}
+				consultaInstance.addToEstudios(estudio)
+			}catch(Exception e){
+				//log.debug "EXCEPCION LANZADA, ESTRUCTURA: "+it.properties
 			}
 //			it.value.imagen.each{
 //				if(!it.value.isEmpty()){

@@ -105,7 +105,7 @@ bi.Profesional = [
 ]
 
 
-bi.EstudioComplementario = [
+bi.EstudioComplementarioImagen = [
 	outputDir: 'imagenestudios',
 	//prefix: 'mySuperImage',
 	images: ['large':[scale:[width:500, height:500, type:ScaleType.APPROXIMATE]

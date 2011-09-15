@@ -13,12 +13,17 @@ import com.medfire.AntecedenteLabel
 import org.apache.commons.io.FileUtils;
 import groovy.sql.Sql;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
+import com.medfire.util.DataSourceUtils
 
 
+//http://grails.1312388.n4.nabble.com/MySQL-errors-after-standing-idle-for-a-period-td3328284.html
+//http://www.sylvioazevedo.com.br/?p=56
+//http://sacharya.com/grails-dbcp-stale-connections/
 class BootStrap {
 	def authenticateService
     def init = { servletContext ->
 		createAdminIfRequired()
+		DataSourceUtils.tune(servletContext)
     }
     def destroy = {
     }

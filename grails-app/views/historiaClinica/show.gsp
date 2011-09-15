@@ -16,15 +16,7 @@
         	var locprescripciones='<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones',params:[id:consultaInstance.id])%>';
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
 			var mycarouselList=[
-			  		<%	def flagcolon = false;
-			  			consultaInstance.estudios?.each{
-							  if(flagcolon)
-							  	out<< ",{url:'${bi.resource(size:'large', bean:it)}',title:''}"
-							  else
-							  	out<< "{url:'${bi.resource(size:'large', bean:it)}',title:''}"
-							  flagcolon = true
-						  }
-			  		%>			
+		
 			  ];
 
 			function mycarousel_getItemHTML(item)
@@ -179,18 +171,19 @@
            					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
            					<br/>
            					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
-            						${consultaInstance?.estudioComplementarioObs}
            					</g:textArea>
            				</div>
             			<div class="clear"> </div>
             			<div class="span-5">
 	            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
 		            			<g:each var="estudio" in ="${consultaInstance?.estudios}">
-			            			<bi:hasImage bean="${estudio}">
-			            				<li>	
-				    						<a class="thickbox" href="${bi.resource(size:'large', bean:estudio)}"><img src="${bi.resource(size:'large', bean:estudio)}" width="150" height="150" alt=""> </img></a>
-										</li>
-									</bi:hasImage>
+		            				<g:each var="imagen" in="${estudio?.imagenes}">
+				            			<bi:hasImage bean="${imagen}">
+				            				<li>	
+					    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'large', bean:imagen)}" width="150" height="150" alt=""> </img></a>
+											</li>
+										</bi:hasImage>
+									</g:each>
 		            			</g:each>
 		            			
 							</ul>            		

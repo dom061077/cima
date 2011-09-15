@@ -313,12 +313,7 @@
 				           					<br/>
 				           					<div class="span-19">
 				            					<g:textArea id="estudio1resultado" class="textareastudio ui-widget ui-corner-all ui-widget-content"  name="consulta.estudio.1.resultado">
-				            						${consultaInstance?.estudioComplementarioObs}
 				            					</g:textArea>
-				                              		<g:hasErrors bean="${consultaInstance}" field="estudioComplementarioObs">
-				                              			<br/>
-				                                   	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="estudioComplementarioObs"/></div>
-				                                  	</g:hasErrors>
 				           					</div>		
 				           				</div>
 				           				<div class="clear"/>

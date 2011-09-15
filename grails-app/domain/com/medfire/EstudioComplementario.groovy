@@ -1,13 +1,18 @@
 package com.medfire
  
-import pl.burningice.plugins.image.ast.FileImageContainer 
-
-@FileImageContainer(field = 'imagen')
 class EstudioComplementario {
+	String pedido
+	String resultado
 	Consulta consulta
 	
 	static belongsTo = [consulta:Consulta]
 	
+	static hasMany = [imagenes:EstudioComplementarioImagen]
+	
     static constraints = {
     } 
+	
+	static mapping = {
+		resultado type:"text"
+	}
 }

@@ -232,6 +232,6 @@ $(document).ready(function(){
 				var index = $( "li", $tabs ).index( $( this ).parent() );
 				$tabs.tabs( "remove", index );
 			});
-	$("#estudio1").hide();	
+	//$("#estudio1").hide();	
 	
 });//end function ready
