@@ -13,6 +13,14 @@
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
 
+		<style>
+			#tabs-estudios { margin-top: 1em; }
+			#tabs-estudios li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+			#tabs-estudios li .ui-icon-arrowreturnthick-1-w { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+			
+			#add_tab { cursor: pointer; }
+		</style>
+
         
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
@@ -332,13 +340,12 @@
            					<ul>
            						<g:set var="i" value="${1}" />
            						<g:each var="estudio" in="${consultaInstance?.estudios}">
-           							<li><a href="#tab-estudio${i}">Estudio ${i}</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>
+           							<li><a href="#tab-estudio${i}">Estudio ${i}</a> <span class="ui-icon ui-icon-close">Remove Tab</span><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
 									<g:set var="i" value="${i+1}"/>   
            						</g:each>
            					</ul>
-						    <g:set var="i" value="${0}" />
+						    <g:set var="i" value="${1}" />
 							<g:each var="estudio" in ="${consultaInstance?.estudios}">
-								<g:set var="i" value="${i+1}"/>
 	           					<div id="tab-estudio${i}">
 					           				<div class="span-10">
 											    <label for="consulta.estudio.1.pedido">Pedido:</label>
@@ -347,7 +354,7 @@
 												<br/>	
 					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
 					           					<br/>
-					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+					           					<g:textArea id="consultaEstudio${i}Resultado" name="consulta.estudio.${i}.resultado" class="ui-widget ui-corner-all ui-widget-content">
 												 	${estudio?.resultado}  
 					           					</g:textArea>
 					           				</div>
@@ -369,6 +376,7 @@
 					            			<div class="clear"> </div>
 											
 		            			</div>
+								<g:set var="i" value="${i+1}"/>
 	            			</g:each>
 	            		</div>	
             		</div>

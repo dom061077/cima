@@ -23,7 +23,7 @@ class BootStrap {
 	def authenticateService
     def init = { servletContext ->
 		createAdminIfRequired()
-		DataSourceUtils.tune(servletContext)
+		//DataSourceUtils.tune(servletContext)
     }
     def destroy = {
     }

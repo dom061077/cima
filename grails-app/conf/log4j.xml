@@ -3,7 +3,7 @@
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' debug='false'>
   <appender name='APP_LOG' class='org.apache.log4j.DailyRollingFileAppender'>
     <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
-    <param name='File' value='logs/app.log' />
+    <param name='File' value='logs/appcima.log' />
     <param name='Append' value='false' />
     <layout class='org.apache.log4j.PatternLayout'>
       <param name='ConversionPattern' value='%d %-5p [%-30.40c{1}] %2X{tid} %X{sid} %X{uid} %m%n' />
@@ -11,7 +11,7 @@
   </appender>
   <appender name='ORM_LOG' class='org.apache.log4j.DailyRollingFileAppender'>
     <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
-    <param name='File' value='logs/orm_log.log' />
+    <param name='File' value='logs/orm_logcima.log' />
     <param name='Append' value='false' />
     <param name='DatePattern' value='&apos;.&apos;yyyy-MM-dd' />
     <layout class='org.apache.log4j.PatternLayout'>
@@ -20,7 +20,7 @@
   </appender>
   <appender name='ORM_SQL_LOG' class='org.apache.log4j.DailyRollingFileAppender'>
     <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
-    <param name='File' value='logs/orm_sql_log.log' />
+    <param name='File' value='logs/orm_sql_logcima.log' />
     <param name='Append' value='false' />
     <param name='DatePattern' value='&apos;.&apos;yyyy-MM-dd' />
     <layout class='org.apache.log4j.PatternLayout'>
@@ -29,7 +29,7 @@
   </appender>
   <appender name='CACHE_LOG' class='org.apache.log4j.DailyRollingFileAppender'>
     <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
-    <param name='File' value='logs/cache_log.log' />
+    <param name='File' value='logs/cache_logcima.log' />
     <param name='Append' value='false' />
     <param name='DatePattern' value='&apos;.&apos;yyyy-MM-dd' />
     <layout class='org.apache.log4j.PatternLayout'>

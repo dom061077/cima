@@ -235,13 +235,19 @@ $(document).ready(function(){
 		$('#imagen'+i+'InpId').attr('codigo',value.codigo);*/
 	});	
 	//----------------para manejo de pestañas de estudios------------
-	var $tabs = $("#tabs-estudios").tabs();
-	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
+	var $tabs = $('#tabs-estudios').tabs();
+	$tabs.bind("tabsshow",function(event,ui){
+		
+	});
+	$( '#tabs-estudios span.ui-icon-close' ).live( 'click', function() {
 				if($tabs){
-					var index = $( "li", $tabs ).index( $( this ).parent() );
-					$tabs.tabs( "remove", index );
+					var index = $( 'li', $tabs ).index( $( this ).parent() );
+					//$tabs.tabs( "remove", index );
+					var estudioIndex=index+1;
+					$('#consultaEstudio'+estudioIndex+'Resultado').attr('disabled','true');
 				}	
 			});
+			
 	
 			
 });//end function ready

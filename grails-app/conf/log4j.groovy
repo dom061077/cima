@@ -5,7 +5,7 @@
 	   */
 	  appender(name: "APP_LOG", 'class': "org.apache.log4j.DailyRollingFileAppender") {
 		errorHandler 'class': "org.apache.log4j.helpers.OnlyOnceErrorHandler"
-		param name: "File", value: "logs/app.log"
+		param name: "File", value: "logs/appcima.log"
 		param name: "Append", value: "false"
 		layout('class': "org.apache.log4j.PatternLayout") {
 		  param name: "ConversionPattern", value: "%d %-5p [%-30.40c{1}] %2X{tid} %X{sid} %X{uid} %m%n"
@@ -18,7 +18,7 @@
 	  ['ORM_LOG', 'ORM_SQL_LOG', 'CACHE_LOG'].each {loggerName ->
 		appender(name: loggerName, 'class': "org.apache.log4j.DailyRollingFileAppender") {
 		  errorHandler 'class': "org.apache.log4j.helpers.OnlyOnceErrorHandler"
-		  param name: "File", value: "logs/${loggerName.toLowerCase()}.log"
+		  param name: "File", value: "logs/${loggerName.toLowerCase()}cima.log"
 		  param name: "Append", value: "false"
 		  param name: "DatePattern", value: "'.'yyyy-MM-dd"
 		  layout('class': "org.apache.log4j.PatternLayout") {
