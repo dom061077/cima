@@ -88,19 +88,22 @@ class HistoriaClinicaController {
 		def i=1
 		def estudioImagen
 		def estudio
+		def secuencia=1
 		params.consulta.estudio.each{
 			try{
 				log.debug "PEDIDO: "+it.value.pedido
 				log.debug "RESULTADO: "+it.value.resultado
-				estudio = new EstudioComplementario(pedido:it.value.pedido,resultado:it.value.resultado) 	
+				log.debug "KEY: "+it.key
+				estudio = new EstudioComplementario(pedido:it.value.pedido,resultado:it.value.resultado,secuencia:it.key.toInteger()) 	
 				it.value?.imagen?.each{ image ->
 					log.debug "ITERANDO IMAGENES: "+image.class
 					if(!image.value.isEmpty()){
 						log.debug "IMAGEN AGREGADA"
 						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value))
-					}
+					} 
 				}
 				consultaInstance.addToEstudios(estudio)
+				secuencia++
 			}catch(Exception e){
 				//log.debug "EXCEPCION LANZADA, ESTRUCTURA: "+it.properties
 			}

@@ -235,9 +235,12 @@ $(document).ready(function(){
 		$('#imagen'+i+'InpId').attr('codigo',value.codigo);*/
 	});	
 	//----------------para manejo de pestañas de estudios------------
+	var $tabs = $("#tabs-estudios").tabs();
 	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
-				var index = $( "li", $tabs ).index( $( this ).parent() );
-				$tabs.tabs( "remove", index );
+				if($tabs){
+					var index = $( "li", $tabs ).index( $( this ).parent() );
+					$tabs.tabs( "remove", index );
+				}	
 			});
 	
 			

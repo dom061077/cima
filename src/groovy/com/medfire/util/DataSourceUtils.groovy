@@ -7,7 +7,7 @@ class DataSourceUtils {
 
 	static final Logger log = Logger.getLogger(DataSourceUtils)
 	
-	   private static final ms = 1000 * 15 * 60
+	   private static final ms = 1000 * 3 * 60
 	
 	   public static tune = { servletContext ->
 	

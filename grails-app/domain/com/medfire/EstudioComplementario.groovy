@@ -4,6 +4,7 @@ class EstudioComplementario {
 	String pedido
 	String resultado
 	Consulta consulta
+	Integer secuencia
 	
 	static belongsTo = [consulta:Consulta]
 	
