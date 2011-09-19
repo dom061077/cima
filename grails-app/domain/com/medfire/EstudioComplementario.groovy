@@ -11,6 +11,9 @@ class EstudioComplementario {
 	static hasMany = [imagenes:EstudioComplementarioImagen]
 	
     static constraints = {
+		imagenes validator: {
+			it?.every{it?.validate()}
+		}
     } 
 	
 	static mapping = {

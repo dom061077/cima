@@ -208,8 +208,16 @@ class GUtilDomainClass{
 			}else{
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
 				maxResults(params.rows.toInteger())
-				if(params.sidx && params.sord)
-					order(params.sidx,params.sord)
+				if(params.sidx && params.sord){
+					if(params.sidx.contains("_")){
+						fieldToken = params.sidx.tokenize("_")
+						log.info "ORDEN APLICADO SOBRE ${fieldToken[0]}, CAMBIO DE ORDENAMIENTO: ${fieldToken[1]} "
+						"${fieldToken[0]}"{
+							order(fieldToken[1],params.sord)
+						}
+					}else
+						order(params.sidx,params.sord)
+				}	
 
 			}
 		} 

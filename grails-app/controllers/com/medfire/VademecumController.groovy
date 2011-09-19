@@ -112,7 +112,7 @@ class VademecumController {
 		totalpaginas=totalpaginas.intValue()
 
 		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
-		log.debug "TOTAL DE REGISTROS: ${totalregistros}"
+		log.debug "TOTAL DE REGISTROS: ${totalregistros}, total paginas: ${totalpaginas}, pagina actual: ${params.page}"
 		log.debug "TOTAL EN LIST: "+list.size()
 		def flagaddcomilla=false
 		list.each{
