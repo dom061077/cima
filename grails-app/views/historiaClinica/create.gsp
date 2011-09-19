@@ -10,6 +10,15 @@
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
+
+		<style>
+			#tabs-estudios { margin-top: 1em; }
+			#tabs-estudios li .ui-icon-close { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+			#tabs-estudios li .ui-icon-arrowreturnthick-1-w { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
+			
+			#add_tab { cursor: pointer; }
+		</style>
+
         
         <script type="text/javascript">
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
@@ -20,6 +29,7 @@
         	function initsubmit(){
         		var gridData = jQuery("#prescripcionesId").getRowData();
             	var postData = JSON.stringify(gridData);
+            	$('#submitButtonId').attr('disabled','true')
             	$("#prescripcionesSerializedId").val(postData);
             	
             }
@@ -530,7 +540,7 @@
             
                 
                 <div style="padding: 10px 15px 15px 15px;">
-                    <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <g:submitButton id="submitButtonId" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.create.label', default: 'Create')}" />
                 </div>
             </form>
         </div>

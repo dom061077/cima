@@ -25,6 +25,7 @@
 	}
 	
 	var arrayDeletedImg=[];
+	
 
 $(document).ready(function(){
 	
@@ -239,14 +240,53 @@ $(document).ready(function(){
 	$tabs.bind("tabsshow",function(event,ui){
 		
 	});
-	$( '#tabs-estudios span.ui-icon-close' ).live( 'click', function() {
+
+	$('#agregarEstudioId').click(function(){
+		//arrayEstudios.push({id:0});		
+		countEstudios++;
+		/*$('#tabs-3').append('<fieldset class="coolfieldset" id="estudio2"></fieldset>');
+		$('#tabs-3').find('fieldset#estudio2').append('<legend>Estudio #</legend>');
+		$('#estudio2').append('<div>contenido de div</div>');
+		$('#estudio2').coolfieldset({speed:'fast'});*/
+		/*var clon = $('#estudio1').clone();
+		clon.attr('id','estudio'+countEstudios);
+		clon.children('legend').toggle();
+		clon.coolfieldset({speed:'fast'});
+		clon.appendTo('#tabs-3');*/
+		$("#tabs-estudios").tabs( "add", "#tab-estudio" + countEstudios, "Estudio "+countEstudios );
+	});
+	
+	
+	
+	$( '#tabs-estudios span.drop-rollback-est' ).live( 'click', function() {
 				if($tabs){
 					var index = $( 'li', $tabs ).index( $( this ).parent() );
 					//$tabs.tabs( "remove", index );
 					var estudioIndex=index+1;
-					$('#consultaEstudio'+estudioIndex+'Resultado').attr('disabled','true');
+					
+					if($(this).hasClass('ui-icon-close')){
+						$(this).removeClass('ui-icon-close').addClass('ui-icon-arrowreturnthick-1-w');
+						$('#tab-estudio'+estudioIndex).find('textarea').addClass('disabled');
+						$('#tab-estudio'+estudioIndex).find('textarea').attr('disabled','true')
+						$('#tab-estudio'+estudioIndex).find('input').addClass('disabled');
+						$('#tab-estudio'+estudioIndex).find('input').attr('disabled','true');
+						$('#tab-estudio'+estudioIndex).find('fieldset').attr('disabled','true');
+						$('#tab-estudio'+estudioIndex).addClass('disabled');
+
+						
+						
+					}else{
+						$(this).removeClass('ui-icon-arrowreturnthick-1-w').addClass('ui-icon-close');
+						$('#tab-estudio'+estudioIndex).find('textarea').removeClass('disabled');
+						$('#tab-estudio'+estudioIndex).find('textarea').removeAttr('disabled','false')
+						$('#tab-estudio'+estudioIndex).find('input').removeClass('disabled');
+						$('#tab-estudio'+estudioIndex).find('input').removeAttr('disabled','false');
+						$('#tab-estudio'+estudioIndex).find('fieldset').removeAttr('disabled');						
+						$('#tab-estudio'+estudioIndex).removeClass('disabled');
+					}
 				}	
 			});
+
 			
 	
 			

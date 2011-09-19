@@ -8,7 +8,7 @@ $(document).ready(function(){
 		rownumbers:true,
 		pager:'pagerhistoria',
 		datatype:'json',
-		colNames:['Nro.Hist. Clínica','Apellido','Nombre','Operaciones'],
+		colNames:['Nro.Hist. Clínica','Apellido','Nombre','Alta'],
 		colModel:[
 				{name:'id',index:'id',width:40,hidden:false,sorttype:'int',sortable:true,searchoptions:{sopt:['eq']}},
 				{name:'apellido',index:'apellido',width:100,sorttype:'text',sortable:true},

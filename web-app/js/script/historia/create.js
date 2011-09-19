@@ -230,7 +230,9 @@ $(document).ready(function(){
 
 	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
 				var index = $( "li", $tabs ).index( $( this ).parent() );
-				$tabs.tabs( "remove", index );
+				if(index>0)
+					$tabs.tabs( "remove", index );
+				
 			});
 	//$("#estudio1").hide();	
 	

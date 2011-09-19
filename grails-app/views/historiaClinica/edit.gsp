@@ -10,6 +10,7 @@
       	<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.form.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
+        
 <!--        <link rel="stylesheet" href="${resource(dir:'css/framework',file:'forms.css')}" />-->
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />        
 
@@ -19,6 +20,9 @@
 			#tabs-estudios li .ui-icon-arrowreturnthick-1-w { float: left; margin: 0.4em 0.2em 0 0; cursor: pointer; }
 			
 			#add_tab { cursor: pointer; }
+			.disabled{
+				color:#DDDDDD;
+			}
 		</style>
 
         
@@ -66,8 +70,7 @@
 						  }
 			  		%>			
 			  ];
-        	
-                		
+			  var countEstudios=<%out << "${consultaInstance.estudios?.size()}"%>;                		
         </script>
         
       	<script type="text/javascript" src="${resource(dir:'js/script/historia',file:'edit.js')}"></script>
@@ -340,7 +343,7 @@
            					<ul>
            						<g:set var="i" value="${1}" />
            						<g:each var="estudio" in="${consultaInstance?.estudios}">
-           							<li><a href="#tab-estudio${i}">Estudio ${i}</a> <span class="ui-icon ui-icon-close">Remove Tab</span><span class="ui-icon ui-icon-arrowreturnthick-1-w"></span></li>
+           							<li><a href="#tab-estudio${i}">Estudio ${i}</a> <span class="ui-icon ui-icon-close drop-rollback-est">Remove Tab</span></li>
 									<g:set var="i" value="${i+1}"/>   
            						</g:each>
            					</ul>
@@ -350,7 +353,7 @@
 					           				<div class="span-10">
 											    <label for="consulta.estudio.1.pedido">Pedido:</label>
 											    <br/>
-												${estudio?.pedido}
+											    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="consulta.estudio.${i}.pedido" id="consultaEstudio${i}Pedido" value="${estudio?.pedido.encodeAsHTML()}"/>
 												<br/>	
 					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
 					           					<br/>
@@ -366,7 +369,7 @@
 								            				<g:each var="imagen" in="${estudio?.imagenes}">
 										            			<bi:hasImage bean="${imagen}">
 										            				<li>	
-											    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+											    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img class="greyScale" src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
 																	</li>
 																</bi:hasImage>
 															</g:each>
