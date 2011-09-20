@@ -23,6 +23,7 @@
 			.disabled{
 				color:#DDDDDD;
 			}
+			
 		</style>
 
         
@@ -364,18 +365,31 @@
 					            			<div class="clear"> </div>
 				            				<fieldset>
 				            					<legend>Imagenes de estudio</legend>
-						            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
-							            				<g:each var="imagen" in="${estudio?.imagenes}">
-									            			<bi:hasImage bean="${imagen}">
-									            				<li>	
-										    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img class="greyScale" src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
-																</li>
-															</bi:hasImage>
-														</g:each>
-												</ul>     
+				            					<g:set var="j" value="${1}"/>
+					            				<g:each var="imagen" in="${estudio?.imagenes}">
+							            			<bi:hasImage bean="${imagen}">
+						            					<label>Imagen ${j}:</label><br/>
+						            					<div style="float:left" id="consultaEstudio${i}Imagen${j}">
+							    							<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img  src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+							    						</div>
+							    						<div class="estudioimagening" id="consultaEstudio${i}Imagen${j}Ing">
+															<input type="file" name="consulta.estudio.${i}.imagen.${j}" id="estudio${i}Imagen${j}"/>							    						
+							    						</div>
+							    						<span style="float:left"><a class="linkdescartarcancelar" indiceest="${i}" indiceimg="${j}" codigo="${imagen.id}" href="" onclick="return false;">Descartar</a></span>
+							    						<div class="clear"></div>
+													</bi:hasImage>
+													<g:set var="j" value="${j+1}"/>
+												</g:each>
+												<br/>
+												<g:each var="k" in="${j..<4}">
+						            					<label>Imagen ${k}:</label><br/>
+							    						<div id="consultaEstudio${i}Imagen${k}Ing">
+															<input type="file" name="consulta.estudio.${i}.imagen.${k}" id="estudio${i}Imagen${k}"/>							    						
+							    						</div>
+												</g:each>
 											</fieldset>       		
 					            			<div class="clear"> </div>
-											
+											<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"></g:hiddenField>
 		            			</div>
 								<g:set var="i" value="${i+1}"/>
 	            			</g:each>

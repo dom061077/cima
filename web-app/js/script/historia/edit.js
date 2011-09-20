@@ -302,7 +302,27 @@ $(document).ready(function(){
 				}	
 			});
 
-			
-	
+	//--oculto los ingresos de archivos de imagenes cargadas, que servirán si se cancela la imagen cargada
+	$('.estudioimagening').hide();
+	//----asigno el evento onclick a los link descargar de imagenes cargadas---
+	$('.linkdescartarcancelar').live('click',function(){
+		//----para descartar imagen-----
+		var indiceest = $(self).attr('indiceest');
+		var indiceimg = $(self).attr('indiceimg');
+		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
+		$('#consultaEstudio'+indiceest+'Imagen'+indiceimg).hide();
+		
+//		arrayDeletedImg.push({id:id});
+		
+		//----para cancelar descarte-----
+//		$('#imagen'+indexImg+'Id').show();		
+//		$('#imagen'+indexImg+'IdOp').html('<a href="" indice="'+indexImg+'"  onClick="descartarImg(this);return false">Descartar</a>');
+//		$('#imagen'+indexImg+'IdInp').hide();
+//		arrayDeletedImg = $.grep(arrayDeletedImg,function(value){
+//			return value.id!=id;
+//		});
+		
+				
+	});
 			
 });//end function ready
