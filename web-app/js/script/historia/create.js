@@ -175,7 +175,8 @@ $(document).ready(function(){
 				$("#outputId").hide();
 				window.location='show/'+retorno;
 			}
-			scroll(0,0);	
+			scroll(0,0);
+			$('#submitButtonId').removeAttr('disabled')
 				
 		}
 	};

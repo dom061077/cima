@@ -362,20 +362,18 @@
 					           					</g:textArea>
 					           				</div>
 					            			<div class="clear"> </div>
-					            			<div class="span-5">
-					            				<fieldset>
-					            					<legend>Imagenes de estudio</legend>
-							            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
-								            				<g:each var="imagen" in="${estudio?.imagenes}">
-										            			<bi:hasImage bean="${imagen}">
-										            				<li>	
-											    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img class="greyScale" src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
-																	</li>
-																</bi:hasImage>
-															</g:each>
-													</ul>     
-												</fieldset>       		
-											</div>
+				            				<fieldset>
+				            					<legend>Imagenes de estudio</legend>
+						            			<ul id='estudioscomplementariosId'  class="jcarousel-skin-tango">
+							            				<g:each var="imagen" in="${estudio?.imagenes}">
+									            			<bi:hasImage bean="${imagen}">
+									            				<li>	
+										    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img class="greyScale" src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+																</li>
+															</bi:hasImage>
+														</g:each>
+												</ul>     
+											</fieldset>       		
 					            			<div class="clear"> </div>
 											
 		            			</div>

@@ -320,4 +320,5 @@ class HistoriaClinicaController {
 		render result
 	}
 	
+	
 }

@@ -236,10 +236,24 @@ $(document).ready(function(){
 		$('#imagen'+i+'InpId').attr('codigo',value.codigo);*/
 	});	
 	//----------------para manejo de pestañas de estudios------------
-	var $tabs = $('#tabs-estudios').tabs();
-	$tabs.bind("tabsshow",function(event,ui){
+	var $tabs = $('#tabs-estudios').tabs({
+		tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close drop-est'>Remove Tab</span></li>",
+		add: function( event, ui ) {
+			$(ui.panel).append('<div id="consultaEstudio'+countEstudios+'Div">');
+			
+			$('#consultaEstudio'+countEstudios+'Div').append('<label for="consulta.estudio.'+countEstudios+'.pedido">Pedido:</label><br/><input class="ui-widget ui-corner-all ui-widget-content" name="estudio.2.resultado" /> <br/>'
+					+'<label for="consulta.estudio.'+countEstudios+'.resultado">Resultado:</label><br/><textarea id="consultaEstudio'+countEstudios+'Resultado" name="consulta.estudio.'+countEstudios+'.resultado" class="ui-widget ui-corner-all ui-widget-content" /><br/> '
+					+'<div><fieldset><legend>Imagenes</legend>'
+					+'<label>Imagen 1:</label><br/><input type="file" id="estudio1imagen1" name="consulta.estudio.'+countEstudios+'.imagen.1" /><br/>'
+					+'<label>Imagen 2:</label><br/><input type="file" id="estudio1imagen2" name="consulta.estudio.'+countEstudios+'.imagen.2" /><br/>'			
+					+'<label>Imagen 3:</label><br/><input type="file" id="estudio1imagen2" name="consulta.estudio.'+countEstudios+'.imagen.3" /><br/>'
+					+'</div>');			
+			
+		}
 		
 	});
+	
+	 	
 
 	$('#agregarEstudioId').click(function(){
 		//arrayEstudios.push({id:0});		
@@ -253,11 +267,15 @@ $(document).ready(function(){
 		clon.children('legend').toggle();
 		clon.coolfieldset({speed:'fast'});
 		clon.appendTo('#tabs-3');*/
-		$("#tabs-estudios").tabs( "add", "#tab-estudio" + countEstudios, "Estudio "+countEstudios );
+		$('#tabs-estudios').tabs( 'add', '#tab-estudio' + countEstudios, 'Estudio '+countEstudios );
 	});
 	
 	
-	
+	$( '#tabs-estudios span.drop-est' ).live( 'click', function() {
+		var index = $( "li", $tabs ).index( $( this ).parent() );
+		if(index>0)
+			$tabs.tabs( "remove", index );
+	});
 	$( '#tabs-estudios span.drop-rollback-est' ).live( 'click', function() {
 				if($tabs){
 					var index = $( 'li', $tabs ).index( $( this ).parent() );
@@ -272,9 +290,6 @@ $(document).ready(function(){
 						$('#tab-estudio'+estudioIndex).find('input').attr('disabled','true');
 						$('#tab-estudio'+estudioIndex).find('fieldset').attr('disabled','true');
 						$('#tab-estudio'+estudioIndex).addClass('disabled');
-
-						
-						
 					}else{
 						$(this).removeClass('ui-icon-arrowreturnthick-1-w').addClass('ui-icon-close');
 						$('#tab-estudio'+estudioIndex).find('textarea').removeClass('disabled');
