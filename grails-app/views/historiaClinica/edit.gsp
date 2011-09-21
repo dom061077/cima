@@ -43,9 +43,12 @@
             	var postData = JSON.stringify(gridData);
 
             	var deletedImg = JSON.stringify(arrayDeletedImg);
+            	var deletedEst = JSON.stringify(arrayDeletedEst);
             	$("#prescripcionesSerializedId").val(postData);
             	$("#deletedImgSerializedId").val(deletedImg);
-            	
+            	$("#deletedEstSerializedId").val(deletedEst);
+            	alert('Imagenes a borrar: '+$("#deletedImgSerializedId").val());
+            	alert('Estudios a borrar: '+$("#deletedEstSerializedId").val());
             }
 
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
@@ -338,6 +341,7 @@
                  		</fieldset>
             		</div>  
             		<div id="tabs-3">
+            			<g:hiddenField id="deletedEstSerializedId" name="deletedEstSerialized"/>
             			<div class="span-3 append-bottom"><a id="agregarEstudioId" onClick="return false" href="">Agregar Estudio</a></div>
             			<div class="clear"></div>
             			<div id="tabs-estudios">
@@ -350,7 +354,7 @@
            					</ul>
 						    <g:set var="i" value="${1}" />
 							<g:each var="estudio" in ="${consultaInstance?.estudios}">
-	           					<div id="tab-estudio${i}">
+	           					<div codigo="${estudio?.id}" id="tab-estudio${i}">
 					           				<div class="span-10">
 											    <label for="consulta.estudio.1.pedido">Pedido:</label>
 											    <br/>
@@ -370,12 +374,12 @@
 							            			<bi:hasImage bean="${imagen}">
 						            					<label>Imagen ${j}:</label><br/>
 						            					<div style="float:left" id="consultaEstudio${i}Imagen${j}">
-							    							<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img  src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+							    							<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img id="estudio${i}Imagen${j}"  src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
 							    						</div>
-							    						<div class="estudioimagening" id="consultaEstudio${i}Imagen${j}Ing">
+							    						<div style="float:left" class="estudioimagening" id="consultaEstudio${i}Imagen${j}Ing">
 															<input type="file" name="consulta.estudio.${i}.imagen.${j}" id="estudio${i}Imagen${j}"/>							    						
 							    						</div>
-							    						<span style="float:left"><a class="linkdescartarcancelar" indiceest="${i}" indiceimg="${j}" codigo="${imagen.id}" href="" onclick="return false;">Descartar</a></span>
+							    						<span style="float:left;padding-left:5px;"><a class="linkdescartarcancelar" image="true" estId="${estudio.id}" indiceest="${i}" indiceimg="${j}" codigo="${imagen.id}" href="" onclick="return false;">Descartar</a></span>
 							    						<div class="clear"></div>
 													</bi:hasImage>
 													<g:set var="j" value="${j+1}"/>

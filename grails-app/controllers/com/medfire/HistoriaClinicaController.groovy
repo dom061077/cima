@@ -196,12 +196,26 @@ class HistoriaClinicaController {
 
 		
 		def consultaInstance = Consulta.get(params.id)
+		def estudioInstance
 		if (consultaInstance) {
+			
+			params.consulta.estudio.each{
+				try{
+					estudioInstance = new EstudioComplementario(pedido:it.pedido,resultado:it.resultado,secuencia:it.key.toInteger())
+					it.value?.imagen?.each{image->
+						if(!image.value.isEmpty()){
+							estudioInstance.addToImagenes(new EstudioComplementarioImagen(imagen:image.value))
+						}
+					}
+					consultaInstance.addToEstudios(estudioInstance)
+				}catch(Exception e){
+				
+				}
+			}
+	
 			if (params.version) {
 				def version = params.version.toLong()
 				if (consultaInstance.version > version) {
-					
-					consultaInstance.
 					errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'historiaClinica.label', default: 'HistoriaClinica')] as Object[], "Another user has updated this HistoriaClinica while you were editing")
 					//render(view: "edit", model: [historiaClinicaInstance: historiaClinicaInstance])
 					render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:consultaInstance)}<br/> ${g.renderErrors(bean:consultaInstance.paciente)} </div>	"
@@ -209,12 +223,10 @@ class HistoriaClinicaController {
 				}
 			}
 			try{
-				
 				consultaInstance=historiaClinicaService.updateVisita(consultaInstance,params)
 				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), consultaInstance.id])}"
 				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
 				//redirect(action: "show", id: consultaInstance.id)
-			
 			}catch(ConsultaException e){
 				log.error "ERROR AL TRATAR DE MODIFICAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
 				log.error "MENSAJE DE ERROR: "+e.message

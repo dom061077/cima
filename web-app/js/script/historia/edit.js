@@ -25,7 +25,7 @@
 	}
 	
 	var arrayDeletedImg=[];
-	
+	var arrayDeletedEst=[];
 
 $(document).ready(function(){
 	
@@ -281,16 +281,21 @@ $(document).ready(function(){
 					var index = $( 'li', $tabs ).index( $( this ).parent() );
 					//$tabs.tabs( "remove", index );
 					var estudioIndex=index+1;
-					
+					var codigo = $('#tab-estudio'+estudioIndex).attr('codigo');
 					if($(this).hasClass('ui-icon-close')){
+						arrayDeletedEst.push({id:codigo});
 						$(this).removeClass('ui-icon-close').addClass('ui-icon-arrowreturnthick-1-w');
 						$('#tab-estudio'+estudioIndex).find('textarea').addClass('disabled');
 						$('#tab-estudio'+estudioIndex).find('textarea').attr('disabled','true')
 						$('#tab-estudio'+estudioIndex).find('input').addClass('disabled');
 						$('#tab-estudio'+estudioIndex).find('input').attr('disabled','true');
 						$('#tab-estudio'+estudioIndex).find('fieldset').attr('disabled','true');
+						$('#tab-estudio'+estudioIndex).find('a').attr('disabled','true');
 						$('#tab-estudio'+estudioIndex).addClass('disabled');
 					}else{
+						arrayDeletedEst = $.grep(arrayDeletedEst,function(value){
+							return value.id!=codigo;
+						});
 						$(this).removeClass('ui-icon-arrowreturnthick-1-w').addClass('ui-icon-close');
 						$('#tab-estudio'+estudioIndex).find('textarea').removeClass('disabled');
 						$('#tab-estudio'+estudioIndex).find('textarea').removeAttr('disabled','false')
@@ -307,10 +312,25 @@ $(document).ready(function(){
 	//----asigno el evento onclick a los link descargar de imagenes cargadas---
 	$('.linkdescartarcancelar').live('click',function(){
 		//----para descartar imagen-----
-		var indiceest = $(self).attr('indiceest');
-		var indiceimg = $(self).attr('indiceimg');
-		var id = $('#imagen'+indexImg+'InpId').attr('codigo');
-		$('#consultaEstudio'+indiceest+'Imagen'+indiceimg).hide();
+		var indiceest = $(this).attr('indiceest');
+		var indiceimg = $(this).attr('indiceimg');
+		var codigo = $(this).attr('codigo');
+		var estudioId = $(this).attr('estId');
+		if($(this).attr('image')=='true'){
+			arrayDeletedImg.push({id:codigo,estId:estudioId});
+			$('#consultaEstudio'+indiceest+'Imagen'+indiceimg).fadeOut('slow');
+			$('#consultaEstudio'+indiceest+'Imagen'+indiceimg+'Ing').fadeIn('slow');
+			$(this).attr('image','false');
+			$(this).html('Cancelar');
+		}else{
+			arrayDeletedEst = $.grep(arrayDeletedEst,function(value){
+				return value.id!=codigo;
+			});
+			$('#consultaEstudio'+indiceest+'Imagen'+indiceimg).fadeIn('slow');
+			$('#consultaEstudio'+indiceest+'Imagen'+indiceimg+'Ing').fadeOut('slow');
+			$(this).attr('image','true');
+			$(this).html('Descartar');
+		}
 		
 //		arrayDeletedImg.push({id:id});
 		

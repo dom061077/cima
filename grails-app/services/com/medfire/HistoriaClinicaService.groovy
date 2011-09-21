@@ -62,24 +62,45 @@ class HistoriaClinicaService {
 					,nombreGenerico:it.nombreGenerico,presentacion:it.presentacion,impresion:ImpresionVademecumEnum."${it.imprimirPorValue}",cantidad:it.cantidad,secuencia:it.id))
 			}
 		}
-		def deletedimgjson
+
+		def deletedestjson
 		def estudioInstance
+		
+		if(params.deletedEstSerialized){
+			deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)
+			deletedestjson?.each{
+				estudioInstance = EstudioComplementario.get(it.id)
+				estudioInstance.imagenes.each{
+					imageUploadService.delete(it)
+				}
+				estudioInstance.delete()
+			}
+		}
+
+		
+		def deletedimgjson
+		def estudioImagenInstance
 
 				// elimino las imagenes marcadas para la eliminacion
 		if(params.deletedImgSerialized){
 			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
 			deletedimgjson?.each{
-				estudioInstance = EstudioComplementario.get(it.id.toLong())
+				estudioImagenInstance = EstudioComplementarioImagen.get(it.id.toLong())
 				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
 				
 				consultaInstance.removeFromEstudios(estudioInstance)
-				imageUploadService.delete(estudioInstance)
-				estudioInstance.delete()
+				consultaInstance.estudios.each{est->
+					if(it.estId.toLong().equals(est.id)){
+						est.removeFromImagenes(estudioImagenInstance)
+					}
+				}
+				imageUploadService.delete(estudioImagenInstance)
+				estudioImagenInstance.delete()
 			}
 		}
+
 		
-		
-		params.imagen.each{
+		params.consulta.estudio.each{
 			log.debug "getTypeContent de la imagen "+it.value.contentType
 			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
 			if(!it.value.isEmpty()){
@@ -87,18 +108,9 @@ class HistoriaClinicaService {
 				consultaInstance.addToEstudios(estudioInstance)
 				estudioInstance.save()
 				imageUploadService.save(estudioInstance)
-				
 			}
 		}
 		
-//		if(!params.imagepropia.isEmpty()){
-//			
-//			estudioInstance = new EstudioComplementario(imagen:params.imagepropia,consulta:consultaInstance)
-//			estudioInstance.validate()
-//			consultaInstance.addToEstudios(estudioInstance)
-//			estudioInstance.save()
-//			imageUploadService.save(estudioInstance)
-//		}
 		consultaInstance.properties = params.consulta
 		if(!consultaInstance.hasErrors() && consultaInstance.save()){
 
