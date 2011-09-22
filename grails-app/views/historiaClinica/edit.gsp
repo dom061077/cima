@@ -47,6 +47,8 @@
             	$("#prescripcionesSerializedId").val(postData);
             	$("#deletedImgSerializedId").val(deletedImg);
             	$("#deletedEstSerializedId").val(deletedEst);
+            	alert('Imagenes borradas: '+$("#deletedImgSerializedId").val());
+            	alert('Estudios borrados: '+$("#deletedEstSerializedId").val());
             }
 
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
@@ -362,7 +364,7 @@
 												<br/>	
 					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
 					           					<br/>
-					           					<g:textArea id="consultaEstudio${i}Resultado" name="consulta.estudio.${i}.resultado" class="ui-widget ui-corner-all ui-widget-content">
+					           					<g:textArea id="consultaEstudio${i}Resultado" name="consulta.estudio.${i}.resultado" class="textareastudio ui-widget ui-corner-all ui-widget-content">
 												 	${estudio?.resultado}  
 					           					</g:textArea>
 					           				</div>

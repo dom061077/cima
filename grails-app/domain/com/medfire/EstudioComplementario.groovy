@@ -18,5 +18,6 @@ class EstudioComplementario {
 	
 	static mapping = {
 		resultado type:"text"
+		images sort:'secuencia'
 	}
 }

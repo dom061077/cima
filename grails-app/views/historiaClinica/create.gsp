@@ -313,42 +313,29 @@
             						<li><a href="#tab-estudio1">Estudio 1</a> <span class="ui-icon ui-icon-close">Remove Tab</span></li>
             					</ul>
             					<div id="tab-estudio1">
-				           			<fieldset id="estudio1">
-				           				<div class="span-10">
 				           					<label for="consulta.estudio.1.pedido">Pedido:</label>
 				           					<br/>
 				           					<g:textField id="estudio1pedido" class="ui-widget ui-corner-all ui-widget-content inputlarge" name="consulta.estudio.1.pedido" />
 				           					<br/>
-				           					<label for="consulta.estudio.1.resultado"><g:message code="historia.estudioComplementarioObs.label" default="Observación:" /></label>
+				           					<label for="consulta.estudio.1.resultado"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
 				           					<br/>
-				           					<div class="span-19">
-				            					<g:textArea id="estudio1resultado" class="textareastudio ui-widget ui-corner-all ui-widget-content"  name="consulta.estudio.1.resultado">
-				            					</g:textArea>
-				           					</div>		
-				           				</div>
-				           				<div class="clear"/>
-				           				<div class="span-6">
-				           					<label for="estudio.1.imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
-				           				</div>
-				           				<div class="span-10">
-				           					<input type="file" id="estudio1imagen1" name="consulta.estudio.1.imagen.1" />
-				           				</div>
-				           				<div class="clear"></div>
-				           				<div class="span-6">
-				           					<label for="estudio.1.imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
-				           				</div>
-				           				<div class="span-10">
-				           					<input type="file" id="estudio1imagen2" name="consulta.estudio.1.imagen.2" />
-				           				</div>
-				           				<div class="clear"></div>
-				
-				           				<div class="span-6">
-				           					<label for="estudio.1.imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
-				           				</div>
-				           				<div class="span-10">
-				           					<input type="file" id="estudio1imagen3" name="consulta.estudio.1.imagen.3" />
-				           				</div>
-				           			</fieldset>
+			            					<g:textArea id="estudio1resultado" class="textareastudio ui-widget ui-corner-all ui-widget-content"  name="consulta.estudio.1.resultado">
+			            					</g:textArea>
+			            					<br>
+			            					<fieldset>
+			            						<legend>Estudios</legend>
+					           					<label for="estudio.1.imagen.1"><g:message code ="historia.estudiocomplementario.image1" default="Imagen 1"/></label>
+					           					<br>
+					           					<input type="file" id="estudio1imagen1" name="consulta.estudio.1.imagen.1" />
+					           					<br>
+					           					<label for="estudio.1.imagen.2"><g:message code ="historia.estudiocomplementario.image2" default="Imagen 2"/></label>
+					           					<br>
+					           					<input type="file" id="estudio1imagen2" name="consulta.estudio.1.imagen.2" />
+					           					<br>
+					           					<label for="estudio.1.imagen.3"><g:message code ="historia.estudiocomplementario.image3" default="Imagen 3"/></label>
+					           					<br>
+					           					<input type="file" id="estudio1imagen3" name="consulta.estudio.1.imagen.3" />
+					           				</fieldset>	
 				           		</div>	
             			</div>
             		</div>

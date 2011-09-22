@@ -207,7 +207,9 @@ $(document).ready(function(){
 			tabTemplate: "<li><a href='#{href}'>#{label}</a><span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
 			add: function( event, ui ) {
 				//var tab_content = $tab_content_input.val() || "Tab " + tab_counter + " content.";
-				var clon = $('#estudio1').clone();
+				
+				/*var clon = $('#estudio1').clone();
+				
 				clon.attr('id','estudio'+countEstudios);
 				clon.appendTo('#tab-estudio'+countEstudios);
 				
@@ -225,14 +227,40 @@ $(document).ready(function(){
 				
 				clon.find('#estudio1imagen3').attr('name','consulta.estudio.'+countEstudios+'.imagen.3');
 				clon.find('#estudio1imagen3').attr('id','estudio'+countEstudios+'imagen3');
-				clon.show();
+				clon.show();*/
+				$(ui.panel).append('<div id="consultaEstudio'+countEstudios+'Div">');
+				$('#consultaEstudio'+countEstudios+'Div').append('<label for="consulta.estudio.'+countEstudios+'">Pedido:</label><br/>'
+						+'<input class="ui-widget ui-corner-all ui-widget-content inputlarge" name="consulta.estudio.'+countEstudios+'.pedido" />'
+						+'<br/>'
+						+'<label for="consulta.estudio.'+countEstudios+'">Resultado:</label>'
+						+'<br/>'
+						+'<textarea class="textareastudio ui-widget ui-corner-all ui-widget-content" name="consulta.estudio.'+countEstudios+'.resultado"></textarea>'
+						+'<br/>'
+						+'<fieldset>'
+							+'<legend>Estudios</legend>'
+							+'<label for="consulta.estudio.'+countEstudios+'.imagen.1">Imagen 1:</label>'
+							+'<br>'
+							+'<input type="file" name="consulta.estudio.'+countEstudios+'.imagen.1" />'
+							+'<br>'
+							+'<label for="consulta.estudio.'+countEstudios+'.imagen.2">Imagen 2:</label>'
+							+'<br>'
+							+'<input type="file" name="consulta.estudio.'+countEstudios+'.imagen.21" />'
+							+'<br>'
+							+'<label for="consulta.estudio.'+countEstudios+'.imagen.3">Imagen 3:</label>'
+							+'<br>'
+							+'<input type="file" name="consulta.estudio.'+countEstudios+'.imagen.3" />'
+							+'<br>'
+							
+						+'</fieldset>'	
+				);	
+					
 			}
 		});
 
 	$( "#tabs-estudios span.ui-icon-close" ).live( "click", function() {
 				var index = $( "li", $tabs ).index( $( this ).parent() );
-				if(index>0)
-					$tabs.tabs( "remove", index );
+				//if(index>0)
+				$tabs.tabs( "remove", index );
 				
 			});
 	//$("#estudio1").hide();	

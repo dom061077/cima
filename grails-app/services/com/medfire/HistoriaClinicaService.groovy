@@ -65,14 +65,23 @@ class HistoriaClinicaService {
 
 		def deletedestjson
 		def estudioInstance
+		def deletedImgList
 		
 		if(params.deletedEstSerialized){
 			deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)
 			deletedestjson?.each{
 				estudioInstance = EstudioComplementario.get(it.id)
-				estudioInstance.imagenes.each{
-					imageUploadService.delete(it)
+				deletedImgList = EstudioComplementarioImagen.createCriteria().list{
+							estudioComplementario{
+								eq("id",estudioInstance.id)
+							}
+					}
+				deletedImgList.each{imagen->
+					imageUploadService.delete(imagen)
+					imagen.delete()
+					estudioInstance.removeFromImagenes(imagen)
 				}
+				consultaInstance.removeFromEstudios(estudioInstance)
 				estudioInstance.delete()
 			}
 		}
@@ -95,7 +104,7 @@ class HistoriaClinicaService {
 					}
 				}
 				imageUploadService.delete(estudioImagenInstance)
-				estudioImagenInstance.delete()
+				//estudioImagenInstance.delete()
 			}
 		}
 
@@ -112,12 +121,14 @@ class HistoriaClinicaService {
 							it.value?.imagen?.each {image->
 								if(!image.value.isEmpty()){
 									log.debug "AGREGANDO IMAGENES AL ESTUDIO EXISTENTE, CLASE: "+image.value.class
-									estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudio,imagen:image.value)
-									if(!estudioImagenInstance.validate())
+									estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudio,imagen:image.value,secuencia:it.key.toInteger())
+									if(!estudioImagenInstance.validate()){
 										log.debug "ERROR DE VALIDACION EN LA IMAGEN: "+estudioImagenInstance.errors.allErrors
-									estudioImagenInstance= estudioImagenInstance.save()
+										throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",estudioImagenInstance)
+									}
+									//estudioImagenInstance= estudioImagenInstance.save()
 									estudio.addToImagenes(estudioImagenInstance)
-									imageUploadService.save(estudioImagenInstance)
+									//imageUploadService.save(estudioImagenInstance)
 								}
 							}
 						}
@@ -128,16 +139,20 @@ class HistoriaClinicaService {
 					estudioInstance = new EstudioComplementario(consulta:consultaInstance,pedido:it.value.pedido,resultado:it.value.resultado,secuencia:it.key.toInteger())
 					if (!estudioInstance.validate())
 						log.debug "ERROR DE VALIDACION: "+estudioInstance.errors.allErrors
-					estudioInstance=estudioInstance.save()
+					//estudioInstance=estudioInstance.save()
 					log.debug "ESTUDIO INSTANCE SALVADO: "+estudioInstance.properties
 					it.value?.imagen?.each{image->
 						log.debug "IMAGEN ITERADA: $image"
 						if(!image.value.isEmpty()){
 							log.debug "IMAGEN AGREGADA: "+image.value.class
-							estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudioInstance,imagen:image.value)
-							estudioImagenInstance = estudioImagenInstance.save()
+							estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudioInstance,imagen:image.value,secuencia:it.key.toInteger())
+							if(!estudioImagenInstance.validate()){
+								log.debug "ERROR DE VALDACION EN LA IMAGEN: "+estudioImagenInstance.errors.allErrors
+								throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",estudioImagenInstance)
+							}
+							//estudioImagenInstance = estudioImagenInstance.save()
 							estudioInstance.addToImagenes(estudioImagenInstance)
-							imageUploadService.save(estudioImagenInstance)
+							//imageUploadService.save(estudioImagenInstance,true)
 						}
 					}
 					consultaInstance.addToEstudios(estudioInstance)
@@ -151,6 +166,7 @@ class HistoriaClinicaService {
 		
 		consultaInstance.properties = params.consulta
 		if(!consultaInstance.hasErrors() && consultaInstance.save()){
+			throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",consultaInstance)
 			return consultaInstance
 		}else{
 			errorMessage="ERROR AL SALVAR LA INSTANCIA DE consultaInstance EN registrarVisita EN HistoriaClinicaService"

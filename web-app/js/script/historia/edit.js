@@ -242,7 +242,7 @@ $(document).ready(function(){
 			$(ui.panel).append('<div id="consultaEstudio'+countEstudios+'Div">');
 			
 			$('#consultaEstudio'+countEstudios+'Div').append('<label for="consulta.estudio.'+countEstudios+'.pedido">Pedido:</label><br/><input class="ui-widget ui-corner-all ui-widget-content" name="consulta.estudio.'+countEstudios+'.pedido" /> <br/>'
-					+'<label for="consulta.estudio.'+countEstudios+'.resultado">Resultado:</label><br/><textarea id="consultaEstudio'+countEstudios+'Resultado" name="consulta.estudio.'+countEstudios+'.resultado" class="ui-widget ui-corner-all ui-widget-content" /><br/> '
+					+'<label for="consulta.estudio.'+countEstudios+'.resultado">Resultado:</label><br/><textarea class="textareastudio ui-widget ui-corner-all ui-widget-content" id="consultaEstudio'+countEstudios+'Resultado" name="consulta.estudio.'+countEstudios+'.resultado" class="ui-widget ui-corner-all ui-widget-content" /><br/> '
 					+'<div><fieldset><legend>Imagenes</legend>'
 					+'<label>Imagen 1:</label><br/><input type="file" id="estudio1imagen1" name="consulta.estudio.'+countEstudios+'.imagen.1" /><br/>'
 					+'<label>Imagen 2:</label><br/><input type="file" id="estudio1imagen2" name="consulta.estudio.'+countEstudios+'.imagen.2" /><br/>'			

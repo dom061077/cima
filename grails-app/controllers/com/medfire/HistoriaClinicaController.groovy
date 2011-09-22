@@ -99,7 +99,7 @@ class HistoriaClinicaController {
 					log.debug "ITERANDO IMAGENES: "+image.class
 					if(!image.value.isEmpty()){
 						log.debug "IMAGEN AGREGADA"
-						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value))
+						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value,secuencia:it.key.toInteger()))
 					} 
 				}
 				consultaInstance.addToEstudios(estudio)
@@ -215,9 +215,8 @@ class HistoriaClinicaController {
 				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
 				//redirect(action: "show", id: consultaInstance.id)
 			}catch(ConsultaException e){
-				log.error "ERROR AL TRATAR DE MODIFICAR LA CONSULTA DE VISITA: "+e.consulta.errors.allErrors
 				log.error "MENSAJE DE ERROR: "+e.message
-				render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)}<br/> ${g.renderErrors(bean:e.consulta.paciente)} </div>	"
+				render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:e.consulta)}<br/> ${g.renderErrors(bean:e?.consulta?.paciente)} <br/> ${g.renderErrors(bean:e?.estudioComplementario)}<br/> ${g.renderErrors(bean:e?.estudioComplementarioImagen)} </div>	"
 			}
 		}
 		else {
