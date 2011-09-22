@@ -241,7 +241,7 @@ $(document).ready(function(){
 		add: function( event, ui ) {
 			$(ui.panel).append('<div id="consultaEstudio'+countEstudios+'Div">');
 			
-			$('#consultaEstudio'+countEstudios+'Div').append('<label for="consulta.estudio.'+countEstudios+'.pedido">Pedido:</label><br/><input class="ui-widget ui-corner-all ui-widget-content" name="estudio.2.resultado" /> <br/>'
+			$('#consultaEstudio'+countEstudios+'Div').append('<label for="consulta.estudio.'+countEstudios+'.pedido">Pedido:</label><br/><input class="ui-widget ui-corner-all ui-widget-content" name="consulta.estudio.'+countEstudios+'.pedido" /> <br/>'
 					+'<label for="consulta.estudio.'+countEstudios+'.resultado">Resultado:</label><br/><textarea id="consultaEstudio'+countEstudios+'Resultado" name="consulta.estudio.'+countEstudios+'.resultado" class="ui-widget ui-corner-all ui-widget-content" /><br/> '
 					+'<div><fieldset><legend>Imagenes</legend>'
 					+'<label>Imagen 1:</label><br/><input type="file" id="estudio1imagen1" name="consulta.estudio.'+countEstudios+'.imagen.1" /><br/>'
@@ -323,7 +323,7 @@ $(document).ready(function(){
 			$(this).attr('image','false');
 			$(this).html('Cancelar');
 		}else{
-			arrayDeletedEst = $.grep(arrayDeletedEst,function(value){
+			arrayDeletedImg = $.grep(arrayDeletedEst,function(value){
 				return value.id!=codigo;
 			});
 			$('#consultaEstudio'+indiceest+'Imagen'+indiceimg).fadeIn('slow');

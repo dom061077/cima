@@ -47,8 +47,6 @@
             	$("#prescripcionesSerializedId").val(postData);
             	$("#deletedImgSerializedId").val(deletedImg);
             	$("#deletedEstSerializedId").val(deletedEst);
-            	alert('Imagenes a borrar: '+$("#deletedImgSerializedId").val());
-            	alert('Estudios a borrar: '+$("#deletedEstSerializedId").val());
             }
 
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
@@ -342,6 +340,7 @@
             		</div>  
             		<div id="tabs-3">
             			<g:hiddenField id="deletedEstSerializedId" name="deletedEstSerialized"/>
+            			<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"/>
             			<div class="span-3 append-bottom"><a id="agregarEstudioId" onClick="return false" href="">Agregar Estudio</a></div>
             			<div class="clear"></div>
             			<div id="tabs-estudios">
@@ -354,6 +353,7 @@
            					</ul>
 						    <g:set var="i" value="${1}" />
 							<g:each var="estudio" in ="${consultaInstance?.estudios}">
+								<g:hiddenField name="consulta.estudio.${i}.id" value="${estudio.id}"/>
 	           					<div codigo="${estudio?.id}" id="tab-estudio${i}">
 					           				<div class="span-10">
 											    <label for="consulta.estudio.1.pedido">Pedido:</label>
@@ -393,7 +393,7 @@
 												</g:each>
 											</fieldset>       		
 					            			<div class="clear"> </div>
-											<g:hiddenField id="deletedImgSerializedId" name="deletedImgSerialized"></g:hiddenField>
+											
 		            			</div>
 								<g:set var="i" value="${i+1}"/>
 	            			</g:each>

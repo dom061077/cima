@@ -197,22 +197,9 @@ class HistoriaClinicaController {
 		
 		def consultaInstance = Consulta.get(params.id)
 		def estudioInstance
-		if (consultaInstance) {
+		def estudioImagenInstance
+		if (consultaInstance) { 
 			
-			params.consulta.estudio.each{
-				try{
-					estudioInstance = new EstudioComplementario(pedido:it.pedido,resultado:it.resultado,secuencia:it.key.toInteger())
-					it.value?.imagen?.each{image->
-						if(!image.value.isEmpty()){
-							estudioInstance.addToImagenes(new EstudioComplementarioImagen(imagen:image.value))
-						}
-					}
-					consultaInstance.addToEstudios(estudioInstance)
-				}catch(Exception e){
-				
-				}
-			}
-	
 			if (params.version) {
 				def version = params.version.toLong()
 				if (consultaInstance.version > version) {

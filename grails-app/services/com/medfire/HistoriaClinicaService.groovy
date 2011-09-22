@@ -86,9 +86,9 @@ class HistoriaClinicaService {
 			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
 			deletedimgjson?.each{
 				estudioImagenInstance = EstudioComplementarioImagen.get(it.id.toLong())
-				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioInstance.id
+				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioImagenInstance?.id
 				
-				consultaInstance.removeFromEstudios(estudioInstance)
+				//consultaInstance.removeFromEstudios(estudioInstance)
 				consultaInstance.estudios.each{est->
 					if(it.estId.toLong().equals(est.id)){
 						est.removeFromImagenes(estudioImagenInstance)
@@ -99,21 +99,58 @@ class HistoriaClinicaService {
 			}
 		}
 
-		
 		params.consulta.estudio.each{
-			log.debug "getTypeContent de la imagen "+it.value.contentType
-			log.debug "NOMBRE DEL ARCHIVO: "+it.value.name
-			if(!it.value.isEmpty()){
-				estudioInstance = new EstudioComplementario(consulta:consultaInstance,imagen:it.value)
-				consultaInstance.addToEstudios(estudioInstance)
-				estudioInstance.save()
-				imageUploadService.save(estudioInstance)
+			try{
+				log.debug "IT DE PARAMS: ${it.value.id}"
+				if(it.value.id){
+					log.debug "ESTUDIO A RECUPERAR: ${it.value.id}"
+					consultaInstance.estudios.each{estudio->
+						if(estudio.id.equals(it.value.id.toLong())){
+							log.debug "MODIFICANDO LOS DATOS CABECERA DEL ESTUDIO EXISTENTE, codigo: ${it.value.id}"
+							estudio.pedido=it.value.pedido
+							estudio.resultado=it.value.resultado
+							it.value?.imagen?.each {image->
+								if(!image.value.isEmpty()){
+									log.debug "AGREGANDO IMAGENES AL ESTUDIO EXISTENTE, CLASE: "+image.value.class
+									estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudio,imagen:image.value)
+									if(!estudioImagenInstance.validate())
+										log.debug "ERROR DE VALIDACION EN LA IMAGEN: "+estudioImagenInstance.errors.allErrors
+									estudioImagenInstance= estudioImagenInstance.save()
+									estudio.addToImagenes(estudioImagenInstance)
+									imageUploadService.save(estudioImagenInstance)
+								}
+							}
+						}
+					}
+				}else{
+					log.debug "AGREGANDO ESTUDIO NUEVO"
+					log.debug "ESTUDIO NUEVO A AGREGAR: "+it.value
+					estudioInstance = new EstudioComplementario(consulta:consultaInstance,pedido:it.value.pedido,resultado:it.value.resultado,secuencia:it.key.toInteger())
+					if (!estudioInstance.validate())
+						log.debug "ERROR DE VALIDACION: "+estudioInstance.errors.allErrors
+					estudioInstance=estudioInstance.save()
+					log.debug "ESTUDIO INSTANCE SALVADO: "+estudioInstance.properties
+					it.value?.imagen?.each{image->
+						log.debug "IMAGEN ITERADA: $image"
+						if(!image.value.isEmpty()){
+							log.debug "IMAGEN AGREGADA: "+image.value.class
+							estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudioInstance,imagen:image.value)
+							estudioImagenInstance = estudioImagenInstance.save()
+							estudioInstance.addToImagenes(estudioImagenInstance)
+							imageUploadService.save(estudioImagenInstance)
+						}
+					}
+					consultaInstance.addToEstudios(estudioInstance)
+				}
+				
+			}catch(MissingPropertyException e){
+			
 			}
 		}
+	
 		
 		consultaInstance.properties = params.consulta
 		if(!consultaInstance.hasErrors() && consultaInstance.save()){
-
 			return consultaInstance
 		}else{
 			errorMessage="ERROR AL SALVAR LA INSTANCIA DE consultaInstance EN registrarVisita EN HistoriaClinicaService"
