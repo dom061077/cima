@@ -99,7 +99,7 @@ class HistoriaClinicaController {
 					log.debug "ITERANDO IMAGENES: "+image.class
 					if(!image.value.isEmpty()){
 						log.debug "IMAGEN AGREGADA"
-						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value,secuencia:it.key.toInteger()))
+						estudio.addToImagenes(new EstudioComplementarioImagen(imagen:image.value,secuencia:image.key.toInteger()))
 					} 
 				}
 				consultaInstance.addToEstudios(estudio)

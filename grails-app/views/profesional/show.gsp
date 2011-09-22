@@ -6,6 +6,8 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'profesional.label', default: 'Profesional')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
+        link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
         <script type="text/javascript">
         	$(document).ready(function(){
         		$("#tabs").tabs();
@@ -167,6 +169,15 @@
 						</div>
 						<div class="span-4">                            
                             ${profesionalInstance?.sexo?.name?.encodeAsHTML()}
+						</div>
+						<div class="clear"></div>
+						<div class="span-3">
+							<g:message code="profesional.foto.label" default="Foto:"/>
+						</div>
+						<div class="span-4">
+							<bi:hasImage bean="${profesionalInstance}">
+								<a class="thickbox" href="${bi.resource(size:'large', bean:profesionalInstance)}"><img src="${bi.resource(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
+							</bi:hasImage>
 						</div>
 					</fieldset>						                      
 				</div>	      

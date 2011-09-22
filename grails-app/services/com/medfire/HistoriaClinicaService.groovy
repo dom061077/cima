@@ -66,47 +66,9 @@ class HistoriaClinicaService {
 		def deletedestjson
 		def estudioInstance
 		def deletedImgList
-		
-		if(params.deletedEstSerialized){
-			deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)
-			deletedestjson?.each{
-				estudioInstance = EstudioComplementario.get(it.id)
-				deletedImgList = EstudioComplementarioImagen.createCriteria().list{
-							estudioComplementario{
-								eq("id",estudioInstance.id)
-							}
-					}
-				deletedImgList.each{imagen->
-					imageUploadService.delete(imagen)
-					imagen.delete()
-					estudioInstance.removeFromImagenes(imagen)
-				}
-				consultaInstance.removeFromEstudios(estudioInstance)
-				estudioInstance.delete()
-			}
-		}
-
-		
 		def deletedimgjson
 		def estudioImagenInstance
-
-				// elimino las imagenes marcadas para la eliminacion
-		if(params.deletedImgSerialized){
-			deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
-			deletedimgjson?.each{
-				estudioImagenInstance = EstudioComplementarioImagen.get(it.id.toLong())
-				log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioImagenInstance?.id
-				
-				//consultaInstance.removeFromEstudios(estudioInstance)
-				consultaInstance.estudios.each{est->
-					if(it.estId.toLong().equals(est.id)){
-						est.removeFromImagenes(estudioImagenInstance)
-					}
-				}
-				imageUploadService.delete(estudioImagenInstance)
-				//estudioImagenInstance.delete()
-			}
-		}
+		
 
 		params.consulta.estudio.each{
 			try{
@@ -121,7 +83,7 @@ class HistoriaClinicaService {
 							it.value?.imagen?.each {image->
 								if(!image.value.isEmpty()){
 									log.debug "AGREGANDO IMAGENES AL ESTUDIO EXISTENTE, CLASE: "+image.value.class
-									estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudio,imagen:image.value,secuencia:it.key.toInteger())
+									estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudio,imagen:image.value,secuencia:image.key.toInteger())
 									if(!estudioImagenInstance.validate()){
 										log.debug "ERROR DE VALIDACION EN LA IMAGEN: "+estudioImagenInstance.errors.allErrors
 										throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",estudioImagenInstance)
@@ -145,7 +107,7 @@ class HistoriaClinicaService {
 						log.debug "IMAGEN ITERADA: $image"
 						if(!image.value.isEmpty()){
 							log.debug "IMAGEN AGREGADA: "+image.value.class
-							estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudioInstance,imagen:image.value,secuencia:it.key.toInteger())
+							estudioImagenInstance = new EstudioComplementarioImagen(estudioComplementario:estudioInstance,imagen:image.value,secuencia:image.key.toInteger())
 							if(!estudioImagenInstance.validate()){
 								log.debug "ERROR DE VALDACION EN LA IMAGEN: "+estudioImagenInstance.errors.allErrors
 								throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",estudioImagenInstance)
@@ -165,9 +127,62 @@ class HistoriaClinicaService {
 	
 		
 		consultaInstance.properties = params.consulta
-		if(!consultaInstance.hasErrors() && consultaInstance.save()){
-			throw new ConsultaException("ERROR DE VALIDACION EN LA IMAGEN A GUARDAR",consultaInstance)
-			return consultaInstance
+		if(!consultaInstance.hasErrors()){
+			if(params.deletedEstSerialized){
+				deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)
+				deletedestjson?.each{
+					estudioInstance = EstudioComplementario.get(it.id)
+					/*deletedImgList = EstudioComplementarioImagen.createCriteria().list{
+								estudioComplementario{
+									eq("id",estudioInstance.id)
+								}
+						}
+					deletedImgList.each{imagen->
+						imageUploadService.delete(imagen)
+						//imagen.delete()
+						estudioInstance.removeFromImagenes(imagen)
+					}*/
+					estudioInstance.imagenes.each{imagen->
+						imageUploadService.delete(imagen)
+					}
+					consultaInstance.removeFromEstudios(estudioInstance)
+					estudioInstance.delete()
+				}
+			}
+	
+					// elimino las imagenes marcadas para la eliminacion
+			if(params.deletedImgSerialized){
+				deletedimgjson = grails.converters.JSON.parse(params.deletedImgSerialized)
+				deletedimgjson?.each{
+					estudioImagenInstance = EstudioComplementarioImagen.get(it.id.toLong())
+					log.debug "SE BORRO EL SIGUIENTE ESTUDIO: "+estudioImagenInstance?.id
+					
+					//consultaInstance.removeFromEstudios(estudioInstance)
+					consultaInstance.estudios.each{est->
+						if(it.estId.toLong().equals(est.id)){
+							est.removeFromImagenes(estudioImagenInstance)
+						}
+					}
+					imageUploadService.delete(estudioImagenInstance)
+					estudioImagenInstance.delete()
+				}
+			}
+			consultaInstance = consultaInstance.save(flush:true)
+			if( consultaInstance){
+				
+				consultaInstance.estudios.each{estudio->
+					estudio.imagenes.each{img->
+						if(img.imagen){
+							log.debug "CLASE DE IMAGEN: ${img.imagen.class}"
+							log.debug "Imagen de estudio recuperada: "+img.secuencia
+							imageUploadService.save(img)
+						}
+					}
+				}
+				return consultaInstance
+			}else{
+			
+			}
 		}else{
 			errorMessage="ERROR AL SALVAR LA INSTANCIA DE consultaInstance EN registrarVisita EN HistoriaClinicaService"
 			throw new ConsultaException(errorMessage,consultaInstance)
@@ -180,16 +195,18 @@ class HistoriaClinicaService {
 	void deleteVisita(def consultaInstance){
 		log.info "INGRESANDO AL METODO deleteVisita "
 		log.info "PARAMETROS: $consultaInstance"
-//		consultaInstance.removeFromEstudios(estudioInstance)
-//		imageUploadService.delete(estudioInstance)
-//		estudioInstance.delete()
-		def listEstudios = EstudioComplementario.createCriteria().list{
-			eq("id",consultaInstance.id)
-		}
-		listEstudios.each{
-			consultaInstance.removeFromEstudios(it)
-			imageUploadService.delete(it)
-			it.delete()
+//		def listEstudios = EstudioComplementario.createCriteria().list{
+//			eq("id",consultaInstance.id)
+//		}
+//		listEstudios.each{
+//			consultaInstance.removeFromEstudios(it)
+//			imageUploadService.delete(it)
+//			it.delete()
+//		}
+		consultaInstance.estudios.each{
+			it.imagenes.each{imagen->
+				imageUploadService.delete(imagen)
+			}
 		}
 		consultaInstance.delete(flush:true)
 	}

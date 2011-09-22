@@ -47,8 +47,6 @@
             	$("#prescripcionesSerializedId").val(postData);
             	$("#deletedImgSerializedId").val(deletedImg);
             	$("#deletedEstSerializedId").val(deletedEst);
-            	alert('Imagenes borradas: '+$("#deletedImgSerializedId").val());
-            	alert('Estudios borrados: '+$("#deletedEstSerializedId").val());
             }
 
         	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
