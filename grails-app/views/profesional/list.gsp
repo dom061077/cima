@@ -8,7 +8,9 @@
         
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'jquery.searchFilter.css')}" />        
         <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js/src/i18n',file:'grid.locale-es.js')}"></script>
-        <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js',file:'jquery.jqGrid.min.js')}"></script>        
+        <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js',file:'jquery.jqGrid.min.js')}"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
         <title><g:message code="default.list.label" args="[entityName]" /></title>
         <script type="text/javascript">
         
@@ -18,7 +20,7 @@
 						   	url:'listjson',
 							datatype: "json",
 							width:680,
-						   	colNames:['Id','C.U.I.T', 'Matricula', 'Nombre','Telófono','Url','Foto','Operaciones'],
+						   	colNames:['Id','C.U.I.T', 'Matricula', 'Nombre','Telófono','Large Url','Url','Foto','Operaciones'],
 						   	colModel:[
 						   		
 						   		{name:'id',index:'id', width:40,searchoptions:{sopt:['eq']}},
@@ -26,6 +28,7 @@
 						   		{name:'matricula',index:'matricula', width:100,search:false,searchoptions:{sopt:['eq']}},
 						   		{name:'nombre',index:'nombre', width:150, sortable:true},
 						   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
+						   		{name:'urllargephoto',index:'urllargephoto', hidden:true, width:80,search:false, align:"right", sortable:false},
 						   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
 						   		{name:'foto',index:'foto', width:80, align:"center",search:false, sortable:false},						   		
 						   		{name:'operaciones',index:'operaciones', width:55,search:false,sortable:false}
@@ -45,9 +48,11 @@
 									var cl = ids[i];
 									obj = $("#list").getRowData(ids[i]); 
 									be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
-									ph = '<img src="'+obj.urlphoto+'"/>';
+									ph = '<a class="thickbox" href="'+obj.urllargephoto+'" onclick="return false"><img src="'+obj.urlphoto+'"/></a>';
 									jQuery("#list").jqGrid('setRowData',ids[i],{operaciones:be,foto:ph}); 
-									} 
+									}
+								tb_init('a.thickbox, area.thickbox, input.thickbox');
+								 
 							}, 						    
 						    caption:"Listado de Profesionales"
 						});
@@ -65,8 +70,8 @@
 						
 					}
 	        );
-        
         </script>
+        
     </head>
     <body>
         <div class="nav">

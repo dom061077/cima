@@ -7,8 +7,9 @@
         <g:set var="entityName" value="${message(code: 'profesional.label', default: 'Profesional')}" />
         <title><g:message code="default.show.label" args="[entityName]" /></title>
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
-        link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
         <script type="text/javascript">
+        	var tb_pathToImage = "<%out << "${resource(dir:'images',file:'loading-thickbox.gif')}"%>";
         	$(document).ready(function(){
         		$("#tabs").tabs();
             });

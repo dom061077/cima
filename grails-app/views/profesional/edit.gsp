@@ -8,7 +8,10 @@
         <g:set var="entityName" value="${message(code: 'profesional.label', default: 'Profesional')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
 		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
-        <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>		        
+        <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
+        		        
         <script type="text/javascript">
 		    	$(document).ready(function(){
 		        	/*$("#usuarioAsignadoDescId").lookupfield({
@@ -154,10 +157,10 @@
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${profesionalInstance}">
-            <div class="errors">
+            <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
                 <g:renderErrors bean="${profesionalInstance}" as="list" />
             </div>
             </g:hasErrors>
@@ -397,9 +400,19 @@
 		                        <div class="clear"></div>
 		                        <div class="span-3 spanlabel">            	
 		                                    <label for="photo"><g:message code="profesional.photo.label" default="Foto:" /></label>
-								</div>		                
-								<div class="span-4">                    
+								</div>
+		            			<div class="span-2">
+		            				<bi:hasImage bean="${profesionalInstance}">
+		            					<a class="thickbox" href="${bi.resource(size:'large', bean:profesionalInstance)}"><img src="${bi.resource(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
+		            				</bi:hasImage>		
+		            			</div>
+								<div class="span-4 colborder">                    
 		                                    <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="photo" />
+		            			</div>
+		            			<div class="span-3">
+		            					<span>
+		            						<a href="" onclick="return false;">Cambiar Imagen</a>
+		            					</span>
 		            			</div>
 		            	</fieldset>
 		            </div>        

@@ -3,9 +3,9 @@ package com.medfire
 import com.medfire.enums.IvaEnum
 import com.medfire.enums.SexoEnum
 import com.medfire.enums.TipoDocumentoEnum
-import pl.burningice.plugins.image.ast.DBImageContainer
+import pl.burningice.plugins.image.ast.FileImageContainer
 
-@DBImageContainer(field = 'photo')
+@FileImageContainer(field = 'photo')
 class Profesional {
 	
 	Integer matricula

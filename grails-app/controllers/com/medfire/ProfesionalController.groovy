@@ -171,7 +171,7 @@ class ProfesionalController {
 			
             profesionalInstance.properties = params
             if (!profesionalInstance.hasErrors() && profesionalInstance.save(flush: true)) {
-				if (!profesionalInstance.photo.isEmpty()){
+				if (!params.photo.isEmpty()){
 					log.debug "EXISTE EL CONTENIDO DE LA FOTO DEL PROFESIONAL"
 					imageUploadService.save(profesionalInstance)
 				}else{
@@ -230,17 +230,25 @@ class ProfesionalController {
     	log.debug "CONSULTA DE PROFESIONALES: $list"
     	def flagaddcomilla=false
 		def urlimg
+		def urllargeimg
     	list.each{
     		
     		if (flagaddcomilla)
     			result=result+','
-			//log.debug it.class
-			try{		
-				urlimg = bi.resource(size:'small',bean:it)
-			}catch(Exception e){	
-				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')	
+				
+//			try{		
+//				urlimg = bi.resource(size:'small',bean:it)
+//			}catch(Exception e){	
+//				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')	
+//			}
+			
+			urlimg = bi.resource(size:'small',bean:it)
+			urllargeimg = bi.resource(size:'large',bean:it)
+			if(urlimg.contains(".null")){
+				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')
+				urllargeimg = g.resource(dir:'images',file:'noDisponibleLarge.jpg')
 			}
-    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.cuit==null?"":it.cuit)+'","'+(it.matricula==null?"":it.matricula)+'","'+(it.nombre==null?"":it.nombre)+'","'+(it.telefono==null?"":it.telefono)+'","'+urlimg+'"]}'
+    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.cuit==null?"":it.cuit)+'","'+(it.matricula==null?"":it.matricula)+'","'+(it.nombre==null?"":it.nombre)+'","'+(it.telefono==null?"":it.telefono)+'","'+urllargeimg+'","'+urlimg+'"]}'
     		 
     		flagaddcomilla=true
     	}
