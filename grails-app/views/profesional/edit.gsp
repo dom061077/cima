@@ -143,8 +143,15 @@
 		                //buttonImage:'<%  out << g.resource(dir:'images',file:'calendar.gif') %>'
 						});
 					$("#tabs").tabs();
+			    	$('.linkdescartarcancelar').live('click',function(){
+				    	//if()
+			    	});
+
+					$('#inputimage').hide();
+
 		        });
-        
+
+		    	
         
         </script>
     </head>
@@ -402,16 +409,14 @@
 		                                    <label for="photo"><g:message code="profesional.photo.label" default="Foto:" /></label>
 								</div>
 		            			<div class="span-2">
-		            				<bi:hasImage bean="${profesionalInstance}">
-		            					<a class="thickbox" href="${bi.resource(size:'large', bean:profesionalInstance)}"><img src="${bi.resource(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
-		            				</bi:hasImage>		
+		            					<a class="thickbox" href="${g.resourceimgext(size:'large', bean:profesionalInstance)}"><img src="${g.resourceimgext(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
 		            			</div>
-								<div class="span-4 colborder">                    
+								<div id="inputimage" class="span-4 colborder">                    
 		                                    <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="photo" />
 		            			</div>
-		            			<div class="span-3">
+		            			<div  class="span-3">
 		            					<span>
-		            						<a href="" onclick="return false;">Cambiar Imagen</a>
+		            						<a  class="cambiarlink" href="" onclick="return false;">Cambiar Imagen</a>
 		            					</span>
 		            			</div>
 		            	</fieldset>
