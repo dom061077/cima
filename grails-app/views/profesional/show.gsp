@@ -42,7 +42,15 @@
 
 						<div class="clear"></div>
                     	<div class="span-3">
-                            <g:message code="profesional.matricula.label" default="Matricula:" />
+                            <g:message code="profesional.matricula.label" default="Tipo Matrícula:" />
+                        </div>    
+                        <div class="span-4">
+                            ${fieldValue(bean: profesionalInstance, field: "tipoMatricula.name")}
+                        </div>   
+
+						<div class="clear"></div>
+                    	<div class="span-3">
+                            <g:message code="profesional.matricula.label" default="Matrícula:" />
                         </div>    
                         <div class="span-4">
                             ${fieldValue(bean: profesionalInstance, field: "matricula")}
@@ -177,7 +185,7 @@
 						</div>
 						<div class="span-4">
 							<bi:hasImage bean="${profesionalInstance}">
-								<a class="thickbox" href="${bi.resource(size:'large', bean:profesionalInstance)}"><img src="${bi.resource(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
+								<a class="thickbox" href="${g.resourceimgext(size:'large', bean:profesionalInstance)}"><img src="${g.resourceimgext(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
 							</bi:hasImage>
 						</div>
 					</fieldset>						                      

@@ -1,6 +1,7 @@
 package com.medfire
 
 import com.medfire.enums.IvaEnum
+import com.medfire.enums.TipoMatriculaEnum
 import com.medfire.enums.SexoEnum
 import com.medfire.enums.TipoDocumentoEnum
 import pl.burningice.plugins.image.ast.FileImageContainer
@@ -25,7 +26,7 @@ class Profesional {
 	EspecialidadMedica especialidad
 	//foto agregar la foto
 	Boolean activo = true
-	String tipoMatricula//tipo enum
+	TipoMatriculaEnum tipoMatricula//tipo enum
 	SexoEnum sexo
 	
 	AntecedenteLabel antecedenteLabel

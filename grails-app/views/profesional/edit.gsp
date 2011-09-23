@@ -143,8 +143,26 @@
 		                //buttonImage:'<%  out << g.resource(dir:'images',file:'calendar.gif') %>'
 						});
 					$("#tabs").tabs();
-			    	$('.linkdescartarcancelar').live('click',function(){
-				    	//if()
+			    	$('.cambiarlink').live('click',function(){
+				    	if($(this).attr('inputactivo')=='false'){
+					    	$(this).attr('inputactivo','true');
+					    	var link = $(this);
+					    	$('#image').fadeOut(function(){
+					    		$('#inputimage').fadeIn('slow',function(){
+					    			link.html('Cancelar');
+						    	});
+					    				
+						    });
+					    }else{
+					    	$(this).attr('inputactivo','false');
+					    	var link = $(this);
+					    	$('#inputimage').fadeOut(function(){
+						    	$('#image').fadeIn('slow',function(){
+						    		link.html('Cambiar Imagen');
+							    });
+						    	
+						    });
+						}
 			    	});
 
 					$('#inputimage').hide();
@@ -201,8 +219,10 @@
 								<div class="span-3 spanlabel">                  
 		                                    <label for="tipoMatricula"><g:message code="profesional.tipoMatricula.label" default="Tipo Matricula:" /></label>
 								</div>		                
-								<div class="span-4">                    
-		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="tipoMatricula" value="${profesionalInstance?.tipoMatricula}" />
+								<div class="span-4">   
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="tipoMatriculaId" name="tipoMatricula" from="${com.medfire.enums.TipoMatriculaEnum?.list()}" 
+		                                    	optionValue="name" value="${profesionalInstance?.tipoMatricula}" noSelection="['': '']" />
+								                 
 								</div>		                                    
 								
 								
@@ -335,7 +355,7 @@
 		                                    <label for="tipoDocumento"><g:message code="profesional.tipoDocumento.label" default="Tipo Documento:" /></label>
 								</div>
 								<div class="span-4">		                                    	
-		                                    <g:select id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content" id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum?.list()}" optionValue="name" value="${profesionalInstance?.tipoDocumento}" noSelection="['': '']" />
 				                                    <g:hasErrors bean="${profesionalInstance}" field="tipoDocumento">
 			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="tipoDocumento"/>
 			                                    	</div>
@@ -358,7 +378,7 @@
 		                                    <label  for="codigoIva"><g:message code="profesional.codigoIva.label" default="Codigo I.V.A:" /></label>
 		                        </div>
 		                        <div class="span-4">            
-		                                    <g:select  id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="codigoivaId" name="codigoIva" from="${com.medfire.enums.IvaEnum?.list()}" optionValue="name" value="${profesionalInstance?.codigoIva}" noSelection="['': '']" />
 		                        </div>     		                        
 		                        
 		                        <div class="clear"></div>
@@ -400,7 +420,7 @@
 		                                    <label for="sexo"><g:message code="profesional.sexo.label" default="Sexo:" /></label>
 								</div>		                
 								<div class="span-4">                    
-		                                    <g:select  id="sexoId" name="sexo" from="${com.medfire.enums.SexoEnum?.list()}" 
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="sexoId" name="sexo" from="${com.medfire.enums.SexoEnum?.list()}" 
 		                                    	optionValue="name" value="${profesionalInstance?.sexo}" noSelection="['': '']" />
 								</div>		                                    	
 		                                    	
@@ -408,15 +428,15 @@
 		                        <div class="span-3 spanlabel">            	
 		                                    <label for="photo"><g:message code="profesional.photo.label" default="Foto:" /></label>
 								</div>
-		            			<div class="span-2">
+		            			<div id="image" class="span-4 colborder">
 		            					<a class="thickbox" href="${g.resourceimgext(size:'large', bean:profesionalInstance)}"><img src="${g.resourceimgext(size:'small', bean:profesionalInstance)}"  alt=""> </img></a>
 		            			</div>
 								<div id="inputimage" class="span-4 colborder">                    
 		                                    <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="photo" />
 		            			</div>
-		            			<div  class="span-3">
+		            			<div  class="span-4">
 		            					<span>
-		            						<a  class="cambiarlink" href="" onclick="return false;">Cambiar Imagen</a>
+		            						<a  class="cambiarlink" inputactivo="false" href="" onclick="return false;">Cambiar Imagen</a>
 		            					</span>
 		            			</div>
 		            	</fieldset>

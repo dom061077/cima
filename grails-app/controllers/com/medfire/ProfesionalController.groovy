@@ -29,46 +29,43 @@ class ProfesionalController {
     def save = {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER ProfesionalController"
 		log.info "PARAMETROS: ${params}"
+		def fechaNacimientoError=false
+		def fechaIngresoError=false
 
 		if (params.fechaNacimiento){
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-			log.debug "FECHA REEMPLAZADA: "+params.fechaNacimiento
-			def fecha
-			try{
-				fecha = df.parse(params.fechaNacimiento)
-				log.debug "LA FECHA SE PARSEO BIEN"
-			}catch(ParseException e){
-				log.debug "LA FECHA NO SE PARSEO BIEN"
+			params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+			log.debug "Anio "+params.fechaNacimiento.substring(6,10)
+			params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+			log.debug "Mes "+params.fechaNacimiento.substring(3,5)
+			params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+			log.debug "Dia "+params.fechaNacimiento.substring(0,2)
+			if(params.fechaNacimiento_month.toInteger()>12)
+				fechaNacimientoError=true
+			if(params.fechaNacimiento_day.toInteger()>31){
+				log.debug "DIA mayor 31"
+				fechaNacimientoError=true
 			}
-			def gc = Calendar.getInstance()
-			gc.setTime(fecha)
-			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-			params.fechaNacimiento_year=gc.get(Calendar.YEAR).toString()
-			params.fechaNacimiento_month=(gc.get(Calendar.MONTH)+1).toString()
-			params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
 		}
 
 		
 		if (params.fechaIngreso){
-			DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-			log.debug "FECHA REEMPLAZADA: "+params.fechaIngreso
-			def fecha
-			try{
-				fecha = df.parse(params.fechaIngreso)
-				log.debug "LA FECHA SE PARSEO BIEN"
-			}catch(ParseException e){
-				log.debug "LA FECHA NO SE PARSEO BIEN"
-			}
-			def gc = Calendar.getInstance()
-			gc.setTime(fecha)
-			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-			params.fechaIngreso_year=gc.get(Calendar.YEAR).toString()
-			params.fechaIngreso_month=(gc.get(Calendar.MONTH)+1).toString()
-			params.fechaIngreso_day=gc.get(Calendar.DATE).toString()
+			params.fechaIngreso_year=params.fechaIngreso.substring(6,10)
+			params.fechaIngreso_month=params.fechaIngreso.substring(3,4)
+			params.fechaIngreso_day=params.fechaIngreso.substring(0,1)
+			if(params.fechaIngreso_month.toInteger()>12)
+				fechaIngresoError=true
+			if(params.fechaIngreso_day.toInteger()>31)
+				fechaIngresoError=true
 		}
 
 				
         def profesionalInstance = new Profesional(params)
+		if(fechaIngresoError)
+			profesionalInstance.errors.rejectValue("","","")
+		if(fechaNacimientoError){
+			profesionalInstance.errors.rejectValue("fechaNacimiento",,"xx","xx")
+			log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
+		}	
 		if(params.localidad?.id){
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
 		}

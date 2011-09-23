@@ -190,8 +190,9 @@
 								<div class="span-3 spanlabel">                  
 		                                    <label for="tipoMatricula"><g:message code="profesional.tipoMatricula.label" default="Tipo Matricula:" /></label>
 								</div>		                
-								<div class="span-4">                    
-		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="tipoMatricula" value="${profesionalInstance?.tipoMatricula}" />
+								<div class="span-4">         
+		                                    <g:select class="ui-widget ui-corner-all ui-widget-content"  id="tipoMatriculaId" name="tipoMatricula" from="${com.medfire.enums.TipoMatriculaEnum?.list()}" 
+		                                    	optionValue="name" value="${profesionalInstance?.tipoMatricula}" noSelection="['': '']" />
 								</div>		                                    
 								
 								
@@ -285,20 +286,21 @@
 								</div>
 								
 								<div class="clear"></div>
+                            	<g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
 								<div class="span-3 spanlabel">
-		                                	<g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
-		                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-		                                    </g:hasErrors>	
 		                                    <label for="fechaNacimiento"><g:message code="profesional.fechaNacimiento.label" default="Fecha Nacimiento:" /></label>
 								</div>	
 								<div class="span-4">	                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaNacimientoId' name='fechaNacimiento' value="${g.formatDate(format:'dd/MM/yyyy',date:profesionalInstance?.fechaNacimiento)}" / noSelection="['': '']"/>
-				                                    <g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
-			                                    		<g:renderErrors bean="${profesionalInstance}" as="list" field="fechaNacimiento"/>
-			                                    	</div>
-			                                    	
-				                                    </g:hasErrors>	
-								</div>	
+								</div>
+                                <g:hasErrors bean="${profesionalInstance}" field="fechaNacimiento">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="fechaNacimiento"/>
+                               	</div>
+                               	
+                                </g:hasErrors>	
+									
 									                        
 								<div class="clear"></div>
 		                        <div class="span-3 spanlabel">										                                    
@@ -359,12 +361,19 @@
 								</div>
 								
 								<div class="clear"></div>
+                            	<g:hasErrors bean="${profesionalInstance}" field="fechaIngreso">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
 								<div class="span-3 spanlabel">		                                    
 		                                    <label for="fechaIngreso"><g:message code="profesional.fechaIngreso.label" default="Fecha Ingreso:" /></label>
 								</div>
 								<div class="span-4">		                                    
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaIngresoId' name='fechaIngreso' value="${g.formatDate(format:'dd/MM/yyyy',date:profesionalInstance?.fechaIngreso)}" / noSelection="['': '']"/>
 		                        </div>
+                                <g:hasErrors bean="${profesionalInstance}" field="fechaIngreso">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="fechaIngreso"/>
+                               		</div>
+                                </g:hasErrors>		                        
 
 								<div class="clear"></div>
 								<div class="span-3 spanlabel">		                                    

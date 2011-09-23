@@ -1,12 +1,13 @@
 package medfireweb
 
-class BurningImageExtensionTagLib {
+import pl.burningice.plugins.image.container.ContainerWorkerFactory
 
+class BurningImageExtensionTagLib {
+	ContainerWorkerFactory containerWorkerFactory
 	def resourceimgext = { attrs ->
-		def bean = attrs.bean
 		def tamanio = attrs.size
-		if(bi.hasImage(bean:bean)){
-			out << "TIENE IMAGEN";
+		if(containerWorkerFactory.produce(attrs.bean).hasImage()){
+			out << bi.resource(bean:attrs.bean,size:attrs.size)
 		}else{
 			if(tamanio.equals("small"))
 				out << g.resource(dir:'images',file:'noDisponible.jpg');
