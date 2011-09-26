@@ -567,6 +567,13 @@ class EventController {
 					return
                 }
             }
+			if(eventInstance.paciente.consultas.size()){
+				render(contentType:"text/json"){
+					result success:false,title:"Error, el turno ya fue atendido o tiene visitas vinculadas"
+				}
+				return
+			}
+			
 			eventInstance.properties=params
 			
             if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
@@ -593,11 +600,11 @@ class EventController {
 		log.info "PARAMETROS: ${params}"
 		def eventInstance = Event.load(new Long(params.id))
 		if (eventInstance.paciente)
-			redirect(controller:"paciente",action: "edit", id: eventInstance.paciente.id)
+			redirect(controller:"historiaClinica",action: "create", params:[pacienteId: eventInstance.paciente.id,eventId: eventInstance.id])
 		else{
 			log.debug "ID DEL EVENTO A ASOCIAR CON EL PACIENTE QUE SE CREARA: "+eventInstance.id
 			log.debug "VERSION DEL EVENTO A ASOCIAR CON EL PACIENTE QUE SE CREARA: "+eventInstance.version
-			redirect(controller:"paciente",action: "create",params:[eventId:eventInstance.id,eventVersion:eventInstance.version])
+			redirect(controller:"paciente",action: "create",params:[eventId:eventInstance.id])
 		}	
 	}    
 }

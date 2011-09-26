@@ -13,7 +13,7 @@ $(document).ready(function(){
 				{name:'nombreComercial',index:'nombreComercial',width:100,sorttype:'text',sortable:true},
 				{name:'principio_principioActivo',index:'principio_principioActivo',width:100,sorttype:'text',sortable:true},
 				{name:'laboratorio_nombre',index:'laboratorio_nombre',width:100,sorttype:'text',sortable:true},
-				{name:'presentacion',index:'presentacion',width:100,hidden:true,sorttype:'text'},
+				{name:'presentacion',index:'presentacion',width:100,hidden:false,sorttype:'text'},
 				{name:'grupo_nombre',index:'grupo_nombre',width:100,sorttype:'text',sortable:true}
 		]
 		

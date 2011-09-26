@@ -23,10 +23,12 @@ class UserController {
     def create = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER UserController"
 		log.info "PARAMETROS: ${params}"
-        def userInstance = new User()
+		
+        def userInstance = new User(params)
 		//userInstance.passwd = authenticateService.encodePassword(params.passwd)
 		def roles = Role.list()
-        userInstance.properties = params
+        //userInstance.properties = params
+		userInstance.enabled=true
         return [userInstance: userInstance,authorityList:roles]
     }
 

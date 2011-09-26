@@ -10,7 +10,7 @@
 					$('#listturnos').trigger('reloadGrid');		
 				else{
 					$(
-							'<div>' + msg.title + '</div>')
+							'<div>' + msg.result.title + '</div>')
 							.dialog();
 					return;
 				}

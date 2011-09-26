@@ -1,6 +1,7 @@
 package com.medfire
 
 import com.medfire.enums.ImpresionVademecumEnum
+import com.medfire.enums.EstadoEvent
 
 
 
@@ -9,7 +10,7 @@ class HistoriaClinicaService {
 	def imageUploadService
     static transactional = true
 
-    def registrarVisita(Consulta consultaInstance) {
+    def registrarVisita(Consulta consultaInstance,Event eventInstance) {
 		log.info "INGRESANDO AL METODO registrarVisita"
 		log.info "PARAMETRO consulta: "+consultaInstance
 		def errorMessage=""
@@ -21,6 +22,11 @@ class HistoriaClinicaService {
 				log.debug "HUBO UN ERROR EN LA VALIDACION: "+it.errors.allErrors
 			}
 		}*/
+		if(eventInstance){
+			eventInstance.estado = EstadoEvent.EVENT_ATENDIDO
+			eventInstance.save()
+		}
+
 		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save()){
 			consultaInstance.estudios.each {
 				log.info "ITERANDO ESTUDIO "+it

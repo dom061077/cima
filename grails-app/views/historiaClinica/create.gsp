@@ -90,8 +90,11 @@
             		</ul>
             		<div id="tabs-1">
             			<fieldset>
-            				<g:hiddenField name="pacienteId" value="${pacienteInstance?.id}"></g:hiddenField>
-            				<div class="span-1 spanlabel">
+            				<g:hiddenField name="pacienteId" value="${pacienteInstance?.id}"/>
+            				<g:hiddenField name="pacienteVersion" value="${pacienteInstance?.version}"/>
+            				<g:hiddenField name="eventId" value="${eventInstance?.id}"/>
+            				<g:hiddenField name="eventVersion" value="${eventInstance?.version}" />
+             				<div class="span-1 spanlabel">
 		   							<label for="cie10Descripcion">CIE-10:</label>
 		   					</div>		
 		   					<div class="span-4">		

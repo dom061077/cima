@@ -273,7 +273,7 @@ $(document).ready(function(){
 	
 	$( '#tabs-estudios span.drop-est' ).live( 'click', function() {
 		var index = $( "li", $tabs ).index( $( this ).parent() );
-		if(index>0)
+		//if(index>0)
 			$tabs.tabs( "remove", index );
 	});
 	$( '#tabs-estudios span.drop-rollback-est' ).live( 'click', function() {

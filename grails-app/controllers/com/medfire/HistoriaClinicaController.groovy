@@ -40,14 +40,25 @@ class HistoriaClinicaController {
 		def pacienteInstance
 		pacienteInstance= Paciente.get(params.pacienteId)
 		if(!pacienteInstance){
-			log.error "PACIENTE CON $params.pacienteId NO ENCONTRADO"
+			log.error "PACIENTE CON ID $params.pacienteId NO ENCONTRADO"
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'paciente.label', default: 'Paciente'), params.id])}"
 			redirect(action: "list")
 			return
 		}
+		def eventInstance
+		if(params.eventId){
+			eventInstance = Event.get(params.eventId)
+			if(!eventInstance){
+				log.error "EVENTO ENVIADO CON ID ${params.eventId} NO ENCONTRADO"
+				flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Turno'), params.id])}"
+				redirect(action: "list")
+				return
+			}
+		}
+		
 		def consultaInstance = new Consulta()
-		log.debug "RENDER CREATE GSP"
-		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance]
+			
+		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance,eventInstance:eventInstance]
 	}
 
 	def save = {
@@ -83,6 +94,14 @@ class HistoriaClinicaController {
 		consultaInstance.profesional=profesionalInstance
 		def pacienteInstance = Paciente.get(params.pacienteId.toLong())
 		pacienteInstance.properties = params.paciente
+		if(params.pacienteVersion){
+			def pacienteVersion = params.pacienteVersion.toLong()
+				if(pacienteInstance.version > pacienteVersion){
+				pacienteInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'paciente.label', default: 'Paciente')] as Object[], "Another user has updated this Turno while you were editing")
+				render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:pacienteInstance)}<br/> ${g.renderErrors(bean:consultaInstance.paciente)} </div>	"
+				return
+			}
+		}
 		consultaInstance.paciente=pacienteInstance
 		
 		def i=1
@@ -118,6 +137,20 @@ class HistoriaClinicaController {
 //			}
 		}
 		
+		//------------si tiene un turno o evento asignado, le cambio el estado-----------
+		def eventInstance
+		if(params.eventId){
+			eventInstance = Event.get(params.eventId)
+			if(params.eventVersion){
+				def versionEvent = params.eventVersion.toLong()
+				if(eventInstance.version > versionEvent){
+					consultaInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Turno')] as Object[], "Another user has updated this Turno while you were editing")
+					render " <div class='ui-state-error ui-corner-all' style='padding: 0pt 0.7em;'>	${g.renderErrors(bean:consultaInstance)}<br/> ${g.renderErrors(bean:consultaInstance.paciente)} </div>	"
+					return
+				}
+			}
+		}
+		
 		prescripcionesjson.each{ 
 			log.debug "OBJETO JSON DE LA PRESCRIPCION: $it"
 			consultaInstance.addToPrescripciones(new Prescripcion(nombreComercial:it.nombreComercial
@@ -125,7 +158,7 @@ class HistoriaClinicaController {
 		}
 
 		try{
-			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance)
+			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance,eventInstance)
 			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
 			//redirect(action: "show", id: consultaInstance.id)
 			log.debug "REENDERIZANDO EL INPUT TEXT CON EL ID CARGADO, CONSULTA GUARDADA ${consultaInstance.id}"

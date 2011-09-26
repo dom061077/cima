@@ -66,5 +66,6 @@ INNER JOIN consultorio.principioactivo p ON nc.principio_activo=p.id_PrincipioA
 INNER JOIN consultorio.laboratorio l ON nc.laboratorio=l.id_lab;
 
 
-
+UPDATE vademecum SET presentacion = REPLACE(presentacion,'\n','') 
+UPDATE vademecum SET presentacion = REPLACE(presentacion,'\r','') 
 
