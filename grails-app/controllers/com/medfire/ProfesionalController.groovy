@@ -60,11 +60,17 @@ class ProfesionalController {
 
 				
         def profesionalInstance = new Profesional(params)
-		if(fechaIngresoError)
-			profesionalInstance.errors.rejectValue("","","")
+		if(fechaIngresoError){
+			profesionalInstance.errors.rejectValue("fechaIngreso","com.medfire.Profesional.fechaIngreso.date.error","")
+			render(view: "create", model: [profesionalInstance: profesionalInstance])
+			return
+		}
 		if(fechaNacimientoError){
-			profesionalInstance.errors.rejectValue("fechaNacimiento",,"xx","xx")
+			profesionalInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correción")
+			//profesionalInstance.errors.getFieldError('fechaNacimiento').rejectedValue
 			log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
+			render(view: "create", model: [profesionalInstance: profesionalInstance])
+			return
 		}	
 		if(params.localidad?.id){
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
@@ -73,7 +79,7 @@ class ProfesionalController {
 		profesionalInstance.antecedenteLabel= new AntecedenteLabel()
 		
 		//profesionalInstance.photo = request.getFile("photo")
-		log.debug "VALOR DE FOTO, nombre: ${profesionalInstance.photo.contentType}"
+	
         if (profesionalInstance.save()) {
 			if (!profesionalInstance.photo.isEmpty()){
 				log.debug "EXISTE EL CONTENIDO DE LA FOTO DEL PROFESIONAL"
