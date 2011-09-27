@@ -255,6 +255,31 @@ class UserController {
 			}
 		}
 	}
-	
 
+	def changepassword = {UserPasswordCommand usrc ->
+		log.info "INGRESNDO AL CLOSURE changepassword"
+		log.info "PARAMETROS: $params"
+		def userInstance = new UserPasswordCommand()
+		return [userInstance:userInstance]
+	}	
+
+}
+
+
+
+class UserPasswordCommand {
+	Long id
+	String oldPassword
+	String password
+	String passwordRepeat
+	static constraints={
+		oldPassword(blank:false
+			,validator(){password2,usrc->
+				return password2 != usrc.password
+			})
+		password(blank:false)
+		passwordRepeat(blank:false,validator(){password2,usrc->
+				return password2 != usrc.passwordRepeat
+			})
+	} 	
 }
