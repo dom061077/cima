@@ -39,26 +39,41 @@ class PacienteController {
     	log.debug "INGRESANDO AL METODO save DEL CONTROLLER PacienteController"
     	log.debug "PARAMETROS $params"
 		def pacienteSalvado
-        
+		def fechaNacimientoError=false
+		def fechaIngresoError=false
+
     	
     	if (params.fechaNacimiento){
-	    	DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-	    	log.debug "FECHA REEMPLAZADA: "+params.fechaNacimiento
-	    	def fecha
-	    	try{ 
-	    		fecha = df.parse(params.fechaNacimiento)
-				log.debug "LA FECHA SE PARSEO BIEN"    		
-	    	}catch(ParseException e){
-	    		log.debug "LA FECHA NO SE PARSEO BIEN"
-	    	}
-	    	def gc = Calendar.getInstance()
-			gc.setTime(fecha)
-			log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()						
-			params.fechaNacimiento_year=gc.get(Calendar.YEAR).toString()
-			params.fechaNacimiento_month=(gc.get(Calendar.MONTH)+1).toString()
-			params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
+			if (params.fechaNacimiento.length()<10){
+				fechaNacimientoError=true
+			}else{
+				//log.debug "Fecha Nacimiento length: "+params.fechaNacimiento.length()
+				params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+				params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+				params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+				try{
+					if(params.fechaNacimiento_month.toInteger()>12)
+						fechaNacimientoError=true
+					if(params.fechaNacimiento_day.toInteger()>31){
+						fechaNacimientoError=true
+					}
+				}catch(NumberFormatException e){
+					fechaNacimientoError=true
+				}
+			}
 		}
+		
+		
 		def pacienteInstance = new Paciente(params)
+		
+		if(fechaNacimientoError){
+			pacienteInstance.validate()
+			pacienteInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correciÛn")
+			log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
+			render(view: "create", model: [pacienteInstance: pacienteInstance])
+			return
+		}
+
 		if(params.obraSocial?.id)
 			pacienteInstance.obraSocial=ObraSocial.load(new Long(params.obraSocial.id))
 		params.each{field,value->
@@ -159,6 +174,7 @@ class PacienteController {
     def update = {
     	log.debug "INGRESANDO AL METODO UPDATE DEL CONTROLLER PacienteController"
     	log.debug "PARAMETROS $params"
+		def fechaNacimientoError = false
         def pacienteInstance = Paciente.get(params.id)
         if (pacienteInstance) {
             if (params.version) {
@@ -171,25 +187,34 @@ class PacienteController {
                 }
             }
 			
-			if (params.fechaNacimiento){
-				DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-				log.debug "FECHA REEMPLAZADA: "+params.fechaNacimiento
-				def fecha
-				try{
-					fecha = df.parse(params.fechaNacimiento)
-					log.debug "LA FECHA SE PARSEO BIEN"
-				}catch(ParseException e){
-					log.debug "LA FECHA NO SE PARSEO BIEN"
+	    	if (params.fechaNacimiento){
+				if (params.fechaNacimiento.length()<10){
+					fechaNacimientoError=true
+				}else{
+					log.debug "Fecha Nacimiento length: "+params.fechaNacimiento.length()
+					params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+					params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+					params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+					try{
+						if(params.fechaNacimiento_month.toInteger()>12)
+							fechaNacimientoError=true
+						if(params.fechaNacimiento_day.toInteger()>31){
+							fechaNacimientoError=true
+						}
+					}catch(NumberFormatException e){
+						fechaNacimientoError=true
+					}
 				}
-				def gc = Calendar.getInstance()
-				gc.setTime(fecha)
-				log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-				params.fechaNacimiento_year=gc.get(Calendar.YEAR).toString()
-				params.fechaNacimiento_month=(gc.get(Calendar.MONTH)+1).toString()
-				params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
 			}
 			
             pacienteInstance.properties = params
+			if(fechaNacimientoError){
+				pacienteInstance.validate()
+				pacienteInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correci√≥n")
+				log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
+				render(view: "edit", model: [pacienteInstance: pacienteInstance])
+				return
+			}
             if (!pacienteInstance.hasErrors() && pacienteInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'paciente.label', default: 'Paciente'), pacienteInstance.id])}"
                 redirect(action: "show", id: pacienteInstance.id)

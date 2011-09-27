@@ -50,6 +50,7 @@ class Profesional {
 		activo(nullable:true,blank:true)
 		tipoMatricula(nullable:true,blank:true)
 		sexo(nullable:true,blank:true)
+		antecedenteLabel(nullable:true,blank:true)
 		
     }
 	

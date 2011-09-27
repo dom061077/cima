@@ -218,15 +218,8 @@
 							
 							$("#provinciaId").combobox();
 							$("#localidadId").combobox();
-							$("#tipodocumentoId").combobox();
-							$("#estadocivilId").combobox();
-							//$("#localidadId").toggle();
+
 							
-							//$("#guardarId").button();
-
-
-												
-							//$("#dniId").addClass( "ui-widget ui-widget-content ui-corner-all" );
 						
 
 						
@@ -285,165 +278,233 @@
 				</ul>
 				<div id="tabs-1">
 							<fieldset>
-					
-			                                    <label for="tipoDocumento"><g:message code="paciente.tipodocumento.label" default="Tipo Documento:" /></label> 	
-												<g:select  id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum.list()}" optionValue="name"  value="${pacienteInstance?.tipoDocumento}"  />
-		                                    	<br/>
-		                                    	
+									<div class="span-3 spanlabel">
+			                                    <label for="tipoDocumento"><g:message code="paciente.tipodocumento.label" default="Tipo Documento:" /></label>
+									</div>			  
+									<div class="span-4">                                   		
+												<g:select class="ui-widget ui-corner-all ui-widget-content"  id="tipodocumentoId" name="tipoDocumento" from="${com.medfire.enums.TipoDocumentoEnum.list()}" optionValue="name"  value="${pacienteInstance?.tipoDocumento}"  />
+		                            </div>
+		                            <div class="clear"></div>        	
+
+			                        <g:hasErrors bean="${pacienteInstance}" field="dni">
+										<div class="ui-state-error ui-corner-all">			                        
+			                        </g:hasErrors>            
+									<div class="span-3 spanlabel">
 			                                    <label for="dni"><g:message code="paciente.dni.label" default="D.N.I:" /></label>
+			                        </div>            
+									<div class="span-4">                                   		
 			                                	<g:textField class="ui-widget ui-corner-all ui-widget-content" id="dniId" name="dni" value="${pacienteInstance?.dni}" />
-			                                		<g:hasErrors bean="${pacienteInstance}" field="dni">
-			                                			<br/>
-				                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${pacienteInstance}" as="list" field="dni"/></div>
-			                                    	</g:hasErrors>
-			                                	<br/>
-			                                	
-			                                	<g:hasErrors bean="${pacienteInstance}" field="apellido">
-			                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-			                                    </g:hasErrors>	
-			                                    <label for="apellido"><g:message code="paciente.apellido.label" default="Apellido:" /></label>
-				                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="apellido" value="${pacienteInstance?.apellido}" />
-				                                    <g:hasErrors bean="${pacienteInstance}" field="apellido">
-				                                    	<br/>
-			                                    		<g:renderErrors bean="${pacienteInstance}" as="list" field="apellido"/>
-			                                    	</div>
-			                                    	
-				                                    </g:hasErrors>	
-			                                    <br/>
-			                                    
-			                                    <g:hasErrors bean="${pacienteInstance}" field="nombre">
-			                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-			                                    </g:hasErrors>
-			                                    <label for="nombre"><g:message code="paciente.nombre.label" default="Nombre:" /></label>	
-		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${pacienteInstance?.nombre}" />
-		                                    	<g:hasErrors bean="${pacienteInstance}" field="nombre">
-		                                    		<br/>
-			                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="nombre"/> 
-			                                    	</div>
-		                                    	</g:hasErrors>
-			                                    <br/>
-			                                    
-			                                    <label for="domicilio"><g:message code="paciente.domicilio.label" default="Domicilio:" /></label>
-		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${pacienteInstance?.domicilio}" />
-		                                    	<br/>
+			                        </div>
+                               		<g:hasErrors bean="${pacienteInstance}" field="dni">
+                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="dni"/>
+                                    	</div>
+                                   	</g:hasErrors>
+			                        			                                    
+
+		                            <div class="clear"></div>
+                                	<g:hasErrors bean="${pacienteInstance}" field="apellido">
+                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                    </g:hasErrors>
 		                                    	
+									<div class="span-3 spanlabel">
+			                                    <label for="apellido"><g:message code="paciente.apellido.label" default="Apellido:" /></label>
+			                        </div>			                                    
+									<div class="span-4">                                   		
+				                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="apellido" value="${pacienteInstance?.apellido}" />
+			                        </div>
+                                    <g:hasErrors bean="${pacienteInstance}" field="apellido">
+                                   		<g:renderErrors bean="${pacienteInstance}" as="list" field="apellido"/>
+	                                   	</div>
+                                    </g:hasErrors>	
+
+			                                    
+		                            <div class="clear"></div>
+                                    <g:hasErrors bean="${pacienteInstance}" field="nombre">
+                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                    </g:hasErrors>
+									<div class="span-3 spanlabel">
+			                                    <label for="nombre"><g:message code="paciente.nombre.label" default="Nombre:" /></label>
+			                        </div>
+									<div class="span-4">                                   		
+		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${pacienteInstance?.nombre}" />
+			                        </div>
+                                   	<g:hasErrors bean="${pacienteInstance}" field="nombre">
+                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="nombre"/> 
+                                    	</div>
+                                   	</g:hasErrors>
+
+		                            <div class="clear"></div>        	
+									<div class="span-3 spanlabel">
+			                                    <label for="domicilio"><g:message code="paciente.domicilio.label" default="Domicilio:" /></label>
+			                        </div>			                                    
+									<div class="span-4">                                   		
+		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${pacienteInstance?.domicilio}" />
+			                        </div>		                                    	
+
+		                            <div class="clear"></div>        	
+									<div class="span-3 spanlabel">
 												<label><g:message code="paciente.provincia.label" default="Provincia:"/></label>
-												<g:select name="provinciaid" id="provinciaId" from="${Provincia.list()}" 
+			                        </div>												
+									<div class="span-4">                                   		
+												<g:select class="ui-widget ui-corner-all ui-widget-content" name="provinciaid" id="provinciaId" from="${Provincia.list()}" 
 														value="${pacienteInstance.localidad?.provincia?.id}"  
 														optionKey="id"
 														optionValue="nombre" />
-												<br/>		
+			                        </div>														
 														
-												<g:hasErrors bean="${pacienteInstance}" as="list" field="localidad">
-													<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">	
-												</g:hasErrors>		
+		                            <div class="clear"></div>
+									<g:hasErrors bean="${pacienteInstance}" as="list" field="localidad">
+										<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">	
+									</g:hasErrors>
+									<div class="span-3 spanlabel">
 			                        			<label> <g:message code="paciente.localidad.label" default="Localidad:" /></label>
-		                        				<g:select name="localidad.id" id="localidadId" from="${localidades}" optionValue="nombre"
+			                        </div>														
+									<div class="span-4">                                   		
+		                        				<g:select class="ui-widget ui-corner-all ui-widget-content" name="localidad.id" id="localidadId" from="${localidades}" optionValue="nombre"
 			                        				optionKey="id" 
 			                        				value="${pacienteInstance.localidad?.id}"></g:select>
-			                        			<g:hasErrors bean="${pacienteInstance}" field="localidad">	
-			                        				<br/>
-			                        				<g:renderErrors bean="${pacienteInstance}" as="list" field="localidad" />
-			                        				</div>
-			                        			</g:hasErrors>	
-			                        			<br/>
-			                        			
+			                        </div>
+                        			<g:hasErrors bean="${pacienteInstance}" field="localidad">	
+                        				<g:renderErrors bean="${pacienteInstance}" as="list" field="localidad" />
+                        				</div>
+                        			</g:hasErrors>	
+			                        														
+
+		                            <div class="clear"></div>        	
+									<div class="span-3 spanlabel">
 			                                    <label for="sexo"><g:message code="paciente.sexo.label" default="Sexo:" /></label>
+			                        </div>														
+			                                    
+									<div class="span-4">                                   		
 			                                    <g:radioGroup name="sexo" labels="['Masculino','Femenino']" values="[0,1]" value="${pacienteInstance.sexo?1:0}">
 			                                    	<p><g:message code="${it.label}" /> ${it.radio}</p>
 			                                    </g:radioGroup>
-			                                    <br/>
-			                                    
+			                        </div>														
+
+		                            <div class="clear"></div>        	
+									<div class="span-3 spanlabel">
 			                                    <label for="codigoPostal"><g:message code="paciente.codigoPostal.label" default="Codigo Postal:" /></label>
+			                        </div>														
+			                                    
+									<div class="span-4">                                   		
 		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="codigoPostal" value="${pacienteInstance?.codigoPostal}" />
-		                                    	<br/>
-		                                    	
+			                        </div>														
+
+		                            <div class="clear"></div>        	
+									<div class="span-3 spanlabel">		                                    	
 			                                    <label for="telefono"><g:message code="paciente.telefono.label" default="Teléfono:" /></label>
+			                        </div>														
+			                                    
+									<div class="span-4">                                   		
 		                                    	<g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefono" value="${fieldValue(bean: pacienteInstance, field: 'telefono')}" />
-			                                    <br/>
+			                        </div>														
+			                                    
 								</fieldset>
 				</div>
 				<div id="tabs-2">
 					<fieldset>
+						
+								<div class="span-3 spanlabel">
 	                                    <label for="estadoCivil"><g:message code="paciente.estadocivil.label" default="Estado civil:" /></label>
-	                                    <g:select id="estadocivilId" name="estadoCivil" from="${com.medfire.enums.EstadoCivilEnum.list()}" optionValue="name" value="${pacienteInstance?.estadoCivil}"  />
-	                                    <br/>
-	                                    
-	                                    <g:hasErrors bean="${pacienteInstance}" field="fechaNacimiento">
-	                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-	                                    </g:hasErrors>
-	                                    <label for="fechaNacimiento"><g:message code="paciente.fechaNacimiento.label" default="Fecha Nacimiento:" /></label>
-	                                    <input class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaNacimientoId' name='fechaNacimiento' value="${g.formatDate(format:'dd/MM/yyyy',date:pacienteInstance?.fechaNacimiento)}" />
-	                                    <g:hasErrors bean="${pacienteInstance}" field="fechaNacimiento">
-	                                    	<br/>
-                                    		<g:renderErrors bean="${pacienteInstance}" as="list" field="fechaNacimiento"/>
-                                    		</div>
-	                                    </g:hasErrors>	 
-										<br/>
-										
-										<g:hasErrors bean="${pacienteInstance}" field="obraSocial">
-											<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-										</g:hasErrors>
+	                            </div>        
+	                            <div class="span-4">
+	                                    <g:select class="ui-widget ui-corner-all ui-widget-content" id="estadocivilId" name="estadoCivil" from="${com.medfire.enums.EstadoCivilEnum.list()}" optionValue="name" value="${pacienteInstance?.estadoCivil}"  />
+	                            </div>        
 
-	                                    <label for="obraSocial"><g:message code="paciente.obrasocial.label" default="Obra Social:" /></label>
-	                                    <div class="ui-widget">
-	                                    	<g:textField id="osDescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="obrasocialdescripcion" value="${pacienteInstance?.obraSocial?.descripcion}"/>
-	                                    </div>
-	                                    <g:hasErrors bean="${pacienteInstance}" field="obraSocial">
-	                                    	<br/>
-	                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="obraSocial"/>
-	                                    	</div>
-	                                    </g:hasErrors>	 
-	                                    <g:hiddenField id="osId" name="obraSocial.id" value="${pacienteInstance?.obraSocial?.id}"/>
-	                                    <br/>
+								<div class="clear"></div>
+                                <g:hasErrors bean="${pacienteInstance}" field="fechaNacimiento">
+                                   	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>
+	                            <div class="span-3 spanlabel">
+	                                    <label for="fechaNacimiento"><g:message code="paciente.fechaNacimiento.label" default="Fecha Nacimiento:" /></label>
+								</div>
+								<div class="span-4">	                                    
+	                                    <input class="ui-widget ui-corner-all ui-widget-content" type="text" id='fechaNacimientoId' name='fechaNacimiento' value="${g.formatDate(format:'dd/MM/yyyy',date:pacienteInstance?.fechaNacimiento)}" />
+								</div>	                                    
+                                <g:hasErrors bean="${pacienteInstance}" field="fechaNacimiento">
+                               		<g:renderErrors bean="${pacienteInstance}" as="list" field="fechaNacimiento"/>
+                               		</div>
+                                </g:hasErrors>	 
+										
+								<div class="clear"></div>										
+								<g:hasErrors bean="${pacienteInstance}" field="obraSocial">
+									<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+								</g:hasErrors>
+								<div class="span-3 spanlabel">
+                                	<label for="obraSocial"><g:message code="paciente.obrasocial.label" default="Obra Social:" /></label>
+                                </div>	
+                                <div class="span-4">
+                                	<g:textField id="osDescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="obrasocialdescripcion" value="${pacienteInstance?.obraSocial?.descripcion}"/>
+                                </div>
+                                <g:hasErrors bean="${pacienteInstance}" field="obraSocial">
+                                   	<g:renderErrors bean="${pacienteInstance}" as="list" field="obraSocial"/>
+                                   	</div>
+                                 </g:hasErrors>	 
+                                 <g:hiddenField id="osId" name="obraSocial.id" value="${pacienteInstance?.obraSocial?.id}"/>
+
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">                                   
+                       				<label for="numeroAfiliado"><g:message code="paciente.numeroafiliado.label" default="Número afiliado:" /></label>
+                       			</div>
+                       			<div class="span-4">	
+                       				<g:textField class="ui-widget ui-corner-all ui-widget-content" name="numeroAfiliado" value="${pacienteInstance?.numeroAfiliado}"/>
+                       			</div>	
+                       			<g:hasErrors bean="${pacienteInstance}" field="numeroAfiliado">
+                       				<g:renderErrors bean="${pacienteInstance}" as="list" field="numeroAfiliado"/>
+									</div>	    
+								</g:hasErrors>                    
+
+								<div class="clear"></div>                                   
+								<g:hasErrors bean="${pacienteInstance}" field="cuit">
+									<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+								</g:hasErrors>
+								<div class="span-3 spanlabel">
+                                   <label for="cuit"><g:message code="paciente.cuit.label" default="C.U.I.T:" /></label>
+                                </div>
+                                <div class="span-4">   
+                                   <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${pacienteInstance?.cuit}" />
+                                </div>    
+                                <g:hasErrors bean="${pacienteInstance}" as="list" field="cuit">
+                                	<g:renderErrors bean="${pacienteInstance}" as="list" field="cuit"/>
+                                	</div>
+                                </g:hasErrors>
 	                                    
-	                                    <g:hasErrors bean="${pacienteInstance}" field="numeroafiliado">
-	                                    	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-	                                    </g:hasErrors>
-	                        			<label for="numeroAfiliado"><g:message code="paciente.numeroafiliado.label" default="Número afiliado:" /></label>
-	                        			<g:textField class="ui-widget ui-corner-all ui-widget-content" name="numeroAfiliado" value="${pacienteInstance?.numeroAfiliado}"/>
-	                        			<g:hasErrors bean="${pacienteInstance}" field="numeroAfiliado">
-	                        				<br/>
-	                        				<g:renderErrors bean="${pacienteInstance}" as="list" field="numeroAfiliado"/>
-											</div>	    
-										</g:hasErrors>                    
-										<br/>
-										<g:hasErrors bean="${pacienteInstance}" field="cuit">
-											<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-										</g:hasErrors>
-	                                    <label for="cuit"><g:message code="paciente.cuit.label" default="C.U.I.T:" /></label>
-	                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${pacienteInstance?.cuit}" />
-	                                    <g:hasErrors bean="${pacienteInstance}" as="list" field="cuit">
-	                                    	<br/>
-	                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="cuit"/>
-	                                    	</div>
-	                                    </g:hasErrors>
 	                                    
-	                                    <br/>
 					</fieldset>	
 				</div>
 				<div id="tabs-3">
 					<fieldset>
+								<div class="span-3 spanlabel">
 	                                    <label for="ocupacion"><g:message code="paciente.ocupacion.label" default="Ocupación:" /></label>
+	                            </div>        
+	                            <div class="span-4">
 	                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="ocupacion" value="${pacienteInstance?.ocupacion}" />
-	                                    <br/>
+	                            </div>        
 
+								<div class="clear"></div>	
+								<div class="span-3 spanlabel">
 	                                    <label for="medicoEnviante"><g:message code="paciente.medicoEnviante.label" default="Medico Enviante:" /></label>
+	                            </div>
+	                            <div class="span4">        
 	                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="medicoEnviante" value="${pacienteInstance?.medicoEnviante}" />
-	                                    <br/>
+	                            </div>        
 
-										<g:hasErrors bean="${pacienteInstance}" field="email">
-											<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
-										</g:hasErrors>
+								<div class="clear"></div>
+								<g:hasErrors bean="${pacienteInstance}" field="email">
+									<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+								</g:hasErrors>
+								<div class="span-3 spanlabel">
 	                                    <label for="email"><g:message code="paciente.email.label" default="E-mail:" /></label>
+								</div>	
+								<div class="span-4">                                    
 	                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="email" value="${pacienteInstance?.email}" />
-	                                    <g:hasErrors bean="${pacienteInstance}" field="email">
-	                                    	<br/>
-		                                    <g:renderErrors bean="${pacienteInstante} as="list" field="email"/>
-		                                    </div>
-	                                    </g:hasErrors>
+								</div>	                                    
+                                <g:hasErrors bean="${pacienteInstance}" field="email">
+                                 <g:renderErrors bean="${pacienteInstante} as="list" field="email"/>
+                                 </div>
+                                </g:hasErrors>
 	                                    
-	                                    <br/>
+	                                    
 	                </fieldset>                    
 				</div>
 			</div>

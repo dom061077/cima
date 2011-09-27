@@ -31,43 +31,59 @@ class ProfesionalController {
 		log.info "PARAMETROS: ${params}"
 		def fechaNacimientoError=false
 		def fechaIngresoError=false
-
 		if (params.fechaNacimiento){
-			params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
-			log.debug "Anio "+params.fechaNacimiento.substring(6,10)
-			params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
-			log.debug "Mes "+params.fechaNacimiento.substring(3,5)
-			params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
-			log.debug "Dia "+params.fechaNacimiento.substring(0,2)
-			if(params.fechaNacimiento_month.toInteger()>12)
-				fechaNacimientoError=true
-			if(params.fechaNacimiento_day.toInteger()>31){
-				log.debug "DIA mayor 31"
-				fechaNacimientoError=true
+			if (params.fechaNacimiento.length()<10){
+				fechaNacimientoError=true	
+			}else{
+				params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+				params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+				params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+				try{
+					if(params.fechaNacimiento_month.toInteger()>12)
+						fechaNacimientoError=true
+					if(params.fechaNacimiento_day.toInteger()>31){
+						fechaNacimientoError=true
+					}
+				}catch(NumberFormatException e){
+					fechaNacimientoError=true
+				}
 			}
 		}
 
 		
 		if (params.fechaIngreso){
-			params.fechaIngreso_year=params.fechaIngreso.substring(6,10)
-			params.fechaIngreso_month=params.fechaIngreso.substring(3,4)
-			params.fechaIngreso_day=params.fechaIngreso.substring(0,1)
-			if(params.fechaIngreso_month.toInteger()>12)
+			if(params.fechaIngreso.length()<10){
 				fechaIngresoError=true
-			if(params.fechaIngreso_day.toInteger()>31)
-				fechaIngresoError=true
+			}else{
+				params.fechaIngreso_year=params.fechaIngreso.substring(6,10)
+				params.fechaIngreso_month=params.fechaIngreso.substring(3,5)
+				params.fechaIngreso_day=params.fechaIngreso.substring(0,2)
+				try{
+					if(params.fechaIngreso_month.toInteger()>12){
+						fechaIngresoError=true
+					}
+					if(params.fechaIngreso_day.toInteger()>31){
+						fechaIngresoError=true
+					}
+				}catch(NumberFormatException e){
+					fechaIngresoError=true
+				}
+			}
 		}
 
 				
         def profesionalInstance = new Profesional(params)
+		profesionalInstance.antecedenteLabel= new AntecedenteLabel()
+		
 		if(fechaIngresoError){
-			profesionalInstance.errors.rejectValue("fechaIngreso","com.medfire.Profesional.fechaIngreso.date.error","")
+			profesionalInstance.validate()
+			profesionalInstance.errors.rejectValue("fechaIngreso","com.medfire.Profesional.fechaIngreso.date.error","Ingrese una fecha correcta, se sugiere una correciÃ³n")
 			render(view: "create", model: [profesionalInstance: profesionalInstance])
 			return
 		}
 		if(fechaNacimientoError){
-			profesionalInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correción")
-			//profesionalInstance.errors.getFieldError('fechaNacimiento').rejectedValue
+			profesionalInstance.validate()
+			profesionalInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correciÃ³n")
 			log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
 			render(view: "create", model: [profesionalInstance: profesionalInstance])
 			return
@@ -76,7 +92,7 @@ class ProfesionalController {
 			profesionalInstance.localidad = Localidad.load(params.localidad.id.toLong())
 		}
 		
-		profesionalInstance.antecedenteLabel= new AntecedenteLabel()
+		
 		
 		//profesionalInstance.photo = request.getFile("photo")
 	
@@ -125,6 +141,9 @@ class ProfesionalController {
 		log.info "INGRESANDO AL CLOSURE update DEL CONTROLLER ProfesionalController"
 		log.info "PARAMETROS: ${params}"
         def profesionalInstance = Profesional.get(new Long(params.id))
+		def fechaNacimientoError=false
+		def fechaIngresoError=false
+
         if (profesionalInstance) {
             if (params.version) {
                 def version = params.version.toLong()
@@ -135,40 +154,51 @@ class ProfesionalController {
                     return
                 }
             }
+
 			if (params.fechaNacimiento){
-				DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-				log.debug "FECHA REEMPLAZADA: "+params.fechaNacimiento
-				def fecha
-				try{
-					fecha = df.parse(params.fechaNacimiento)
-					log.debug "LA FECHA SE PARSEO BIEN"
-				}catch(ParseException e){
-					log.debug "LA FECHA NO SE PARSEO BIEN"
+				if (params.fechaNacimiento.length()<6){
+					fechaNacimientoError=true
+				}else{
+					params.fechaNacimiento_year=params.fechaNacimiento.substring(6,10)
+					params.fechaNacimiento_month=params.fechaNacimiento.substring(3,5)
+					params.fechaNacimiento_day=params.fechaNacimiento.substring(0,2)
+					if(params.fechaNacimiento_month.toInteger()>12)
+						fechaNacimientoError=true
+					if(params.fechaNacimiento_day.toInteger()>31){
+						fechaNacimientoError=true
+					}
 				}
-				def gc = Calendar.getInstance()
-				gc.setTime(fecha)
-				log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-				params.fechaNacimiento_year=gc.get(Calendar.YEAR).toString()
-				params.fechaNacimiento_month=(gc.get(Calendar.MONTH)+1).toString()
-				params.fechaNacimiento_day=gc.get(Calendar.DATE).toString()
 			}
+	
 			
 			if (params.fechaIngreso){
-				DateFormat df = new SimpleDateFormat("dd/MM/yyyy")
-				log.debug "FECHA REEMPLAZADA: "+params.fechaIngreso
-				def fecha
-				try{
-					fecha = df.parse(params.fechaIngreso)
-					log.debug "LA FECHA SE PARSEO BIEN"
-				}catch(ParseException e){
-					log.debug "LA FECHA NO SE PARSEO BIEN"
+				if(params.fechaIngreso.length()<6){
+					fechaIngresoError=true
+				}else{
+					params.fechaIngreso_year=params.fechaIngreso.substring(6,10)
+					params.fechaIngreso_month=params.fechaIngreso.substring(3,5)
+					params.fechaIngreso_day=params.fechaIngreso.substring(0,2)
+					if(params.fechaIngreso_month.toInteger()>12){
+						fechaIngresoError=true
+					}
+					if(params.fechaIngreso_day.toInteger()>31){
+						fechaIngresoError=true
+					}
 				}
-				def gc = Calendar.getInstance()
-				gc.setTime(fecha)
-				log.debug "ANIO: "+gc.get(Calendar.YEAR).toString()+", MES "+gc.get(Calendar.MONTH+1).toString()+" DIA "+gc.get(Calendar.DATE).toString()
-				params.fechaIngreso_year=gc.get(Calendar.YEAR).toString()
-				params.fechaIngreso_month=(gc.get(Calendar.MONTH)+1).toString()
-				params.fechaIngreso_day=gc.get(Calendar.DATE).toString()
+			}
+	
+			if(fechaIngresoError){
+				profesionalInstance.validate()
+				profesionalInstance.errors.rejectValue("fechaIngreso","com.medfire.Profesional.fechaIngreso.date.error","Ingrese una fecha correcta, se sugiere una correción")
+				render(view: "edit", model: [profesionalInstance: profesionalInstance])
+				return
+			}
+			if(fechaNacimientoError){
+				profesionalInstance.validate()
+				profesionalInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correción")
+				log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
+				render(view: "edit", model: [profesionalInstance: profesionalInstance])
+				return
 			}
 	
 			
