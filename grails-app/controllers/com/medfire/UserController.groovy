@@ -256,30 +256,57 @@ class UserController {
 		}
 	}
 
-	def changepassword = {UserPasswordCommand usrc ->
+	def changepassword = {/*UserPasswordCommand usrc ->*/
 		log.info "INGRESNDO AL CLOSURE changepassword"
 		log.info "PARAMETROS: $params"
-		def userInstance = new UserPasswordCommand()
-		return [userInstance:userInstance]
+		def userCommand = new UserPasswordCommand()
+		return [userInstance:userCommand]
 	}	
+	
+	def change = {UserPasswordCommand cmd ->
+		log.info "INGRESANDO AL CLOSURE change"
+		log.info "PARAMETROS $params"
+		
+		if(cmd.validate()){
+			flash.message="La Contraseña se cambió con éxito"
+			render(view:"/index")
+		}else{
+			log.debug "ERRORES DE VALIDACION: "+cmd.errors.allErrors
+			render(view: "changepassword", model: [userInstance:cmd])
+		}
+	}
 
 }
 
 
 
 class UserPasswordCommand {
-	Long id
+	def authenticateService
+	String id
 	String oldPassword
-	String password
+	String newPassword
 	String passwordRepeat
+	
+	String getOldPasswordEncrypted(){
+		return authenticateService.encodePassword(newPassword)
+	}
+	
+	String getLoggedPassword(){
+		return authenticateService.userDomain().passwd
+	}
+	
 	static constraints={
-		oldPassword(blank:false
-			,validator(){password2,usrc->
-				return password2 != usrc.password
-			})
-		password(blank:false)
-		passwordRepeat(blank:false,validator(){password2,usrc->
-				return password2 != usrc.passwordRepeat
-			})
+		oldPassword(blank:false,validator: { passwd2, cmd ->
+					if(!cmd.oldPasswordEncrypted.equals(cmd.loggedPassword))	
+                    	return "invalid"
+					if(passwd2!=cmd.newPassword)
+						return "equals.oldpassword"
+
+                })
+		newPassword(blank:false)
+		passwordRepeat(blank:false,validator:{ current, cmd ->
+				if(!current.equals(cmd.newPassword))
+					return "notequals"
+		})
 	} 	
 }

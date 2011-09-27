@@ -93,7 +93,7 @@
     </head>
     <body>
 
-<div class="container box">
+<div class="container showgrid">
 
 			<div style="display:none" id="MenuJqGrid">
 		        <ul>
@@ -165,7 +165,7 @@
 									<li><a href="${createLink(controller:'role')}">Roles</a></li>
 									<li><a href="${createLink(controller:'requestmap')}">Requestmap</a></li>
 								</g:ifAnyGranted>
-								<li><a href="./">Cambiar Contraseña</a></li>
+								<li><a href="${createLink(controller:"user",action:"changepassword")}">Cambiar Contraseña</a></li>
 							</ul>
 						</li>
 						<g:ifAnyGranted role="ROLE_PROFESIONAL">
