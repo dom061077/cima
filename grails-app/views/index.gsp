@@ -51,6 +51,11 @@
         </style>
     </head>
     <body>
+    	
+        <g:if test="${flash.message}">
+	        <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
+        </g:if>
+    	
         <div id="welcome">
             <h1>Bienvenido al Sistema</h1>
         </div>

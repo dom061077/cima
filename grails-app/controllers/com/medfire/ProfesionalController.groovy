@@ -73,7 +73,7 @@ class ProfesionalController {
 
 				
         def profesionalInstance = new Profesional(params)
-		profesionalInstance.antecedenteLabel= new AntecedenteLabel()
+		//profesionalInstance.antecedenteLabel= new AntecedenteLabel()
 		
 		if(fechaIngresoError){
 			profesionalInstance.validate()

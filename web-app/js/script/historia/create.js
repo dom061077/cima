@@ -99,7 +99,7 @@ $(document).ready(function(){
 	
 	
 	jQuery("#prescripcionesId").jqGrid('navGrid','#pagerPrescripciones', {add:true,edit:true,del:true,search:false,refresh:false}, //options 
-		{height:280,reloadAfterSubmit:false
+		{height:280,width:310,reloadAfterSubmit:false
 			, recreateForm:true
 			, beforeShowForm:function(form){
 				$('#TblGrid_prescripcionesId').before('<a style="width:50px" id="searchlinkformgridId" href="#"><span  class="ui-icon ui-icon-search"></span>Vademecum</a>');
@@ -118,14 +118,15 @@ $(document).ready(function(){
 			}
 		
 		}, // edit options 
-		{height:280,reloadAfterSubmit:false
+		{height:280,width:310,reloadAfterSubmit:false
 			,recreateForm:true
 			,beforeSubmit: function(postData,formId){
 				postData.imprimirPorValue= $("#imprimirPor").val();
 				return [true,'']
 			}
 			,beforeShowForm:function(form){
-				$('#TblGrid_prescripcionesId').before('<a style="width:50px" id="searchlinkformgridId" href="#"><span  class="ui-icon ui-icon-search"></span>Vademecum</a>');
+				//$('#tr_nombreComercial').after('<a  id="searchlinkformgridId" href="#"><span style="float:left;"  class="ui-icon ui-icon-search"></span></a>');
+				$('#tr_nombreComercial').append('<td><a  id="searchlinkformgridId" href="#"><span style="float:left;"  class="ui-icon ui-icon-search"></span></a></td>');
 				$('#searchlinkformgridId').bind('click',function(){
 	            	$('#busquedaVademecumDialogId').dialog({
 	            		title:'Buscar',

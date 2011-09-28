@@ -15,7 +15,8 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fcalendar.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fullcalendar.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>
-		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>        
+		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
+		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.cookie.js')}"></script>
         
         <style type="text/css">
         	//div.ui-datepicker {
@@ -26,6 +27,13 @@
         </style>
         <script type="text/javascript">
 			$(document).ready(function() {
+				var slot;
+				if($.cookie('intervaloihistclinica'))
+					slot=$.cookie('intervaloihistclinica')
+				else
+					slot= <%out << "${intervalo}"%>;
+				slot = parseInt(slot);
+				$('#intervalosId').val(slot)	
 				$('#calendar').fullCalendar( {
 					theme : true,
 					header : {
@@ -57,7 +65,7 @@
 					},	
 					allDayText:'todo el día',
 					weekends: true,
-					slotMinutes: <%out<< "${intervalo}"%>,
+					slotMinutes: slot,
 						
 					/***************/
 					eventColor:'#8c94f0',
@@ -220,6 +228,7 @@
  								document.profesionales.submit();
  	 					});
  					$("#intervalosId").change(function(){
+ 								$.cookie('intervaloihistclinica', $('#intervalosId').val());
  	 							document.intervalo.submit();
  	 				});	
 					
@@ -259,6 +268,8 @@
 							$("#pacienteeventdialogId").height("auto");
 							//$("#pacienteeventdialogId").width("auto");
 						});
+					//---------cookie para los intervalos de tiempo
+					
 				});//end del ready's function
         	
         </script>

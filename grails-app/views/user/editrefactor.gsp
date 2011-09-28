@@ -23,7 +23,7 @@
 					   		{name:'nombre',index:'nombre', width:150, sortable:true},
 					   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
 					   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
-					   		{name:'foto',index:'foto', width:80, align:"center",search:false, sortable:false}						   		
+					   		{name:'foto',index:'foto', width:80, align:"center",hidden:true,search:false, sortable:false}						   		
 						],
 					hiddenid:'profesionalId',
 					descid:'profesionalDescId',

@@ -268,7 +268,10 @@ class UserController {
 		log.info "PARAMETROS $params"
 		
 		if(cmd.validate()){
-			flash.message="La Contraseña se cambió con éxito"
+			def userInstance = User.get(authenticateService.userDomain().id)
+			userInstance.passwd = authenticateService.encodePassword(cmd.newPassword)
+			userInstance.save()
+			flash.message=g.message(code:"user.sucesschanged.flash.message")
 			render(view:"/index")
 		}else{
 			log.debug "ERRORES DE VALIDACION: "+cmd.errors.allErrors
@@ -288,7 +291,7 @@ class UserPasswordCommand {
 	String passwordRepeat
 	
 	String getOldPasswordEncrypted(){
-		return authenticateService.encodePassword(newPassword)
+		return authenticateService.encodePassword(oldPassword)
 	}
 	
 	String getLoggedPassword(){
@@ -298,8 +301,8 @@ class UserPasswordCommand {
 	static constraints={
 		oldPassword(blank:false,validator: { passwd2, cmd ->
 					if(!cmd.oldPasswordEncrypted.equals(cmd.loggedPassword))	
-                    	return "invalid"
-					if(passwd2!=cmd.newPassword)
+                    	return "oldPasswordEncrypted: "+cmd.oldPasswordEncrypted+" password: "+cmd.loggedPassword
+					if(passwd2==cmd.newPassword)
 						return "equals.oldpassword"
 
                 })

@@ -1,7 +1,8 @@
 package com.medfire
 
 class AntecedenteLabelController {
-
+	def authenticateService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -97,4 +98,26 @@ class AntecedenteLabelController {
             redirect(action: "list")
         }
     }
+	
+	def redirect = {
+		log.info "INGRESANDO AL CLOSURE redirect"
+		log.info "PARAMETROS: $params"
+		def profesionalInstance = authenticateService.userDomain().profesionalAsignado
+		if (profesionalInstance?.antecedenteLabel){
+			redirect(action:"edit",params:[id:profesionalAsignado.id])
+		} else{
+			redirect(action:"createprof")
+		}
+	}
+	
+	def createprof = {
+		log.info "INGRESANDO AL CLOSURE createprof"
+		log.info "PARAMETROS: $params"
+		def profesionalInstance = authenticateService.userDomain().profesionalAsignado
+		def antecedenteLabelInstance = new AntecedenteLabel()
+		antecedenteLabelInstance.properties = params
+		antecedenteLabelInstance.profesional = profesionalInstance
+		return [antecedenteLabelInstance:antecedenteLabelInstance]
+	}
+	
 }

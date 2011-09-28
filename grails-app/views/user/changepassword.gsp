@@ -5,6 +5,11 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'user.label', default: 'User')}" />
         <title><g:message code="user.changepassd.label" args="[entityName]" /></title>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+            	$('#oldPasswordId').focus();	
+            });
+        </script>
 	</head>
 <body>
 	<h1><g:message code="default.create.label" args="[entityName]" /></h1>
@@ -26,7 +31,7 @@
 						<label for="oldPassword"><g:message code="user.oldpassword.label" /></label>
 					</div>
 					<div class="span-4">
-						<g:passwordField name="oldPassword" id="oldPasswordId" value="${userInstance.oldPassword}"/>
+						<g:passwordField id="oldPasswordId" name="oldPassword" id="oldPasswordId" value="${userInstance.oldPassword}"/>
 					</div>
 					<div class="clear"></div>
 					
