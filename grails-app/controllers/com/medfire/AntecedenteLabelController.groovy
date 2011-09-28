@@ -31,7 +31,7 @@ class AntecedenteLabelController {
             redirect(action: "show", id: antecedenteLabelInstance.id)
         }
         else {
-            render(view: "create", model: [antecedenteLabelInstance: antecedenteLabelInstance])
+            render(view: "createprof", model: [antecedenteLabelInstance: antecedenteLabelInstance])
         }
     }
 
