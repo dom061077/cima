@@ -24,7 +24,7 @@
             </div>
             </g:hasErrors>
             <g:form action="save" >
-                <div class="span-10 prepend-2 colborder">
+                <div class="span-10 prepend-2">
                 		<fieldset>
                 				<div class="span-3 spanlabel">	
                                     <label for="t1Label"><g:message code="antecedenteLabel.t1Label.label" default="T1 Label" /></label>
@@ -204,7 +204,7 @@
                 </div>
            		<div class="clear"></div>
                 
-                 <div class="span-10 prepend-2 colborder">
+                 <div class="span-10 prepend-2">
                     <span class="button"><g:submitButton name="create" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
             </g:form>

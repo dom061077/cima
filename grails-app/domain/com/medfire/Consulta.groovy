@@ -5,8 +5,8 @@ import com.medfire.enums.EstadoConsultaEnum
 
 class Consulta {
 
-	Date fechaConsulta
-	Date fechaAlta
+	Date fechaConsulta = new java.sql.Date((new java.util.Date()).getTime())
+	Date fechaAlta = new java.sql.Date((new java.util.Date()).getTime())
 	String contenido
 	Cie10 cie10
 	Profesional profesional

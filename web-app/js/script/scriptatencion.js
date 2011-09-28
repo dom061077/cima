@@ -84,17 +84,18 @@
 							
 							$("#estadoeventId option[value*='"+row.cod_estado+"']").attr('selected', 'selected');
 
-							$("#pacienteturnoId").val(row.paciente);
+							$("#pacienteturnoId").val(row.titulo);
 							$("#turnoId").val(row.id);
 							$("#versionId").val(row.version);
-							$("#fechaturnoId").val(row.fechaStart)
+							$("#fechaturnoInicioId").val(row.fechaStart)
+							$("#fechaturnoFinId").val(row.fechaEnd)							
 							$( "#dialog-form" ).dialog({
 									autoOpen: true,
 									modal: true,
 									open:function(event,ui){
 										refrescarAtencion=false;
 									},
-									buttons: {
+									/*buttons: {
 										"Guardar": function() {
 											$.ajax({
 												 url:locturnos,
@@ -123,7 +124,7 @@
 										"Cancelar": function() {
 											$( this ).dialog( "close" );
 										}
-									},
+									},*/
 									close: function() {
 										refrescarAtencion=true;
 									}

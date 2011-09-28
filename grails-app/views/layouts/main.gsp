@@ -93,7 +93,7 @@
     </head>
     <body>
 
-<div class="container showgrid">
+<div class="container">
 
 			<div style="display:none" id="MenuJqGrid">
 		        <ul>
@@ -112,7 +112,7 @@
 					</div>		
 			</div>
 	
-			<div style="display:none" id="dialog-form" title="Cambiar estado turno">
+			<div style="display:none" id="dialog-form" title="Información del turno">
 				<form id="formturnosId">
 					<table>
 						<tr class="prop">
@@ -120,7 +120,7 @@
 								<label for='pacienteturno'>Paciente:</label>
 							</td>
 							<td>
-								<input type="text" disabled name='pacienteturno' id='pacienteturnoId' />
+								<input class="ui-widget ui-corner-all ui-widget-content" type="text" disabled name='pacienteturno' id='pacienteturnoId' />
 								<input type="hidden" name="id" id="turnoId" />
 								<input type="hidden" name="cmd" value="update" />
 								<input type="hidden" name="version" id="versionId"/>
@@ -128,21 +128,20 @@
 						</tr>
 						<tr class="prop">
 							<td valign="top" class="name">
-								<label for="fechaturno">Fecha y Hora del Turno:</label>
+								<label for="fechaturno">Fecha y Hora Inicio del Turno:</label>
 							</td>
 							<td>
-								<input type="text" disabled id="fechaturnoId"/>
+								<input class="ui-widget ui-corner-all ui-widget-content" type="text" disabled id="fechaturnoInicioId"/>
 							</td>
-						</tr>								
+						</tr>		
 						<tr class="prop">
 							<td valign="top" class="name">
-								<label for='estado'>Estado del Turno:</label>	
+								<label for="fechaturno">Fecha y Hora Fin del Turno:</label>
 							</td>
 							<td>
-								<g:select name="estado" id="estadoeventId" from="${EstadoEvent?.list()}" 
-														optionValue="name" />
-							</td>							
-						</tr>
+								<input class="ui-widget ui-corner-all ui-widget-content" type="text" disabled id="fechaturnoFinId"/>
+							</td>
+						</tr>													
 					</table>									
 				</form>
 			</div>
@@ -168,7 +167,7 @@
 								<li><a href="${createLink(controller:"user",action:"changepassword")}">Cambiar Contraseña</a></li>
 							</ul>
 						</li>
-						<g:ifAnyGranted role="ROLE_PROFESIONAL">
+						<g:ifAnyGranted role="ROLE_PROFESIONAL,ROLE_ADMIN">
 							<li><a href="#" class="dir">Edición</a>
 								<ul>
 <%--									<g:antecedenteLabel label="t1Label"/>--%>

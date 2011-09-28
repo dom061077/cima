@@ -26,7 +26,7 @@ class AntecedenteLabel {
 	String t22Label
 	Profesional profesional
 
-	static belongsTo= [profesional:Profesional]
+	//static belongsTo= [profesional:Profesional]
 	
     static constraints = {
 		 t1Label (nullable:true,blank:true)

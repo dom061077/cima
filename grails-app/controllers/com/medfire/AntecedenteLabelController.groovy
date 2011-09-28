@@ -21,7 +21,11 @@ class AntecedenteLabelController {
     }
 
     def save = {
+		log.info "INGRESANDO AL CLOSURE save"
+		
         def antecedenteLabelInstance = new AntecedenteLabel(params)
+		def profesionalInstance = User.load(authenticateService.userDomain().id).profesionalAsignado
+		antecedenteLabelInstance.profesional=profesionalInstance
         if (antecedenteLabelInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), antecedenteLabelInstance.id])}"
             redirect(action: "show", id: antecedenteLabelInstance.id)
@@ -84,6 +88,8 @@ class AntecedenteLabelController {
         def antecedenteLabelInstance = AntecedenteLabel.get(params.id)
         if (antecedenteLabelInstance) {
             try {
+				antecedenteLabelInstance.profesional.antecedenteLabel=null
+				antecedenteLabelInstance.profesional.save(flush:true)
                 antecedenteLabelInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
                 redirect(action: "list")
@@ -104,7 +110,7 @@ class AntecedenteLabelController {
 		log.info "PARAMETROS: $params"
 		def profesionalInstance = authenticateService.userDomain().profesionalAsignado
 		if (profesionalInstance?.antecedenteLabel){
-			redirect(action:"edit",params:[id:profesionalAsignado.id])
+			redirect(action:"show",params:[id:profesionalInstance.id])
 		} else{
 			redirect(action:"createprof")
 		}

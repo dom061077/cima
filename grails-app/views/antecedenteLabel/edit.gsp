@@ -229,14 +229,6 @@
                                 </td>
                             </tr>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="profesional"><g:message code="antecedenteLabel.profesional.label" default="Profesional" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: antecedenteLabelInstance, field: 'profesional', 'errors')}">
-                                    <g:select name="profesional.id" from="${com.medfire.Profesional.list()}" optionKey="id" value="${antecedenteLabelInstance?.profesional?.id}"  />
-                                </td>
-                            </tr>
                         
                         </tbody>
                     </table>
