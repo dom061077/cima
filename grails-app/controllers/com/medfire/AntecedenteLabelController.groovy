@@ -1,5 +1,7 @@
 package com.medfire
 
+import org.springframework.transaction.TransactionStatus
+
 class AntecedenteLabelController {
 	def authenticateService
 	
@@ -25,8 +27,10 @@ class AntecedenteLabelController {
 		
         def antecedenteLabelInstance = new AntecedenteLabel(params)
 		def profesionalInstance = User.load(authenticateService.userDomain().id).profesionalAsignado
-		antecedenteLabelInstance.profesional=profesionalInstance
-        if (antecedenteLabelInstance.save(flush: true)) {
+		profesionalInstance.antecedenteLabel=antecedenteLabelInstance
+		log.debug "PROFESIONAL: ASIGNADO "+profesionalInstance
+		log.debug "PROFESIONAL ASIGNADO DESDE EL USUARIO: "+antecedenteLabelInstance.profesional
+        if (profesionalInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), antecedenteLabelInstance.id])}"
             redirect(action: "show", id: antecedenteLabelInstance.id)
         }
@@ -87,17 +91,22 @@ class AntecedenteLabelController {
     def delete = {
         def antecedenteLabelInstance = AntecedenteLabel.get(params.id)
         if (antecedenteLabelInstance) {
-            try {
-				antecedenteLabelInstance.profesional.antecedenteLabel=null
-				antecedenteLabelInstance.profesional.save(flush:true)
-                antecedenteLabelInstance.delete(flush: true)
-                flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
-                redirect(action: "list")
-            }
-            catch (org.springframework.dao.DataIntegrityViolationException e) {
-                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
-                redirect(action: "show", id: params.id)
-            }
+			Profesional.withTransaction{TransactionStatus status ->
+	            try {
+					antecedenteLabelInstance.profesional.antecedenteLabel=null
+						antecedenteLabelInstance.profesional.save(flush:true)
+						antecedenteLabelInstance.delete(flush: true)
+						flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
+						redirect(action: "list")
+		
+	            }
+	            catch (org.springframework.dao.DataIntegrityViolationException e) {
+					status.setRollbackOnly()
+	                flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
+	                redirect(action: "show", id: params.id)
+	            }
+			}
+			
         }
         else {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel'), params.id])}"
@@ -108,9 +117,16 @@ class AntecedenteLabelController {
 	def redirect = {
 		log.info "INGRESANDO AL CLOSURE redirect"
 		log.info "PARAMETROS: $params"
-		def profesionalInstance = authenticateService.userDomain().profesionalAsignado
-		if (profesionalInstance?.antecedenteLabel){
-			redirect(action:"show",params:[id:profesionalInstance.id])
+		def userInstance = User.load(authenticateService.userDomain().id)  
+		//def profesionalInstance = Profesional.load(authenticateService.userDomain().profesionalAsignado?.id)
+		if(!userInstance.profesionalAsignado){
+			flash.message="No tiene un profesional asignado a su usuario"
+			render(view:"/index")
+			return
+		}
+		
+		if (userInstance.profesionalAsignado?.antecedenteLabel){
+			redirect(action:"show",params:[id:userInstance.profesionalAsignado.antecedenteLabel.id])
 		} else{
 			redirect(action:"createprof")
 		}
@@ -119,10 +135,15 @@ class AntecedenteLabelController {
 	def createprof = {
 		log.info "INGRESANDO AL CLOSURE createprof"
 		log.info "PARAMETROS: $params"
-		def profesionalInstance = authenticateService.userDomain().profesionalAsignado
+		def userInstance = User.load(authenticateService.userDomain().id)
+		if(!userInstance.profesionalAsignado){
+			flash.message="Su usuario no tiene un profesional asignado"
+			render(view:"/index")
+			return
+		}
 		def antecedenteLabelInstance = new AntecedenteLabel()
 		antecedenteLabelInstance.properties = params
-		antecedenteLabelInstance.profesional = profesionalInstance
+		antecedenteLabelInstance.profesional = userInstance.profesionalAsignado
 		return [antecedenteLabelInstance:antecedenteLabelInstance]
 	}
 	

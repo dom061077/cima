@@ -26,7 +26,7 @@ class AntecedenteLabel {
 	String t22Label
 	Profesional profesional
 
-	//static belongsTo= [profesional:Profesional]
+	static belongsTo= [profesional:Profesional]
 	
     static constraints = {
 		 t1Label (nullable:true,blank:true)
@@ -51,6 +51,7 @@ class AntecedenteLabel {
 		 t20Label (nullable:true,blank:true)
 		 t21Label (nullable:true,blank:true)
 		 t22Label (nullable:true,blank:true)
+		 profesional(nullable:false)
 	
     }
 }
