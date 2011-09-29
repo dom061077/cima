@@ -81,6 +81,14 @@ class BootStrap {
 			new Requestmap(url:"/principioActivo/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/grupoTerapeutico/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
 			new Requestmap(url:"/laboratorio/listjson",configuraAttribute:"ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL").save()
+			new Requestmap(url:"/antecedenteLabel/listjson",configuraAttribute:"ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/list",configuraAttribute:"ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/edit",configuraAttribute:"ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/update",configuraAttribute:"ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/createprof",configuraAttribute:"ROLE_PROFESIONAL,ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/redirect",configuraAttribute:"ROLE_PROFESIONAL,ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/show",configuraAttribute:"ROLE_PROFESIONAL,ROLE_ADMIN").save()
+			new Requestmap(url:"/antecedenteLabel/save",configuraAttribute:"ROLE_PROFESIONAL,ROLE_ADMIN").save()
 			
 			new Requestmap(url:"/obraSocial/**",configAttribute:"ROLE_USER,ROLE_ADMIN").save()
 			
@@ -116,9 +124,9 @@ class BootStrap {
 			role.addToPeople(user)
 			
 			def obsocial=new ObraSocial(descripcion:"Prensa",razonSocial:"Prensa S.R.L",domicilio:"junin 750",codigoPostal:"4000"
-				,telefono:"381-4228823",contacto:"NO TIENE",cuit:"20-23456890-9",habilitada:new Boolean(true)).save()
+				,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)).save()
 			new ObraSocial(descripcion:"Subsidio de Salud",razonSocial:"IPSST DE TUCUMAN",domicilio:"junin 750",codigoPostal:"4000"
-					,telefono:"381-4228823",contacto:"NO TIENE",cuit:"20-23456890-9",habilitada:new Boolean(true)).save()
+					,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)).save()
 	
 			
 			def provtucuman = new Provincia(nombre:"TUCUMAN").save()

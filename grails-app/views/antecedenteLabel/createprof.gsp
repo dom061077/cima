@@ -16,7 +16,7 @@
         <div class="span-16 prepend-2">
             <h1><g:message code="default.create.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
             <g:hasErrors bean="${antecedenteLabelInstance}">
             <div class="errors">

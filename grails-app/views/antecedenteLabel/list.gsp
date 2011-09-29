@@ -6,60 +6,80 @@
         <meta name="layout" content="main" />
         <g:set var="entityName" value="${message(code: 'antecedenteLabel.label', default: 'AntecedenteLabel')}" />
         <title><g:message code="default.list.label" args="[entityName]" /></title>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'jquery.searchFilter.css')}" />        
+        <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js/src/i18n',file:'grid.locale-es.js')}"></script>
+        <script type="text/javascript" src="${g.resource(dir:'js/jquery-ui/js',file:'jquery.jqGrid.min.js')}"></script>
+
+        <script type="text/javascript">
+		    	$(document).ready(
+						function(){
+							jQuery("#list").jqGrid({
+							   	url:'listjson',
+								datatype: "json",
+								width:680,
+							   	colNames:['Id','Nombre del Profesional', 'Matrícula','Operaciones'],
+							   	colModel:[
+							   		
+							   		{name:'id',index:'id', width:40,search:false},
+							   		{name:'profesional_nombre',index:'profesional_nombre', width:92,sortable:true},
+							   		{name:'profesional_matricula',index:'profesional_matricula', width:100,sortable:true},
+							   		{name:'operaciones',index:'operaciones', width:55,sortable:false,search:false}
+							   	],
+							   	
+							   	rowNum:10,
+							   	rownumbers:true,
+							   	rowList:[10,20,30],
+							   	pager: '#pager',
+							   	sortname: 'id',
+							    viewrecords: true,
+							    sortorder: "desc",
+								gridComplete: function(){ 
+									var ids = jQuery("#list").jqGrid('getDataIDs');
+									var obj; 
+									for(var i=0;i < ids.length;i++){ 
+										var cl = ids[i];
+										be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
+										jQuery("#list").jqGrid('setRowData',ids[i],{operaciones:be}); 
+										} 
+								}, 						    
+							    caption:"Listado de Profesionales con Etiquetas"
+							});
+							jQuery("#list").jqGrid('navGrid','#pager',{search:false,edit:false,add:false,del:false,pdf:true});
+							jQuery("#list").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
+							jQuery("#list").jqGrid('navButtonAdd','#pager',{
+							       caption:"Excel", 
+							       onClickButton : function () { 
+							           //jQuery("#list").excelExport();
+							           jQuery("#list").jqGrid("excelExport",{url:"excelexport"});
+							       } 
+							});
+							
+							
+						}
+		        );
+        
+        
+        </script>
+        
     </head>
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
-        </div>
+        </div>        
+        <g:if test="${flash.message}">
+        <div class="message">${flash.message}</div>
+        </g:if>
+             
         <div class="body">
-            <h1><g:message code="default.list.label" args="[entityName]" /></h1>
+            <h1><g:message code="antecedenteLabel.list.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
             </g:if>
-            <div class="list">
-                <table>
-                    <thead>
-                        <tr>
-                        
-                            <g:sortableColumn property="id" title="${message(code: 'antecedenteLabel.id.label', default: 'Id')}" />
-                        
-                            <g:sortableColumn property="t1Label" title="${message(code: 'antecedenteLabel.t1Label.label', default: 'T1 Label')}" />
-                        
-                            <g:sortableColumn property="t2Label" title="${message(code: 'antecedenteLabel.t2Label.label', default: 'T2 Label')}" />
-                        
-                            <g:sortableColumn property="t3Label" title="${message(code: 'antecedenteLabel.t3Label.label', default: 'T3 Label')}" />
-                        
-                            <g:sortableColumn property="t4Label" title="${message(code: 'antecedenteLabel.t4Label.label', default: 'T4 Label')}" />
-                        
-                            <g:sortableColumn property="t5Label" title="${message(code: 'antecedenteLabel.t5Label.label', default: 'T5 Label')}" />
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                    <g:each in="${antecedenteLabelInstanceList}" status="i" var="antecedenteLabelInstance">
-                        <tr class="${(i % 2) == 0 ? 'odd' : 'even'}">
-                        
-                            <td><g:link action="show" id="${antecedenteLabelInstance.id}">${fieldValue(bean: antecedenteLabelInstance, field: "id")}</g:link></td>
-                        
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t1Label")}</td>
-                        
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t2Label")}</td>
-                        
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t3Label")}</td>
-                        
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t4Label")}</td>
-                        
-                            <td>${fieldValue(bean: antecedenteLabelInstance, field: "t5Label")}</td>
-                        
-                        </tr>
-                    </g:each>
-                    </tbody>
-                </table>
-            </div>
-            <div class="paginateButtons">
-                <g:paginate total="${antecedenteLabelInstanceTotal}" />
-            </div>
+			<table style="z-index:1"  id="list"></table>
+			<div id="pager" ></div>
+            
         </div>
-    </body>
+            
+     </body>
 </html>

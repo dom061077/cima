@@ -43,7 +43,37 @@ class Profesional {
 		numeroDocumento(nullable:true,blank:true)
 		tipoDocumento(nullable:true,blank:true)
 		codigoIva(nullable:true,blank:true)
-		cuit(nullable:true,blank:true)
+		cuit(nullable:true,blank:true,validator:{current,obj->
+			def suma
+		    def mod
+			if(current==null)
+				return true
+		    if(current?.length()!=13)
+		        return false
+		    try{    
+		        suma=current[10].toInteger()*2+
+		             current[9].toInteger()*3+
+		             current[8].toInteger()*4+
+		             current[7].toInteger()*5+
+		             current[6].toInteger()*6+
+		             current[5].toInteger()*7+
+		             current[4].toInteger()*2+
+		             current[3].toInteger()*3+
+		             current[1].toInteger()*4+
+		             current[0].toInteger()*5
+		        if(suma % 11 == 0) 
+		            mod= 0
+		        else
+		            mod=11 - (suma % 11)
+		        if(current[12].toInteger()!=mod)    
+		            return false
+		        return true
+		    }catch(Exception e){
+		             return false    
+		    }
+			
+					
+		})
 		fechaIngreso(nullable:true,blank:true)
 		//usuarioAsignado(nullable:true,blank:true)
 		especialidad(nullable:true,blank:true)

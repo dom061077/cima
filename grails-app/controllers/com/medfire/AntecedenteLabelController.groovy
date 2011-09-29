@@ -1,7 +1,8 @@
 package com.medfire
 
 import org.springframework.transaction.TransactionStatus
-
+import com.medfire.util.GUtilDomainClass
+ 
 class AntecedenteLabelController {
 	def authenticateService
 	
@@ -12,8 +13,8 @@ class AntecedenteLabelController {
     }
 
     def list = {
-        params.max = Math.min(params.max ? params.int('max') : 10, 100)
-        [antecedenteLabelInstanceList: AntecedenteLabel.list(params), antecedenteLabelInstanceTotal: AntecedenteLabel.count()]
+        //params.max = Math.min(params.max ? params.int('max') : 10, 100)
+        //[antecedenteLabelInstanceList: AntecedenteLabel.list(params), antecedenteLabelInstanceTotal: AntecedenteLabel.count()]
     }
 
     def create = {
@@ -126,8 +127,10 @@ class AntecedenteLabelController {
 		}
 		
 		if (userInstance.profesionalAsignado?.antecedenteLabel){
+			flash.message="Ud. y hizo una carga inicial de etiquetas, si desea modificar alguna consulte a su Administrador"
 			redirect(action:"show",params:[id:userInstance.profesionalAsignado.antecedenteLabel.id])
 		} else{
+			flash.message="Está por cargar por primera vez las etiquetas, recuerde que si luego quiere modificar alguna de ellas debe consultar a su Administrador"
 			redirect(action:"createprof")
 		}
 	}
@@ -145,6 +148,40 @@ class AntecedenteLabelController {
 		antecedenteLabelInstance.properties = params
 		antecedenteLabelInstance.profesional = userInstance.profesionalAsignado
 		return [antecedenteLabelInstance:antecedenteLabelInstance]
+	}
+	
+	def listjson = {
+		log.info "INGRESANDO AL CLOSURE listjson"
+		log.info "PARAMETROS: $params"
+		def gud = new GUtilDomainClass(AntecedenteLabel,params,grailsApplication)
+		def list=gud.listrefactor(false)
+		def totalregistros=gud.listrefactor(true)
+		
+		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
+		if (totalpaginas>0 && totalpaginas<1)
+			totalpaginas=1;
+		totalpaginas=totalpaginas.intValue()
+
+		
+		log.debug "TOTAL USUARIOS: "+list.size()
+		
+		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+		log.debug "CONSULTA DE USUARIOS: $list"
+		def flagaddcomilla=false
+		def urlimg
+		list.each{
+			
+			if (flagaddcomilla)
+				result=result+','
+
+
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.profesional.nombre==null?"":it.profesional.nombre)+'","'+(it.profesional.matricula==null?"":it.profesional.matricula)+'"]}'
+			 
+			flagaddcomilla=true
+		}
+		result=result+']}'
+		render result
+		
 	}
 	
 }

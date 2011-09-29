@@ -172,7 +172,9 @@
 								<ul>
 <%--									<g:antecedenteLabel label="t1Label"/>--%>
 									<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'redirect')+g.antecedenteLabel(field:'id',url:true))}">Etiquetas de Ficha Clínica</a></li>	
-								
+									<g:ifAnyGranted role="ROLE_ADMIN">
+										<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'list')+g.antecedenteLabel(field:'id',url:true))}">Listar etiquetas de Ficha Clínica</a></li>
+									</g:ifAnyGranted>
 								</ul>							
 							</li>
 						</g:ifAnyGranted>
