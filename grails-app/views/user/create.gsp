@@ -169,15 +169,13 @@
                                     <g:checkBox name="enabled" value="${userInstance?.enabled}" />
                         	</div>	
                         	<div class="clear"></div>	
-									<fieldset>
-										<legend>Roles Asignados:</legend>
-										<g:each in="${authorityList}">
-											${it.description.encodeAsHTML()}
-											<g:checkBox name="${it.authority}"/>
-											
+                        			<fieldset>
+                        				<legend>Roles Asignados</legend>
+                        				<g:each var="entry" in="${authorityList}">
+											${entry.key.description?.encodeAsHTML()}
+											<g:checkBox name="${entry.key.authority}" value="${entry.value}"/>
 										</g:each>
                         			</fieldset>
-                        			
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>

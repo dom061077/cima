@@ -29,7 +29,17 @@ class UserController {
 		def roles = Role.list()
         //userInstance.properties = params
 		userInstance.enabled=true
-        return [userInstance: userInstance,authorityList:roles]
+		
+		
+		roles.sort { r1, r2 ->
+			r1.authority <=> r2.authority
+		}
+		LinkedHashMap<Role, Boolean> roleMap = [:]
+		for (role in roles) {
+			roleMap[(role)]=false
+		}
+		
+        return [userInstance: userInstance,authorityList:roleMap]
     }
 
     def saverefactor = { 
@@ -38,6 +48,32 @@ class UserController {
         def userInstance = new User(params)
 		userInstance.passwd = authenticateService.encodePassword(params.passwd)
 		def roles = Role.list()
+		def cantRoles=0
+		roles.sort { r1, r2 ->
+			r1.authority <=> r2.authority
+		}
+		LinkedHashMap<Role, Boolean> roleMap = [:]
+		for (role in roles) {
+			roleMap[(role)]=false
+		}
+		
+		def rolAux
+		for (String key in params.keySet()) {
+			if (key.contains('ROLE') && 'on' == params.get(key)) {
+				//log.debug "ROL AGREGADO: "+key
+				rolAux=Role.findByAuthority(key)
+				//roleMap.remove(rolAux)
+				roleMap[rolAux]=true
+				cantRoles++
+			}
+		}
+
+		if(cantRoles>1){
+			userInstance.validate()
+			userInstance.errors.rejectValue("authorities","user.roles.exluyentes","Solo puede selecionar un Rol")
+			render(view: "create", model: [userInstance: userInstance,authorityList:roleMap])
+			return
+		}
         if (userInstance.save(flush: true)) {
 			addRoles(userInstance)
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'user.label', default: 'User'), userInstance.id])}"
@@ -46,7 +82,7 @@ class UserController {
         } 
         else {
 			log.warn "ERRORES DE VALIDACION: "+userInstance.errors.allErrors
-            render(view: "create", model: [userInstance: userInstance,authorityList:roles])
+            render(view: "create", model: [userInstance: userInstance,authorityList:roleMap])
         }
     }
 
@@ -65,7 +101,7 @@ class UserController {
     }
 
     def editrefactor = {
-		log.info "INGRESANDO AL CLOSURE edit DEL CONTROLLER UserController"
+		log.info "INGRESANDO AL CLOSURE editrefactor DEL CONTROLLER UserController"
 		log.info "PARAMETROS: ${params}"
         def userInstance = User.get(params.id)
 		def roles = Role.list()
@@ -84,6 +120,8 @@ class UserController {
 			}
 			LinkedHashMap<Role, Boolean> roleMap = [:]
 			for (role in roles) {
+				//log.debug "role: "+role
+				
 				roleMap[(role)] = userRoleNames.contains(role.authority)
 			}
 			return [userInstance: userInstance, authorityList: roleMap]
@@ -103,17 +141,38 @@ class UserController {
 			userRoleNames << role.authority
 		}
 		LinkedHashMap<Role, Boolean> roleMap = [:]
+		def cantRoles=0
+		
 		for (role in roles) {
-			roleMap[(role)] = userRoleNames.contains(role.authority)
+			roleMap[(role)] = false//userRoleNames.contains(role.authority)
+		}
+		def rolAux
+		for (String key in params.keySet()) {
+			if (key.contains('ROLE') && 'on' == params.get(key)) {
+				//log.debug "ROL AGREGADO: "+key
+				rolAux=Role.findByAuthority(key)
+				//roleMap.remove(rolAux)
+				roleMap[rolAux]=true
+				cantRoles++
+			}
 		}
 
+
+		if(cantRoles>1){
+			userInstance.validate()
+			userInstance.errors.rejectValue("authorities","user.roles.exluyentes","Solo puede selecionar un Rol")
+			render(view: "editrefactor", model: [userInstance: userInstance,authorityList:roleMap])
+			return
+		}
+
+		
 		if (userInstance) {
 			if (params.version) {
 				def version = params.version.toLong()
 				if (userInstance.version > version) {
 					
 					userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
-					render(view: "editfactor", model: [userInstance: userInstance,authorityList:roleMap])
+					render(view: "editrefactor", model: [userInstance: userInstance,authorityList:roleMap])
 					return
 				}
 			}

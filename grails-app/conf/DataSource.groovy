@@ -16,7 +16,7 @@ environments {
 			username = "root"
 			password = "exito"
 		
-            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+            dbCreate = "create" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/medfireweb"
         }
     }
@@ -53,8 +53,12 @@ environments {
 	
 	dbdiff {
 		dataSource {
+			pooled = true
+			driverClassName = "com.mysql.jdbc.Driver"
+			username = "root"
+			password = "exito"
 			dbCreate = "create-drop"
-			url = "jdbc:mysql://localhost/medfirewebprod"
+			url = "jdbc:mysql://localhost/cimainap"
 			dbCreate = "create-drop"
 		}
 		
