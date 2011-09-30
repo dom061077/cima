@@ -353,12 +353,21 @@
 		                        </div>     		                        
 		                        
 		                        <div class="clear"></div>
-								<div class="span-3 spanlabel">		                        
+                               	<g:hasErrors bean="${profesionalInstance}" field="cuit">
+                                   	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	
+								<div class="span-3 spanlabel">	
 		                                    <label for="cuit"><g:message code="profesional.cuit.label" default="C.U.I.T:" /></label>
 		                        </div>
 		                        <div class="span-4">            
 		                                    <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${profesionalInstance?.cuit}" />
 								</div>
+                                  <g:hasErrors bean="${profesionalInstance}" field="cuit">
+                                 		<g:renderErrors bean="${profesionalInstance}" as="list" field="cuit"/>
+                                 	</div>
+                                 	
+                                  </g:hasErrors>	
+								
 								
 								<div class="clear"></div>
                             	<g:hasErrors bean="${profesionalInstance}" field="fechaIngreso">
