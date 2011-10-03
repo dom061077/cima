@@ -15,6 +15,7 @@ class AntecedenteLabelController {
     def list = {
         //params.max = Math.min(params.max ? params.int('max') : 10, 100)
         //[antecedenteLabelInstanceList: AntecedenteLabel.list(params), antecedenteLabelInstanceTotal: AntecedenteLabel.count()]
+		log.info "INGRESANDO AL CLOSURE list"
     }
 
     def create = {
@@ -180,6 +181,7 @@ class AntecedenteLabelController {
 			flagaddcomilla=true
 		}
 		result=result+']}'
+		log.debug "RESULT renderizado: $result"
 		render result
 		
 	}

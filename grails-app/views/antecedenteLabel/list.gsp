@@ -14,7 +14,7 @@
 		    	$(document).ready(
 						function(){
 							jQuery("#list").jqGrid({
-							   	url:'listjson',
+							   	url:'<%out<< "${createLink(controller:"antecedenteLabel",action:"listjson")}"%>',
 								datatype: "json",
 								width:680,
 							   	colNames:['Id','Nombre del Profesional', 'Matrícula','Operaciones'],
@@ -38,7 +38,7 @@
 									var obj; 
 									for(var i=0;i < ids.length;i++){ 
 										var cl = ids[i];
-										be = "<a href='edit/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
+										be = "<a href='<%out << "${createLink(controller:"antecedenteLabel",action:"edit")}"%>/"+ids[i]+"'><span class='ui-icon ui-icon-pencil' style='margin: 3px 3px 3px 10px'  ></span></a>";
 										jQuery("#list").jqGrid('setRowData',ids[i],{operaciones:be}); 
 										} 
 								}, 						    
@@ -65,7 +65,7 @@
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+<%--            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>--%>
         </div>        
         <g:if test="${flash.message}">
         <div class="message">${flash.message}</div>

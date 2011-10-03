@@ -149,7 +149,7 @@
 
 
 <div class="span-24 last append-bottom" >
-	<div class="span-11 prepend-2">    
+	<div class="span-12 prepend-2 colborder">    
             <g:isLoggedIn>
 				<div>
 					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
@@ -192,6 +192,15 @@
 									<li><a href="${createLink(controller:'vademecum',action:'list')}">Vademecum</a></li>
 									<li><a href="${createLink(controller:'historiaClinica',action:'list')}">Historia Cínica</a> </li>
 								</g:ifAnyGranted>
+							</ul>
+						</li>
+						<li><a href="#" class="dir">Informes</a>
+							<ul>
+								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos</a></li>								
+								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por O.S</a></li>
+								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por Primera Vez</a></li>
+								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
+								<li><a href="${createLink(controller:"consulta",action:"list")}">Cantidad de visitas de un paciente</a></li>								
 							</ul>
 						</li>
 						<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>
