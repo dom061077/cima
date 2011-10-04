@@ -17,7 +17,7 @@ class Event {
 	Paciente paciente
 	Profesional profesional
 	User user
-	
+	Consulta consulta
 	//static belongTo = [paciente:Paciente,profesional:User,user:User]
     static constraints = {
     	start (unique:'profesional')
@@ -27,6 +27,7 @@ class Event {
 		paciente(nullable:true,blank:true)
 		profesional(nullable:false,blank:false)
 		user(nullable:false,blank:false)
+		consulta(nullable:true)
     }
 	
 	

@@ -171,7 +171,8 @@ class ConsultaController {
 	def pacientesatendidos = { 
 		log.info "INGRESANDO AL CLOSURE pacientesatendidos"
 		log.info "PARAMETROS: $params"
-		return [cmdInstance:new ConsultaCommand()]
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
 	}
 	
 	def pacientesatendidosbuscar = { ConsultaCommand cmd ->
@@ -181,7 +182,6 @@ class ConsultaController {
 		if(cmd.validate())
 			render(view:"pacientesatendidos", model:[cmdInstance:cmd, buscar:true])
 		else{
-			flash.message="DATOS INVALIDOS"
 			log.debug "ERRORES: "+cmd.errors.allErrors
 			render(view:"pacientesatendidos", model:[cmdInstance:cmd, buscar:false])
 		}
@@ -196,14 +196,74 @@ class ConsultaController {
 		def flagcomilla=false
 		def totalregistros
 		def totalpaginas
-		def gud
 		def list
-		result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
-		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		if(cmd.validate()){
-			gud = new GUtilDomainClass(Consulta,params,grailsApplication)
-			list=gud.listrefactor(false)
-			totalregistros=gud.listrefactor(true)
+			list=Consulta.createCriteria().list(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.profesionalId){
+					profesional{
+						eq("id",params.profesionalId.toLong())
+					}
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+
+				if(params.cie10Id){
+					cie10{
+						eq("id",params.cie10Id.toLong())
+					}
+				}
+
+				
+			}
+			totalregistros=Consulta.createCriteria().get(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.profesionalId){
+					profesional{
+						eq("id",params.profesionalId.toLong())
+					}
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+				if(params.cie10Id){
+					cie10{
+						eq("id",params.cie10Id.toLong())
+					}
+				}
+
+
+				projections{
+					rowCount()
+				}
+
+			}
+			result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+			
 			if(list){
 				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
 				if (totalpaginas>0 && totalpaginas<1)
@@ -212,7 +272,7 @@ class ConsultaController {
 				list.each{
 					if(flagcomilla)
 						result=result+','
-					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+it.paciente.apellido+'-'+it.paciene.nombre+'","'+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'","'+(it.profesional?.nombre!=null?it.profesional?.nombre:"")+'","'+(it.obraSocial.descripcion!=null?it.obraSocial.descripcion:"")+'"]}'
+					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'","'+(it.profesional?.nombre!=null?it.profesional?.nombre:"")+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+'"]}'
 					flagcomilla=true
 				}
 				result=result+']}'
@@ -228,6 +288,95 @@ class ConsultaController {
 				render result
 		}
 		
+		totalregistros=Consulta.createCriteria().get(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+
+
+			projections{
+				rowCount()
+			}
+
+		}
+		result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+
+		
+	}
+	
+	def porprofesionaljson={ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE porprofesionaljson"
+		log.info "PARAMETROS: $params"
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		
+		if(cmd.validate()){
+				list = Consulta.createCriteria().list(){
+					if(params.fechaDesde){
+						java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+						ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+					}
+					if(params.fechaHasta){
+						java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+						le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+					}
+					if(params.profesionalId){
+						profesional{
+							eq("id",params.profesionalId.toLong())
+						}
+					}
+					if(params.obraSocialId){
+						paciente{
+							obraSocial{
+								eq("id",params.obraSocialId.toLong())
+							}
+						}
+					}
+		
+					if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+					}
+					projections {
+						count ("paciente")
+						groupProperty 'profesional'
+					}
+				}
+		}
+		
+		list.each{
+			log.debug "RESULTADO DEL GROUP BY:"+it[0]+"--"+it[1].nombre
+		}
+		
+		
 	}
 }
 
@@ -240,7 +389,7 @@ class ConsultaCommand{
 	String obraSocial
 	String obraSocialId
 	String cie10
-	Long cie10Id
+	String cie10Id
 	static constraints = {
 		fechaDesde(blank:false,nullable:false,validator:{v,cmd ->
 			def df = new SimpleDateFormat('dd/MM/yyyy')
@@ -248,6 +397,29 @@ class ConsultaCommand{
 
 			return df.parse(v, new ParsePosition(0)) ? true : false
 		})
+		fechaHasta(blank:false,nullable:false,validator:{v,cmd ->
+			def df = new SimpleDateFormat('dd/MM/yyyy')
+			df.lenient = false
+
+			return df.parse(v, new ParsePosition(0)) ? true : false
+		})
+		
+		profesionalId(blank:true, validator:{v,cmd->
+			if(v){
+				try{
+					def profesionalInstance = Profesional.load(v.toLong())
+					if(profesionalInstance){
+						cmd.profesional = profesionalInstance.nombre
+						return true
+					}else
+						return false
+				}catch(Exception e){
+					return false
+				}
+			}
+		})
+
 	}
+	
 }
 

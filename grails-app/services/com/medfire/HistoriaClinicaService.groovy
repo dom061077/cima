@@ -24,10 +24,12 @@ class HistoriaClinicaService {
 		}*/
 		if(eventInstance){
 			eventInstance.estado = EstadoEvent.EVENT_ATENDIDO
-			eventInstance.save()
 		}
-
-		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save()){
+		if (eventInstance){
+			consultaInstance.evento=eventInstance
+			enventInstance.consulta = consultaInstance
+		}
+		if(consultaInstance.validate() && consultaInstance.paciente.validate() && consultaInstance.save() && consultaInstance.paciente.save() && eventInstance.save()){
 			consultaInstance.estudios.each {
 				log.info "ITERANDO ESTUDIO "+it
 				it.imagenes.each{imagen->

@@ -12,6 +12,7 @@ class Consulta {
 	Profesional profesional
 	Paciente paciente
 	EstadoConsultaEnum estado
+	Event evento
 
 	//examen fisico	
 	String pulso
@@ -42,6 +43,7 @@ class Consulta {
 		estudios validator: {
 			it?.every { it?.validate() }
 		}
+		evento(nullable:true)
 
     }
 	

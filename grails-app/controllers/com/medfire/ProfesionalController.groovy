@@ -315,5 +315,36 @@ class ProfesionalController {
 		chain(controller:'jasper',action:'index',model:[data:profesionales],params:params)
 	}
 
+	def listsearchjson = {
+		log.info "INGRESANDO AL METODO listsearchjson"
+		log.info "PARAMETROS: ${params}"
+		def gud=new GUtilDomainClass(Profesional,params,grailsApplication)
+		list=gud.listrefactor(false)
+		def totalregistros=gud.listrefactor(true)
+		
+		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
+		if (totalpaginas>0 && totalpaginas<1)
+			totalpaginas=1;
+		totalpaginas=totalpaginas.intValue()
+
+		
+		 
+		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+		def flagaddcomilla=false
+		list.each{
+			
+			if (flagaddcomilla)
+				result=result+','
+			
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.nombre+'"]}'
+			 
+			flagaddcomilla=true
+		}
+		result=result+']}'
+		render result
+
+	}
+
+	
 	
 }
