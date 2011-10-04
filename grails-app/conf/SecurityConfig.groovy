@@ -15,5 +15,7 @@ security {
 	userRequestMapDomainClass = true
 	afterLogoutUrl = '/login'
 	useLogger = true
+	cacheUsers = false
+	
 	
 }

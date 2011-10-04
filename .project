@@ -119,11 +119,6 @@
 			<location>C:/Users/Andrea/.grails/1.3.5/projects/medfirewebant/burning-image-0.5.0/src/groovy</location>
 		</link>
 		<link>
-			<name>cloud-foundry-1.0.0.M2-src-groovy</name>
-			<type>2</type>
-			<location>C:/Users/Andrea/.grails/1.3.5/projects/medfirewebant/plugins/cloud-foundry-1.0.0.M2/src/groovy</location>
-		</link>
-		<link>
 			<name>database-migration-0.2.1-grails-app-conf</name>
 			<type>2</type>
 			<location>C:/Users/Andrea/.grails/1.3.5/projects/medfirewebant/plugins/database-migration-0.2.1/grails-app/conf</location>

@@ -20,7 +20,7 @@ class UserController {
         [userInstanceList: User.list(params), userInstanceTotal: User.count()]
     } 
 
-    def create = {
+    def createrefactor = {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER UserController"
 		log.info "PARAMETROS: ${params}"
 		
@@ -38,6 +38,8 @@ class UserController {
 		for (role in roles) {
 			roleMap[(role)]=false
 		}
+		
+
 		
         return [userInstance: userInstance,authorityList:roleMap]
     }
@@ -71,7 +73,7 @@ class UserController {
 		if(cantRoles>1){
 			userInstance.validate()
 			userInstance.errors.rejectValue("authorities","user.roles.exluyentes","Solo puede selecionar un Rol")
-			render(view: "create", model: [userInstance: userInstance,authorityList:roleMap])
+			render(view: "createrefactor", model: [userInstance: userInstance,authorityList:roleMap])
 			return
 		}
         if (userInstance.save(flush: true)) {
@@ -82,7 +84,7 @@ class UserController {
         } 
         else {
 			log.warn "ERRORES DE VALIDACION: "+userInstance.errors.allErrors
-            render(view: "create", model: [userInstance: userInstance,authorityList:roleMap])
+            render(view: "createrefactor", model: [userInstance: userInstance,authorityList:roleMap])
         }
     }
 
@@ -170,7 +172,6 @@ class UserController {
 			if (params.version) {
 				def version = params.version.toLong()
 				if (userInstance.version > version) {
-					
 					userInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'user.label', default: 'User')] as Object[], "Another user has updated this User while you were editing")
 					render(view: "editrefactor", model: [userInstance: userInstance,authorityList:roleMap])
 					return
