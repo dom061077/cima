@@ -1,7 +1,6 @@
 package com.medfire
 
 class RequestmapController {
-	def authenticateService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -24,7 +23,6 @@ class RequestmapController {
         def requestmapInstance = new Requestmap(params)
         if (requestmapInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), requestmapInstance.id])}"
-			authenticateService.clearCachedRequestmaps()
             redirect(action: "show", id: requestmapInstance.id)
         }
         else {
@@ -69,7 +67,6 @@ class RequestmapController {
             requestmapInstance.properties = params
             if (!requestmapInstance.hasErrors() && requestmapInstance.save(flush: true)) {
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), requestmapInstance.id])}"
-				authenticateService.clearCachedRequestmaps
                 redirect(action: "show", id: requestmapInstance.id)
             }
             else {
@@ -88,7 +85,6 @@ class RequestmapController {
             try {
                 requestmapInstance.delete(flush: true)
                 flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'requestmap.label', default: 'Requestmap'), params.id])}"
-				authenticateService.clearCachedRequestmaps()
                 redirect(action: "list")
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {

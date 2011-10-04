@@ -196,7 +196,7 @@
 						</li>
 						<li><a href="#" class="dir">Informes</a>
 							<ul>
-								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos</a></li>								
+								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por O.S</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por Primera Vez</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
