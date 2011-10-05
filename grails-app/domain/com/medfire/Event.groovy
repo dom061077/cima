@@ -18,6 +18,7 @@ class Event {
 	Profesional profesional
 	User user
 	Consulta consulta
+	Long tiempoAtencion
 	//static belongTo = [paciente:Paciente,profesional:User,user:User]
     static constraints = {
     	start (unique:'profesional')
@@ -28,7 +29,13 @@ class Event {
 		profesional(nullable:false,blank:false)
 		user(nullable:false,blank:false)
 		consulta(nullable:true)
+		tiempoAtencion(nullable:true,blank:true)
+		
     }
+	
+	static mapping = {
+		tiempoAtencion formula:"(fecha_end - fecha_start)/100"
+	}
 	
 	
 }

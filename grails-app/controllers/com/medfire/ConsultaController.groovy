@@ -226,6 +226,8 @@ class ConsultaController {
 						eq("id",params.cie10Id.toLong())
 					}
 				}
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+				maxResults(params.rows.toInteger())
 
 				
 			}
@@ -262,13 +264,13 @@ class ConsultaController {
 				}
 
 			}
-			result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 			
 			if(list){
 				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
 				if (totalpaginas>0 && totalpaginas<1)
 					totalpaginas=1
 				totalpaginas = totalpaginas.intValue()
+				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 				list.each{
 					if(flagcomilla)
 						result=result+','
@@ -288,40 +290,6 @@ class ConsultaController {
 				render result
 		}
 		
-		totalregistros=Consulta.createCriteria().get(){
-			if(params.fechaDesde){
-				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
-				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
-			}
-			if(params.fechaHasta){
-				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
-				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
-			}
-			if(params.profesionalId){
-				profesional{
-					eq("id",params.profesionalId.toLong())
-				}
-			}
-			if(params.obraSocialId){
-				paciente{
-					obraSocial{
-						eq("id",params.obraSocialId.toLong())
-					}
-				}
-			}
-			if(params.cie10Id){
-				cie10{
-					eq("id",params.cie10Id.toLong())
-				}
-			}
-
-
-			projections{
-				rowCount()
-			}
-
-		}
-		result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 
 		
 	}
@@ -339,14 +307,6 @@ class ConsultaController {
 		
 		if(cmd.validate()){
 				list = Consulta.createCriteria().list(){
-					if(params.fechaDesde){
-						java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
-						ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
-					}
-					if(params.fechaHasta){
-						java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
-						le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
-					}
 					if(params.profesionalId){
 						profesional{
 							eq("id",params.profesionalId.toLong())
@@ -365,17 +325,97 @@ class ConsultaController {
 							eq("id",params.cie10Id.toLong())
 						}
 					}
+					createAlias("evento","e")
 					projections {
 						count ("paciente")
+						sum	("e.tiempoAtencion") 
 						groupProperty 'profesional'
 					}
+					firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+					maxResults(params.rows.toInteger())
 				}
+				def hqlstr = "c.profesional.id, count(profesional.id) from Consulta c where c.fechaConsulta between :fechaDesde and :fechaHasta"
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+
+				def hqlparams = [fechaDesde:fechaDesde, fechaHasta:fechaHasta]
+
+				if(params.profesionalId){
+					hqlstr = hqlstr + " and c.profesional.id = :profesional"
+					hqlparams.put("profesional",params.profesionalId.toLong())
+				}
+				if(params.obraSocialId){
+					hqlstr = hqlstr + " and c.paciente.obraSocial.id = :obraSocial"
+					hqlparams.put("obraSocial",params.obraSocial.toLong())
+				}
+				
+				if(params.cie10Id){
+					hqlstr = hqlstr + " and c.cie10.id = :cie10"
+					hqlparams.put("cie10",params.cie10Id.toLong())
+				}
+				hqlstr = hqlstr + " group by c.profesional.id"
+				totalregistros = Consulta.findAll(hqlstr,hqlparams)
+				
+						/*if(params.fechaDesde){
+							java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+							ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+						}
+						if(params.fechaHasta){
+							java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+							le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+						}
+						if(params.profesionalId){
+							profesional{
+								eq("id",params.profesionalId.toLong())
+							}
+						}
+						if(params.obraSocialId){
+							paciente{
+								obraSocial{
+									eq("id",params.obraSocialId.toLong())
+								}
+							}
+						}
+			
+						if(params.cie10Id){
+							cie10{
+								eq("id",params.cie10Id.toLong())
+							}
+						}
+						projections{
+							rowCount()
+							//groupProperty 'profesional'
+						}
+
+				}*/
+				log.debug "RESULTADO DE LA PROJECTION DEL TOTAL DE REGISTROS: "+totalregistros
+				if(list){
+					totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+					if (totalpaginas>0 && totalpaginas<1)
+						totalpaginas=1
+					totalpaginas = totalpaginas.intValue()
+					result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+					list.each{
+						if(flagcomilla)
+							result=result+','
+						result=result+'{"id":"'+it[2].id+'","cell":["'+it[2].id+'","'+(it[2].matricula!=null?it[2].matricula:"")+'","'+it[2].nombre+'","'+it[0]+'","'+it[1]+'"]}'
+						flagcomilla=true
+					}
+					result=result+']}'
+					render result
+				}else{
+					result='{"page":0,"total":"0","records":"0","rows":['
+					result=result+']}'
+					render result
+				}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+
 		}
 		
-		list.each{
-			log.debug "RESULTADO DEL GROUP BY:"+it[0]+"--"+it[1].nombre
-		}
-		
+
 		
 	}
 }

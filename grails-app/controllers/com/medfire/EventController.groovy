@@ -458,6 +458,7 @@ class EventController {
     	def flagaddcomilla=false
     	log.debug "Total registros: "+totalregistros
     	list.each{
+			log.debug "TIEMPO DE ATENCION: "+it.tiempoAtencion
     		if (flagaddcomilla)
     			result=result+','
     		log.debug "FECHA FORMATEADA CON EL TAG: "+g.formatDate(format:"dd/MM/yyyy hh:mm:ss",date:it.fechaStart)	

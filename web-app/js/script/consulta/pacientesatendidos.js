@@ -94,16 +94,13 @@ $(document).ready(function(){
 	   	},
 		datatype: "json",
 		width:680,
-	   	colNames:['Id','Fecha Consulta', 'Paciente', 'CIE10','Diagnóstico','Profesional','Obra Social'],
+	   	colNames:['Id','Matrícula', 'Profesional', 'Pacientes','Minutos'],
 	   	colModel:[
-	   		
 	   		{name:'id',index:'id', width:40,hidden:true},
-	   		{name:'fechaConsulta',index:'fechaConsulta', width:92,sortable:false},
-	   		{name:'paciente',index:'paciente', width:150},
-	   		{name:'cie10',index:'cie10', width:80, sortable:false},
-	   		{name:'diagnostico',index:'diagnostico', width:150, align:"left", sortable:false},
-	   		{name:'profesional',index:'profesional', width:150, align:"left", sortable:false},		
-	   		{name:'obraSocial',index:'obraSocial', width:150,align:"left",sortable:false}
+	   		{name:'matricula',index:'matricula', width:92,sortable:false},
+	   		{name:'profesional',index:'profesional', width:150},
+	   		{name:'cantPacientes',index:'cantPacientes', width:80, sortable:false},
+	   		{name:'minutos',index:'minutos', width:80, sortable:false}	   		
 	   	],
 	   	
 	   	rowNum:10,
