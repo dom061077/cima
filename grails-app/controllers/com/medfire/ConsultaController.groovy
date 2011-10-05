@@ -300,8 +300,6 @@ class ConsultaController {
 		def result
 		
 		def flagcomilla=false
-		def totalregistros
-		def totalpaginas
 		def list
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		
@@ -331,70 +329,10 @@ class ConsultaController {
 						sum	("e.tiempoAtencion") 
 						groupProperty 'profesional'
 					}
-					firstResult((params.page.toInteger()-1)*params.rows.toInteger())
-					maxResults(params.rows.toInteger())
-				}
-				def hqlstr = "c.profesional.id, count(profesional.id) from Consulta c where c.fechaConsulta between :fechaDesde and :fechaHasta"
-				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
-				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
-
-				def hqlparams = [fechaDesde:fechaDesde, fechaHasta:fechaHasta]
-
-				if(params.profesionalId){
-					hqlstr = hqlstr + " and c.profesional.id = :profesional"
-					hqlparams.put("profesional",params.profesionalId.toLong())
-				}
-				if(params.obraSocialId){
-					hqlstr = hqlstr + " and c.paciente.obraSocial.id = :obraSocial"
-					hqlparams.put("obraSocial",params.obraSocial.toLong())
 				}
 				
-				if(params.cie10Id){
-					hqlstr = hqlstr + " and c.cie10.id = :cie10"
-					hqlparams.put("cie10",params.cie10Id.toLong())
-				}
-				hqlstr = hqlstr + " group by c.profesional.id"
-				totalregistros = Consulta.findAll(hqlstr,hqlparams)
-				
-						/*if(params.fechaDesde){
-							java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
-							ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
-						}
-						if(params.fechaHasta){
-							java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
-							le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
-						}
-						if(params.profesionalId){
-							profesional{
-								eq("id",params.profesionalId.toLong())
-							}
-						}
-						if(params.obraSocialId){
-							paciente{
-								obraSocial{
-									eq("id",params.obraSocialId.toLong())
-								}
-							}
-						}
-			
-						if(params.cie10Id){
-							cie10{
-								eq("id",params.cie10Id.toLong())
-							}
-						}
-						projections{
-							rowCount()
-							//groupProperty 'profesional'
-						}
-
-				}*/
-				log.debug "RESULTADO DE LA PROJECTION DEL TOTAL DE REGISTROS: "+totalregistros
 				if(list){
-					totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
-					if (totalpaginas>0 && totalpaginas<1)
-						totalpaginas=1
-					totalpaginas = totalpaginas.intValue()
-					result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+					result='{"page":'+params.page+',"total":"'+1+'","records":"'+list.size()+'","rows":['
 					list.each{
 						if(flagcomilla)
 							result=result+','
@@ -414,9 +352,68 @@ class ConsultaController {
 				render result
 
 		}
+	}
+	
+	def pordiagnosticojson = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE pordiagnostico"
+		log.info "PARAMETROS: $params"
+		def result
 		
+		def flagcomilla=false
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		
+		if(cmd.validate()){
+				list = Consulta.createCriteria().list(){
+					if(params.profesionalId){
+						profesional{
+							eq("id",params.profesionalId.toLong())
+						}
+					}
+					if(params.obraSocialId){
+						paciente{
+							obraSocial{
+								eq("id",params.obraSocialId.toLong())
+							}
+						}
+					}
+		
+					if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+					}
+					createAlias("evento","e")
+					projections {
+						count ("cie10")
+						groupProperty 'cie10'
+					}
+				}
+				
+				if(list){
+					result='{"page":'+params.page+',"total":"'+1+'","records":"'+list.size()+'","rows":['
+					list.each{
+						log.debug "ESTRUCTURA IT: "+it
+						
+						if(flagcomilla)
+							result=result+','
+						result=result+'{"id":"'+it[1]?.id+'","cell":["'+it[1]?.id+'","'+(it[1]?.cie10!=null?it[1]?.cie10:"")+'","'+(it[1]?.descripcion!=null?it[1]?.descripcion:"")+'","'+it[0]+'"]}'
+						flagcomilla=true
+					}
+					result=result+']}'
+					render result
+				}else{
+					result='{"page":0,"total":"0","records":"0","rows":['
+					result=result+']}'
+					render result
+				}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
 
-		
+		}
+
 	}
 }
 

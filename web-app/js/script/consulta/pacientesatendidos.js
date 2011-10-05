@@ -65,7 +65,6 @@ $(document).ready(function(){
 	
 	//----------------Por profesional----------------
 	
-	//------------pesta�a general---------------
 	jQuery("#profesionalgrid").jqGrid({
 	   	url:'porprofesionaljson',
 	   	postData:{
@@ -102,10 +101,12 @@ $(document).ready(function(){
 	   		{name:'cantPacientes',index:'cantPacientes', width:80, sortable:false},
 	   		{name:'minutos',index:'minutos', width:80, sortable:false}	   		
 	   	],
-	   	
-	   	rowNum:10,
+	   	gridview:true,
+	   	pgbuttons:false,
+	   	pgtext:'',
+	   	//rowNum:10,
 	   	rownumbers:true,
-	   	rowList:[10,20,30],
+	   	//rowList:[10,20,30],
 	   	pager: '#pagerprofesional',
 	   	sortname: 'id',
 	    viewrecords: true,
@@ -114,7 +115,7 @@ $(document).ready(function(){
 	});
 	jQuery("#profesionalgrid").jqGrid('navGrid','#pagerprofesional',{edit:false,search:false,add:false,del:false,pdf:true});
 
-	jQuery("#profesionalgrid").jqGrid('navButtonAdd','#profesionalpager',{
+	jQuery("#profesionalgrid").jqGrid('navButtonAdd','#pagerprofesional',{
 	       caption:"Reporte", 
 	       onClickButton : function () { 
 	           //jQuery("#list").excelExport();
@@ -122,5 +123,63 @@ $(document).ready(function(){
 	       } 
 	});
 	
+	//----------------Por diagnostico----------------
+	
+	jQuery("#diagnosticogrid").jqGrid({
+	   	url:'pordiagnosticojson',
+	   	postData:{
+	   		fechaDesde:function(){
+	   					return $('#fechaDesdeId').val();
+	   				},
+	   		fechaHasta:function(){return $('#fechaHastaId').val()},
+	   		profesional:function(){return $('#profesionalId').val()},
+	   		profesionalId:function(){
+	   					if($('#profesionalIdId').val()==undefined)
+	   						return '';
+	   					else
+	   						return $('#profesionalIdId').val()
+	   				},
+	   		obraSocial:function(){
+	   					return $('#obraSocialId').val();
+	   				},
+	   		obraSocialId:function(){
+	   					if($('#obraSocialIdId')==undefined)
+	   						return '';
+	   					else
+	   						return $('#obraSocialIdId').val();
+	   		},
+	   		cie10:function(){return $('#cie10IdId').val()}
+	   		
+	   	},
+		datatype: "json",
+		width:680,
+	   	colNames:['Id','Diagnóstico', 'Descripción', 'Total'],
+	   	colModel:[
+	   		{name:'id',index:'id', width:40,hidden:true},
+	   		{name:'diagnostico',index:'diagnostico', width:92,sortable:false},
+	   		{name:'descripcion',index:'descripcion', width:150},
+	   		{name:'total',index:'total', width:80, sortable:false}	   		
+	   	],
+	   	gridview:true,
+	   	pgbuttons:false,
+	   	pgtext:'',
+	   	//rowNum:10,
+	   	rownumbers:true,
+	   	//rowList:[10,20,30],
+	   	pager: '#pagerdiagnostico',
+	   	sortname: 'id',
+	    viewrecords: true,
+	    sortorder: "desc",
+	    caption:"Listado Por Diagnóstico"
+	});
+	jQuery("#diagnosticogrid").jqGrid('navGrid','#pagerdiagnostico',{edit:false,search:false,add:false,del:false,pdf:true});
+
+	jQuery("#diagnosticogrid").jqGrid('navButtonAdd','#pagerdiagnostico',{
+	       caption:"Reporte", 
+	       onClickButton : function () { 
+	           //jQuery("#list").excelExport();
+	           jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"Iimprimir"});
+	       } 
+	});	
 	
 });

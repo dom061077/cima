@@ -47,7 +47,7 @@ $(document).ready(function(){
 		hiddenid:'cie10Id',
 		descid:'cie10DescripcionId',
 		hiddenfield:'id',
-		descfield:'descripcion'	
+		descfield:['descripcion']	
 			
 	});
 

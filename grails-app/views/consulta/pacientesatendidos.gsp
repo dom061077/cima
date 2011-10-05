@@ -178,6 +178,8 @@
 	        			</div>
 	        		</div>    
 	        		<div id="tabs-4">
+						<g:pieChart title='Sample Pie Chart' colors="${colors}"
+      						labels="${["DOM","POMO","SKIBY"]}" fill="${'bg,s,efefef'}" dataType='simple' data='${[10,10,10]}' />	        		
 	        			<div id="graficos">
 	        			</div>
 	        			<div id="pagergraficos">
