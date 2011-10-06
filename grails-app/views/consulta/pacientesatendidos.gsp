@@ -5,6 +5,9 @@
         <g:set var="entityName" value="${message(code: 'consulta.label', default: 'Consulta')}" />
         <script type="text/javascript" src="${resource(dir:"js/script/consulta",file:"pacientesatendidos.js")}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
+        <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgcharts.pack.js')}"></script>        
+        <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jquery.metadata.pack.js')}"></script>        
+        <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgtable.pack.js')}"></script>        
         <title>Pacientes Atendidos</title>
         <script type="text/javascript">
         	var buscar=<%out << "${buscar}"%>;
@@ -81,7 +84,7 @@
         				}
         	        }); 
     	         
-        		
+        		 jQuery(".jgtable").jgtable();        		
             });
         </script>
 	</head>
@@ -178,12 +181,24 @@
 	        			</div>
 	        		</div>    
 	        		<div id="tabs-4">
-						<g:pieChart title='Sample Pie Chart' colors="${colors}"
-      						labels="${["DOM","POMO","SKIBY"]}" fill="${'bg,s,efefef'}" dataType='simple' data='${[10,10,10]}' />	        		
-	        			<div id="graficos">
-	        			</div>
-	        			<div id="pagergraficos">
-	        			</div>
+						<table id="table-3" class="jgtable {size:'700x350',type:'p3',axis_step:1,title:'Example 4',title_color:'28179b',title_size:16,bar_width:30,bar_spacing:2,fillarea:true,fillbottom:true,filltop:false,lines:[[1,1,0],[1,1,0],[1,1,0]],bg:'FFFFFF',bg_type:'gradient',bg_angle:90,bg_offset:'b7b4b4',bg_width:10,bg_trasparency:false,chbg:'f7f7f7',chbg_type:'gradient',chbg_angle:90,chbg_offset:'e81711',chbg_width:10,chbg_trasparency:false,grid:true,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
+						  <thead>
+						    <tr>
+						        <th>Año</th>
+						        <th class="serie">Data 5</th>
+						    </tr>
+						  </thead>
+						  <tbody>
+						    <tr>
+						        <th class="serie">GONZALEZ</th>
+						        <td>40</td>
+						    </tr>
+						    <tr>
+						        <th class="serie">SKIBY</th>
+						        <td>30</td>
+						    </tr>
+						  </tbody>
+						</table>
 	        		</div>    
 	        		    
 	            </div>

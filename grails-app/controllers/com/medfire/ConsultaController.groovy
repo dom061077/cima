@@ -354,6 +354,7 @@ class ConsultaController {
 		}
 	}
 	
+	
 	def pordiagnosticojson = {ConsultaCommand cmd->
 		log.info "INGRESANDO AL CLOSURE pordiagnostico"
 		log.info "PARAMETROS: $params"
@@ -415,6 +416,10 @@ class ConsultaController {
 		}
 
 	}
+	
+	
+	
+
 }
 
 
