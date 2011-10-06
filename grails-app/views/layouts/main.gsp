@@ -170,11 +170,13 @@
 						<g:ifAnyGranted role="ROLE_PROFESIONAL,ROLE_ADMIN">
 							<li><a href="#" class="dir">Edición</a>
 								<ul>
-<%--									<g:antecedenteLabel label="t1Label"/>--%>
-									<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'redirect')+g.antecedenteLabel(field:'id',url:true))}">Etiquetas de Ficha Clínica</a></li>	
+									<g:ifAnyGranted role="ROLE_ADMIN,ROLE_PROFESIONAL">
+										<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'redirect')+g.antecedenteLabel(field:'id',url:true))}">Etiquetas de Ficha Clínica</a></li>	
+									</g:ifAnyGranted>
 									<g:ifAnyGranted role="ROLE_ADMIN">
 										<li><a href="${response.encodeURL(createLink(controller:'antecedenteLabel',action:'list')+g.antecedenteLabel(field:'id',url:true))}">Listar etiquetas de Ficha Clínica</a></li>
 									</g:ifAnyGranted>
+									<li><a href="${createLink(controller:'institucion',action:'redirectaction')}">Membrete Institucional</a></li>
 								</ul>							
 							</li>
 						</g:ifAnyGranted>

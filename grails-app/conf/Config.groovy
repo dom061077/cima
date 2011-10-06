@@ -120,3 +120,20 @@ bi.EstudioComplementarioImagen = [
 		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/x-png']
 	]
 ]
+
+bi.Institucion = [
+	outputDir : 'institucional',
+	images: ['large':[scale:[width:500, height:500, type:ScaleType.APPROXIMATE]
+					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
+					  ],
+			 'small':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
+					  //,watermark:[sign:'images/trash.gif', offset:[top:10, left:10]]
+					  ]
+		  	]
+	//,outputDir: ['path':'/var/www/my-app/images/', 'alias':'/upload/']
+	,constraints:[
+		nullable:true,
+		maxSize:1024*5000,
+		contentType:['image/gif', 'image/png' , 'image/jpg', 'image/jpeg', 'image/pjpeg', 'image/x-png']
+	]
+]

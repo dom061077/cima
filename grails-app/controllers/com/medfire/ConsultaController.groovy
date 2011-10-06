@@ -175,13 +175,140 @@ class ConsultaController {
 		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
 	}
 	
+	private def porprofesionalesgraph(def params){
+		log.info "INGRESANDO AL METODO PRIVADO porprofesionalesgraph"
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		list = Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+	
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+			projections {
+				count ("paciente.id")
+				groupProperty 'profesional'
+			}
+		}
+
+		return list
+	}
+	
+	private def porobrasocialgraph(def params){
+		log.info "INGRESANDO AL METODO PRIVADO porobrasocialgraph"
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		list = Consulta.createCriteria().list(){
+			createAlias("paciente","p")
+			
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+	
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+				/*paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}*/
+				eq("p.obraSocial.id",params.obraSocialId.toLong())
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+			projections {
+				count ("paciente.id")
+				groupProperty 'p.obraSocial'
+			}
+		}
+
+		return list
+
+	}
+	
+	private def pordiagnosticogrph(def params){
+		log.info "INGRESANDO AL METODO PRIVADO pordiagnosticogrph"
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		list = Consulta.createCriteria().list(){
+			createAlias("paciente","p")
+			
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+	
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+						eq("p.obraSocial.id",params.obraSocialId.toLong())
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+			projections {
+				count ("paciente.id")
+				groupProperty "cie10"
+			}
+		}
+
+		return list
+
+	}
+	
 	def pacientesatendidosbuscar = { ConsultaCommand cmd ->
 		log.info "INGRESANDO AL CLOSURE pacientesatendidosbuscar"
 		log.info "PARAMETROS: $params"
 		log.debug "COMMAND OBJECT: $cmd.properties"
-		if(cmd.validate())
-			render(view:"pacientesatendidos", model:[cmdInstance:cmd, buscar:true])
-		else{
+		if(cmd.validate()){
+			def profGraph = porprofesionalesgraph(params)
+			def osGraph = porobrasocialgraph(params)
+			def cie10Graph= pordiagnosticogrph(params)
+			render(view:"pacientesatendidos", model:[cmdInstance:cmd, buscar:true,profGraph:profGraph,osGraph:osGraph,cie10Graph:cie10Graph])
+			
+		}else{
 			log.debug "ERRORES: "+cmd.errors.allErrors
 			render(view:"pacientesatendidos", model:[cmdInstance:cmd, buscar:false])
 		}
@@ -325,7 +452,7 @@ class ConsultaController {
 					}
 					createAlias("evento","e")
 					projections {
-						count ("paciente")
+						count ("paciente.id")
 						sum	("e.tiempoAtencion") 
 						groupProperty 'profesional'
 					}
@@ -386,7 +513,7 @@ class ConsultaController {
 					}
 					createAlias("evento","e")
 					projections {
-						count ("cie10")
+						count ("cie10.id")
 						groupProperty 'cie10'
 					}
 				}

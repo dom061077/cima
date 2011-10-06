@@ -181,24 +181,73 @@
 	        			</div>
 	        		</div>    
 	        		<div id="tabs-4">
-						<table id="table-3" class="jgtable {size:'700x350',type:'p3',axis_step:1,title:'Example 4',title_color:'28179b',title_size:16,bar_width:30,bar_spacing:2,fillarea:true,fillbottom:true,filltop:false,lines:[[1,1,0],[1,1,0],[1,1,0]],bg:'FFFFFF',bg_type:'gradient',bg_angle:90,bg_offset:'b7b4b4',bg_width:10,bg_trasparency:false,chbg:'f7f7f7',chbg_type:'gradient',chbg_angle:90,chbg_offset:'e81711',chbg_width:10,chbg_trasparency:false,grid:true,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
-						  <thead>
-						    <tr>
-						        <th>A�o</th>
-						        <th class="serie">Data 5</th>
-						    </tr>
-						  </thead>
-						  <tbody>
-						    <tr>
-						        <th class="serie">GONZALEZ</th>
-						        <td>40</td>
-						    </tr>
-						    <tr>
-						        <th class="serie">SKIBY</th>
-						        <td>30</td>
-						    </tr>
-						  </tbody>
-						</table>
+	        			<div id="tabs-graficos">
+	        				<ul>
+	        					<li><a href="#tabs-graph1">Profesionales</a></li>
+	        					<li><a href="#tabs-graph2">Obras Sociales</a></li>
+	        					<li><a href="#tabs-graph3">Diagnóstico</a></li>
+	        				</ul>
+	        				<div id="tabs-graph1">
+									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
+									  <thead>
+									    <tr>
+									        <th>Profesional</th>
+									        <th class="serie">Cant.Pacientes</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	<g:each var="prof" in="${profGraph}">
+										    <tr>
+										        <th class="serie">${prof[1]?.nombre}</th>
+										        <td>${prof[0]}</td> 
+										    </tr>
+									    </g:each>
+									  </tbody>
+									</table>
+							</div>
+							
+							<div id="tabs-graph2">
+									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
+									  <thead>
+									    <tr>
+									        <th>Obras Sociales</th>
+									        <th class="serie">Cant.Pacientes</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	<g:each var="os" in="${osGraph}">
+									  		<g:if test="${os[1]!=null}">
+											    <tr>
+											        <th class="serie">${os[1]?.descripcion}</th>
+											        <td>${os[0]}</td> 
+											    </tr>
+										    </g:if>
+									    </g:each>
+									  </tbody>
+									</table>
+							</div>
+							<div id="tabs-graph3">
+									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
+									  <thead>
+									    <tr>
+									        <th>Diagnóstico</th>
+									        <th class="serie">Cant.Pacientes</th>
+									    </tr>
+									  </thead>
+									  <tbody>
+									  	<g:each var="cie10" in="${cie10Graph}">
+									  		<g:if test="${cie10[1]!=null}">
+											    <tr>
+											        <th class="serie">${cie10[1]?.descripcion}</th>
+											        <td>${cie10[0]}</td> 
+											    </tr>
+										    </g:if>
+									    </g:each>
+									  </tbody>
+									</table>
+							</div>
+							
+						</div>
 	        		</div>    
 	        		    
 	            </div>

@@ -1,5 +1,6 @@
 $(document).ready(function(){
 	$('#tabs').tabs();
+	$('#tabs-graficos').tabs();
 	$("#fechaDesdeId" ).datepicker($.datepicker.regional[ "es" ]);
 	$("#fechaHastaId" ).datepicker($.datepicker.regional[ "es" ]);
 	
