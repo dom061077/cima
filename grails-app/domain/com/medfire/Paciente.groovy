@@ -72,4 +72,9 @@ class Paciente {
 			return ! val.after(obj.enrollmentDate)
 		}))*/
     }
+	
+	static mapping = {
+		obraSocial lazy:false
+		antecedente lazy:false
+	}
 }

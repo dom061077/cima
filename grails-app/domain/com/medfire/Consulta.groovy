@@ -51,6 +51,8 @@ class Consulta {
 		contenido type: "text"
 		impresion type:"text"
 		paciente lazy:false
+		cie10 lazy:false
+		profesional lazy:false
 		estudios sort:'secuencia'
 	}
 	

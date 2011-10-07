@@ -179,6 +179,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL METODO PRIVADO porprofesionalesgraph"
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		list = Consulta.createCriteria().list(){
+			createAlias("paciente","p")
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -194,11 +195,12 @@ class ConsultaController {
 				}
 			}
 			if(params.obraSocialId){
-				paciente{
+				/*paciente{
 					obraSocial{
 						eq("id",params.obraSocialId.toLong())
 					}
-				}
+				}*/
+				eq("p.obraSocial.id",params.obraSocialId.toLong())
 			}
 
 			if(params.cie10Id){
@@ -211,7 +213,10 @@ class ConsultaController {
 				groupProperty 'profesional'
 			}
 		}
-
+		log.debug "CANTIDAD DE REGISTROS: "+list.size()
+		list.each{
+			log.debug "REGISTRO: "+it
+		}
 		return list
 	}
 	
@@ -391,7 +396,7 @@ class ConsultaController {
 				}
 
 			}
-			
+			log.debug "TOTAL DE REGISTROS: "+totalregistros
 			if(list){
 				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
 				if (totalpaginas>0 && totalpaginas<1)
@@ -432,6 +437,15 @@ class ConsultaController {
 		
 		if(cmd.validate()){
 				list = Consulta.createCriteria().list(){
+					if(params.fechaDesde){
+						java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+						ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+					}
+					if(params.fechaHasta){
+						java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+						le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+					}
+	
 					if(params.profesionalId){
 						profesional{
 							eq("id",params.profesionalId.toLong())
@@ -493,6 +507,15 @@ class ConsultaController {
 		
 		if(cmd.validate()){
 				list = Consulta.createCriteria().list(){
+					if(params.fechaDesde){
+						java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+						ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+					}
+					if(params.fechaHasta){
+						java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+						le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+					}
+	
 					if(params.profesionalId){
 						profesional{
 							eq("id",params.profesionalId.toLong())
@@ -551,9 +574,24 @@ class ConsultaController {
 		def list = Institucion.findAll()
 		def institucionInstance = list.getAt(0)
 		String pathimage
-		if(institucionInstance) 
-			pathimage = bi.resource(size:'large',bean:institucionInstance) 
+		if(institucionInstance){ 
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				
+				pathimage = servletContext.getRealPath("/images")+"/noDisponibleLarge.jpg"
+			}
+
+			
+		}
 		params.put("pathimage", pathimage);
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","HTML")
+		params.put("_name","profesionales")
+		params.put("_file","pacientesatendidosgral")
+		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listPacientes=Consulta.createCriteria().list(){
 				if(params.fechaDesde){
@@ -583,7 +621,7 @@ class ConsultaController {
 					}
 				}
 			} 
-		log.debug "CANTIDAD DE PACIENTES DEVUELTOS: "+listPacientes.size()
+		
 		
 		chain(controller:'jasper',action:'index',model:[data:listPacientes],params:params)
 	}	

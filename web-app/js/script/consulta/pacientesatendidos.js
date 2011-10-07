@@ -28,7 +28,14 @@ $(document).ready(function(){
 	   					else
 	   						return $('#obraSocialIdId').val();
 	   		},
-	   		cie10:function(){return $('#cie10IdId').val()}
+	   		cie10Id:function(){
+				if($('#cie10IdId')==undefined)
+					return '';
+				else
+					return $('#cie10IdId').val();
+	   			
+	   			
+	   		}
 	   		
 	   	},
 		datatype: "json",
@@ -57,10 +64,9 @@ $(document).ready(function(){
 	jQuery("#generalgrid").jqGrid('navGrid','#pagergeneral',{edit:false,search:false,add:false,del:false,pdf:true});
 
 	jQuery("#generalgrid").jqGrid('navButtonAdd','#pagergeneral',{
-	       caption:"Reporte", 
+	       caption:"Pdf", 
 	       onClickButton : function () { 
-	           //jQuery("#list").excelExport();
-	           jQuery("#generalgrid").jqGrid("excelExport",{url:"reportegral"});
+	           window.location = 'reportegral?target=_blank'
 	       } 
 	});
 	
@@ -89,7 +95,14 @@ $(document).ready(function(){
 	   					else
 	   						return $('#obraSocialIdId').val();
 	   		},
-	   		cie10:function(){return $('#cie10IdId').val()}
+	   		cie10Id:function(){
+				if($('#cie10IdId')==undefined)
+					return '';
+				else
+					return $('#cie10IdId').val();
+	   			
+	   			
+	   		}
 	   		
 	   	},
 		datatype: "json",
@@ -149,7 +162,14 @@ $(document).ready(function(){
 	   					else
 	   						return $('#obraSocialIdId').val();
 	   		},
-	   		cie10:function(){return $('#cie10IdId').val()}
+	   		cie10Id:function(){
+				if($('#cie10IdId')==undefined)
+					return '';
+				else
+					return $('#cie10IdId').val();
+	   			
+	   			
+	   		}
 	   		
 	   	},
 		datatype: "json",
@@ -176,10 +196,11 @@ $(document).ready(function(){
 	jQuery("#diagnosticogrid").jqGrid('navGrid','#pagerdiagnostico',{edit:false,search:false,add:false,del:false,pdf:true});
 
 	jQuery("#diagnosticogrid").jqGrid('navButtonAdd','#pagerdiagnostico',{
-	       caption:"Reporte", 
+	       caption:"Pdf", 
 	       onClickButton : function () { 
 	           //jQuery("#list").excelExport();
-	           jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"reportegral"});
+	           //jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"reportegral"});
+	           document.windows.location = 'reportegral?target=_blank' 
 	       } 
 	});	
 	

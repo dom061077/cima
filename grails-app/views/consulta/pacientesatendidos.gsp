@@ -42,7 +42,8 @@
         			colnames:['Id','Descripción'],
         			colModel:[
         					{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-        					{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true},	
+        					{name:'cie10',index:'cie10', width:100,  sortable:true,search:true},
+        					{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true}	
         				],
         			hiddenid:'cie10IdId',
         			descid:'cie10Id',
