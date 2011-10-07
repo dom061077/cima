@@ -32,7 +32,11 @@ class PacienteController {
 		log.debug "FECHA $fecha"
         def pacienteInstance = new Paciente()
         pacienteInstance.properties = params
-        return [pacienteInstance: pacienteInstance,eventId:params.eventId,eventVersion:params.eventVersion]
+		def eventInstance 
+		if(params.eventId){
+			eventInstance = Event.load(params.eventId.toLong())
+		}
+        return [pacienteInstance: pacienteInstance,eventInstance:eventInstance]
     }
 
     def save = {
@@ -62,7 +66,9 @@ class PacienteController {
 				}
 			}
 		}
-		
+		def eventInstance 
+		if(params.eventId)
+			eventInstance = Event.get(params.eventId)
 		
 		def pacienteInstance = new Paciente(params)
 		
@@ -70,7 +76,7 @@ class PacienteController {
 			pacienteInstance.validate()
 			pacienteInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correci�n")
 			log.debug "ERROR EN FECHA DE NACIMIENTO SEGUN BANDERA"
-			render(view: "create", model: [pacienteInstance: pacienteInstance])
+			render(view: "create", model: [pacienteInstance: pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
 			return
 		}
 
@@ -83,28 +89,32 @@ class PacienteController {
 		}
 		
 		if (params.eventId){
+			log.debug "INGRESANDO POR LA TRANSACCION DEL EVENTO"
 			Event.withTransaction(){TransactionStatus status ->
-				def eventInstance = Event.get(params.eventId)
+				log.debug "DENTRO DE LA TRANSACCION"
+				
 				if(eventInstance){
 					if (params.eventVersion) {
 						def version = params.eventVersion.toLong()
+						log.debug "ANTES DE LA VALIDACION DE VERSION"
 						if (eventInstance.version > version) {
-							
-							//eventInstance.errors.rejectValue("version", "default.optimistic.locking.failure", [message(code: 'event.label', default: 'Event')] as Object[], "Another user has updated this Event while you were editing")
-							//render(view: "edit", model: [eventInstance: eventInstance])
+							log.debug "DETECCION DE DIFERENCIA DE VERSION"
 							status.setRollbackOnly()
-							flash.message = "Al turno seleccionado no se le puede asociar un nuevo paciente porque esta siendo modificado por otro usurio"
-							render(view:"create",model:[pacienteInstance])
+							flash.message = "Al turno seleccionado no se le puede asociar un nuevo paciente porque esta siendo modificado por otro usuario"
+							render(view:"create",model:[pacienteInstance:pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
 							return
 						}
+						log.debug "ANTES DE SALVAR AL PACIENTE"
 						pacienteSalvado = pacienteInstance.save(flush: true) 
+						log.debug "PACIENTE SALVADO"
 						if (pacienteSalvado) {
-							
+							log.debug "PACIENTE GUARDADO"
 							eventInstance.paciente=pacienteSalvado
-							eventInstance.titulo=pacienteInstance.apellido+'-'+pacienteInstance.nombre
+							eventInstance.titulo=pacienteSalvado.apellido+'-'+pacienteSalvado.nombre
 							eventInstance.save()
 							flash.message = "${message(code: 'default.created.message', args: [message(code: 'paciente.label', default: 'Paciente'), pacienteInstance.id])}"
 							redirect(action: "show", id: pacienteInstance.id)
+							log.debug "REDIRECCIONANDO..."
 							return
 						}else {
 							log.debug "ERRORES: "+pacienteInstance.errors.allErrors
@@ -114,23 +124,29 @@ class PacienteController {
 									eq("id",new Long(params.localidad.id))
 								}
 							//redirect(controller:"paciente",action: "create",params:[eventId:eventInstance.id,eventVersion:eventInstance.version])
-							render(view: "create", model: [pacienteInstance: pacienteInstance,eventId:params.eventId,eventVersion:params.eventVersion,localidades:listlocalidades])
+							render(view: "create", model: [pacienteInstance: pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
 							return
 						}
-			
+					}else{
+						pacienteInstance.errors.rejectValue("version", "", [message(code: 'paciente.label', default: 'Paciente')] as Object[], "No se puede determinar la última versión del turno seleccionado")
+						render(view:"create",model:[pacienteInstance:pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
+						return
 					}
-					
 				}else{
+					log.debug "ROLLBACK DE LA TRANSACCION"
 					status.setRollbackOnly()
 					flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'event.label', default: 'Event'), params.eventId])}"
-					render(view:"create",model:[pacienteInstance])
+					render(view:"create",model:[pacienteInstance:pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
+					return
 				}
+				log.debug "DESPUES DE IF Y ELSE DE VALIDACION"
 			}
-			
+			log.debug "SALE DE LA TRANSACCION..."
 		}else{
 	        if (pacienteInstance.save(flush: true)) {
 	            flash.message = "${message(code: 'default.created.message', args: [message(code: 'paciente.label', default: 'Paciente'), pacienteInstance.id])}"
 	            redirect(action: "show", id: pacienteInstance.id)
+				return
 	        }
 	        else {
 				log.debug "ERRORES: "+pacienteInstance.errors.allErrors
@@ -139,9 +155,11 @@ class PacienteController {
 					listlocalidades = Localidad.createCriteria().list(){
 						eq("id",new Long(params.localidad.id))
 					}
-	            render(view: "create", model: [pacienteInstance: pacienteInstance,localidades:listlocalidades])
+	            render(view: "create", model: [pacienteInstance: pacienteInstance,eventInstance:eventInstance,localidades:listlocalidades])
+				return
 	        }
 		}
+		log.debug "RETORNO SIN REGISTRAR DESDE EL SAVE"
     }
 
     def show = {

@@ -60,7 +60,7 @@ $(document).ready(function(){
 	       caption:"Reporte", 
 	       onClickButton : function () { 
 	           //jQuery("#list").excelExport();
-	           jQuery("#generalgrid").jqGrid("excelExport",{url:"Iimprimir"});
+	           jQuery("#generalgrid").jqGrid("excelExport",{url:"reportegral"});
 	       } 
 	});
 	
@@ -179,7 +179,7 @@ $(document).ready(function(){
 	       caption:"Reporte", 
 	       onClickButton : function () { 
 	           //jQuery("#list").excelExport();
-	           jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"Iimprimir"});
+	           jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"reportegral"});
 	       } 
 	});	
 	

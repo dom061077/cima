@@ -544,7 +544,49 @@ class ConsultaController {
 
 	}
 	
-	
+	def reportegral = {
+		log.info "INGRESANDO AL CLOSURE reportegral"
+		log.info "PARAMETROS: $params"
+		//bi.resource(size:'large',bean:it)
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		if(institucionInstance) 
+			pathimage = bi.resource(size:'large',bean:institucionInstance) 
+		params.put("pathimage", pathimage);
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listPacientes=Consulta.createCriteria().list(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.profesionalId){
+					profesional{
+						eq("id",params.profesionalId.toLong())
+					}
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+
+				if(params.cie10Id){
+					cie10{
+						eq("id",params.cie10Id.toLong())
+					}
+				}
+			} 
+		log.debug "CANTIDAD DE PACIENTES DEVUELTOS: "+listPacientes.size()
+		
+		chain(controller:'jasper',action:'index',model:[data:listPacientes],params:params)
+	}	
 	
 
 }

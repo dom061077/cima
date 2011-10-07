@@ -259,8 +259,8 @@
             <g:form action="save" >
                 
 
-			<g:hiddenField name="eventId"  value="${eventId}"/>
-			<g:hiddenField name="eventVersion" value="${eventVersion}"/>
+			<g:hiddenField name="eventId"  value="${eventInstance?.id}"/>
+			<g:hiddenField name="eventVersion" value="${eventInstance?.version}"/>
 			
 
                 
