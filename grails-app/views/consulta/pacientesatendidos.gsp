@@ -103,7 +103,7 @@
 	                <g:renderErrors bean="${cmdInstance}" as="list" />
 	            </div>
             </g:hasErrors>
-            <g:form action="pacientesatendidosbuscar" method="get">
+            <g:form action="pacientesatendidosbuscar">
 		            <div class="span-20">
 		   				<fieldset>
 							<div class="span-2 spanlabel">
@@ -200,7 +200,7 @@
 							</div>
 							<div id="tabs-graph3">
 	        					<g:if test="${cie10Graph?.size()>0}">
-	        						<img alt="" src="${resource(dir:"images",file:"piechartidiag.png")}?dummy=${new java.util.Random().nextInt()}">
+	        						<img alt="" src="${resource(dir:"images",file:"piechartdiag.png")}?dummy=${new java.util.Random().nextInt()}">
 	        					</g:if>	
 							</div>
 							

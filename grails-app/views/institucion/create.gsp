@@ -23,14 +23,14 @@
                 <g:renderErrors bean="${institucionInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form action="save" >
+            <form action="save" method="post" enctype="multipart/form-data">
                 <div class="dialog">
                     <table>
                         <tbody>
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="email"><g:message code="institucion.email.label" default="Email" /></label>
+                                    <label for="email"><g:message code="institucion.email.label" default="Email:" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'email', 'errors')}">
                                     <g:textField name="email" value="${institucionInstance?.email}" />
@@ -39,7 +39,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="direccion"><g:message code="institucion.direccion.label" default="Direccion" /></label>
+                                    <label for="direccion"><g:message code="institucion.direccion.label" default="Direccion:" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'direccion', 'errors')}">
                                     <g:textField name="direccion" value="${institucionInstance?.direccion}" />
@@ -48,7 +48,7 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="nombre"><g:message code="institucion.nombre.label" default="Nombre" /></label>
+                                    <label for="nombre"><g:message code="institucion.nombre.label" default="Nombre:" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'nombre', 'errors')}">
                                     <g:textField name="nombre" value="${institucionInstance?.nombre}" />
@@ -57,11 +57,19 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="telefonos"><g:message code="institucion.telefonos.label" default="Telefonos" /></label>
+                                    <label for="telefonos"><g:message code="institucion.telefonos.label" default="Telefonos:" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'telefonos', 'errors')}">
                                     <g:textField name="telefonos" value="${institucionInstance?.telefonos}" />
                                 </td>
+                            </tr>
+                            <tr class="prop">
+                            	<td>
+                            		<label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
+                            	</td>
+                            	<td>
+									<input type="file" name="imagen"/>                            	
+                            	</td>
                             </tr>
                         
                         </tbody>
@@ -70,7 +78,7 @@
                 <div class="buttons">
                     <span class="button"><g:submitButton name="create" class="save" value="${message(code: 'default.button.create.label', default: 'Create')}" /></span>
                 </div>
-            </g:form>
+            </form>
         </div>
     </body>
 </html>

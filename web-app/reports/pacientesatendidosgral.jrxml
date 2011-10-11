@@ -8,6 +8,7 @@
 	<parameter name="telefonos" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="email" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="direccion" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nameimage" class="java.lang.String" isForPrompting="false"/>
 	<field name="fechaConsulta" class="java.lang.String"/>
 	<field name="paciente.apellido" class="java.lang.String"/>
 	<field name="paciente.nombre" class="java.lang.String"/>
@@ -21,7 +22,7 @@
 		<band height="75" splitType="Stretch">
 			<image>
 				<reportElement x="2" y="2" width="138" height="64"/>
-				<imageExpression class="java.lang.String"><![CDATA[new File($P{pathimage})]]></imageExpression>
+				<imageExpression class="java.io.File"><![CDATA[new File($P{pathimage},$P{nameimage})]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="152" y="6" width="200" height="15"/>
@@ -140,21 +141,21 @@
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{profesional.nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="382" y="3" width="70" height="15"/>
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cie10.descripcion}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="460" y="3" width="93" height="15"/>
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.nombre}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.obraSocial.descripcion}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="4" y="18" width="549" height="1"/>

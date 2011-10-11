@@ -24,7 +24,7 @@
                 <g:renderErrors bean="${institucionInstance}" as="list" />
             </div>
             </g:hasErrors>
-            <g:form method="post" >
+            <form method="post" enctype="multipart/form-data" >
                 <g:hiddenField name="id" value="${institucionInstance?.id}" />
                 <g:hiddenField name="version" value="${institucionInstance?.version}" />
                 <div class="dialog">
@@ -67,6 +67,15 @@
                                 </td>
                             </tr>
                         
+                            <tr class="prop">
+                            	<td>
+                            		<label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
+                            	</td>
+                            	<td>
+									<input type="file" name="imagen"/>                            	
+                            	</td>
+                            </tr>
+                        
                         </tbody>
                     </table>
                 </div>
@@ -74,7 +83,7 @@
                     <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
                     <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
                 </div>
-            </g:form>
+            </form>
         </div>
     </body>
 </html>

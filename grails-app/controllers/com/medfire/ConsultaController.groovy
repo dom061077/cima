@@ -10,6 +10,7 @@ import java.util.List;
 import com.medfire.util.GUtilDomainClass
 import grails.converters.JSON
 import com.medfire.util.ChartGenerator
+import pl.burningice.plugins.image.container.ContainerUtils
 
 class ConsultaController {
 
@@ -279,7 +280,7 @@ class ConsultaController {
 		List values = new ArrayList()
 		list.each{
 			if(it[1]){
-				keys.add(it[1]?.nombre)
+				keys.add(it[1]?.descripcion)
 				values.add(it[0])
 			}
 		}
@@ -329,8 +330,9 @@ class ConsultaController {
 		List keys = new ArrayList()
 		List values = new ArrayList()
 		list.each{
+			log.debug "ITERANDO EN DIAGNOSTICO: "+it[0]+" "+it[1]
 			if(it[1]){
-				keys.add(it[1]?.nombre)
+				keys.add(it[1]?.descripcion)
 				values.add(it[0])
 			}
 		}
@@ -617,21 +619,37 @@ class ConsultaController {
 		def list = Institucion.findAll()
 		def institucionInstance = list.getAt(0)
 		String pathimage
+		String nameimage
+		def config
 		if(institucionInstance){ 
 			pathimage = bi.resource(size:'large',bean:institucionInstance)
 			if(pathimage.contains(".null")){
-				
-				pathimage = servletContext.getRealPath("/images")+"/noDisponibleLarge.jpg"
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
 			}
+/*
+ * def config = ContainerUtils.getConfig(imageContainer)
 
-			
+        if (!config){
+            throw new IllegalArgumentException("There is no config for ${imageContainer.class.name}")
+        }
+
+        return g.resource(dir:getOutputDir(config.outputDir), file:ContainerUtils.getFullName(size, imageContainer, config))
+
+ * 
+ * */		
 		}
 		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
 		params.put("nombreInstitucion", institucionInstance.nombre);
 		params.put("telefonos", institucionInstance.telefonos);
 		params.put("email", institucionInstance.email);
 		params.put("direccion", institucionInstance.direccion);
-		params.put("_format","HTML")
+		params.put("_format","PDF")
 		params.put("_name","profesionales")
 		params.put("_file","pacientesatendidosgral")
 		

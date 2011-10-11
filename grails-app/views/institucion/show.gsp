@@ -30,32 +30,41 @@
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="institucion.email.label" default="Email" /></td>
+                            <td valign="top" class="name"><g:message code="institucion.email.label" default="Email:" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: institucionInstance, field: "email")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="institucion.direccion.label" default="Direccion" /></td>
+                            <td valign="top" class="name"><g:message code="institucion.direccion.label" default="Direccion:" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: institucionInstance, field: "direccion")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="institucion.nombre.label" default="Nombre" /></td>
+                            <td valign="top" class="name"><g:message code="institucion.nombre.label" default="Nombre:" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: institucionInstance, field: "nombre")}</td>
                             
                         </tr>
                     
                         <tr class="prop">
-                            <td valign="top" class="name"><g:message code="institucion.telefonos.label" default="Telefonos" /></td>
+                            <td valign="top" class="name"><g:message code="institucion.telefonos.label" default="Telefonos:" /></td>
                             
                             <td valign="top" class="value">${fieldValue(bean: institucionInstance, field: "telefonos")}</td>
                             
                         </tr>
+                        
+                        <tr class="prop">
+                        	<td><g:message code="institucion.telefonos.label" default="Imagen:" /></td>
+                        	<td>
+								<bi:hasImage bean="${institucionInstance}">
+									<a class="thickbox" href="${g.resourceimgext(size:'large', bean:institucionInstance)}"><img src="${g.resourceimgext(size:'small', bean:institucionInstance)}"  alt=""> </img></a>
+								</bi:hasImage>
+							</td>	
+						</tr>	                        
                     
                     </tbody>
                 </table>

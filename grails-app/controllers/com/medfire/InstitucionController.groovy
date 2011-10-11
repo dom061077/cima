@@ -1,7 +1,7 @@
 package com.medfire
 
 class InstitucionController {
-
+	def imageUploadService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -22,6 +22,10 @@ class InstitucionController {
     def save = {
         def institucionInstance = new Institucion(params)
         if (institucionInstance.save(flush: true)) {
+			
+			if(!institucionInstance.imagen.isEmpty())
+				imageUploadService.save(profesionalInstance)
+			
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'institucion.label', default: 'Institucion'), institucionInstance.id])}"
             redirect(action: "show", id: institucionInstance.id)
         }
@@ -66,6 +70,10 @@ class InstitucionController {
             }
             institucionInstance.properties = params
             if (!institucionInstance.hasErrors() && institucionInstance.save(flush: true)) {
+				if (!params.imagen.isEmpty()){
+					imageUploadService.save(institucionInstance)
+				}
+				
                 flash.message = "${message(code: 'default.updated.message', args: [message(code: 'institucion.label', default: 'Institucion'), institucionInstance.id])}"
                 redirect(action: "show", id: institucionInstance.id)
             }
