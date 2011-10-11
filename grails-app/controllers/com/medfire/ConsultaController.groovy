@@ -1,11 +1,15 @@
 package com.medfire
 
 import java.text.DateFormat
+
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat
 import java.text.ParseException
+import java.util.List;
+
 import com.medfire.util.GUtilDomainClass
 import grails.converters.JSON
+import com.medfire.util.ChartGenerator
 
 class ConsultaController {
 
@@ -214,9 +218,20 @@ class ConsultaController {
 			}
 		}
 		log.debug "CANTIDAD DE REGISTROS: "+list.size()
+
+		ChartGenerator chart = new ChartGenerator()
+		List keys = new ArrayList()
+		List values = new ArrayList()
 		list.each{
-			log.debug "REGISTRO: "+it
+			if(it[1]){
+				keys.add(it[1]?.nombre)
+				values.add(it[0])
+			}
 		}
+		String pathimg = servletContext.getRealPath("/images/piechartprof.png")
+		if(keys.size()>0 && values.size()>0)
+			chart.drawPieChart(keys, values, new Integer(200), new Integer(200),pathimg)
+		
 		return list
 	}
 	
@@ -259,6 +274,18 @@ class ConsultaController {
 				groupProperty 'p.obraSocial'
 			}
 		}
+		ChartGenerator chart = new ChartGenerator()
+		List keys = new ArrayList()
+		List values = new ArrayList()
+		list.each{
+			if(it[1]){
+				keys.add(it[1]?.nombre)
+				values.add(it[0])
+			}
+		}
+		String pathimg = servletContext.getRealPath("/images/piechartos.png")
+		if(keys.size()>0 && values.size()>0)
+			chart.drawPieChart(keys, values, new Integer(200), new Integer(200),pathimg)
 
 		return list
 
@@ -298,6 +325,19 @@ class ConsultaController {
 				groupProperty "cie10"
 			}
 		}
+		ChartGenerator chart = new ChartGenerator()
+		List keys = new ArrayList()
+		List values = new ArrayList()
+		list.each{
+			if(it[1]){
+				keys.add(it[1]?.nombre)
+				values.add(it[0])
+			}
+		}
+		String pathimg = servletContext.getRealPath("/images/piechartdiag.png")
+		if(keys.size()>0 && values.size()>0)
+			chart.drawPieChart(keys, values, new Integer(200), new Integer(200),pathimg)
+
 
 		return list
 
@@ -305,8 +345,11 @@ class ConsultaController {
 	
 	def pacientesatendidosbuscar = { ConsultaCommand cmd ->
 		log.info "INGRESANDO AL CLOSURE pacientesatendidosbuscar"
-		log.info "PARAMETROS: $params"
+		log.info "PARAMETROS: $params" 
 		log.debug "COMMAND OBJECT: $cmd.properties"
+		/*response.AppendHeader("pragma", "no-store,no-cache")  //HTTP 1.0
+		response.AppendHeader("cache-control", "no-cache, no-store,must-revalidate, max-age=-1") // HTTP 1.1
+		response.AppendHeader("expires", "-1")*/
 		if(cmd.validate()){
 			def profGraph = porprofesionalesgraph(params)
 			def osGraph = porobrasocialgraph(params)

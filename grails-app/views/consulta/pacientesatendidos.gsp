@@ -103,7 +103,7 @@
 	                <g:renderErrors bean="${cmdInstance}" as="list" />
 	            </div>
             </g:hasErrors>
-            <g:form action="pacientesatendidosbuscar">
+            <g:form action="pacientesatendidosbuscar" method="get">
 		            <div class="span-20">
 		   				<fieldset>
 							<div class="span-2 spanlabel">
@@ -189,63 +189,19 @@
 	        					<li><a href="#tabs-graph3">Diagnóstico</a></li>
 	        				</ul>
 	        				<div id="tabs-graph1">
-									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
-									  <thead>
-									    <tr>
-									        <th>Profesional</th>
-									        <th class="serie">Cant.Pacientes</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									  	<g:each var="prof" in="${profGraph}">
-										    <tr>
-										        <th class="serie">${prof[1]?.nombre}</th>
-										        <td>${prof[0]}</td> 
-										    </tr>
-									    </g:each>
-									  </tbody>
-									</table>
+	        					<g:if test="${profGraph?.size()>0}">
+	        						<img alt="" src="${resource(dir:"images",file:"piechartprof.png")}?dummy=${new java.util.Random().nextInt()}">
+	        					</g:if>	
 							</div>
-							
 							<div id="tabs-graph2">
-									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
-									  <thead>
-									    <tr>
-									        <th>Obras Sociales</th>
-									        <th class="serie">Cant.Pacientes</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									  	<g:each var="os" in="${osGraph}">
-									  		<g:if test="${os[1]!=null}">
-											    <tr>
-											        <th class="serie">${os[1]?.descripcion}</th>
-											        <td>${os[0]}</td> 
-											    </tr>
-										    </g:if>
-									    </g:each>
-									  </tbody>
-									</table>
+	        					<g:if test="${osGraph?.size()>0}">
+	        						<img alt="" src="${resource(dir:"images",file:"piechartos.png")}?dummy=${new java.util.Random().nextInt()}">
+	        					</g:if>	
 							</div>
 							<div id="tabs-graph3">
-									<table id="table-3" class="jgtable {size:'500x150',type:'p3',axis_step:1,fillarea:true,fillbottom:true,filltop:false,bg_type:'gradient',bg_angle:90,grid:false,grid_x:7,grid_y:10,grid_line:0,grid_blank:1}">
-									  <thead>
-									    <tr>
-									        <th>Diagnóstico</th>
-									        <th class="serie">Cant.Pacientes</th>
-									    </tr>
-									  </thead>
-									  <tbody>
-									  	<g:each var="cie10" in="${cie10Graph}">
-									  		<g:if test="${cie10[1]!=null}">
-											    <tr>
-											        <th class="serie">${cie10[1]?.descripcion}</th>
-											        <td>${cie10[0]}</td> 
-											    </tr>
-										    </g:if>
-									    </g:each>
-									  </tbody>
-									</table>
+	        					<g:if test="${cie10Graph?.size()>0}">
+	        						<img alt="" src="${resource(dir:"images",file:"piechartidiag.png")}?dummy=${new java.util.Random().nextInt()}">
+	        					</g:if>	
 							</div>
 							
 						</div>
