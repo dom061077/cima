@@ -24,7 +24,7 @@ class InstitucionController {
         if (institucionInstance.save(flush: true)) {
 			
 			if(!institucionInstance.imagen.isEmpty())
-				imageUploadService.save(profesionalInstance)
+				imageUploadService.save(institucionInstance)
 			
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'institucion.label', default: 'Institucion'), institucionInstance.id])}"
             redirect(action: "show", id: institucionInstance.id)
