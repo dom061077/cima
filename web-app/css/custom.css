@@ -69,3 +69,47 @@ h1,h2{
 
 }
 /********************************************************/
+/*para limpiar  la x de los campos de busqueda*/
+
+.delete {
+	float:left;
+	width:10px;
+	height:17px;
+	line-height:17px;
+	margin-right:0px;
+	margin-left:0px;
+	margin-top:6px;
+	padding:0 0px 0 0px;
+	font-family: "Lucida Sans", "Lucida Sans Unicode",sans-serif;
+	font-size:12px;
+	background: #fff;
+	border:solid 1px #d9d9d9;
+	border-top:solid 1px #c0c0c0;
+	border-left:none;
+	-moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px;
+}
+/* Set default state of "X" and hide it */
+.delete .x {
+	color:#A1B9ED;
+	cursor:pointer;
+	/*display:none;*/
+}
+/* Set the hover state of "X" */
+.delete .x:hover {
+	color:#36c;
+}
+
+.lookupfield {
+	float:left;
+	width:300px;
+	height:27px;
+	line-height:27px;
+	text-indent:10px;
+	font-family:arial, sans-serif;
+	font-size:1em;
+	color:#333;
+	background: #fff;
+	border:solid 1px #d9d9d9;
+	border-top:solid 1px #c0c0c0;
+	border-right:none;
+}

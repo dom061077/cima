@@ -631,17 +631,7 @@ class ConsultaController {
 				pathimage = servletContext.getRealPath("/institucional")
 				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
 			}
-/*
- * def config = ContainerUtils.getConfig(imageContainer)
-
-        if (!config){
-            throw new IllegalArgumentException("There is no config for ${imageContainer.class.name}")
-        }
-
-        return g.resource(dir:getOutputDir(config.outputDir), file:ContainerUtils.getFullName(size, imageContainer, config))
-
- * 
- * */		
+		
 		}
 		params.put("pathimage", pathimage);
 		params.put("nameimage", nameimage)
@@ -650,7 +640,7 @@ class ConsultaController {
 		params.put("email", institucionInstance.email);
 		params.put("direccion", institucionInstance.direccion);
 		params.put("_format","PDF")
-		params.put("_name","profesionales")
+		params.put("_name","pacientesgral")
 		params.put("_file","pacientesatendidosgral")
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
@@ -687,7 +677,152 @@ class ConsultaController {
 		chain(controller:'jasper',action:'index',model:[data:listPacientes],params:params)
 	}	
 	
+	
+	def reporteporprof = {
+		log.info "INGRESANDO AL CLOSURE reporteporprof"
+		log.info "PARAMETROS: $params"
+		
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","profesionales")
+		params.put("_file","pacientesatendidosporprof")
+		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listporprof = Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
 
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+			createAlias("evento","e")
+			projections {
+				count ("paciente.id","cantpacientes")
+				sum	("e.tiempoAtencion","totalminutos")
+				groupProperty 'profesional'
+			}
+		}
+		chain(controller:'jasper',action:'index',model:[data:listporprof],params:params)
+	}
+
+	def  reportepordiag = {
+		log.info "INGRESANDO AL CLOSURE reportepordiag"
+		log.info "PARAMETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","diagnostico")
+		params.put("_file","pacientesatendidospordiag")
+		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listdiagnostico = Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+
+			if(params.profesionalId){
+				profesional{
+					eq("id",params.profesionalId.toLong())
+				}
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+			createAlias("evento","e")
+			projections {
+				count ("cie10.id")
+				groupProperty 'cie10'
+			}
+		}
+		chain(controller:'jasper',action:'index',model:[data:listdiagnostico],params:params)
+	}
+	
+	def pacientesatendidosporos = {
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporos"
+		log.info "PARAMETROS: $params"
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+		
+	}
 }
 
 

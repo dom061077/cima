@@ -64,9 +64,29 @@ $(document).ready(function(){
 	jQuery("#generalgrid").jqGrid('navGrid','#pagergeneral',{edit:false,search:false,add:false,del:false,pdf:true});
 
 	jQuery("#generalgrid").jqGrid('navButtonAdd','#pagergeneral',{
-	       caption:"Pdf", 
+	       caption:"Reporte", 
 	       onClickButton : function () { 
-	           window.location = 'reportegral?target=_blank'
+	    	   var fechaDesde = $('#fechaDesdeId').val();
+	    	   var fechaHasta = $('#fechaHastaId').val();
+	    	   var profesionalId;
+	    	   var obraSocialId;
+	    	   var cie10Id
+	    	   if($('#profesionalIdId').val()==undefined)
+					profesionalId='';
+				else
+					profesionalId=$('#profesionalIdId').val();
+	    	   
+	    	   if($('#obraSocialIdId').val()==undefined)
+					obraSocialId='';
+	    	   else
+					obraSocialId=$('#obraSocialIdId').val();
+	    	   
+	    	   if($('#cie10IdId').val()==undefined)
+					cie10Id='';
+	    	   else
+					cie10Id=$('#cie10IdId').val();
+	           window.location = 'reportegral?target=_blank&fechaDesde='+fechaDesde+'&fechaHasta='+fechaHasta+'&profesionalId='
+	           						+profesionalId+'&obraSocialId='+obraSocialId+'&cie10Id='+cie10Id;
 	       } 
 	});
 	
@@ -132,8 +152,27 @@ $(document).ready(function(){
 	jQuery("#profesionalgrid").jqGrid('navButtonAdd','#pagerprofesional',{
 	       caption:"Reporte", 
 	       onClickButton : function () { 
-	           //jQuery("#list").excelExport();
-	           jQuery("#profesionalgrid").jqGrid("excelExport",{url:"Iimprimir"});
+	    	   var fechaDesde = $('#fechaDesdeId').val();
+	    	   var fechaHasta = $('#fechaHastaId').val();
+	    	   var profesionalId;
+	    	   var obraSocialId;
+	    	   var cie10Id
+	    	   if($('#profesionalIdId').val()==undefined)
+					profesionalId='';
+				else
+					profesionalId=$('#profesionalIdId').val();
+	    	   
+	    	   if($('#obraSocialIdId').val()==undefined)
+					obraSocialId='';
+	    	   else
+					obraSocialId=$('#obraSocialIdId').val();
+	    	   
+	    	   if($('#cie10IdId').val()==undefined)
+					cie10Id='';
+	    	   else
+					cie10Id=$('#cie10IdId').val();
+	           window.location = 'reporteporprof?target=_blank&fechaDesde='+fechaDesde+'&fechaHasta='+fechaHasta+'&profesionalId='
+	           						+profesionalId+'&obraSocialId='+obraSocialId+'&cie10Id='+cie10Id;
 	       } 
 	});
 	
@@ -196,11 +235,29 @@ $(document).ready(function(){
 	jQuery("#diagnosticogrid").jqGrid('navGrid','#pagerdiagnostico',{edit:false,search:false,add:false,del:false,pdf:true});
 
 	jQuery("#diagnosticogrid").jqGrid('navButtonAdd','#pagerdiagnostico',{
-	       caption:"Pdf", 
+	       caption:"Reporte", 
 	       onClickButton : function () { 
-	           //jQuery("#list").excelExport();
-	           //jQuery("#diagnosticogrid").jqGrid("excelExport",{url:"reportegral"});
-	           document.windows.location = 'reportegral?target=_blank' 
+	    	   var fechaDesde = $('#fechaDesdeId').val();
+	    	   var fechaHasta = $('#fechaHastaId').val();
+	    	   var profesionalId;
+	    	   var obraSocialId;
+	    	   var cie10Id
+	    	   if($('#profesionalIdId').val()==undefined)
+					profesionalId='';
+				else
+					profesionalId=$('#profesionalIdId').val();
+	    	   
+	    	   if($('#obraSocialIdId').val()==undefined)
+					obraSocialId='';
+	    	   else
+					obraSocialId=$('#obraSocialIdId').val();
+	    	   
+	    	   if($('#cie10IdId').val()==undefined)
+					cie10Id='';
+	    	   else
+					cie10Id=$('#cie10IdId').val();
+	           window.location = 'reportepordiag?target=_blank&fechaDesde='+fechaDesde+'&fechaHasta='+fechaHasta+'&profesionalId='
+	           						+profesionalId+'&obraSocialId='+obraSocialId+'&cie10Id='+cie10Id;
 	       } 
 	});	
 	
