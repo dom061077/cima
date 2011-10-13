@@ -282,6 +282,9 @@ class ConsultaController {
 			if(it[1]){
 				keys.add(it[1]?.descripcion)
 				values.add(it[0])
+			}else{
+				keys.add("SIN OBRA SOCIAL")
+				values.add(it[0])
 			}
 		}
 		String pathimg = servletContext.getRealPath("/images/piechartos.png")
@@ -330,9 +333,11 @@ class ConsultaController {
 		List keys = new ArrayList()
 		List values = new ArrayList()
 		list.each{
-			log.debug "ITERANDO EN DIAGNOSTICO: "+it[0]+" "+it[1]
 			if(it[1]){
 				keys.add(it[1]?.descripcion)
+				values.add(it[0])
+			}else{
+				keys.add("SIN DIAGNOSTICO")
 				values.add(it[0])
 			}
 		}
@@ -581,7 +586,7 @@ class ConsultaController {
 					}
 					createAlias("evento","e")
 					projections {
-						count ("cie10.id")
+						count ("paciente.id")
 						groupProperty 'cie10'
 					}
 				}
@@ -593,7 +598,7 @@ class ConsultaController {
 						
 						if(flagcomilla)
 							result=result+','
-						result=result+'{"id":"'+it[1]?.id+'","cell":["'+it[1]?.id+'","'+(it[1]?.cie10!=null?it[1]?.cie10:"")+'","'+(it[1]?.descripcion!=null?it[1]?.descripcion:"")+'","'+it[0]+'"]}'
+						result=result+'{"id":"'+it[1]?.id+'","cell":["'+it[1]?.id+'","'+(it[1]?.cie10!=null?it[1]?.cie10:"SIN CODIGO")+'","'+(it[1]?.descripcion!=null?it[1]?.descripcion:"SIN DIAGNOSTICO")+'","'+it[0]+'"]}'
 						flagcomilla=true
 					}
 					result=result+']}'
@@ -809,7 +814,7 @@ class ConsultaController {
 			}
 			createAlias("evento","e")
 			projections {
-				count ("cie10.id")
+				count ("paciente.id")
 				groupProperty 'cie10'
 			}
 		}
@@ -823,6 +828,230 @@ class ConsultaController {
 		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
 		
 	}
+	
+	def pacientesatendidosporosbuscar = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporosbucar"
+		log.info "PARAMETROS $params"
+		log.info "PROPIEDADES COMMAND: "+cmd.properties
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def osGraph
+		if(cmd.validate()){
+//			def profGraph = porprofesionalesgraph(params)
+			osGraph = porobrasocialgraph(params)
+//			def cie10Graph= pordiagnosticogrph(params)
+			render(view:"pacientesatendidosporos", model:[cmdInstance:cmd, buscar:true,osGraph:osGraph])
+			
+		}else{
+			log.debug "ERRORES: "+cmd.errors.allErrors
+			render(view:"pacientesatendidosporos", model:[cmdInstance:cmd, buscar:false])
+		}
+	}
+	
+	def pacientesatendidosporosjson = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporosjson"
+		log.info "PARAMETROS: $params"
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		if(cmd.validate()){
+			list=Consulta.createCriteria().list(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+				paciente{
+					order("apellido","desc")
+				}
+
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+				maxResults(params.rows.toInteger())
+
+				
+			}
+			totalregistros=Consulta.createCriteria().get(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+				projections{
+					rowCount()
+				}
+
+			}
+			if(list){
+				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+				if (totalpaginas>0 && totalpaginas<1)
+					totalpaginas=1
+				totalpaginas = totalpaginas.intValue()
+				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+				list.each{
+					if(flagcomilla)
+						result=result+','
+					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'"]}'
+					flagcomilla=true
+				}
+				result=result+']}'
+				render result
+			}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+			}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+		}
+		
+	}
+	
+	
+	def reporteporos = {
+		log.info "INGRESANDO AL CLOSURE reporteporos"
+		log.info "PARAMETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","pacientesatendidosporos")
+		params.put("_file","pacientesatendidosporos")
+
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listos=Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+			paciente{
+				order("apellido","desc")
+			}
+		}
+		chain(controller:'jasper',action:'index',model:[data:listos],params:params)
+	}
+	
+	def reporteporosranking = {
+		log.info "INGRESANDO AL CLOSURE reporteporosranking"
+		log.info "PARAMETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","pacientesatendidosporosranking")
+		params.put("_file","pacientesatendidosporosranking")
+
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listos=Consulta.createCriteria().list(){
+			createAlias("paciente","p")
+			
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+			if(params.obraSocialId){
+				paciente{
+					obraSocial{
+						eq("id",params.obraSocialId.toLong())
+					}
+				}
+			}
+			
+			order("p.apellido","desc")
+			projections {
+				count ("p.id")
+				groupProperty 'p.obraSocial'
+			}
+		}
+		chain(controller:'jasper',action:'index',model:[data:listos],params:params)
+
+	}
+	
 }
 
 

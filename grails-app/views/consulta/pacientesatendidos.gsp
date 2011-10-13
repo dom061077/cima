@@ -7,7 +7,6 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgcharts.pack.js')}"></script>        
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jquery.metadata.pack.js')}"></script>        
-        <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgtable.pack.js')}"></script>        
         <title>Pacientes Atendidos</title>
         <script type="text/javascript">
         	var buscar=<%out << "${buscar}"%>;
@@ -85,7 +84,6 @@
         				}
         	        }); 
     	         
-        		 jQuery(".jgtable").jgtable();        		
             });
         </script>
 	</head>

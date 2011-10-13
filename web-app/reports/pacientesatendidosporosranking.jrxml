@@ -9,8 +9,8 @@
 	<parameter name="email" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="direccion" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="nameimage" class="java.lang.String" isForPrompting="false"/>
-	<field name="[0]" class="java.lang.Object"/>
-	<field name="[1].cie10" class="java.lang.String"/>
+	<field name="[0]" class="java.lang.Integer"/>
+	<field name="[1].id" class="java.lang.String"/>
 	<field name="[1].descripcion" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
@@ -66,9 +66,9 @@
 			<staticText>
 				<reportElement x="352" y="46" width="201" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pacientes Atendidos por DiagnÃ³stico]]></text>
+				<text><![CDATA[Ranking por O.S]]></text>
 			</staticText>
 			<line>
 				<reportElement x="4" y="72" width="549" height="1"/>
@@ -85,10 +85,10 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Diagnóstico]]></text>
+				<text><![CDATA[O.S]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="81" y="20" width="284" height="15"/>
+				<reportElement x="81" y="20" width="361" height="15"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
@@ -99,7 +99,7 @@
 				<textElement textAlignment="Center">
 					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Cant.Pacientes]]></text>
+				<text><![CDATA[Descripción]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
@@ -119,18 +119,18 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{[0]}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="12" y="0" width="79" height="15"/>
+				<reportElement x="12" y="0" width="65" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{[1].cie10}==null?"SIN CODIGO":$F{[1].cie10}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{[1].id}!=null?($F{[1].id}+100000).toString().substring(1,6):"SIN O.S"]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
-				<reportElement x="116" y="0" width="344" height="15"/>
+				<reportElement x="81" y="0" width="361" height="15"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{[1].descripcion}==null?"SIN DIAGNOSTICO":$F{[1].descripcion}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{[1].descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

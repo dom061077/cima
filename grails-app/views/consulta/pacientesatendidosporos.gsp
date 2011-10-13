@@ -7,7 +7,6 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgcharts.pack.js')}"></script>        
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jquery.metadata.pack.js')}"></script>        
-        <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgtable.pack.js')}"></script>        
         <title>Pacientes Atendidos</title>
         <script type="text/javascript">
         	var buscar=<%out << "${buscar}"%>;
@@ -36,56 +35,8 @@
         				}
         	        }); 	
 
-        		$("#cie10Id").lookupfield({
-        			source:"<% out << g.createLink(controller:'cie10',action:'listsearchjson')%>",
-        			title:'Búsqueda de CIE10',
-        			colnames:['Id','Descripción'],
-        			colModel:[
-        					{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-        					{name:'cie10',index:'cie10', width:100,  sortable:true,search:true},
-        					{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true}	
-        				],
-        			hiddenid:'cie10IdId',
-        			descid:'cie10Id',
-        			hiddenfield:'id',
-        			descfield:['descripcion']	
-        		});	
-        		
-        		$("#cie10Id").autocomplete({
-        				source: "<% out << g.createLink(controller:"cie10",action:'listjsonautocomplete')%>",
-        				minLength:2,
-        				select: function(event,ui){
-        					if(ui.item){
-        						$("#cie10IdId").val(ui.item.id);
-        					}
-        				}
-        	        });
 
-        		$("#profesionalId").lookupfield({
-        			source:"<% out << g.createLink(controller:'profesional',action:'listsearchjson')%>",
-        			title:'Búsqueda de Profesional',
-        			colnames:['Id','Nombre'],
-        			colModel:[
-        					{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-        					{name:'nombre',index:'nombre', width:100,  sortable:true,search:true},	
-        				],
-        			hiddenid:'profesionalIdId',
-        			descid:'profesionalId',
-        			hiddenfield:'id',
-        			descfield:['nombre']	
-        		});	
-        		
-        		$("#profesionalId").autocomplete({
-        				source: "<% out << g.createLink(controller:"profesional",action:'listjsonautocomplete')%>",
-        				minLength:2,
-        				select: function(event,ui){
-        					if(ui.item){
-        						$("#profesionalIdId").val(ui.item.id);
-        					}
-        				}
-        	        }); 
     	         
-        		 jQuery(".jgtable").jgtable();        		
             });
         </script>
 	</head>
@@ -122,15 +73,6 @@
 							<div class="clear"></div>
 							
 							<div class="span-2 spanlabel">
-								<label for="profesional">Profesional:</label>
-							</div>
-							<div class="span-4">
-								<g:textField id="profesionalId" class="ui-widget ui-corner-all ui-widget-content" name="profesional" value="${cmdInstance.profesional}"/>
-								<g:hiddenField id="profesionalIdId" name="profesionalId" value="${cmdInstance.profesionalId}"/>
-							</div>        				
-							<div class="clear"></div>
-		
-							<div class="span-2 spanlabel">
 								<label for="obraSocial">Obra Social:</label>
 							</div>
 							<div class="span-4">
@@ -139,14 +81,6 @@
 							</div>        				
 							<div class="clear"></div>
 							
-							<div class="span-2 spanlabel">
-								<label for="cie10">Diagnóstico:</label>
-							</div>
-							<div class="span-4">
-								<g:textField id="cie10Id" class="ui-widget ui-corner-all ui-widget-content" name="cie10" value="${cmdInstance.cie10}"/>
-								<g:hiddenField id="cie10IdId" name="cie10Id" value="${cmdInstance.cie10Id}"/>
-							</div>   
-							<div class="clear"></div>     				
 							<div class="span-3  prepend-2"><g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" 
 															value="${message(code: 'default.button.search.label', default: 'Create')}"/> </div>
 												        				
@@ -168,6 +102,9 @@
 	        			</div>
 	        		</div>
 	        		<div id="tabs-2">
+	        					<g:if test="${osGraph?.size()>0}">
+	        						<img alt="" src="${resource(dir:"images",file:"piechartos.png")}?dummy=${new java.util.Random().nextInt()}">
+	        					</g:if>	
 	        		</div>    
 	            </div>
             </div>
