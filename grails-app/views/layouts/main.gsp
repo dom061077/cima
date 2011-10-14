@@ -18,7 +18,7 @@
 
          <link rel="stylesheet" href="${resource(dir:'css',file:'jquery-ui-1.8.11.custom.css')}" />
         
-        <link rel="shortcut icon" href="${resource(dir:'images',file:'cima.ico')}" type="image/x-icon" />
+        <link rel="shortcut icon" href="${resource(dir:'images',file:'icono.ico')}" type="image/x-icon" />
         
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery-1.5.1.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'jquery-ui-1.8.11.custom.min.js')}"></script>
@@ -149,12 +149,17 @@
 
 
 <div class="span-24 last append-bottom" >
-	<div class="span-12 prepend-2 colborder">    
-            <g:isLoggedIn>
-				<div>
-					Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
-				</div>
-			</g:isLoggedIn>
+	<div class="span-12 prepend-2">
+			<div class="span-24">
+				<img alt="" src="${resource(dir:"images", file:"cabecera.jpg")}"/>
+			</div>    
+			<div class="span-5 prepend-15">
+	            <g:isLoggedIn>
+					<div>
+						Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
+					</div>
+				</g:isLoggedIn>
+			</div>
            	<g:isLoggedIn>
 		            <ul class="dropdown dropdown-horizontal" >
 						<li><a href="#" class="dir">Archivo</a>

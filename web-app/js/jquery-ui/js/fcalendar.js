@@ -98,7 +98,8 @@ function guiCreate(start, end, allDay) {
 					endmonth:end.getMonth(),
 					endday:end.getDate(),
 					endhours:end.getHours(),
-					endminutes:end.getMinutes()
+					endminutes:end.getMinutes(),
+					estado:'EVENT_PENDIENTE'
 				};
 				//refrescarflag=true;
 				//if (!paciente) {
@@ -233,23 +234,27 @@ function guiUpdateClick(calEvent, jsEvent, view) {
 		position : 'center',
 		resizable : false,
 		open: function(event,ui){
+			$('#estadoEventDivId').show();
 			refrescarflag=false;
 			$("#paciente").val(calEvent.title)
 			$("#pacienteId").val(calEvent.pacienteId);
 			$("#fechaStartId").val(calEvent.fechaStart);
-			$("#fechaEndId").val(calEvent.fechaEnd);			
+			$("#fechaEndId").val(calEvent.fechaEnd);
+			//$("#estadoEventId option[value='"+calEvent.estado.name+"']").attr("selected", "selected");
+			$('#estadoEventId').val(calEvent.estado.name);
 		},
 		width : "340px",
 		close : function() {
 			//$(id).html('');
 			refrescarflag=true;
+			$('#estadoEventDivId').hide();
 		},
 		buttons : {
 			"Guardar" : function() {
 				textNew = '';
 				$(id).dialog("close");
 				serverUpdateTitle(calEvent, textNew);
-				$('#calendar').fullCalendar('refetchEvents')
+				
 			},
 			"Cancelar" : function() {
 				$(id).dialog("close");
@@ -288,7 +293,7 @@ function serverUpdateTitle(calEvent, textNew) {
 			$.ajax( {
 				type : 'GET',
 				url : loc,
-				data : 'cmd=update&id=' + calEvent.id + '&paciente.id='+$("#pacienteId").val()+'&titulo='+$("#paciente").val()+'&version='+calEvent.version,
+				data : 'cmd=update&id=' + calEvent.id + '&paciente.id='+$("#pacienteId").val()+'&titulo='+$("#paciente").val()+'&version='+calEvent.version+'&estado='+$('#estadoEventId').val(),
 						
 				success : function(msg) {
 					if (!msg.result.success) {
@@ -297,6 +302,7 @@ function serverUpdateTitle(calEvent, textNew) {
 					}
 					calEvent.title = msg.result.title;
 					$('#calendar').fullCalendar('updateEvent', calEvent);
+					$('#calendar').fullCalendar('refetchEvents')
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					$(

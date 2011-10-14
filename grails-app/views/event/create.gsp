@@ -349,7 +349,7 @@
 				</div>
 				
         		<div class="clear"></div>
-				<div class="span-2 spanlabel">
+				<div class="span-2">
         			<label for="paciente">Paciente:</label>
         		</div>	
         		<div class="span-4">
@@ -360,16 +360,25 @@
         			<label for="fechaStart">Fecha Inicio:</label>
         		</div>
         		<div class="span4">
-        			<input disabled="disabled" name="fechaStart" id="fechaStartId"/>
+        			<input class="ui-widget ui-corner-all ui-widget-content" disabled="disabled" name="fechaStart" id="fechaStartId"/>
         		</div>
         		<div class="clear"></div>
         		<div class="span-2">
         			<label for="fechaEnd">Fecha Fin:</label>
         		</div>
         		<div class="span4">
-        			<input disabled="disabled" name="fechaEnd" id="fechaEndId"/>
+        			<input class="ui-widget ui-corner-all ui-widget-content" disabled="disabled" name="fechaEnd" id="fechaEndId"/>
         		</div>
-        		
+        		<div class="clear"></div>
+        		<div style="display:none" id="estadoEventDivId">
+	        		<div  class="span-2">
+	        			<label for="estado">Estado:</label>
+	        		</div>
+	        		<div class="span-4">
+						<g:select  id="estadoEventId" class="ui-widget ui-corner-all ui-widget-content"  name="estado" from="${com.medfire.enums.EstadoEvent?.list(com.medfire.enums.EstadoEvent.EVENT_ATENDIDO)}" 
+			                           	optionValue="name" />        			
+	        		</div>
+				</div>        		
 <%--        		<div class="clear"></div>--%>
 <%--        		<div class="span-2 spanlabel">--%>
 <%--        			Inicio:--%>

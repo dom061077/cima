@@ -174,7 +174,7 @@ class EventController {
 					if(e.estado==EstadoEvent.EVENT_ANULADO)
 						backgroundColor=grailsApplication.config.event.COLOR_ANULADO
 
-					evento id: e.id,pacienteId:e.paciente?.id, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
+					evento id: e.id,pacienteId:e.paciente?.id,estado:e.estado, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
 				}
 			}
 		}
@@ -294,6 +294,7 @@ class EventController {
             }
             else {
                 //render(view: "edit", model: [eventInstance: eventInstance])
+				log.debug "ERROR DE VALIDACION: "+eventInstance.errors.allErrors
                 render (contentType:"text/json"){
                 	result success:false,title:"Error, datos incompletos"
                 }

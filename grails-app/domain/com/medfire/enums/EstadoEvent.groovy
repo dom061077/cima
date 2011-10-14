@@ -12,7 +12,13 @@ public enum EstadoEvent {
 		this.name=name
 	}
 	
-	static list(){
+	static list (def excluded=null){
+		def listint = listinterno()
+		listint.remove(excluded)
+		return listint
+	}
+	
+	private static listinterno(){
 		[EVENT_ATENDIDO,EVENT_AUSENTE,EVENT_ANULADO,EVENT_PENDIENTE]
 	}
 	

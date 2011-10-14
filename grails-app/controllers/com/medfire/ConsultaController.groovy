@@ -1035,11 +1035,12 @@ class ConsultaController {
 				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
 			}
 			if(params.obraSocialId){
-				paciente{
-					obraSocial{
-						eq("id",params.obraSocialId.toLong())
-					}
-				}
+//				paciente{
+//					obraSocial{
+//						eq("id",params.obraSocialId.toLong())
+//					}
+//				}
+				eq("p.obraSocial.id",params.obraSocialId.toLong())
 			}
 			
 			order("p.apellido","desc")
