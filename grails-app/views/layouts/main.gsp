@@ -205,7 +205,7 @@
 							<ul>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
-								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por Primera Vez</a></li>
+								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Cantidad de visitas de un paciente</a></li>								
 							</ul>

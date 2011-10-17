@@ -812,7 +812,6 @@ class ConsultaController {
 					eq("id",params.cie10Id.toLong())
 				}
 			}
-			createAlias("evento","e")
 			projections {
 				count ("paciente.id")
 				groupProperty 'cie10'
@@ -820,6 +819,8 @@ class ConsultaController {
 		}
 		chain(controller:'jasper',action:'index',model:[data:listdiagnostico],params:params)
 	}
+	
+	//-----------------------------------------------
 	
 	def pacientesatendidosporos = {
 		log.info "INGRESANDO AL CLOSURE pacientesatendidosporos"
@@ -936,8 +937,138 @@ class ConsultaController {
 		}
 		
 	}
+	//-------------------------------------------------
+	def pacientesatendidosporprimeravez = {
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporprimeravez"
+		log.info "PARAMETROS: $params"
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+
+	}
 	
+	def pacientesatendidosporprimeravezbuscar = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE: pacientesatendidosporprimeravezbuscar"
+		log.info "PARAMETROS: $params"
+		log.info "PROPIEDADES COMMAND: "+cmd.properties
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		if(cmd.validate()){
+			render(view:"pacientesatendidosporprimeravez", model:[cmdInstance:cmd, buscar:true])
+			
+		}else{
+			log.debug "ERRORES: "+cmd.errors.allErrors
+			render(view:"pacientesatendidosporprimeravez", model:[cmdInstance:cmd, buscar:false])
+		}
+
+	}
 	
+	def pacientesatendidosporprimeravezjson = {ConsultaCommand cmd ->
+		log.info "INGRESANDO AL CLOSURE"
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		if(cmd.validate()){
+			list=Consulta.createCriteria().list(){
+				createAlias("paciente","p")
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.obraSocialId){
+					//paciente{
+					//	obraSocial{
+							eq("p.obraSocial.id",params.obraSocialId.toLong())
+					//	}
+					//}
+				}
+				
+				/*def detachedCriteria = DetachedCriteria.forClass(ProductCatalog.class).setProjection(Property.forName("key")).add(Restrictions.eq("productCatalogId", "Printer"))
+				
+				def tenPrinterProducts = Product.createCriteria().list {
+					criteria.add(Subqueries.propertyIn("catalog.key", detachedCriteria))
+					maxResults(10)
+				}*/
+				
+				
+				projections {
+					countDistinct "id", "cantidad"
+					groupProperty 'paciente'
+					gt("cantidad",1)
+				}
+				
+				
+				
+				order("p.apellido","desc")
+				
+				
+
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+				maxResults(params.rows.toInteger())
+
+				
+			}
+			totalregistros=Consulta.createCriteria().get(){
+				if(params.fechaDesde){
+					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+				projections{
+					rowCount()
+				}
+
+			}
+			if(list){
+				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+				if (totalpaginas>0 && totalpaginas<1)
+					totalpaginas=1
+				totalpaginas = totalpaginas.intValue()
+				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+				list.each{
+					if(flagcomilla)
+						result=result+','
+					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'"]}'
+					flagcomilla=true
+				}
+				result=result+']}'
+				render result
+			}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+			}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+		}
+
+	}
+	
+	//-----------------------------------------
 	def reporteporos = {
 		log.info "INGRESANDO AL CLOSURE reporteporos"
 		log.info "PARAMETROS: $params"
