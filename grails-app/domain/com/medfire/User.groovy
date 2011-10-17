@@ -46,5 +46,6 @@ class User {
 	
 	static mapping = {
 		profesionalAsignado lazy:false
+		profesionalAsignado cascade:'none'
 	}
 }

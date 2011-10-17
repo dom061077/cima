@@ -1,11 +1,17 @@
 package com.medfire
-
+//http://fokot.blogspot.com/2011/06/having-clause-in-hibernate-criteria-no.html
 import java.text.DateFormat
 
 import java.text.ParsePosition;
 import java.text.SimpleDateFormat
 import java.text.ParseException
 import java.util.List;
+
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Criterion;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections
+import org.hibernate.criterion.Subqueries
 
 import com.medfire.util.GUtilDomainClass
 import grails.converters.JSON
@@ -584,7 +590,7 @@ class ConsultaController {
 							eq("id",params.cie10Id.toLong())
 						}
 					}
-					createAlias("evento","e")
+					//createAlias("evento","e")
 					projections {
 						count ("paciente.id")
 						groupProperty 'cie10'
@@ -976,66 +982,48 @@ class ConsultaController {
 		def totalpaginas
 		def list
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		def detachedCriteria = DetachedCriteria.forClass(Consulta.class,"inner")
+		detachedCriteria.setProjection(Projections.rowCount())
+		Criterion c1 = Restrictions.and(Restrictions.and(Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)),Restrictions.eq("paciente.id","outer.paciente.id"))
+		
+		detachedCriteria.add(c1)
+		//detachedCriteria.setProjection(Projections.groupProperty("paciente.id"))
+		detachedCriteria.setProjection(Projections.min("fechaConsulta"))
 		if(cmd.validate()){
-			list=Consulta.createCriteria().list(){
-				createAlias("paciente","p")
-				if(params.fechaDesde){
-					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
-					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
-				}
-				if(params.fechaHasta){
-					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
-					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
-				}
-				if(params.obraSocialId){
-					//paciente{
-					//	obraSocial{
-							eq("p.obraSocial.id",params.obraSocialId.toLong())
-					//	}
-					//}
-				}
+			def criteria=session.createCriteria(Consulta.class,"outer")
+			criteria.add(Restrictions.and(
+									Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)
+									)
+						)
+			//criteria.setProjection()
 				
-				/*def detachedCriteria = DetachedCriteria.forClass(ProductCatalog.class).setProjection(Property.forName("key")).add(Restrictions.eq("productCatalogId", "Printer"))
-				
-				def tenPrinterProducts = Product.createCriteria().list {
-					criteria.add(Subqueries.propertyIn("catalog.key", detachedCriteria))
-					maxResults(10)
-				}*/
+			criteria.add(Subqueries.ge(fechaDesde,detachedCriteria))	  
 				
 				
-				projections {
-					countDistinct "id", "cantidad"
-					groupProperty 'paciente'
-					gt("cantidad",1)
-				}
-				
-				
-				
+/*				instance
 				order("p.apellido","desc")
 				
 				
 
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
-				maxResults(params.rows.toInteger())
+				maxResults(params.rows.toInteger())*/
 
 				
 			}
 			totalregistros=Consulta.createCriteria().get(){
+				createAlias("paciente","p")
 				if(params.fechaDesde){
-					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
 				}
 				if(params.fechaHasta){
-					java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
 					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
 				}
 				if(params.obraSocialId){
-					paciente{
-						obraSocial{
-							eq("id",params.obraSocialId.toLong())
-						}
-					}
+							eq("p.obraSocial.id",params.obraSocialId.toLong())
 				}
+				instance.add(Subqueries.ge(fechaDesde,detachedCriteria))
 				projections{
 					rowCount()
 				}
@@ -1065,6 +1053,7 @@ class ConsultaController {
 				result=result+']}'
 				render result
 		}
+		
 
 	}
 	

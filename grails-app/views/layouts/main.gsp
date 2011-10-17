@@ -149,10 +149,11 @@
 
 
 <div class="span-24 last append-bottom" >
-	<div class="span-12 prepend-2">
 			<div class="span-24">
 				<img alt="" src="${resource(dir:"images", file:"cabecera.jpg")}"/>
 			</div>    
+
+	<div class="span-12 prepend-2">
 			<div class="span-5 prepend-15">
 	            <g:isLoggedIn>
 					<div>
@@ -222,7 +223,7 @@
 		<div class="span-22 prepend-2 last">
 	        	<g:layoutBody />
 		</div>	
-        <div class="span-24 last prepend-top">
+        <div style="background:url(${resource(dir:"images",file:"bkpie.jpg")})" class="span-24 last prepend-top">
         	<p style="text-align:center">
             &copy; Copyright 2011 &lt;INAP&gt; | Design by: Marca Registrada
             </p>
