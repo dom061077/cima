@@ -17,6 +17,9 @@ import com.medfire.util.GUtilDomainClass
 import grails.converters.JSON
 import com.medfire.util.ChartGenerator
 import pl.burningice.plugins.image.container.ContainerUtils
+import org.codehaus.groovy.grails.commons.ApplicationHolder as AH
+import org.hibernate.SessionFactory
+import org.hibernate.Session
 
 class ConsultaController {
 
@@ -974,9 +977,14 @@ class ConsultaController {
 	}
 	
 	def pacientesatendidosporprimeravezjson = {ConsultaCommand cmd ->
-		log.info "INGRESANDO AL CLOSURE"
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporprimeravezjson"
+		log.info "PARAMETROS: $params"
 		def result
 		
+		//def ctx = AH.application.mainContext
+		//def sessionFactory = ctx.sessionFactory
+		//def sessionH = sessionFactory.currentSession
+				
 		def flagcomilla=false
 		def totalregistros
 		def totalpaginas
@@ -986,32 +994,54 @@ class ConsultaController {
 		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
 		def detachedCriteria = DetachedCriteria.forClass(Consulta.class,"inner")
 		detachedCriteria.setProjection(Projections.rowCount())
-		Criterion c1 = Restrictions.and(Restrictions.and(Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)),Restrictions.eq("paciente.id","outer.paciente.id"))
+		Criterion c1 = Restrictions.and(Restrictions.and(Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)),Restrictions.eqProperty("inner.paciente.id","p.id"))
 		
 		detachedCriteria.add(c1)
 		//detachedCriteria.setProjection(Projections.groupProperty("paciente.id"))
 		detachedCriteria.setProjection(Projections.min("fechaConsulta"))
 		if(cmd.validate()){
-			def criteria=session.createCriteria(Consulta.class,"outer")
+			/*def criteria = sessionH.createCriteria(Consulta.class,"outer")
 			criteria.add(Restrictions.and(
 									Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)
 									)
 						)
 			//criteria.setProjection()
-				
-			criteria.add(Subqueries.ge(fechaDesde,detachedCriteria))	  
-				
-				
-/*				instance
-				order("p.apellido","desc")
-				
-				
-
+			criteria.setProjection(Projections.property("paciente"))	
+			criteria.add(Subqueries.le(fechaDesde,detachedCriteria))	
+			list = criteria.list()  
+			log.debug "CANTIDAD DE OBJETOS DEVUELTOS: "+list?.size()
+			list?.each{
+				log.debug "ESTRUCTURA DE OBJETO DEVUELTO: "+it.properties
+				log.debug "OBJETO DEVUELTO: "+it
+			}	*/
+			list = Consulta.createCriteria().list(){
+				and{
+					if(params.fechaDesde)
+						ge("fechaConsulta",fechaDesde)
+					if(params.fechaHasta)	
+						le("fechaConsulta",fechaHasta)
+					if(params.obraSocialId){
+						paciente{
+							obraSocial{
+								eq("id",params.obraSocialId.toLong())
+							}
+						}
+					}	
+						
+				}
+				createAlias("paciente","p")
+				ge("fechaConsulta",fechaDesde)
+				le("fechaConsulta",fechaHasta)
+				projections{
+					count("p.id")
+					groupProperty("paciente")
+					instance.add(Subqueries.le(fechaDesde,detachedCriteria))
+				}
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
-				maxResults(params.rows.toInteger())*/
-
-				
+				maxResults(params.rows.toInteger())
+				order("p.apellido","desc")
 			}
+				
 			totalregistros=Consulta.createCriteria().get(){
 				createAlias("paciente","p")
 				if(params.fechaDesde){
@@ -1023,9 +1053,9 @@ class ConsultaController {
 				if(params.obraSocialId){
 							eq("p.obraSocial.id",params.obraSocialId.toLong())
 				}
-				instance.add(Subqueries.ge(fechaDesde,detachedCriteria))
 				projections{
-					rowCount()
+					countDistinct("p.id")
+					instance.add(Subqueries.le(fechaDesde,detachedCriteria))
 				}
 
 			}
@@ -1038,7 +1068,7 @@ class ConsultaController {
 				list.each{
 					if(flagcomilla)
 						result=result+','
-					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'"]}'
+					result=result+'{"id":"'+it[1].id+'","cell":["'+it[1].id+'","'+it[1].apellido+'-'+it[1].nombre+'","'+(it[1].obraSocial?.descripcion!=null?it[1].obraSocial?.descripcion:"")+'"]}'
 					flagcomilla=true
 				}
 				result=result+']}'
@@ -1170,6 +1200,80 @@ class ConsultaController {
 			}
 		}
 		chain(controller:'jasper',action:'index',model:[data:listos],params:params)
+
+	}
+	
+	def reporteporprimeravez = {
+		log.info "INGRESANDO AL CLOSURE reporteporprimeravez"
+		log.info "PARAMEETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","pacientesatendidosporprimeravez")
+		params.put("_file","pacientesatendidosporprimeravez")
+
+		
+		def listPrimeravez
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		def detachedCriteria = DetachedCriteria.forClass(Consulta.class,"inner")
+		detachedCriteria.setProjection(Projections.rowCount())
+		Criterion c1 = Restrictions.and(Restrictions.and(Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)),Restrictions.eqProperty("inner.paciente.id","p.id"))
+		
+		detachedCriteria.add(c1)
+		//detachedCriteria.setProjection(Projections.groupProperty("paciente.id"))
+		detachedCriteria.setProjection(Projections.min("fechaConsulta"))
+
+		listPrimeravez = Consulta.createCriteria().list(){
+			and{
+				if(params.fechaDesde)
+					ge("fechaConsulta",fechaDesde)
+				if(params.fechaHasta)
+					le("fechaConsulta",fechaHasta)
+				if(params.obraSocialId){
+					paciente{
+						obraSocial{
+							eq("id",params.obraSocialId.toLong())
+						}
+					}
+				}
+					
+			}
+			createAlias("paciente","p")
+			ge("fechaConsulta",fechaDesde)
+			le("fechaConsulta",fechaHasta)
+			projections{
+				count("p.id")
+				groupProperty("paciente")
+				instance.add(Subqueries.le(fechaDesde,detachedCriteria))
+			}
+			order("p.apellido","desc")
+		}
+
+		
+		chain(controller:'jasper',action:'index',model:[data:listPrimeravez],params:params)
 
 	}
 	

@@ -14,7 +14,7 @@ environments {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "root"
-			password = "exito"
+			password = ""
 		
             dbCreate = "update" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/medfireweb"
