@@ -153,7 +153,7 @@
 				<img alt="" src="${resource(dir:"images", file:"cabecera.jpg")}"/>
 			</div>    
 
-	<div class="span-12 prepend-2">
+	<div class="span-12">
 			<div class="span-5 prepend-15">
 	            <g:isLoggedIn>
 					<div>
@@ -207,7 +207,7 @@
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
-								<li><a href="${createLink(controller:"consulta",action:"list")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
+								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporgrupodiag")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
 								<li><a href="${createLink(controller:"consulta",action:"list")}">Cantidad de visitas de un paciente</a></li>								
 							</ul>
 						</li>
@@ -220,7 +220,7 @@
 		</div>
 	</g:isLoggedIn>	            
 </div> <!-- cierre del div de la cabecera -->
-		<div class="span-22 prepend-2 last">
+		<div class="span-22 last">
 	        	<g:layoutBody />
 		</div>	
         <div style="background:url(${resource(dir:"images",file:"bkpie.jpg")})" class="span-24 last prepend-top">

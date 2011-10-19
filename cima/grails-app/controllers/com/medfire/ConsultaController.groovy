@@ -359,6 +359,8 @@ class ConsultaController {
 
 	}
 	
+	
+	
 	def pacientesatendidosbuscar = { ConsultaCommand cmd ->
 		log.info "INGRESANDO AL CLOSURE pacientesatendidosbuscar"
 		log.info "PARAMETROS: $params" 
@@ -829,6 +831,59 @@ class ConsultaController {
 		chain(controller:'jasper',action:'index',model:[data:listdiagnostico],params:params)
 	}
 	
+	def reportepordiagdetalle = {
+		log.info "INGRESANDO AL CLOSURE reportepordiagdetalle"
+		log.info "PARAMETROS: $params"
+		log.info "INGRESANDO AL CLOSURE reportepordiag"
+		log.info "PARAMETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","diagnostico")
+		params.put("_file","pacientesatendidospordiagdetalle")
+		
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def listdiagnostico = Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+
+			if(params.cie10Id){
+				cie10{
+					eq("id",params.cie10Id.toLong())
+				}
+			}
+		}
+		chain(controller:'jasper',action:'index',model:[data:listdiagnostico],params:params)
+
+	}
+	
 	//-----------------------------------------------
 	
 	def pacientesatendidosporos = {
@@ -852,9 +907,7 @@ class ConsultaController {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def osGraph
 		if(cmd.validate()){
-//			def profGraph = porprofesionalesgraph(params)
 			osGraph = porobrasocialgraph(params)
-//			def cie10Graph= pordiagnosticogrph(params)
 			render(view:"pacientesatendidosporos", model:[cmdInstance:cmd, buscar:true,osGraph:osGraph])
 			
 		}else{
@@ -1087,6 +1140,115 @@ class ConsultaController {
 
 	}
 	
+	//------------------------------------------------------
+	
+	def pacientesatendidosporgrupodiag = {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+		
+	}
+	
+	
+	def pacientesatendidosporgrupodiagbuscar = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE: pacientesatendidosporgrupodiag"
+		log.info "PARAMETROS: $params"
+		log.info "PROPIEDADES COMMAND: "+cmd.properties
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def diagGraph
+		if(cmd.validate()){
+			diagGraph = pordiagnosticogrph(params)
+			render(view:"pacientesatendidosporgrupodiag", model:[cmdInstance:cmd, buscar:true,diagGraph:diagGraph])
+			
+		}else{
+			log.debug "ERRORES: "+cmd.errors.allErrors
+			render(view:"pacientesatendidosporgrupodiag", model:[cmdInstance:cmd, buscar:false])
+		}
+		
+	}
+	
+	def pacientesatendidosporgrupodiagjson = {ConsultaCommand cmd ->
+		log.info "INGRESANDO AL CLOSURE pacientesatendidosporgrupodiagjson"
+		log.info "PARAMETROS: $params"
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		if(cmd.validate()){
+			list = Consulta.createCriteria().list(){
+				and{
+					if(params.fechaDesde)
+						ge("fechaConsulta",fechaDesde)
+					if(params.fechaHasta)
+						le("fechaConsulta",fechaHasta)
+					if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+					}
+				}
+					
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+				maxResults(params.rows.toInteger())
+				order("fechaConsulta","desc")
+			}
+				
+			totalregistros=Consulta.createCriteria().get(){
+				createAlias("paciente","p")
+				if(params.fechaDesde){
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+				}
+				projections{
+					rowCount()
+				}
+
+			}
+			if(list){
+				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+				if (totalpaginas>0 && totalpaginas<1)
+					totalpaginas=1
+				totalpaginas = totalpaginas.intValue()
+				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+				list.each{
+					if(flagcomilla)
+						result=result+','
+					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.fechaConsulta+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+(it.cie10!=null?it.cie10.id:"")+'","'+(it.cie10!=null?it.cie10.descripcion:"")+'","'+(it.paciente.obraSocial!=null?it.paciente.obraSocial?.descripcion:"")+'"]}'
+					flagcomilla=true
+				}
+				result=result+']}'
+				render result
+			}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+			}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+		}
+		
+
+	}
+
 	//-----------------------------------------
 	def reporteporos = {
 		log.info "INGRESANDO AL CLOSURE reporteporos"
@@ -1276,6 +1438,79 @@ class ConsultaController {
 		chain(controller:'jasper',action:'index',model:[data:listPrimeravez],params:params)
 
 	}
+	
+	def reportepordiagranking = {
+		log.info "INGRESANDO AL CLOSURE reportepordiagranking"
+		log.info "PARAMETROS: $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","pacientesatendidospordiagranking")
+		params.put("_file","pacientesatendidospordiagranking")
+
+		
+		def listPrimeravez
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		def detachedCriteria = DetachedCriteria.forClass(Consulta.class,"inner")
+		detachedCriteria.setProjection(Projections.rowCount())
+		Criterion c1 = Restrictions.and(Restrictions.and(Restrictions.ge("fechaConsulta",fechaDesde),Restrictions.le("fechaConsulta", fechaHasta)),Restrictions.eqProperty("inner.paciente.id","p.id"))
+		
+		detachedCriteria.add(c1)
+		//detachedCriteria.setProjection(Projections.groupProperty("paciente.id"))
+		detachedCriteria.setProjection(Projections.min("fechaConsulta"))
+
+		listPrimeravez = Consulta.createCriteria().list(){
+			and{
+				if(params.fechaDesde)
+					ge("fechaConsulta",fechaDesde)
+				if(params.fechaHasta)
+					le("fechaConsulta",fechaHasta)
+				if(params.cie10Id){
+					cie10{
+							eq("id",params.cie10Id.toLong())
+					}
+				}
+					
+			}
+			createAlias("paciente","p")
+			ge("fechaConsulta",fechaDesde)
+			le("fechaConsulta",fechaHasta)
+			projections{
+				count("cie10.id","cantidad")
+				groupProperty("cie10")
+				instance.add(Subqueries.le(fechaDesde,detachedCriteria))
+			}
+			order("cantidad","desc")
+		}
+
+		
+		chain(controller:'jasper',action:'index',model:[data:listPrimeravez],params:params)
+		
+	} 
+	
 	
 }
 
