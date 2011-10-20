@@ -1,6 +1,8 @@
 package com.medfire
  
 class EstudioComplementario {
+	static auditable = true
+	
 	String pedido
 	String resultado
 	Consulta consulta

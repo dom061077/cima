@@ -4,7 +4,7 @@ import java.util.Date
 import com.medfire.enums.EstadoEvent;
 
 class Event {
-
+	static auditable = true
 	
 	Date fechaStart
 	Date fechaEnd

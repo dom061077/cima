@@ -8,6 +8,7 @@ import pl.burningice.plugins.image.ast.FileImageContainer
 
 @FileImageContainer(field = 'photo')
 class Profesional {
+	static auditable = true
 	
 	Integer matricula
 	String nombre

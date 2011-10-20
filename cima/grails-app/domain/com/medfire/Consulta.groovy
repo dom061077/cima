@@ -4,7 +4,8 @@ import java.sql.Date
 import com.medfire.enums.EstadoConsultaEnum
 
 class Consulta {
-
+	static auditable = true
+	
 	Date fechaConsulta = new java.sql.Date((new java.util.Date()).getTime())
 	Date fechaAlta = new java.sql.Date((new java.util.Date()).getTime())
 	String contenido

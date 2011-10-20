@@ -1,6 +1,7 @@
 package com.medfire
 
 class ObraSocial {
+	static auditable = true
 	
 	String descripcion
 	String razonSocial

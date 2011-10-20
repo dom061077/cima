@@ -1142,6 +1142,130 @@ class ConsultaController {
 	
 	//------------------------------------------------------
 	
+	def cantidadvisitasporpaciente = {
+		log.info "INGRESANDO AL CLOSURE: cantidadvisitasporpaciente"
+		log.info "PARAMETROS: $params"
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+		
+	}
+	
+	
+	def cantidadvisitasporpacientebuscar = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE: cantidadvisitasporpacientebuscar"
+		log.info "PARAMETROS: $params"
+		log.info "PROPIEDADES COMMAND: "+cmd.properties
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		if(cmd.validate()){
+			render(view:"cantidadvisitasporpaciente", model:[cmdInstance:cmd, buscar:true])
+			
+		}else{
+			log.debug "ERRORES: "+cmd.errors.allErrors
+			render(view:"cantidadvisitasporpaciente", model:[cmdInstance:cmd, buscar:false])
+		}
+		
+	}
+	
+	def cantidadvisitasporpacientejson = {ConsultaCommand cmd ->
+		log.info "INGRESANDO AL CLOSURE cantidadvisitasporpacientejson"
+		log.info "PARAMETROS: $params"
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		if(cmd.validate()){
+			list = Consulta.createCriteria().list(){
+				and{
+					if(params.fechaDesde)
+						ge("fechaConsulta",fechaDesde)
+					if(params.fechaHasta)
+						le("fechaConsulta",fechaHasta)
+					if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+					}
+					if(params.pacienteId){
+						paciente{
+							eq("id",params.pacienteId.toLong())
+						}
+					}
+				}
+				projections{
+					count("paciente.id")
+					groupProperty("paciente")
+					groupProperty("fechaConsulta")
+				}
+					
+				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+				maxResults(params.rows.toInteger())
+				order("fechaConsulta","desc")
+			}
+				
+			totalregistros=Consulta.createCriteria().get(){
+				createAlias("paciente","p")
+				if(params.fechaDesde){
+					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+				}
+				if(params.fechaHasta){
+					le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+				}
+				if(params.cie10Id){
+						cie10{
+							eq("id",params.cie10Id.toLong())
+						}
+				}
+				if(params.pacienteId){
+					paciente{
+						eq("id",params.pacienteId.toLong())
+					}
+				}
+
+				projections{
+					rowCount()
+				}
+
+			}
+			if(list){
+				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+				if (totalpaginas>0 && totalpaginas<1)
+					totalpaginas=1
+				totalpaginas = totalpaginas.intValue()
+				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+				list.each{
+					log.debug "OBJETO: $it,"
+					if(flagcomilla)
+						result=result+','
+					result=result+'{"id":"'+it[1].id+'","cell":["'+it[1].id+'","'+it[2]+'","'+it[1].apellido+'-'+it[1].nombre+'","'+(it[1].cie10!=null?it[1].cie10.id:"")+'","'+(it[1].cie10!=null?it[1].cie10.descripcion:"")+'","'+(it[1].obraSocial!=null?it[1].obraSocial?.descripcion:"")+'","'+it[0]+'"]}'
+					flagcomilla=true
+				}
+				result=result+']}'
+				render result
+			}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+			}
+		}else{
+				result='{"page":0,"total":"0","records":"0","rows":['
+				result=result+']}'
+				render result
+		}
+		
+
+	}
+	//-----------------------------------------
 	def pacientesatendidosporgrupodiag = {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
@@ -1522,6 +1646,8 @@ class ConsultaCommand{
 	String profesionalId
 	String obraSocial
 	String obraSocialId
+	String paciente
+	String pacienteId
 	String cie10
 	String cie10Id
 	static constraints = {
@@ -1544,6 +1670,21 @@ class ConsultaCommand{
 					def profesionalInstance = Profesional.load(v.toLong())
 					if(profesionalInstance){
 						cmd.profesional = profesionalInstance.nombre
+						return true
+					}else
+						return false
+				}catch(Exception e){
+					return false
+				}
+			}
+		})
+		
+		pacienteId(blank:true, validator:{v,cmd->
+			if(v){
+				try{
+					def pacienteInstance = Paciente.load(v.toLong())
+					if(pacienteInstance){
+						cmd.paciente = pacienteInstance.apellido+"-"+pacienteInstance.nombre
 						return true
 					}else
 						return false
