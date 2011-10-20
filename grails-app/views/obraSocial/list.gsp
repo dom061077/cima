@@ -74,10 +74,6 @@
 			<div id="pager" ></div>
        </div>
        
-            <%-- Reporte --%>
-            <g:jasperReport controller="obraSocial" action="listado" 
-            	jasper="obrassociales" format="HTML" name="obasSociales">
-            </g:jasperReport>
        
     </body>
 </html>

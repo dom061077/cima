@@ -3,6 +3,8 @@ package com.medfire
 import com.medfire.enums.ImpresionVademecumEnum
 
 class Prescripcion {
+	static auditable = true
+	
 	String nombreComercial
 	String nombreGenerico
 	String presentacion

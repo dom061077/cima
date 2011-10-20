@@ -6,6 +6,7 @@ import com.medfire.User
  * Authority domain class.
  */
 class Role {
+	static auditable = true
 
 	static hasMany = [people: User]
 

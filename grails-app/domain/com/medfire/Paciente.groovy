@@ -3,6 +3,8 @@ package com.medfire
 import com.medfire.enums.*
 
 class Paciente {
+	static auditable = true
+	
 	Long dni
 	String apellido
 	String nombre

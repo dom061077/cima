@@ -6,6 +6,8 @@ import com.medfire.Role
  * User domain class.
  */
 class User {
+	static auditable = true
+	
 	static transients = ['pass']
 	static hasMany = [authorities: Role,medicos:Profesional]
 	static belongsTo =Role
