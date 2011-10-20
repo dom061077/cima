@@ -1205,7 +1205,7 @@ class ConsultaController {
 				projections{
 					count("paciente.id")
 					groupProperty("paciente")
-					groupProperty("fechaConsulta")
+					groupProperty("cie10")
 				}
 					
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())

@@ -87,10 +87,6 @@
 			<div id="pager" ></div>
         </div>
         
-            <%-- Reporte --%>
-            <g:jasperReport controller="profesional" action="listado" 
-            	jasper="profesionales" format="HTML" name="profesionales">
-            </g:jasperReport>
         
     </body>
 </html>

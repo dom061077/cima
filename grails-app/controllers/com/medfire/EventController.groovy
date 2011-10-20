@@ -537,12 +537,24 @@ class EventController {
 		
 		
 		def flagaddcomilla=false
-		//log.debug "Total registros: "+totalregistros
+		def backgroundColor
+		
 		list.each{
+			
+			if(it.estado==EstadoEvent.EVENT_PENDIENTE)
+				backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
+			if(it.estado==EstadoEvent.EVENT_ATENDIDO)
+				backgroundColor=grailsApplication.config.event.COLOR_ATENDIDO
+			if(it.estado==EstadoEvent.EVENT_AUSENTE)
+				backgroundColor=grailsApplication.config.event.COLOR_AUSENTE
+			if(it.estado==EstadoEvent.EVENT_ANULADO)
+				backgroundColor=grailsApplication.config.event.COLOR_ANULADO
+			if(it.estado==EstadoEvent.EVENT_PENDIENTE)
+				backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE	
+				
 			if (flagaddcomilla)
 				result=result+','
-			log.debug "FECHA FORMATEADA CON EL TAG: "+g.formatDate(format:"dd/MM/yyyy hh:mm:ss",date:it.fechaStart)
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"hh:mm",date:it.fechaStart)+'","'+g.formatDate(format:"hh:mm",date:it.fechaEnd)+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"hh:mm",date:it.fechaStart)+'","'+g.formatDate(format:"hh:mm",date:it.fechaEnd)+'","'+backgroundColor+'"]}'
 			flagaddcomilla=true
 		}
 		
@@ -566,7 +578,7 @@ class EventController {
 					return
                 }
             }
-			if(eventInstance.paciente.consultas.size()){
+			if(eventInstance.consulta){
 				render(contentType:"text/json"){
 					result success:false,title:"Error, el turno ya fue atendido o tiene visitas vinculadas"
 				}
