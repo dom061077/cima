@@ -66,14 +66,15 @@
 						//scrollOffset:0,
 						//viewrecords: true,
 						datatype: "json",
-						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin'],
+						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin','BackgroundColor'],
 						colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
 								   {name:'titulo',index:'titulo', width:100,sorttype:'text',sortable:false},	
 								   {name:'cod_estado',index:'cod_estado', width:60,sortable:false,hidden:true,search:false},
 								   {name:'estado',index:'estado', width:60,sortable:false,hidden:false,search:false},
 								   {name:'version',index:'version', width:60,sortable:false,hidden:true,search:false},								   
 								   {name:'fechaStart',index:'fechaStart', width:60,sortable:false,hidden:false,search:false},
-								   {name:'fechaEnd',index:'fechaEnd', width:60,sortable:false,hidden:false,search:false}
+								   {name:'fechaEnd',index:'fechaEnd', width:60,sortable:false,hidden:false,search:false},
+								   {name:'backgroundColor',index:'backgroundColor', width:60,sortable:false,hidden:true,search:false}
 								 ], 
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
 				                        $('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
@@ -130,7 +131,18 @@
 									}
 								});
 						},
-						multiselect: false});
+						multiselect: false,
+						gridComplete: function(){
+							var ids = $("#listturnos").jqGrid('getDataIDs');
+							var obj;
+							for(var i=0;i < ids.length;i++){
+								obj = $("#listturnos").getRowData(ids[i]);
+								$("#listturnos").setCell (ids[i],'estado','',{'background':obj.backgroundColor});	
+							}
+							
+
+						}
+					});
 			//$("#listturnos").closest(".ui-jqgrid-bdiv").css({ 'overflow-y' : 'scroll' });
 			//for(var i=0;i<=mydata.length;i++) jQuery("#listturnos").jqGrid('addRowData',i+1,mydata[i]);
 			

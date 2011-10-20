@@ -220,7 +220,7 @@
 		</div>
 	</g:isLoggedIn>	            
 </div> <!-- cierre del div de la cabecera -->
-		<div class="span-22 last">
+		<div class="span-22 prepend-2 last">
 	        	<g:layoutBody />
 		</div>	
         <div style="background:url(${resource(dir:"images",file:"bkpie.jpg")})" class="span-24 last prepend-top">
