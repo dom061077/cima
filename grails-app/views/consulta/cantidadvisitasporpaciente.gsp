@@ -111,8 +111,8 @@
 								<label for="cie10">H.C.Pac:</label>
 							</div>
 							<div class="span-4">
-								<g:textField id="pacienteId" class="ui-widget ui-corner-all ui-widget-content" name="cie10" value="${cmdInstance.cie10}"/>
-								<g:hiddenField id="pacienteIdId" name="pacienteId" value="${cmdInstance.cie10Id}"/>
+								<g:textField id="pacienteId" class="ui-widget ui-corner-all ui-widget-content" name="paciente" value="${cmdInstance.paciente}"/>
+								<g:hiddenField id="pacienteIdId" name="pacienteId" value="${cmdInstance.pacienteId}"/>
 							</div>   
 							<div class="clear"></div>
 

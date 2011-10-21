@@ -1,17 +1,28 @@
 package com.medfire
 
 import groovy.sql.Sql
+import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import java.text.SimpleDateFormat
 import java.text.ParseException
 import java.text.ParsePosition;
 
 
 class AuditoriaController {
+	def dataSource
 
     def index = { }
 	
-	def consultabuscar = {AuditoriaCommand cmd ->
+	def consulta = {AuditoriaCommand cmd->
 		log.info "INGRESANDO AL CLOSURE consulta"
+		log.info "PARAMETROS: $params"		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new AuditoriaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+
+	}
+	
+	
+	def consultabuscar = {AuditoriaCommand cmd ->
+		log.info "INGRESANDO AL CLOSURE consultabuscar"
 		log.info "PARAMETROS: $params"
 		log.debug "COMMAND OBJECT: $cmd.properties"
 		if(cmd.validate()){
@@ -29,19 +40,29 @@ class AuditoriaController {
 		def result
 		
 		def flagcomilla=false
-		def totalregistros
-		def totalpaginas
+		def totalregistros=0
+		def totalpaginas=0
 		def list
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		def param = [fechaDesde:fechaDesde,fechaHasta:fechaHasta]
+		def sqlstr = "select * from audit_log where date_created between :fechaDesde and :fechaHasta"
 
 		if(cmd.validate()){
-			def sql = Sql.newInstance(ConfigurationHolder.config.db as String,
-				ConfigurationHolder.config.dbUsername as String,
-				ConfigurationHolder.config.dbPassword as String,
-				"com.mysql.jdbc.Driver")
-			list = sql.rows("""select * from audit_log """)
+			
+			log.debug "username: "+dataSource
+			def sql = Sql.newInstance(dataSource)
+			if(params.usuarioId){
+				sqlstr = sqlstr + " and actor = :actor"
+				param.put("actor", usuario)
+			}
+			if(params.tipoTransaccion){
+				sqlstr = sqlstr + " and event_name = :eventname"
+				param.put("eventname",params.tipoTransaccion)
+			}		
+			list = sql.rows(sqlstr,param)
+			log.debug "TAMAÑO DE LA LISTA: "+list.size()
 			
 			if(list){
 				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
@@ -49,12 +70,14 @@ class AuditoriaController {
 					totalpaginas=1
 				totalpaginas = totalpaginas.intValue()
 				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+				def i=1
 				list.each{
 					log.debug "OBJETO: $it,"
 					if(flagcomilla)
 						result=result+','
-					result=result+'{"id":"'+it[1].id+'","cell":["'+it[1].id+'","'+it[2]+'","'+it[1].apellido+'-'+it[1].nombre+'","'+(it[1].cie10!=null?it[1].cie10.id:"")+'","'+(it[1].cie10!=null?it[1].cie10.descripcion:"")+'","'+(it[1].obraSocial!=null?it[1].obraSocial?.descripcion:"")+'","'+it[0]+'"]}'
+					result=result+'{"id":"'+i+'","cell":["'+i+'","'+it.actor+'","'+it.class_name+'","'+it.date_created+'","'+it.event_name+'","'+it.last_updateed+'","'+it.+'"]}'
 					flagcomilla=true
+					i++
 				}
 				result=result+']}'
 				render result
@@ -72,7 +95,8 @@ class AuditoriaController {
 class AuditoriaCommand{
 	String fechaDesde
 	String fechaHasta
-	String nombreUsuario
+	String usuarioId
+	String usuario
 	String tipoTransaccion
 	
 	static constraints = {
@@ -89,7 +113,21 @@ class AuditoriaCommand{
 			return df.parse(v, new ParsePosition(0)) ? true : false
 		})
 		
-		nombreUsuario(blank:true,nullable:true)
+		usuarioId(blank:true,nullable:true,validator:{v,cmd ->
+			if(v){
+				try{
+					def usuarioInstance = User.load(v.toLong())
+					if(usuarioInstance){
+						cmd.usuario = usuarioInstance.apellido+"-"+usuarioInstance.nombre
+						return true
+					}else
+						return false
+				}catch(Exception e){
+					return false
+				}
+				return true
+			}
+		})
 		tipoTransaccion(blank:true,nullable:true)
 
 	}
