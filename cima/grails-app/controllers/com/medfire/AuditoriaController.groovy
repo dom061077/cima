@@ -5,6 +5,7 @@ import org.codehaus.groovy.grails.commons.ConfigurationHolder
 import java.text.SimpleDateFormat
 import java.text.ParseException
 import java.text.ParsePosition;
+import com.medfire.enums.TipoTransaccionEnum
 
 
 class AuditoriaController {
@@ -47,7 +48,7 @@ class AuditoriaController {
 		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
 		def param = [fechaDesde:fechaDesde,fechaHasta:fechaHasta]
-		def sqlstr = "select * from audit_log where date_created between :fechaDesde and :fechaHasta"
+		def sqlstr = "select * from audit_log where convert(date_created,DATE) between :fechaDesde and :fechaHasta"
 
 		if(cmd.validate()){
 			
@@ -55,27 +56,30 @@ class AuditoriaController {
 			def sql = Sql.newInstance(dataSource)
 			if(params.usuarioId){
 				sqlstr = sqlstr + " and actor = :actor"
-				param.put("actor", usuario)
+				param.put("actor", cmd.userName)
 			}
 			if(params.tipoTransaccion){
 				sqlstr = sqlstr + " and event_name = :eventname"
-				param.put("eventname",params.tipoTransaccion)
+				param.put("eventname",params.tipoTransaccion.substring(9,15))
+				log.debug "FILTRO APLICADO: "+params.tipoTransaccion.substring(9,15)
 			}		
 			list = sql.rows(sqlstr,param)
-			log.debug "TAMAÑO DE LA LISTA: "+list.size()
-			
+			log.debug "CONSULTA: "+sqlstr
 			if(list){
+				totalregistros = list.size()
 				totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+				def class_name=""
+				def sdf = new SimpleDateFormat("dd/MM/yyyy")
 				if (totalpaginas>0 && totalpaginas<1)
 					totalpaginas=1
 				totalpaginas = totalpaginas.intValue()
 				result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 				def i=1
 				list.each{
-					log.debug "OBJETO: $it,"
+					class_name = g.message(code:"${it.class_name}")
 					if(flagcomilla)
 						result=result+','
-					result=result+'{"id":"'+i+'","cell":["'+i+'","'+it.actor+'","'+it.class_name+'","'+it.date_created+'","'+it.event_name+'","'+it.last_updateed+'","'+it.+'"]}'
+					result=result+'{"id":"'+i+'","cell":["'+i+'","'+it.actor+'","'+class_name+'","'+sdf.format(it.date_created)+'","'+TipoTransaccionEnum."TIPOTRAN_${it.event_name}".name+'","'+sdf.format(it.last_updated)+'","'+it.new_value+'","'+it.old_value+'","'+it.persisted_object_id+'","'+it.property_name+'","'+it.uri+'"]}'
 					flagcomilla=true
 					i++
 				}
@@ -87,6 +91,12 @@ class AuditoriaController {
 				render result
 			}
 
+		}else{
+			result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+			result='{"page":0,"total":"0","records":"0","rows":['
+			result=result+']}'
+			render result
+
 		}
 
 	}
@@ -97,6 +107,7 @@ class AuditoriaCommand{
 	String fechaHasta
 	String usuarioId
 	String usuario
+	String userName
 	String tipoTransaccion
 	
 	static constraints = {
@@ -118,7 +129,8 @@ class AuditoriaCommand{
 				try{
 					def usuarioInstance = User.load(v.toLong())
 					if(usuarioInstance){
-						cmd.usuario = usuarioInstance.apellido+"-"+usuarioInstance.nombre
+						cmd.usuario = usuarioInstance.userRealName
+						cmd.userName = usuarioInstance.username
 						return true
 					}else
 						return false

@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('#tabs').tabs();
+	//	$('#tabs').tabs();
 	$("#fechaDesdeId" ).datepicker($.datepicker.regional[ "es" ]);
 	$("#fechaHastaId" ).datepicker($.datepicker.regional[ "es" ]);
 	
@@ -19,8 +19,19 @@ $(document).ready(function(){
 	   						return '';
 	   					else
 	   						return $('#cie10IdId').val();
-	   		}
-	   		
+	   				},
+	   		usuarioId:function(){
+	   					if($('#usuarioIdId').val()==undefined)
+	   						return '';
+	   					else
+	   						return $('#usuarioIdId').val();
+	   				},
+	   		tipoTransaccion:function(){
+				if($('#tipoTransaccionId').val()==undefined)
+					return '';
+				else
+					return $('#tipoTransaccionId').val();
+   				}		
 	   	},
 		datatype: "json",
 		width:680,
@@ -38,19 +49,19 @@ $(document).ready(function(){
 	   		{name:'oldvalue',index:'oldvalue',width:80,sortable:false},
 	   		{name:'persistedobjectid',index:'persistedobjectid',width:80,sortable:false},
 	   		{name:'propertyname',index:'propertyname',width:80,sortable:false},
-	   		{name:'uri',index:'uri',width:80,sortable:false}
+	   		{name:'uri',index:'uri',width:80,sortable:false,hidden:true}
 	   	],
 	   	
 	   	rowNum:10,
 	   	rownumbers:true,
 	   	rowList:[10,20,30],
-	   	pager: '#pagerdetalle',
+	   	//pager: '#pagerdetalle',
 	   	sortname: 'id',
 	    viewrecords: true,
 	    sortorder: "desc",
 	    caption:"Listado Detalle"
 	});
-	jQuery("#detallegrid").jqGrid('navGrid','#pagerdetalle',{edit:false,search:false,add:false,del:false,pdf:true});
+	/*jQuery("#detallegrid").jqGrid('navGrid','#pagerdetalle',{edit:false,search:false,add:false,del:false,pdf:true});
 
 	jQuery("#detallegrid").jqGrid('navButtonAdd','#pagerdetalle',{
 	       caption:"Detalle", 
@@ -85,6 +96,6 @@ $(document).ready(function(){
 	           window.location = 'reportepordiagranking?target=_blank&fechaDesde='+fechaDesde+'&fechaHasta='+fechaHasta
 	           						+'&cie10Id='+cie10Id;
 	       } 
-	});	
+	});	*/
 	
 });

@@ -338,6 +338,14 @@ class EventController {
 				}
 			}
 			
+			if (!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE)){
+				render(contentType:"text/json"){
+					result success:false,title:"Error, para mover un turno el mismo debe estar pendiente"
+				}
+				return
+				
+			}
+			
 	        GregorianCalendar gc = new GregorianCalendar(
 	        		Integer.parseInt(params.startyear)
 	        		,Integer.parseInt(params.startmonth)
