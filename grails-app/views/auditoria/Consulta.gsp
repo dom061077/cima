@@ -102,7 +102,7 @@
 								<label for="cie10">Usuario:</label>
 							</div>
 							<div class="span-4">
-									<g:select class="ui-widget ui-corner-all ui-widget-content"  name="usuarioId" from="${com.medfire.User.list()}"
+									<g:select class="ui-widget ui-corner-all ui-widget-content" id="usuarioIdId"  name="usuarioId" from="${com.medfire.User.list()}"
 											optionKey="id" 
 		                                 	optionValue="userRealName" value="${cmdInstance?.usuarioId}" noSelection="['': '']" />							</div>   
 							</div>   
@@ -112,8 +112,8 @@
 								<label for="cie10">Transacción:</label>
 							</div>
 							<div class="span-4">
-									<g:select class="ui-widget ui-corner-all ui-widget-content"  name="tipoTransaccion" from="${com.medfire.enums.TipoTransaccionEnum?.list()}" 
-		                                   	optionKey="name" optionValue="name" value="${cmdInstance?.tipoTransaccion?.name}" noSelection="['': '']" />									
+									<g:select class="ui-widget ui-corner-all ui-widget-content" id="tipoTransaccionId"  name="tipoTransaccion" from="${com.medfire.enums.TipoTransaccionEnum?.list()}" 
+		                                   	 optionValue="name" value="${cmdInstance?.tipoTransaccion}" noSelection="['': '']" />									
 							</div>
 							<div class="clear"></div>
 
@@ -128,17 +128,9 @@
       		</g:form>
       		<div class="clear"></div>
             <div class="span-20">
-	            <div id="tabs">
-	            	<ul>
-	            		<li><a href="#tabs-1">Detalle</a></li>
-	            	</ul>
-	        		<div id="tabs-1">
 	        			<table id="detallegrid">
 	        			</table>
 	        			<div id="pagerdetalle">
-	        			</div>
-	        		</div>
-	            </div>
             </div>
 		</div>	
 	</body>

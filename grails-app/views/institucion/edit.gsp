@@ -28,60 +28,58 @@
                 <g:hiddenField name="id" value="${institucionInstance?.id}" />
                 <g:hiddenField name="version" value="${institucionInstance?.version}" />
                 <div class="dialog">
-                    <table>
-                        <tbody>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="email"><g:message code="institucion.email.label" default="Email" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${institucionInstance?.email}" />
-                                </td>
-                            </tr>
+                            <div class="span-2 spanlabel">
+                                  <label for="email"><g:message code="institucion.email.label" default="Email:" /></label>
+                            </div>
+                            <div class="span-4">      
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="email" value="${institucionInstance?.email}" />
+                            </div>
+                            <div class="clear"></div>
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="direccion"><g:message code="institucion.direccion.label" default="Direccion" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'direccion', 'errors')}">
-                                    <g:textField name="direccion" value="${institucionInstance?.direccion}" />
-                                </td>
-                            </tr>
+                        	<div class="span-2 spanlabel">
+                                  <label for="direccion"><g:message code="institucion.direccion.label" default="Dirección:" /></label>
+                            </div>      
+                            <div class="span-4">
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="direccion" value="${institucionInstance?.direccion}" />
+                        	</div>
+                            <div class="clear"></div>                        	
+                        	
+                        	<div class="span-2 spanlabel">
+                                  <label for="nombre"><g:message code="institucion.nombre.label" default="Nombre:" /></label>
+                            </div>
+                            <div class="span-4">      
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${institucionInstance?.nombre}" />
+                        	</div>
+                            <div class="clear"></div>                        	
+
+
+                        	<div class="span-2 spanlabel">
+                                  <label for="telefonos"><g:message code="institucion.telefonos.label" default="Teléfonos:" /></label>
+                            </div>
+                            <div class="span-4">      
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefonos" value="${institucionInstance?.telefonos}" />
+                        	</div>
+                            <div class="clear"></div>                        	
+
+
+                        	<div class="span-2 spanlabel">
+                           		  <label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
+                            </div>
+                            <div class="span-4">      
+								  <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="imagen"/>                            	
+                        	</div>
+                            <div class="clear"></div>                        	
                         
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="nombre"><g:message code="institucion.nombre.label" default="Nombre" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'nombre', 'errors')}">
-                                    <g:textField name="nombre" value="${institucionInstance?.nombre}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                  <label for="telefonos"><g:message code="institucion.telefonos.label" default="Telefonos" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'telefonos', 'errors')}">
-                                    <g:textField name="telefonos" value="${institucionInstance?.telefonos}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                            	<td>
-                            		<label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
-                            	</td>
-                            	<td>
-									<input type="file" name="imagen"/>                            	
-                            	</td>
-                            </tr>
-                        
-                        </tbody>
-                    </table>
                 </div>
                 <div class="buttons">
-                    <span class="button"><g:actionSubmit class="save" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" /></span>
-                    <span class="button"><g:actionSubmit class="delete" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" /></span>
+                    <span class="button">
+                    	<g:actionSubmit class="ui-widget ui-corner-all ui-widget-content" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    </span>
+<%--                    <span class="button">--%>
+<%--                    		<g:actionSubmit class="ui-widget ui-corner-all ui-widget-content" action="delete"	value="${message(code: 'default.button.delete.label', default: 'Delete')}" 	--%>
+<%--        		            		onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Are you sure?')}');" />--%>
+<%--                    </span>--%>
                 </div>
             </form>
         </div>

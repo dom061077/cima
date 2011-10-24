@@ -28,96 +28,122 @@
                 <g:hiddenField name="id" value="${obraSocialInstance?.id}" />
                 <g:hiddenField name="version" value="${obraSocialInstance?.version}" />
                 <fieldset>
-                                  <label for="descripcion"><g:message code="obraSocial.descripcion.label" default="Descripcion" /></label>
                                   <g:hasErrors bean="${obraSocialInstance}" field="descripcion">
                                   		<div class="ui-state-error ui-corner-all">	
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="descripcion" value="${obraSocialInstance?.descripcion}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="descripcion"><g:message code="obraSocial.descripcion.label" default="Descripcion:" /></label>
+	                              </div>
+	                              <div class="span-4">    
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="descripcion" value="${obraSocialInstance?.descripcion}" />
+    	                          </div>    
                                   <g:hasErrors bean="${obraSocialInstance}" field="descripcion">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="descripcion"/>
                                   		</div>
                                   </g:hasErrors>
-                                  <br/>
-                
-                                  <label for="razonSocial"><g:message code="obraSocial.razonSocial.label" default="Razon Social" /></label>
+                                  <div class="clear"></div>
+						                                  
+
                                   <g:hasErrors bean="${obraSocialInstance}" field="razonSocial">
 										<div class="ui-state-error ui-corner-all">                                  		
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="razonSocial" value="${obraSocialInstance?.razonSocial}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="razonSocial"><g:message code="obraSocial.razonSocial.label" default="Razon Social" /></label>
+								  </div>	                  
+								  <div class="span-4">                
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="razonSocial" value="${obraSocialInstance?.razonSocial}" />
+                                  </div>
                                   <g:hasErrors bean="${obraSocialInstance}" field="razonSocial">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="razonSocial" />
                                   		</div>
                                   </g:hasErrors>
-                                  <br/>
+                                  <div class="clear"></div>                                  
+                                  
 
-
-                                  <label for="domicilio"><g:message code="obraSocial.domicilio.label" default="Domicilio" /></label>
                                   <g:hasErrors bean="${obraSocialInstance}" field="domicilio">
                                   		<div class="ui-state-error ui-corner-all">
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${obraSocialInstance?.domicilio}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="domicilio"><g:message code="obraSocial.domicilio.label" default="Domicilio" /></label>
+								  </div>	                  
+								  <div class="span-4">                
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="domicilio" value="${obraSocialInstance?.domicilio}" />
+                                  </div>
                                   <g:hasErrors bean="${obraSocialInstance}" field="domicilio">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="domicilio"/>
-                                  		</div>
-                                  </g:hasErrors>
-                                  <br/>
-                
-                                  <label for="codigoPostal"><g:message code="obraSocial.codigoPostal.label" default="Codigo Postal" /></label>
+        	                          		</div>
+		                          </g:hasErrors>
+                                  <div class="clear"></div>		                          
+                                  
+
                                   <g:hasErrors bean="${obraSocialInstance}" field="codigoPostal">
                                   		<div class="ui-state-error ui-corner-all">		
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="codigoPostal" value="${obraSocialInstance?.codigoPostal}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="codigoPostal"><g:message code="obraSocial.codigoPostal.label" default="Codigo Postal" /></label>
+								  </div>
+								  <div class="span-4">    	                              
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="codigoPostal" value="${obraSocialInstance?.codigoPostal}" />
+                                  </div>
                                   <g:hasErrors bean="${obraSocialInstance}" field="codigoPostal">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="codigoPostal"/>
                                   		</div>
                                   </g:hasErrors>
-                                  <br/>
+                                  <div class="clear"></div>                                  
+                                  
 
-                        
-                                  <label for="contacto"><g:message code="obraSocial.contacto.label" default="Contacto" /></label>
                                   <g:hasErrors bean="${obraSocialInstance}" field="contacto">
                                   		<div class="ui-state-error ui-corner-all">
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="contacto" value="${obraSocialInstance?.contacto}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="contacto"><g:message code="obraSocial.contacto.label" default="Contacto" /></label>
+    	                          </div>
+    	                          <div class="span-4">    	
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="contacto" value="${obraSocialInstance?.contacto}" />
+                                  </div>
                                   <g:hasErrors bean="${obraSocialInstance}" field="contacto">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="contacto" />
                                   		</div>
                                   </g:hasErrors>
-                                  <br/>
-                        
-                                  <label for="cuit"><g:message code="obraSocial.cuit.label" default="Cuit" /></label>
+                                  <div class="clear"></div>                                  
+                                  
                                   <g:hasErrors bean="${obraSocialInstance}" field="cuit">
                                   		<div class="ui-state-error ui-corner-all">
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${obraSocialInstance?.cuit}" />
+                                  <div class="span-2 spanlabel">
+	                                  <label for="cuit"><g:message code="obraSocial.cuit.label" default="Cuit" /></label>
+	                              </div>
+	                              <div class="span-4">    
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="cuit" value="${obraSocialInstance?.cuit}" />
+    	                          </div>    
                                   <g:hasErrors bean="${obraSocialInstance }" field="cuit">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="cuit"/>
                                   		</div>
                                   </g:hasErrors>
-								  <br/>	                        
+                                  <div class="clear"></div>								  	                        
 	                        
+                        		  <div class="span-2 spanlabel">		
+                                  	<label for="habilitada"><g:message code="obraSocial.habilitada.label" default="Habilitada" /></label>
+                                  </div>
+                                  <div class="span-4">	
+                                  	<g:checkBox name="habilitada" value="${obraSocialInstance?.habilitada}" />
+                                  </div>	
+                                  <div class="clear"></div>                        
                         
-                                  <label for="habilitada"><g:message code="obraSocial.habilitada.label" default="Habilitada" /></label>
-                                  <g:checkBox name="habilitada" value="${obraSocialInstance?.habilitada}" /><br/>
-                        
-                        
-                                  <label for="telefono"><g:message code="obraSocial.telefono.label" default="Telefono" /></label>
                                   <g:hasErrors bean="obraSocialInstance" field="telefono">
                                   		<div class="ui-state-error ui-corner-all">
                                   </g:hasErrors>
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefono" value="${fieldValue(bean: obraSocialInstance, field: 'telefono')}" />
+                                  <div class="span-2">
+	                                  <label for="telefono"><g:message code="obraSocial.telefono.label" default="Telefono" /></label>
+    	                          </div>
+    	                          <div class="span-4">    
+    	                              <g:textField class="ui-widget ui-corner-all ui-widget-content" name="telefono" value="${fieldValue(bean: obraSocialInstance, field: 'telefono')}" />
+                                  </div>
                                   <g:hasErrors bean="${obraSocialInstance}" field="telefono">
-                                  		<br/>
                                   		<g:renderErrors bean="${obraSocialInstance}" field="telefono"></g:renderErrors>
                                   		</div>
                                   </g:hasErrors>
-                                  <br/>
+                                  <div class="clear"></div>                                  
                         
                 </fieldset>
                 <div style="padding: 10px 15px 15px 15px;">
