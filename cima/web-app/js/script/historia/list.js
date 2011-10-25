@@ -40,7 +40,7 @@ $(document).ready(function(){
 				url:locsubgridconsulta+'?pacienteId='+obj.id,
 				datatype: "json",
 				mtype:'POST',
-				colNames: ['Id','Fecha Consulta','Cie10','Cie10 Desc.','Profesional','Ambito','Hist.Nro.','Operaciones'],
+				colNames: ['Id','Fecha Consulta','Cie10','Cie10 Desc.','Profesional','Ambito','Hist.Nro.','Editar'],
 				colModel: [
 					{name:"id",index:"id",width:80,key:true,hidden:true},				           
 					{name:"fechaConsulta",index:"fechaConsulta",width:80,sorttype:'date', formatter:'date'},
@@ -63,9 +63,9 @@ $(document).ready(function(){
 					for(var i=0;i < ids.length;i++){ 
 						var cl = ids[i];
 						row = jQuery('#'+subgrid_table_id).getRowData(cl);
-						be = "<a href='edit/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'></span></a>";
+						be = "<a href='show/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-pencil'></span></a>";
 						se = "<a href='show/"+ids[i]+"'><span style='float:left' class='ui-icon ui-icon-trash'></span></a>";
-						jQuery("#"+subgrid_table_id).jqGrid('setRowData',ids[i],{operaciones:be+se}); 
+						jQuery("#"+subgrid_table_id).jqGrid('setRowData',ids[i],{operaciones:be}); 
 						} 
 			    }
 			});

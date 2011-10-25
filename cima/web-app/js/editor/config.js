@@ -10,6 +10,7 @@ CKEDITOR.editorConfig = function( config )
 	// config.uiColor = '#AADC6E';
 	config.toolbar = 'HistToolbar';
 	config.width = 780;
+	config.height = 100;
  
 	config.toolbar_HistToolbar =
 		[

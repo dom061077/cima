@@ -138,7 +138,7 @@
                  			<div class="clear"></div>
                  			<div class="span-3"><label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label></div>
 							<div class="span-5 colborder">
-							<textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion" >
+							<textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content textareastudio" id="impresionId" name="consulta.impresion" >
 								${consultaInstance?.impresion}
 							</textArea>
                             </div>
@@ -186,7 +186,7 @@
 												<br/>	
 					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
 					           					<br/>
-					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content textareastudio" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
 												 	${estudio?.resultado}  
 					           					</g:textArea>
 					           				</div>
@@ -388,7 +388,7 @@
 	            					<div class="span-9">
 	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
 	            						<br/>
-	            						<g:textArea readonly="readonly" class="title" name="paciente.antecedente.antecedenteFamiliar" >
+	            						<g:textArea readonly="readonly" class="textareastudio" name="paciente.antecedente.antecedenteFamiliar" >
 	            							<g:fieldValue bean="${consultaInstance.paciente.antecedente}" field="antecedenteFamiliar"></g:fieldValue>
 	            						</g:textArea>
 	            					</div>
@@ -399,13 +399,21 @@
             		
             
             </div>
+            <div class="span-4">
+	            <div class="buttons">
+	                <g:form>
+	                    <g:hiddenField name="id" value="${consultaInstance?.id}" />
+	                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
+	                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Está seguro ?')}');" />
+	                </g:form>
+	            </div>
+	        </div>    
+            <div class="span-4 prepend-5">
+               	<g:jasperReport controller="historiaClinica" action="reportecontenidovisita" 
+            			jasper="historiacontenidovisita" format="PDF" name="Cont. de la Visita">
+           			<g:hiddenField name="id" value="${consultaInstance?.id}"></g:hiddenField>
+            	</g:jasperReport>
             
-            <div class="buttons">
-                <g:form>
-                    <g:hiddenField name="id" value="${consultaInstance?.id}" />
-                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="edit" value="${message(code: 'default.button.edit.label', default: 'Edit')}" />
-                    <g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="delete" value="${message(code: 'default.button.delete.label', default: 'Delete')}" onclick="return confirm('${message(code: 'default.button.delete.confirm.message', default: 'Está seguro ?')}');" />
-                </g:form>
             </div>
         </div>
     </body>

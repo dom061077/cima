@@ -209,7 +209,7 @@
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporgrupodiag")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
-								<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								
+<!--								<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								-->
 							</ul>
 						</li>
 						<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>

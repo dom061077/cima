@@ -2,21 +2,9 @@
 <meta name='layout' content='main' />
 <title>Login</title>
 <style type='text/css' media='screen'>
-#login {
-	margin:15px 0px; padding:0px;
-	text-align:center;
-	height:300px;
-}
-#login .inner {
-	width:290px;
-	height: 130;
-	margin:0px auto;
-	text-align:left;
-	padding:10px;
-	border-top:1px  #499ede;
-	border-bottom:1px  #499ede;
-	background-color:#E6E6E6;
-	/*background: url(images/loginbackg.png) repeat-y top;*/
+
+.inner {
+	background: url(../images/login-box-backg.png) no-repeat;
 }
 #login .inner .fheader {
 	padding:4px;margin:3px 0px 3px 0;color:#2e3741;font-size:14px;font-weight:bold;
@@ -47,29 +35,43 @@
 </head>
 
 <body>
-	<div id='login'>
-		<div class='inner'>
+	<div class="span-8 prepend-7">
+		<div class='span-3'>
 			<g:if test='${flash.message}'>
 			<div class='login_message'>${flash.message}</div>
 			</g:if>
-			<div class='fheader'>Ingrese al Sistema</div>
+		</div>
+		<div class="clear"></div>	
+		<div class='span-4'>Ingrese al Sistema</div>
+		<div class="clear"></div>
+		<div class="inner span-8">
 			<form action='${postUrl}' method='POST' id='loginForm' class='cssform'>
-				<p>
+				<div class="span-2">
 					<label for='j_username'>Usuario:</label>
+				</div>
+				<div class="span-4">	
 					<input type='text' class='text_' name='j_username' id='j_username' value='${request.remoteUser}' />
-				</p>
-				<p>
+				</div>
+				<div class="clear"></div>
+				
+				<div class="span-2">
 					<label for='j_password'>Contraseña:</label>
+				</div>
+				<div class="span-4">	
 					<input type='password' class='text_' name='j_password' id='j_password' />
-				</p>
-				<p>
+				</div>
+				<div class="clear"></div>				
+				
+				<div class="span-2">
 					<label for='remember_me'>Recordarme</label>
+				</div>
+				<div class="span-1">	
 					<input type='checkbox' class='chk' name='_spring_security_remember_me' id='remember_me'
 					<g:if test='${hasCookie}'>checked='checked'</g:if> />
-				</p>
-				<p>
+				</div>
+				<div class="span-3">
 					<input type='submit' value='Ingresar' />
-				</p>
+				</div>	
 			</form>
 		</div>
 	</div>
