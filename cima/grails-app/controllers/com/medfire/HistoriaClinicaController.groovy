@@ -1,10 +1,13 @@
 package com.medfire
 
-import com.medfire.enums.ImpresionVademecumEnum 
-import com.medfire.util.GUtilDomainClass
-import java.text.SimpleDateFormat
 import java.text.DateFormat
-import java.text.ParseException;
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.ArrayList
+
+import com.medfire.enums.ImpresionVademecumEnum
+import com.medfire.util.GUtilDomainClass
+import pl.burningice.plugins.image.container.ContainerUtils
 
 
 class HistoriaClinicaController {
@@ -365,6 +368,49 @@ class HistoriaClinicaController {
 		}
 		result=result+']}'
 		render result
+	}
+	
+	def reportecontenidovisita = {
+		log.info "INGRESANDO AL CLOSURE reportecontenidovisita"
+		log.info "PARAMETROS : $params"
+		def consultaInstance = Consulta.load(params.id.toLong())
+		log.debug "PACIENTE: "+consultaInstance.paciente.apellido
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("reportsDirPath",servletContext.getRealPath("/reports/"))
+		params.put("_format","PDF")
+		params.put("_name","historiacontenidovisita")
+		params.put("_file","historiacontenidovisita")
+		def listReporte = new ArrayList()
+		listReporte.add(consultaInstance)
+		log.debug "Cantidad de prescripciones: "+consultaInstance.prescripciones.size()
+		consultaInstance.prescripciones.each{
+			log.debug "Prescripcion: "+it.nombreComercial
+		}
+		chain(controller:'jasper',action:'index',model:[data:listReporte],params:params)
+		
 	}
 	
 	
