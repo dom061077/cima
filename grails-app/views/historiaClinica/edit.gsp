@@ -260,7 +260,7 @@
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
 							</div>
 							<div class="span-5 colborder">
-							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion">
+							<textArea class="ui-widget ui-corner-all ui-widget-content textareastudio" id="impresionId" name="consulta.impresion">
 								${fieldValue(bean: consultaInstance, field: "impresion")}
 							</textArea>
                                 		<g:hasErrors bean="${consultaInstance}" field="impresion">
@@ -576,7 +576,7 @@
 	            					<div class="span-9">
 	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
 	            						<br/>
-	            						<g:textArea  class="title" name="consulta.paciente.antecedente.antecedenteFamiliar" value="${consultaInstance.paciente.antecedente?.antecedenteFamiliar}"></g:textArea>
+	            						<g:textArea  class="textareastudio" name="consulta.paciente.antecedente.antecedenteFamiliar" value="${consultaInstance.paciente.antecedente?.antecedenteFamiliar}"></g:textArea>
 	            					</div>
 	            				</fieldset>
 						</div>					
@@ -591,10 +591,6 @@
                 </div>
             </form>
         </div>
-            	<g:jasperReport controller="historiaClinica" action="reportecontenidovisita" 
-            			jasper="historiacontenidovisita" format="PDF" name="historiacontenidovisita">
-           			<g:hiddenField name="id" value="${consultaInstance?.id}"></g:hiddenField>
-            	</g:jasperReport>
 		        
     </body>
 </html>

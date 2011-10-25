@@ -231,7 +231,7 @@
 							<label for="impresion"><g:message code="historia.impresion.label" default="Impresión:" /></label>
 							</div>
 							<div class="span-5 colborder">
-							<textArea class="ui-widget ui-corner-all ui-widget-content" id="impresionId" name="consulta.impresion">${consultaInstance?.impresion}</textArea>
+							<textArea class="ui-widget ui-corner-all ui-widget-content textareastudio" id="impresionId" name="consulta.impresion">${consultaInstance?.impresion}</textArea>
                                 		<g:hasErrors bean="${consultaInstance}" field="impresion">
                                 			<br/>
 	                                    	<div class="ui-state-error ui-corner-all"><g:renderErrors bean="${consultaInstance}" as="list" field="impresion"/></div>
@@ -519,7 +519,7 @@
 	            					<div class="span-9">
 	            						<label for="paciente.antecedente.antecedenteFamiliar">Antecedentes Familiares:</label>
 	            						<br/>
-	            						<g:textArea class="title" name="paciente.antecedente.antecedenteFamiliar" value="${pacienteInstance.antecedente?.antecedenteFamiliar}"></g:textArea>
+	            						<g:textArea class="textareastudio" name="paciente.antecedente.antecedenteFamiliar" value="${pacienteInstance.antecedente?.antecedenteFamiliar}"></g:textArea>
 	            					</div>
 	            				</fieldset>
 						</div>					
