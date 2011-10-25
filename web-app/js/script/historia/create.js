@@ -7,6 +7,8 @@ $(document).ready(function(){
     //var arrayEstudios=[{id}];
 	var countEstudios=1;
 	$( "#tabs" ).tabs();
+	$('#contenidoId').width(500);
+	
 	 
 	$("#fechaConsultaId" ).datepicker($.datepicker.regional[ "es" ]);	
 	$("#cie10DescripcionId").lookupfield({

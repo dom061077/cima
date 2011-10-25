@@ -585,14 +585,16 @@
             		<div class="clear"></div>
             		
        			</div><!-- cierre div tabs -->   	
-            
-                
-                <div style="padding: 10px 15px 15px 15px;">
+                <div class="span-*" style="padding: 10px 15px 15px 15px;">
                 <g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />
 <!--                 <g:actionSubmit action="update" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.update.label', default: 'Modificar')}" />-->
                 </div>
             </form>
         </div>
+            	<g:jasperReport controller="historiaClinica" action="reportecontenidovisita" 
+            			jasper="historiacontenidovisita" format="PDF" name="historiacontenidovisita">
+           			<g:hiddenField name="id" value="${consultaInstance?.id}"></g:hiddenField>
+            	</g:jasperReport>
 		        
     </body>
 </html>

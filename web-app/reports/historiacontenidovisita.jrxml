@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pacientesatendidosgral" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="pathimage" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nombreInstitucion" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="telefonos" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="email" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="direccion" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="nameimage" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\Users\\danielmedina\\Documents\\workspace-sts-2.6.0.SR1\\medfirewebant\\web-app\\reports\\"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="reportsDirPath" class="java.lang.String"/>
+	<field name="paciente.apellido" class="java.lang.String"/>
+	<field name="paciente.nombre" class="java.lang.String"/>
+	<field name="paciente.id" class="java.lang.Long"/>
+	<field name="id" class="java.lang.Long"/>
+	<field name="profesional.id" class="java.lang.Long"/>
+	<field name="profesional.nombre" class="java.lang.String"/>
+	<field name="profesional.matricula" class="java.lang.Integer"/>
+	<field name="paciente.obraSocial.id" class="java.lang.Long"/>
+	<field name="paciente.obraSocial.descripcion" class="java.lang.String"/>
+	<field name="cie10.id" class="java.lang.Long"/>
+	<field name="cie10.descripcion" class="java.lang.String"/>
+	<field name="contenido" class="java.lang.String"/>
+	<field name="prescripciones" class="java.util.Collection"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="75" splitType="Stretch">
+			<image>
+				<reportElement x="2" y="2" width="138" height="64"/>
+				<imageExpression class="java.io.File"><![CDATA[new File($P{pathimage},$P{nameimage})]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="152" y="6" width="200" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{nombreInstitucion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="21" width="200" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{direccion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="36" width="200" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{telefonos}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="152" y="51" width="200" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$P{email}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="392" y="6" width="95" height="15"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Fecha Informe:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="475" y="6" width="63" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="352" y="46" width="201" height="15"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Historia Clínica]]></text>
+			</staticText>
+			<line>
+				<reportElement x="4" y="72" width="549" height="1"/>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="155" splitType="Stretch">
+			<rectangle>
+				<reportElement x="5" y="39" width="120" height="20" backcolor="#CCCCCC"/>
+				<graphicElement>
+					<pen lineColor="#FFFFFF"/>
+				</graphicElement>
+			</rectangle>
+			<textField>
+				<reportElement x="12" y="0" width="366" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Número de H.C:" + ($F{paciente.id}+100000000).toString().substring(1,9)]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="12" y="16" width="366" height="13"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.apellido}+"-"+$F{paciente.nombre}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="4" y="37" width="549" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<subreport>
+				<reportElement x="5" y="117" width="533" height="26"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{prescripciones})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitasubreport.jasper")]]></subreportExpression>
+			</subreport>
+			<staticText>
+				<reportElement x="12" y="43" width="55" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<text><![CDATA[Visita Nro.:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="72" y="43" width="53" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="175" y="43" width="48" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{profesional.id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="228" y="43" width="120" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{profesional.nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="426" y="43" width="120" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{paciente.obraSocial.descripcion}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="373" y="43" width="48" height="13"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Long"><![CDATA[$F{paciente.obraSocial.id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="70" width="533" height="46"/>
+				<textElement markup="html">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{contenido}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="27" splitType="Stretch">
+			<textField>
+				<reportElement x="192" y="7" width="80" height="15"/>
+				<textElement textAlignment="Right">
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA["Página "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="272" y="7" width="40" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

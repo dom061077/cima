@@ -54,6 +54,7 @@ class Consulta {
 		paciente lazy:false
 		cie10 lazy:false
 		profesional lazy:false
+		prescripciones lazy:false
 		estudios sort:'secuencia'
 	}
 	
