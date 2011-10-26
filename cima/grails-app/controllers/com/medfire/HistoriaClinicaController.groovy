@@ -412,6 +412,48 @@ class HistoriaClinicaController {
 		chain(controller:'jasper',action:'index',model:[data:listReporte],params:params)
 		
 	}
-	
+
+	def reportehistoriapropio = {
+		log.info "INGRESANDO AL CLOSURE reportehistoriapropio"
+		log.info "PARAMETROS : $params"
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("reportsDirPath",servletContext.getRealPath("/reports/"))
+		params.put("_format","PDF")
+		params.put("_name","historiacontenidovisita")
+		params.put("_file","historiacontenidovisita")
+		def userLogged = authenticateService.userDomain()
+		def listReporte = Consulta.createCriteria().list(){
+			profesional{
+				eq("id",userLogged.profesionalAsignado?.id)
+			}
+		} 
+		chain(controller:'jasper',action:'index',model:[data:listReporte],params:params)
+		
+	}
+
+		
 	
 }
