@@ -27,33 +27,33 @@
 				<text><![CDATA[Nombre Comercial]]></text>
 			</staticText>
 			<line>
-				<reportElement x="14" y="7" width="549" height="1"/>
+				<reportElement x="1" y="7" width="549" height="1"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
 			<line>
-				<reportElement x="14" y="37" width="549" height="1"/>
+				<reportElement x="1" y="37" width="549" height="2"/>
 				<graphicElement>
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="124" y="23" width="90" height="13"/>
+				<reportElement x="114" y="23" width="90" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Nombre Genérico]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="324" y="23" width="90" height="13"/>
+				<reportElement x="301" y="23" width="90" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Presentación]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="515" y="23" width="69" height="13"/>
+				<reportElement x="473" y="23" width="69" height="13"/>
 				<textElement textAlignment="Center">
 					<font fontName="Arial" isBold="false"/>
 				</textElement>
@@ -71,25 +71,25 @@
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreComercial}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="123" y="3" width="121" height="13"/>
+				<reportElement x="103" y="3" width="121" height="13"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreGenerico}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="3" width="250" height="13"/>
+				<reportElement x="230" y="3" width="234" height="13"/>
 				<textElement>
 					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{presentacion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="520" y="3" width="44" height="13"/>
+				<reportElement x="478" y="3" width="44" height="13"/>
 				<textElement textAlignment="Right">
 					<font fontName="Arial"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreGenerico}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

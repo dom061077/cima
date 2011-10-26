@@ -415,6 +415,11 @@
             	</g:jasperReport>
             
             </div>
+            <div class="span-4">
+               	<g:jasperReport controller="historiaClinica" action="reportehistoriapropio" 
+            			jasper="historiacontenidovisita" format="PDF" name="Todas Mis Atenciones">
+            	</g:jasperReport>
+            </div>
         </div>
     </body>
 </html>

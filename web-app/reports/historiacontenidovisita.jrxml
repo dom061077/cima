@@ -118,7 +118,7 @@
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement x="5" y="117" width="533" height="26"/>
+				<reportElement x="4" y="117" width="549" height="26"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{prescripciones})]]></dataSourceExpression>
 				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitasubreport.jasper")]]></subreportExpression>
 			</subreport>
