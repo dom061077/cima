@@ -222,8 +222,8 @@ class HistoriaClinicaController {
 			redirect(action: "list")
 		}
 		else {
-			if(!consultaInstance.profesional.equals(userInstance.profesionalAsignado)){
-				flash.message = "Solo puede modificar las consultas que Ud. atendió"
+			if(!consultaInstance.profesional.id.equals(userInstance.profesionalAsignado.id)){
+				flash.message = "Solo puede modificar las consultas que Ud. atendió "
 				redirect(action:"list")	
 			}else
 				return [consultaInstance: consultaInstance]
@@ -287,7 +287,13 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO EL CLOSURE delete"
 		log.info "PARAMETROS: $params"
 		def consultaInstance = Consulta.get(params.id)
+		def userInstance = authenticateService.userDomain()
 		if (consultaInstance) {
+			if(!consultaInstance.profesional.id.equals(userInstance.profesionalAsignado.id)){
+				flash.message = "Solo puede modificar las consultas que Ud. atendió"
+				redirect(action:"list")
+				return
+			}
 			try {
 				historiaClinicaService.deleteVisita(consultaInstance)
 				log.info "OPERACION EJECUTADA CORRECTAMENTE"

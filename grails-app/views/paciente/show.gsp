@@ -74,7 +74,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="paciente.estadocivil.label" default="Estadocivil" /></td>
                             
-                            <td valign="top" class="value">${fieldValue(bean:pacienteInstance,field:"estadoCivil")}</td>
+                            <td valign="top" class="value">${fieldValue(bean:pacienteInstance,field:"estadoCivil.name")}</td>
                             
                         </tr>
                     
@@ -102,7 +102,7 @@
                         <tr class="prop">
                             <td valign="top" class="name"><g:message code="paciente.obrasocial.label" default="Obrasocial" /></td>
                             
-                            <td valign="top" class="value"><g:link controller="obraSocial" action="show" id="${pacienteInstance?.obraSocial?.id}">${pacienteInstance?.obraSocial?.descripcion.encodeAsHTML()}</g:link></td>
+                            <td valign="top" class="value"><g:link controller="obraSocial" action="show" id="${pacienteInstance?.obraSocial?.id}">${pacienteInstance?.obraSocial?.descripcion?.encodeAsHTML()}</g:link></td>
                             
                         </tr>
                     

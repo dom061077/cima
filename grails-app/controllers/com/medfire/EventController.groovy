@@ -162,7 +162,8 @@ class EventController {
 			}
 		}
 		def backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
-		
+		def borderColor = ""
+		def textColor = ""
 		render(contentType:"text/json"){
 			array{
 				for(e in eventos){
@@ -175,8 +176,17 @@ class EventController {
 						backgroundColor=grailsApplication.config.event.COLOR_AUSENTE
 					if(e.estado==EstadoEvent.EVENT_ANULADO)
 						backgroundColor=grailsApplication.config.event.COLOR_ANULADO
+					
+					if(e.sobreTurno){
+						borderColor=grailsApplication.config.event.COLOR_SOBRETURNO
+						textColor=grailsApplication.config.event.COLOR_SOBRETURNO	
+					}else{
+						borderColor=""
+						textColor=""
+					}
+						
 
-					evento id: e.id,pacienteId:e.paciente?.id,estado:e.estado, title:e.titulo,start:e.start, end:e.end, allDay:false,version:e.version,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
+					evento id: e.id,pacienteId:e.paciente?.id,estado:e.estado, title:e.titulo,start:e.start,sobreTurno:e.sobreTurno, end:e.end, allDay:false,version:e.version,borderColor:borderColor,textColor:textColor,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
 				}
 			}
 		}
@@ -374,7 +384,6 @@ class EventController {
 				return
 				
 			}
-			
 	        GregorianCalendar gc = new GregorianCalendar(
 	        		Integer.parseInt(params.startyear)
 	        		,Integer.parseInt(params.startmonth)
@@ -408,7 +417,33 @@ class EventController {
 	        
 	        eventInstance.fechaEnd = new java.sql.Date(gc.getTime().getTime())
 
-			
+			//---------deteccion de sobreturnos--------
+			def listSobreTurno=Event.createCriteria().list(){
+				or{
+					and{
+						ne("id",eventInstance.id)
+						ge("start",eventInstance.start)
+						lt("end",eventInstance.start)
+					}
+					and{
+						ne("id",eventInstance.id)
+						ge("start",eventInstance.end)
+						lt("end",eventInstance.end)
+					}
+					and{
+						ne("id",eventInstance.id)
+						eq("start",eventInstance.start)
+						eq("end",eventInstance.end)
+					}
+
+				}
+			}
+			if(listSobreTurno.size()>0)
+				eventInstance.sobreTurno = true
+			else
+				eventInstance.sobreTurno = false
+			//-----------------------------------------
+
 			
 			if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
 				//flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"

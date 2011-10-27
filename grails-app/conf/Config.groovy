@@ -58,8 +58,9 @@ grails.spring.bean.packages = []
 
 event.COLOR_ATENDIDO="#54de25"
 event.COLOR_AUSENTE="#fab7a0"
-event.COLOR_ANULADO="#ff0000"
+event.COLOR_ANULADO="#D8D8D8"
 event.COLOR_PENDIENTE="#8c94f0"
+event.COLOR_SOBRETURNO="#DF0101"
 
 
 // set per-environment serverURL stem for creating absolute links

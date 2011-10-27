@@ -150,7 +150,7 @@
 
 <div class="span-24 last append-bottom" >
 			<div class="span-24">
-				<img alt="" src="${resource(dir:"images", file:"cabecera.jpg")}"/>
+				<img alt="" src="${resource(dir:"images", file:"cabecera.png")}"/>
 			</div>    
 
 	<div class="span-12">

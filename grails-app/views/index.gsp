@@ -57,7 +57,7 @@
         </g:if>
     	
         <div id="welcome">
-            <h1>Bienvenido al Sistema</h1>
+            <h1>Bienvenido <%out << g.loggedInUserInfo(field:"userRealName")%></h1>
         </div>
     </body>
 </html>

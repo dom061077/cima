@@ -4,7 +4,7 @@ public enum EstadoEvent {
 	EVENT_ATENDIDO("Atendido"),
 	EVENT_AUSENTE("Ausente"),
 	EVENT_ANULADO("Anulado"),
-	EVENT_PENDIENTE("Pendiente");
+	EVENT_PENDIENTE("Pendiente")
 	
 	String name
 	
