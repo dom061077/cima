@@ -152,6 +152,7 @@ function serverSave(ev) {
 					}
 					ev.id = msg;
 					$('#calendar').fullCalendar('renderEvent', ev); // create
+					$('#calendar').fullCalendar('refetchEvents')
 				},
 				error : function(XMLHttpRequest, textStatus, errorThrown) {
 					$(

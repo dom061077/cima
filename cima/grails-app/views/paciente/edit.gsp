@@ -253,7 +253,7 @@
         </div>
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
             </g:if>
             
             <g:hasErrors bean="${pacienteInstance}">
@@ -435,7 +435,7 @@
                                    	<g:renderErrors bean="${pacienteInstance}" as="list" field="obraSocial"/>
                                    	</div>
                                  </g:hasErrors>	 
-                                 <g:hiddenField id="osId" name="obraSocial.id" value="${pacienteInstance?.obraSocial?.id}"/>
+                                 <g:hiddenField id="osId" name="obraSocialId" value="${pacienteInstance?.obraSocial?.id}"/>
 
 								<div class="clear"></div>
 								<div class="span-3 spanlabel">                                   

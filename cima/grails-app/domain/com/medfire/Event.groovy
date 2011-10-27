@@ -19,11 +19,12 @@ class Event {
 	User user
 	Consulta consulta
 	Long tiempoAtencion
+	boolean sobreTurno = false
 	//static belongTo = [paciente:Paciente,profesional:User,user:User]
     static constraints = {
-    	start (unique:'profesional')
+    	//start (unique:'profesional')
 		start (unique:'paciente')
-    	end (unique:'profesional')
+    	//end (unique:'profesional')
 		end (unique:'paciente')
 		paciente(nullable:true,blank:true)
 		profesional(nullable:false,blank:false)

@@ -17,7 +17,7 @@
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
             <g:if test="${flash.message}">
-            <div class="message">${flash.message}</div>
+            <div class="ui-state-highlight ui-corner-all">${flash.message}</div>
             </g:if>
             <g:hasErrors bean="${obraSocialInstance}">
 	            <div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">

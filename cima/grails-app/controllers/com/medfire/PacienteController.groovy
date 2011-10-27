@@ -226,6 +226,7 @@ class PacienteController {
 			}
 			
             pacienteInstance.properties = params
+			pacienteInstance.obraSocial = ObraSocial.load(params.obraSocialId)
 			if(fechaNacimientoError){
 				pacienteInstance.validate()
 				pacienteInstance.errors.rejectValue("fechaNacimiento","com.medfire.Profesional.fechaNacimiento.date.error","Ingrese una fecha correcta, se sugiere una correción")
