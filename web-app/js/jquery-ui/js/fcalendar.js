@@ -320,9 +320,9 @@ function serverDelete($id) {
 				url : loc,
 				data : 'cmd=delete&id=' + $id,
 				success : function(msg) {
-					if (msg.length != 0) {
+					if (!msg.result.success) {
 						$(
-								'<div>' +  msg + '</div>')
+								'<div>' +  msg.result.title + '</div>')
 								.dialog();
 						return;
 					}

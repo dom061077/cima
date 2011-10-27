@@ -193,7 +193,7 @@
 									<li><a href="${createLink(controller:'obraSocial',action:'list')}">Obra Social</a></li>
 									<li><a href="${createLink(controller:'event',action:'create')}">Turnos</a></li>
 									<li><a href="${createLink(controller:'profesional',action:'list')}">Profesionales</a> </li>
-									<li><a href="${createLink(controller:'laboratorio',action:'list')}">Laboratorios</a> </li>
+<%--									<li><a href="${createLink(controller:'laboratorio',action:'list')}">Laboratorios</a> </li>--%>
 									<li><a href="${createLink(controller:'especialidadMedica',action:'list')}">Especialidades</a> </li>			
 								</g:ifAnyGranted>
 								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">				

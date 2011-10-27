@@ -31,7 +31,7 @@
 		
 		
 	   	<div id="login-box">
-					       <H2>Ingreso a C.I.M.A</H2>
+					       <H2>C.I.M.A</H2>
 							
 			<g:if test='${flash.message}'>
 			<div class='login_message'>${flash.message}</div>

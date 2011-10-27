@@ -3,7 +3,7 @@ $(document).ready(function(){
 		caption:'Productos',
 		url:locvademec,
 		mtype:'POST',
-		width:600,
+		width:800,
 		rownumbers:true,
 		pager:'pagervademec',
 		datatype:'json',
