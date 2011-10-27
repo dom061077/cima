@@ -51,7 +51,7 @@
 						week: 'ddd d/M',
 						day: 'dddd d/M'
 					},
-					height:400,
+					height:350,
 					
 					buttonText: {
 						prev: '&nbsp;&#9668;&nbsp;',
@@ -292,21 +292,6 @@
 		<div style="float:left">
 		<div id='datepicker'></div>
 		</div>
-		<div class="span-8">
-						<form name="profesionales">
-							<fieldset>
-								<div class="span-2 spanlabel">
-									<label for="profesional">Profesional:</label>
-								</div>
-								<div class="span-4">
-									<g:select class="ui-widget ui-corner-all ui-widget-content" name="profesionalId" id="profesionalId" from="${profesionales}" 
-											value="${profesionalId}"  
-											optionKey="id"
-											optionValue="nombre"/>
-								</div>
-							</fieldset>
-						</form>									
-		</div>
 			
 		
 		<div class="clear"></div>
@@ -319,14 +304,28 @@
 				<div id='calendar'></div>
 			</div>
         </div>
-		<div class="span-2" style="padding: 100px 0px 0px 0px">
-			<form method="POST" name="intervalo">
-				<fieldset>
-					<label>Intervalos:</label><br/>
-					<g:select id="intervalosId" class="ui-widget ui-corner-all ui-widget-content" name="intervalo" value="${intervalo}"
-					 	from="${['60','30','15','10','5'] }"></g:select>
-				</fieldset>
-			</form>	
+        <div class="span-2">
+			<div class="span-4" style="padding: 100px 0px 0px 0px">
+				<form method="POST" name="intervalo">
+					<fieldset>
+						<legend>Intervalos:</legend>
+						<g:select id="intervalosId" class="ui-widget ui-corner-all ui-widget-content" name="intervalo" value="${intervalo}"
+						 	from="${['60','30','15','10','5'] }"></g:select>
+					</fieldset>
+				</form>	
+			</div>
+			<div class="clear"></div>
+			<div class="span-4">
+									<form name="profesionales">
+										<fieldset>
+											<legend>Profesional:</legend>
+												<g:select class="ui-widget ui-corner-all ui-widget-content" name="profesionalId" id="profesionalId" from="${profesionales}" 
+														value="${profesionalId}"  
+														optionKey="id"
+														optionValue="nombre"/>
+										</fieldset>
+									</form>									
+			</div>			
 		</div>
 		        
         <div style="display: none" id="event-form" title="Crear Turno" >

@@ -195,7 +195,7 @@ class ObraSocialController {
     		if (flagaddcomilla)
     			result=result+','
     		
-    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.cuit+'","'+it.descripcion+'","'+it.razonSocial+'","'+it.telefono+'","'+it.codigoPostal+'","'+it.domicilio+'","'+it.contacto+'"]}'
+    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+it.cuit+'","'+it.descripcion+'","'+it.razonSocial+'","'+(it.telefono==null?"":it.telefono)+'","'+it.codigoPostal+'","'+it.domicilio+'","'+it.contacto+'"]}'
     		 
     		flagaddcomilla=true
     	}

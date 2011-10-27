@@ -1,5 +1,7 @@
 package com.medfire
 
+//http://fbflex.wordpress.com/2011/10/24/six-ways-to-become-a-better-grails-programmer/
+
 import com.medfire.enums.EstadoEvent;
 import com.medfire.util.FilterUtils
 import java.util.Calendar;
@@ -238,13 +240,28 @@ class EventController {
     private def deleteevent(def params){
     	log.info "INGRESANDO AL METODO PRIVADO deleteevent"
     	log.info "PARAMETROS $params"
+		def hoy = new Date()
+		def gc = new GregorianCalendar()
+		gc.setTime(hoy)
+		def gcHoy = new GregorianCalendar(gc.get(Calendar.YEAR),gc.get(Calendar.MONTH),gc.get(Calendar.DATE))
+
+		
         def eventInstance = Event.get(params.id)
         if (eventInstance) {
             try {
+				if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
+					render(contentType:"text/json"){
+						result success:false,title:"Error, solo se pueden modificar los turnos pendientes y que no sean anteriores al día de hoy"
+					}
+					return
+				}
+				
                 eventInstance.delete(flush: true)
                 //flash.message = "${message(code: 'default.deleted.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
                 //redirect(action: "list")
-                render ""
+                render (contentType:"text/json"){
+					result success:true
+				}
             }
             catch (org.springframework.dao.DataIntegrityViolationException e) {
                 //flash.message = "${message(code: 'default.not.deleted.message', args: [message(code: 'event.label', default: 'Event'), params.id])}"
@@ -263,9 +280,21 @@ class EventController {
     	log.info "INGRESANDO AL METODO PRIVADO updateeventjson"
     	log.info "PARAMETROS $params"
     	
+		def hoy = new Date()
+		def gc = new GregorianCalendar()
+		gc.setTime(hoy)
+		def gcHoy = new GregorianCalendar(gc.get(Calendar.YEAR),gc.get(Calendar.MONTH),gc.get(Calendar.DATE))
+		
         def eventInstance = Event.get(params.id)
 		
         if (eventInstance) {
+			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
+				render(contentType:"text/json"){
+					result success:false,title:"Error, solo se pueden modificar los turnos pendientes y que no sean anteriores al día de hoy"
+				}
+				return
+			}
+			
             if (params.version) {
                 def version = params.version.toLong()
                 if (eventInstance.version > version) {
@@ -289,7 +318,7 @@ class EventController {
                 //flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
                 //redirect(action: "show", id: eventInstance.id)
                 render (contentType:"text/json"){
-					result success:true,title:eventInstance.paciente.apellido+"-"+eventInstance.paciente.nombre
+					result success:true,title:eventInstance.paciente?.apellido+"-"+eventInstance.paciente?.nombre
 				}
             }
             else {
@@ -338,9 +367,9 @@ class EventController {
 				}
 			}
 			
-			if (!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE)){
+			if (!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(currentCal.getTime())<0){
 				render(contentType:"text/json"){
-					result success:false,title:"Error, para mover un turno el mismo debe estar pendiente"
+					result success:false,title:"Error, para mover un turno el mismo debe estar pendiente y que no sean anteriores al día de hoy"
 				}
 				return
 				

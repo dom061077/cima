@@ -30,6 +30,7 @@ class Event {
 		user(nullable:false,blank:false)
 		consulta(nullable:true)
 		tiempoAtencion(nullable:true,blank:true)
+		titulo(blank:false)
 		
     }
 	

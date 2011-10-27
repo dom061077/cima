@@ -214,13 +214,19 @@ class HistoriaClinicaController {
 	def edit = {
 		log.info "INGRESANDO AL CLOSURE edit"
 		log.info "PARAMETROS: $params"
+		def userInstance = authenticateService.userDomain()
+		
 		def consultaInstance = Consulta.get(params.id)
 		if (!consultaInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Historia Clinica'), params.id])}"
 			redirect(action: "list")
 		}
 		else {
-			return [consultaInstance: consultaInstance]
+			if(!consultaInstance.profesional.equals(userInstance.profesionalAsignado)){
+				flash.message = "Solo puede modificar las consultas que Ud. atendió"
+				redirect(action:"list")	
+			}else
+				return [consultaInstance: consultaInstance]
 		}
 	}
 
