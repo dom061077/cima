@@ -5,12 +5,12 @@
 #login-box {
 	width:300px;
 	height: 300px;
-	padding: 25px 70px 0 50px;
+	padding: 25px 20px 0 50px;
 	color: #ebebeb;
 	font: 11px Arial, Helvetica, sans-serif;
 	background: url(../images/login-box-backg.png) no-repeat;
     /*margin:100px 100px 100px 100px;*/
-	margin:100px 100px 100px 100px;	
+	margin:50px 50px 10px 100px;	
 }
 #login-box h2 {
 	padding:0;
@@ -66,6 +66,7 @@
 										</tr>
 										<tr>
 											<td></td>
+											
 											<td align="center">
 												<input class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" type='submit' value='Ingresar' />
 												
