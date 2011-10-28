@@ -72,6 +72,7 @@ function guiCreate(start, end, allDay) {
 			$("#pacienteId").val("");
 			$("#fechaStartId").val($.format.date(start,"dd/MM/yyyy hh:mm"));
 			$("#fechaEndId").val($.format.date(end,"dd/MM/yyyy hh:mm"));
+			$('#esSobreturnoId').attr('checked', false);
 		},
 		close : function(event, ui) {
 			/*$(id).html('');*/
@@ -99,7 +100,8 @@ function guiCreate(start, end, allDay) {
 					endday:end.getDate(),
 					endhours:end.getHours(),
 					endminutes:end.getMinutes(),
-					estado:'EVENT_PENDIENTE'
+					estado:'EVENT_PENDIENTE',
+					essobreturno: false
 				};
 				//refrescarflag=true;
 				//if (!paciente) {
@@ -141,7 +143,7 @@ function serverSave(ev) {
 						+ '&startyear='+ev.startyear+'&startmonth='+ev.startmonth+'&startday='+ev.startday
 						+ '&starthours='+ev.starthours+'&startminutes='+ev.startminutes
 						+ '&endyear='+ev.endyear+'&endmonth='+ev.endmonth+'&endday='+ev.endday
-						+ '&endhours='+ev.endhours+'&endminutes='+ev.endminutes
+						+ '&endhours='+ev.endhours+'&endminutes='+ev.endminutes+'&essobreturno='+ev.essobreturno
 						,
 				success : function(msg) {
 					if (!isInteger(msg)) {
@@ -201,7 +203,7 @@ function guiUpdateDrag(ev, dayDelta, minuteDelta, allDay, revertFunc, jsEvent,
 										refrescarflag=true
 									}
 								});
-						revertFunc();
+						$('#calendar').fullCalendar('refetchEvents');//revertFunc();
 						
 						return;
 					}
@@ -216,7 +218,7 @@ function guiUpdateDrag(ev, dayDelta, minuteDelta, allDay, revertFunc, jsEvent,
 								}
 							});
 					refrescarflag=true		
-					revertFunc();
+					$('#calendar').fullCalendar('refetchEvents');//revertFunc();
 				}
 			});
 }
@@ -243,6 +245,7 @@ function guiUpdateClick(calEvent, jsEvent, view) {
 			$("#fechaEndId").val(calEvent.fechaEnd);
 			//$("#estadoEventId option[value='"+calEvent.estado.name+"']").attr("selected", "selected");
 			$('#estadoEventId').val(calEvent.estado.name);
+			$('#esSobreturnoId').attr('checked', calEvent.sobreTurno);
 		},
 		width : "340px",
 		close : function() {
@@ -294,7 +297,8 @@ function serverUpdateTitle(calEvent, textNew) {
 			$.ajax( {
 				type : 'GET',
 				url : loc,
-				data : 'cmd=update&id=' + calEvent.id + '&paciente.id='+$("#pacienteId").val()+'&titulo='+$("#paciente").val()+'&version='+calEvent.version+'&estado='+$('#estadoEventId').val(),
+				data : 'cmd=update&id=' + calEvent.id + '&paciente.id='+$("#pacienteId").val()+'&titulo='
+						+$("#paciente").val()+'&version='+calEvent.version+'&estado='+$('#estadoEventId').val()+'&sobreTurno='+$('#esSobreturnoId').attr('checked'),
 						
 				success : function(msg) {
 					if (!msg.result.success) {

@@ -133,7 +133,7 @@
             						
 		   							<label style="float:left;" for="cie10Descripcion">CIE-10:</label>
 		   							<input style="float:left" type="text" id="cie10DescripcionId" class="ui-widget ui-corner-all ui-widget-content" name="consulta.cie10Descripcion" value="${consultaInstance?.cie10?.descripcion}"/>
-		   							<g:hiddenField id="cie10Id" name="consulta.cie10.id" value="${consultaInstance?.cie10?.id}"/>
+		   							<g:hiddenField id="cie10Id" name="consultaCie10Id" value="${consultaInstance?.cie10?.id}"/>
    							</div>
    							
    							<div class="span-7 colborder">
