@@ -16,19 +16,19 @@
 						jQuery("#list").jqGrid({
 						   	url:'listjson',
 							datatype: "json",
-							width:680,
+							width:800,
 						   	colNames:['Id','C.U.I.T', 'Nombre', 'Razón Social','Telófono','C.P','Domicilio','Contacto','Operaciones'],
 						   	colModel:[
 						   		
-						   		{name:'id',index:'id', width:40},
-						   		{name:'cuit',index:'cuit', width:92,sortable:false},
-						   		{name:'descripcion',index:'descripcion', width:100},
-						   		{name:'razonSocial',index:'razonSocial', width:150, sortable:false},
-						   		{name:'telefono',index:'telefono', width:80, align:"right", sortable:false},
-						   		{name:'codigoPostal',index:'codigoPostal', width:40, align:"right", sortable:false},		
-						   		{name:'domicilio',index:'domicilio', width:80,align:"right",sortable:false},
-						   		{name:'contacto',index:'contacto', width:100, sortable:false},
-						   		{name:'operaciones',index:'operaciones', width:55,sortable:false}
+						   		{name:'id',index:'id', width:40,searchoptions:{sopt:['eq']}},
+						   		{name:'cuit',index:'cuit', width:105,sortable:false},
+						   		{name:'descripcion',index:'descripcion', width:100,search:true},
+						   		{name:'razonSocial',index:'razonSocial', width:150, sortable:false,search:true},
+						   		{name:'telefono',index:'telefono', width:80, align:"right", sortable:false,search:false},
+						   		{name:'codigoPostal',index:'codigoPostal', width:40, align:"right", sortable:false,search:false},		
+						   		{name:'domicilio',index:'domicilio', width:80,align:"right",sortable:false,search:false},
+						   		{name:'contacto',index:'contacto', width:100, sortable:false,search:false},
+						   		{name:'operaciones',index:'operaciones', width:55,sortable:false,search:false}
 						   	],
 						   	
 						   	rowNum:10,
@@ -48,15 +48,17 @@
 							}, 						    
 						    caption:"Listado de Obras Sociales"
 						});
-						jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true});
+						jQuery("#list").jqGrid('navGrid','#pager',{edit:false,add:false,del:false,pdf:true,search:false});
 
-						jQuery("#list").jqGrid('navButtonAdd','#pager',{
+						/*jQuery("#list").jqGrid('navButtonAdd','#pager',{
 						       caption:"Informe", 
 						       onClickButton : function () { 
 						           //jQuery("#list").excelExport();
 						           jQuery("#list").jqGrid("excelExport",{url:"listado"});
 						       } 
-						});
+						});*/
+
+						jQuery("#list").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
 						
 					}
             );

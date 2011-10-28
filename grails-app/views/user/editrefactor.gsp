@@ -123,7 +123,7 @@
 								 <div class="span-4">                                    
                                     <g:textField name="profesionalDesc" id="profesionalDescId"  class="ui-widget ui-corner-all ui-widget-content" value="${userInstance?.profesionalAsignado?.nombre}" />
                                  </div>   
-                                 <g:hiddenField id="profesionalId" name="profesionalAsignado.id" value="${userInstance?.profesionalAsignado?.id}" />
+                                 <g:hiddenField id="profesionalId" name="profesionalAsignadoId" value="${userInstance?.profesionalAsignado?.id}" />
 							 <g:hasErrors bean="${userInstance}" field="profesionalAsignado">
 								<g:renderErrors bean="${userInstance}" as="list" field="profesionalAsignado"/>
 								</div>

@@ -74,7 +74,7 @@
                 </div>
                 <div class="buttons">
                     <span class="button">
-                    	<g:actionSubmit class="ui-widget ui-corner-all ui-widget-content" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
+                    	<g:actionSubmit class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" action="update" value="${message(code: 'default.button.update.label', default: 'Update')}" />
                     </span>
 <%--                    <span class="button">--%>
 <%--                    		<g:actionSubmit class="ui-widget ui-corner-all ui-widget-content" action="delete"	value="${message(code: 'default.button.delete.label', default: 'Delete')}" 	--%>

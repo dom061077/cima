@@ -106,7 +106,7 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div style="position:absolute;top:200px;left:10px; id="exploradorId">
+			<div style="position:absolute;top:300px;left:10px; id="exploradorId">
 					<div id="turnosesperaId">
 							<table id="listturnos"></table>
 					</div>		
@@ -150,18 +150,21 @@
 
 <div class="span-24 last append-bottom" >
 			<div class="span-24">
-				<img alt="" src="${resource(dir:"images", file:"cabecera.png")}"/>
+				<a href="${createLink(uri:'/')}">
+					<img alt="" src="${resource(dir:"images", file:"cabecera.png")}"/>
+				</a>	
 			</div>    
 
 	<div class="span-12">
 			<div class="span-5 prepend-15">
 	            <g:isLoggedIn>
-					<div>
-						Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>
-					</div>
+<%--					<div>--%>
+<%--						Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>--%>
+<%--					</div>--%>
 				</g:isLoggedIn>
 			</div>
            	<g:isLoggedIn>
+           		<div style="background-color: #5C9CCC" class="span-24">
 		            <ul class="dropdown dropdown-horizontal" >
 						<li><a href="#" class="dir">Archivo</a>
 							<ul>
@@ -171,7 +174,7 @@
 									<li><a href="${createLink(controller:'requestmap')}">Requestmap</a></li>
 								</g:ifAnyGranted>
 								<li><a href="${createLink(controller:"auditoria",action:"consulta")}">Auditoría</a></li>
-								<li><a href="${createLink(controller:"user",action:"changepassword")}">Cambiar Contraseña</a></li>
+								
 							</ul>
 						</li>
 						<g:ifAnyGranted role="ROLE_PROFESIONAL,ROLE_ADMIN">
@@ -212,8 +215,18 @@
 <!--								<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								-->
 							</ul>
 						</li>
-						<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>
+						
+						<li><a href="#" class="dir">Usuario <%out << g.loggedInUserInfo(field:"userRealName")%></a>
+							<ul>
+								<li><a href="${createLink(controller:"user",action:"changepassword")}">Cambiar Contraseña</a></li>
+								<li><a href="${createLink(controller:'logout',action:'index')}">Cerrar Sesión</a></li>							
+							</ul>
+						</li>
+						
+						
+						
 					</ul>
+				</div>	
 			</g:isLoggedIn>	
 	</div><!-- div cierre del menu -->
 	<g:isLoggedIn>
