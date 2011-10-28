@@ -237,9 +237,9 @@
 		<div class="span-22 prepend-2 last">
 	        	<g:layoutBody />
 		</div>	
-        <div style="background:url(${resource(dir:"images",file:"bkpie.jpg")})" class="span-24 last prepend-top">
-        	<p style="text-align:center">
-            &copy; Copyright 2011 &lt;INAP&gt; | Design by: Marca Registrada
+        <div style="height:80px;background:url(${resource(dir:"images",file:"footer.png")})" class="span-24 last prepend-top">
+        	<p style="text-align:left;padding-left:10px;padding-top:40px;font-color:">
+            &copy; Copyright 2011 &lt;INAP&gt; | Design by: &lt;INAP&gt;
             </p>
         </div><!-- end footer -->
 

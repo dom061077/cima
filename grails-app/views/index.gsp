@@ -58,6 +58,9 @@
     	
         <div id="welcome">
             <h1>Bienvenido <%out << g.loggedInUserInfo(field:"userRealName")%></h1>
+            <center>
+            <img alt="" src="${resource(dir:"images", file:"bienvenida.png")}">
+            </center>
         </div>
     </body>
 </html>
