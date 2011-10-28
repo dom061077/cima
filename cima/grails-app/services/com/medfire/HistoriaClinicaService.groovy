@@ -137,6 +137,10 @@ class HistoriaClinicaService {
 	
 		
 		consultaInstance.properties = params.consulta
+		if(params.consultaCie10Id)
+			consultaInstance.cie10=Cie10.load(params.consultaCie10Id.toLong())
+		else
+			consultaInstance.cie10=null
 		if(!consultaInstance.hasErrors()){
 			if(params.deletedEstSerialized){
 				deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)

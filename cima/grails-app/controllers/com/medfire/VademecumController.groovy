@@ -15,7 +15,7 @@ class VademecumController {
         [vademecumInstanceList: Vademecum.list(params), vademecumInstanceTotal: Vademecum.count()]
     }
 
-    def create = {
+/*    def create = {
         def vademecumInstance = new Vademecum()
         vademecumInstance.properties = params
         return [vademecumInstance: vademecumInstance]
@@ -98,7 +98,7 @@ class VademecumController {
             flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'vademecum.label', default: 'Vademecum'), params.id])}"
             redirect(action: "list")
         }
-    }
+    }*/
 	
 	def listjson={
 		log.info "INGRESANDO AL CLOSURE listjson DEL CONTROLLER VademecumController"

@@ -186,7 +186,7 @@ class EventController {
 					}
 						
 
-					evento id: e.id,pacienteId:e.paciente?.id,estado:e.estado, title:e.titulo,start:e.start,sobreTurno:e.sobreTurno, end:e.end, allDay:false,version:e.version,borderColor:borderColor,textColor:textColor,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
+					evento id: e.id,pacienteId:e.paciente?.id,estado:e.estado, title:e.titulo,start:e.start,sobreTurno:e.sobreTurno, end:e.end, allDay:false,version:e.version,es,borderColor:borderColor,textColor:textColor,backgroundColor:backgroundColor,fechaStart: g.formatDate(date:e.fechaStart,format:"dd/MM/yyyy hh:mm"),fechaEnd:g.formatDate(date:e.fechaEnd,format:"dd/MM/yyyy hh:mm")
 				}
 			}
 		}
@@ -230,6 +230,7 @@ class EventController {
 		eventInstance.end = new Integer(params.end)
 		eventInstance.allDay = false
 		eventInstance.titulo = params.title
+		eventInstance.sobreTurno = params.essobreturno.toBoolean()
 		if(!params.pacienteId.trim().equals(""))
 			eventInstance.paciente = Paciente.load(new Long(params.pacienteId))
 			
@@ -324,6 +325,7 @@ class EventController {
 				eventInstance.paciente=null	
 			eventInstance.properties=params
 			
+			
             if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
                 //flash.message = "${message(code: 'default.updated.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
                 //redirect(action: "show", id: eventInstance.id)
@@ -417,32 +419,6 @@ class EventController {
 	        
 	        eventInstance.fechaEnd = new java.sql.Date(gc.getTime().getTime())
 
-			//---------deteccion de sobreturnos--------
-			def listSobreTurno=Event.createCriteria().list(){
-				or{
-					and{
-						ne("id",eventInstance.id)
-						ge("start",eventInstance.start)
-						lt("end",eventInstance.start)
-					}
-					and{
-						ne("id",eventInstance.id)
-						ge("start",eventInstance.end)
-						lt("end",eventInstance.end)
-					}
-					and{
-						ne("id",eventInstance.id)
-						eq("start",eventInstance.start)
-						eq("end",eventInstance.end)
-					}
-
-				}
-			}
-			if(listSobreTurno.size()>0)
-				eventInstance.sobreTurno = true
-			else
-				eventInstance.sobreTurno = false
-			//-----------------------------------------
 
 			
 			if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
@@ -653,6 +629,13 @@ class EventController {
 			if(eventInstance.consulta){
 				render(contentType:"text/json"){
 					result success:false,title:"Error, el turno ya fue atendido o tiene visitas vinculadas"
+				}
+				return
+			}
+			
+			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE)){
+				render(contentType:"text/json"){
+					result success:false,title:"Error, solo puede cambiar el estado a los turnos pendientes"
 				}
 				return
 			}

@@ -369,6 +369,15 @@
         			<input class="ui-widget ui-corner-all ui-widget-content" disabled="disabled" name="fechaEnd" id="fechaEndId"/>
         		</div>
         		<div class="clear"></div>
+        		<div class="span-2">
+        			<label for="fechaEnd">Es un Sobreturno?:</label>
+        		</div>
+        		<div class="span4">
+        			<input type="checkbox" name="esSobreturno" id="esSobreturnoId" />
+        		</div>
+        		<div class="clear"></div>
+        		
+        		
         		<div style="display:none" id="estadoEventDivId">
 	        		<div  class="span-2">
 	        			<label for="estado">Estado:</label>

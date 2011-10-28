@@ -47,8 +47,11 @@ class AuditoriaController {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		log.debug "FECHA DESDE: "+fechaDesde
+		log.debug "FECHA HASTA: "+fechaHasta
 		def param = [fechaDesde:fechaDesde,fechaHasta:fechaHasta]
-		def sqlstr = "select * from audit_log where convert(date_created,DATE) between :fechaDesde and :fechaHasta"
+		//def sqlstr = "select * from audit_log where date_created >= '2011-10-01' and date_created <= :fechaHasta"
+		def sqlstr = "SELECT * FROM audit_log WHERE CONVERT(date_created,DATE) BETWEEN :fechaDesde AND :fechaHasta"
 
 		if(cmd.validate()){
 			
