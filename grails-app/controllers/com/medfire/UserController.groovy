@@ -178,10 +178,13 @@ class UserController {
 				}
 			}
 			def oldPasswd = userInstance.passwd
-			if(!params.profesionalAsignado.id)
-			userInstance.profesionalAsignado=null
 
 			userInstance.properties = params
+			if(params.profesionalAsignadoId)
+				userInstance.profesionalAsignado = Profesional.load(params.profesionalAsignadoId.toLong())
+			else
+				userInstance.profesionalAsignado=null
+
 			if(!oldPasswd.equals(params.passwd)){
 				log.info "PASSWORD DISTINTA DE LA ANTERIOR"
 				userInstance.passwd = authenticateService.encodePassword(params.passwd)
