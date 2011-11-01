@@ -1,5 +1,7 @@
 	var timer;
 	var refrescarAtencion=true;
+	
+	
 	function updateestadoturno(id,estado){
 		$.ajax({
 			url:locupdturnos,
@@ -49,19 +51,20 @@
 			$(document).ready(function() {
 					
 		
-			jQuery("#listturnos").jqGrid({ 
+			var exploradorGrid = jQuery("#listturnos").jqGrid({ 
 						caption:'Turnos en Espera', 
 						//height:200, 
-						width: 200,
+						width: 300,
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
 						//postData: {profesionalId : profesionalId,cmd:'list'},
         				mtype:"POST",
+        				loadtext:'',
         				//rownumbers:true,
 				   		//rowList:[10,20,30],
 				   		//rowTotal:2000,
-				   		
+				   		pager:"#pagerlistturnos",
 				   		 
 						//scrollOffset:0,
 						//viewrecords: true,
@@ -77,7 +80,7 @@
 								   {name:'backgroundColor',index:'backgroundColor', width:60,sortable:false,hidden:true,search:false}
 								 ], 
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
-				                        $('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
+				                        //$('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
 				                },
 						ondblClickRow:function( rowid) { // here is the code 		 
 								// var selr = jQuery('#grid').jqGrid('getGridParam','selrow')
@@ -96,36 +99,17 @@
 									open:function(event,ui){
 										refrescarAtencion=false;
 									},
-									/*buttons: {
+									buttons: {
 										"Guardar": function() {
-											$.ajax({
-												 url:locturnos,
-												 type:"post",
-												 data:$("#formturnosId").serialize(),
-												 success:function(msg){
-												 	if(msg.result.success){
-												 		$("#listturnos").trigger("reloadGrid");
-												 		
-												 	}else
-												 		$('<div><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 50px 0;"></span>'
-												 			+msg.result.title+'</div>').dialog({
-															title: 'Error',
-															modal:true,
-															resizable: false,
-															close:function(event,ui){
-																
-															}
-														});
-												 },
-												 error : function(XMLHttpRequest, textStatus, errorThrown) {
-												 }
-											});
+											var id = $('#turnoId').val()
+											var estado = $('#estadoturnoId').val();
+											updateestadoturno(id,estado);
 											$(this).dialog( "close" );
 										},
 										"Cancelar": function() {
 											$( this ).dialog( "close" );
 										}
-									},*/
+									},
 									close: function() {
 										refrescarAtencion=true;
 									}
@@ -146,8 +130,22 @@
 			//$("#listturnos").closest(".ui-jqgrid-bdiv").css({ 'overflow-y' : 'scroll' });
 			//for(var i=0;i<=mydata.length;i++) jQuery("#listturnos").jqGrid('addRowData',i+1,mydata[i]);
 			
-				jQuery("#listturnos").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true}); 
-							
+				jQuery("#listturnos").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
+				jQuery("#listturnos").jqGrid('navGrid','#pagerlistturnos',{refresh:false,search:false,edit:false,add:false,del:false,pdf:true});
+				
+				jQuery("#listturnos").jqGrid('navButtonAdd','#pagerlistturnos',{
+				       caption:"Paciente", 
+				       onClickButton : function () { 
+				           //jQuery("#list").excelExport();
+				    	   var id = jQuery('#listturnos').jqGrid('getGridParam','selrow');
+				    	   if(id)
+				    		   window.location=locpacientes+'/'+id;
+				    	   else
+				    		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+				       } 
+				});				
+				
+				$(".ui-jqgrid-titlebar-close",exploradorGrid[0].grid.cDiv).click()			
 
 						
 				timer = $.timer(25000, function() {

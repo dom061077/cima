@@ -1,6 +1,7 @@
 package com.medfire
 
 import com.medfire.util.GUtilDomainClass
+import pl.burningice.plugins.image.container.ContainerUtils
 
 class VademecumController {
 
@@ -127,6 +128,46 @@ class VademecumController {
 		result=result+']}'
 		render result
 
+	}
+	
+	def vademecumdetalle = {
+		log.info "INGREANDO AL CLOSURE vademecumdetalle"
+		log.info "PARAMETROS: $params"
+		
+		def list = Institucion.findAll()
+		def institucionInstance = list.getAt(0)
+		String pathimage
+		String nameimage
+		def config
+		if(institucionInstance){
+			pathimage = bi.resource(size:'large',bean:institucionInstance)
+			if(pathimage.contains(".null")){
+				pathimage = servletContext.getRealPath("/images")
+				nameimage = "noDisponibleLarge.jpg"
+			}else{
+				config = ContainerUtils.getConfig(institucionInstance)
+				pathimage = servletContext.getRealPath("/institucional")
+				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
+			}
+		
+		}
+		params.put("pathimage", pathimage);
+		params.put("nameimage", nameimage)
+		params.put("nombreInstitucion", institucionInstance.nombre);
+		params.put("telefonos", institucionInstance.telefonos);
+		params.put("email", institucionInstance.email);
+		params.put("direccion", institucionInstance.direccion);
+		params.put("_format","PDF")
+		params.put("_name","vademecumdetalle")
+		params.put("_file","vademecumdetalle")
+
+		def listvademecum = Vademecum.createCriteria().list(){
+			eq("id",params.id.toLong())
+		}
+
+		chain(controller:'jasper',action:'index',model:[data:listvademecum],params:params)
+		
+		
 	}
 	
 }

@@ -574,13 +574,39 @@ class EventController {
 			order("fechaStart","asc")
 		}
 		
+		def criteriaCount = Event.createCriteria()
+		def closureCount = {
+			criteriaCount.and(){
+				criteriaCount.profesional(){
+					criteriaCount.eq('id',user.profesionalAsignado?.id)
+				}
+				criteriaCount.between('fechaStart',dateStart,dateEnd)
+				if(Boolean.parseBoolean(params._search)){
+					if(params.filters){
+						filtersJson = JSON.parse(params.filters)
+						criteriaCount."${filtersJson.groupOp.toLowerCase()}"(){
+							filtersJson?.rules?.each{
+								oper = FilterUtils.operationSearch(it.op)
+								criteriaCount."${oper}"(it.field,"%"+it.data+"%")
+							}
+						}
+					}
+				}
+			}
+			criteriaCount.projections{
+				rowCount()
+			}
+		}
+		
 		def list = criteria.list(closure)
 
 		
 		//log.debug "TOTAL DE LIST: "+list.size()
-		def totalregistros=list.size()
+		def totalregistros=criteriaCount.get(closureCount)
 		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
-		
+		if (totalpaginas>0 && totalpaginas<1)
+			totalpaginas=1;
+		totalpaginas=totalpaginas.intValue()
 		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
 		
 		

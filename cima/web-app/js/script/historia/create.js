@@ -96,7 +96,19 @@ $(document).ready(function(){
 			$('#cantidad').focus();
 		} 
 	});
+	jQuery("#tablaBusquedaVademecumId").jqGrid('navGrid','#pagerBusquedaVademecumId',{search:false,edit:false,add:false,del:false,pdf:true});
 	jQuery('#tablaBusquedaVademecumId').jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
+	jQuery("#tablaBusquedaVademecumId").jqGrid('navButtonAdd','#pagerBusquedaVademecumId',{
+	       caption:"Informe", 
+	       onClickButton : function () {
+	    	   var id = jQuery('#tablaBusquedaVademecumId').jqGrid('getGridParam','selrow');
+	    	   if(id)
+	    		   window.location = locvademecdetalle+'?target=_blank&id='+id;
+	    	   else
+	    		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+	    	   
+	       } 
+	});
 	
 	
 	

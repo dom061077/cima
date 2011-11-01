@@ -26,4 +26,9 @@ class Vademecum {
 	
     static constraints = {
     }
+	
+	static mapping = {
+		composicion lazy:false
+		laboratorio lazy:false
+	}
 }
