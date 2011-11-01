@@ -95,7 +95,7 @@
 
 <div class="container">
 
-			<div style="display:none" id="MenuJqGrid">
+			<div style="display:none;" id="MenuJqGrid">
 		        <ul>
 		            <li id="atendido"><g:colorsList event='COLOR_ATENDIDO'/>${EstadoEvent.EVENT_ATENDIDO.name}</li>
 		            <li id="ausente"><g:colorsList event='COLOR_AUSENTE'/>${EstadoEvent.EVENT_AUSENTE.name}</li>
@@ -106,11 +106,14 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div style="position:absolute;top:300px;left:10px; id="exploradorId">
+			<div style="position:absolute;top:200px;left:900px;z-index:1000" id="exploradorId">
 					<div id="turnosesperaId">
 							<table id="listturnos"></table>
-					</div>		
+					</div>
+					<div id="pagerlistturnos">
+					</div>
 			</div>
+			
 	
 			<div style="display:none" id="dialog-form" title="Información del turno">
 				<form id="formturnosId">
@@ -140,6 +143,15 @@
 							</td>
 							<td>
 								<input class="ui-widget ui-corner-all ui-widget-content" type="text" disabled id="fechaturnoFinId"/>
+							</td>
+						</tr>
+						<tr class="prop">
+							<td valign="top" class="name">
+								<label for="fechaturno">Estado:</label>
+							</td>
+							<td>
+								<g:select  id="estadoturnoId" class="ui-widget ui-corner-all ui-widget-content"  name="estado" from="${com.medfire.enums.EstadoEvent?.list()}" 
+			                           	optionValue="name" />
 							</td>
 						</tr>													
 					</table>									
@@ -238,7 +250,7 @@
 	        	<g:layoutBody />
 		</div>	
         <div style="height:80px;background:url(${resource(dir:"images",file:"footer.png")})" class="span-24 last prepend-top">
-        	<p style="text-align:left;padding-left:10px;padding-top:40px;font-color:">
+        	<p style="text-align:center;padding-left:10px;padding-top:50px;font-color:">
             &copy; Copyright 2011 &lt;INAP&gt; | Design by: &lt;INAP&gt;
             </p>
         </div><!-- end footer -->

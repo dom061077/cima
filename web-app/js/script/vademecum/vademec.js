@@ -20,4 +20,15 @@ $(document).ready(function(){
 	});
 	jQuery("#listvademec").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
 	jQuery("#listvademec").jqGrid('navGrid','#pagervademec',{search:false,edit:false,add:false,del:false,pdf:true});
+	jQuery("#listvademec").jqGrid('navButtonAdd','#pagervademec',{
+	       caption:"Informe", 
+	       onClickButton : function () {
+	    	   var id = jQuery('#listvademec').jqGrid('getGridParam','selrow');
+	    	   if(id)
+	    		   window.location = 'vademecumdetalle?target=_blank&id='+id;
+	    	   else
+	    		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+	    	   
+	       } 
+	});	
 });

@@ -31,6 +31,7 @@
         	var loccie10search = "<%out << g.createLink(controller:'cie10',action:'listsearchjson');%>";
         	var loccie10autocomplete = "<%out << g.createLink(controller:'cie10',action:'listautocompletejson');%>";
         	var locvademec = '<%out << g.createLink(controller:'vademecum',action:'listjson')%>';
+        	var locvademecdetalle = '<%out << g.createLink(controller:'vademecum',action:'vademecumdetalle')%>';
         	var consultaId = <%out << "${consultaInstance.id}"%>;
         	var locprescripciones =  "<%out << g.createLink(controller:'historiaClinica',action:'listprescripciones')%>";
         	var loceditprescripciones = "<%out << g.createLink(controller:'historiaClinica',action:'editprescripciones')%>";
