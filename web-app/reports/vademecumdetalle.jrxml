@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="net.sf.jasperreports.export.character.encoding" value="UTF-8"/>
 	<parameter name="pathimage" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="nombreInstitucion" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="telefonos" class="java.lang.String" isForPrompting="false"/>
@@ -15,6 +16,9 @@
 	<field name="presentacion" class="java.lang.String"/>
 	<field name="accionTerapeutica" class="java.lang.String"/>
 	<field name="laboratorio.nombre" class="java.lang.String"/>
+	<field name="indicaciones" class="java.lang.String"/>
+	<field name="dosificacion" class="java.lang.String"/>
+	<field name="advertencias" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -69,9 +73,9 @@
 			<staticText>
 				<reportElement x="352" y="46" width="201" height="15"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" size="10" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Pacientes Atendidos por Profesional]]></text>
+				<text><![CDATA[Detalle Vademecum]]></text>
 			</staticText>
 			<line>
 				<reportElement x="4" y="72" width="549" height="1"/>
@@ -79,11 +83,11 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="298" splitType="Stretch">
+		<band height="61" splitType="Stretch">
 			<textField>
 				<reportElement x="40" y="10" width="302" height="17"/>
 				<textElement>
-					<font fontName="Arial" size="14"/>
+					<font fontName="Arial" size="14" isPdfEmbedded="false"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{id}+"-"+ $F{nombreComercial}]]></textFieldExpression>
 			</textField>
@@ -92,45 +96,105 @@
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{nombreComercial}]]></textFieldExpression>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{laboratorio.nombre}]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{composicion.descripcion}.trim()!=""]]></printWhenExpression>
 			<staticText>
-				<reportElement x="40" y="99" width="100" height="15"/>
+				<reportElement x="40" y="4" width="137" height="15"/>
 				<textElement>
-					<font fontName="Arial" size="11" isBold="true"/>
+					<font fontName="Arial" size="11" isBold="true" isPdfEmbedded="false"/>
 				</textElement>
 				<text><![CDATA[Composición:]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="40" y="169" width="100" height="15"/>
-				<textElement>
-					<font fontName="Arial" size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Presentaciones:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="40" y="244" width="100" height="15"/>
-				<textElement>
-					<font fontName="Arial" size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Acción Terapeútica:]]></text>
-			</staticText>
 			<textField>
-				<reportElement x="40" y="121" width="498" height="20"/>
+				<reportElement x="40" y="26" width="498" height="20"/>
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{composicion.descripcion}]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="80">
+			<printWhenExpression><![CDATA[$F{indicaciones}.trim()!=""]]></printWhenExpression>
+			<staticText>
+				<reportElement x="40" y="5" width="100" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Indicaciones:]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="40" y="191" width="498" height="43"/>
+				<reportElement x="40" y="27" width="498" height="40"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{indicaciones}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="79">
+			<printWhenExpression><![CDATA[$F{dosificacion}.trim()!=""]]></printWhenExpression>
+			<staticText>
+				<reportElement x="40" y="3" width="100" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dosificación:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="25" width="498" height="43"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{dosificacion}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="72">
+			<printWhenExpression><![CDATA[$F{presentacion}.trim()!=""]]></printWhenExpression>
+			<staticText>
+				<reportElement x="40" y="5" width="100" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Presentaciones:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="27" width="498" height="35"/>
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{presentacion}]]></textFieldExpression>
 			</textField>
+		</band>
+		<band height="75">
+			<printWhenExpression><![CDATA[$F{advertencias}.trim()!=""]]></printWhenExpression>
+			<staticText>
+				<reportElement x="40" y="4" width="100" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Advertencias:]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="40" y="266" width="498" height="20"/>
+				<reportElement x="40" y="26" width="498" height="37"/>
+				<textElement>
+					<font fontName="Arial" size="11"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{advertencias}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{accionTerapeutica}.trim()!=""]]></printWhenExpression>
+			<staticText>
+				<reportElement x="40" y="5" width="218" height="15"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Acción Terapeútetica:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="40" y="27" width="498" height="20"/>
 				<textElement>
 					<font fontName="Arial" size="11"/>
 				</textElement>
