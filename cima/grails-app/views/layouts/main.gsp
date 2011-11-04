@@ -106,13 +106,6 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div style="position:absolute;top:200px;left:900px;z-index:1000" id="exploradorId">
-					<div id="turnosesperaId">
-							<table id="listturnos"></table>
-					</div>
-					<div id="pagerlistturnos">
-					</div>
-			</div>
 			
 	
 			<div style="display:none" id="dialog-form" title="Información del turno">
@@ -167,16 +160,9 @@
 				</a>	
 			</div>    
 
-	<div class="span-12">
-			<div class="span-5 prepend-15">
-	            <g:isLoggedIn>
-<%--					<div>--%>
-<%--						Usuario: <%out << g.loggedInUserInfo(field:"userRealName")%>--%>
-<%--					</div>--%>
-				</g:isLoggedIn>
-			</div>
+	<div style="background-color: #5C9CCC" class="span-24">
            	<g:isLoggedIn>
-           		<div style="background-color: #5C9CCC" class="span-24">
+           		<div  class="span-16">
 		            <ul class="dropdown dropdown-horizontal" >
 						<li><a href="#" class="dir">Archivo</a>
 							<ul>
@@ -239,8 +225,17 @@
 						
 					</ul>
 				</div>	
+				<div class="span-5" id="exploradorId">
+					<div id="turnosesperaId">
+							<table id="listturnos"></table>
+					</div>
+					<div id="pagerlistturnos">
+				</div>
+			</div>
+				
 			</g:isLoggedIn>	
 	</div><!-- div cierre del menu -->
+	
 	<g:isLoggedIn>
 		<div class="span-7 prepend-3 last">
 		</div>

@@ -2,6 +2,8 @@ package com.medfire
 
 import com.medfire.util.GUtilDomainClass
 import pl.burningice.plugins.image.container.ContainerUtils
+import net.sf.jasperreports.engine.JRExporterParameter
+import net.sf.jasperreports.engine.export.JRHtmlExporterParameter
 
 class VademecumController {
 
@@ -160,11 +162,15 @@ class VademecumController {
 		params.put("_format","PDF")
 		params.put("_name","vademecumdetalle")
 		params.put("_file","vademecumdetalle")
+		params.put(JRExporterParameter.PROPERTY_CHARACTER_ENCODING  ,"ISO-8859-1")
+		//params.put(JRHtmlExporterParameter.IMAGES_DIR_NAME ,servletContext.getRealPath("/images"))
+		//params.put(JRHtmlExporterParameter.IMAGES_URI  ,servletContext.getRealPath("/images")+"/") 
+		
 
 		def listvademecum = Vademecum.createCriteria().list(){
 			eq("id",params.id.toLong())
 		}
-
+		
 		chain(controller:'jasper',action:'index',model:[data:listvademecum],params:params)
 		
 		
