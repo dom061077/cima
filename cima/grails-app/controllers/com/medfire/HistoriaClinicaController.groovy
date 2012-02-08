@@ -269,8 +269,8 @@ class HistoriaClinicaController {
 			}
 			try{
 				consultaInstance=historiaClinicaService.updateVisita(consultaInstance,params)
-				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), consultaInstance.id])}"
-				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
+				flash.message = "${message(code: 'default.updated.message', args: [message(code: 'historiaClinica.label', default: 'HistoriaClinica'), consultaInstance?.id])}"
+				render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance?.id}' />"
 				//redirect(action: "show", id: consultaInstance.id)
 			}catch(ConsultaException e){
 				log.error "MENSAJE DE ERROR: "+e.message

@@ -54,7 +54,7 @@
 			var exploradorGrid = jQuery("#listturnos").jqGrid({ 
 						caption:'Turnos en Espera', 
 						//height:200, 
-						width: 300,
+						width: 400,
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
