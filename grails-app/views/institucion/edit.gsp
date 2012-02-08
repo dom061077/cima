@@ -5,14 +5,41 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <meta name="layout" content="main" />
+        <script type="text/javascript" src="${resource(dir:'js/jquery',file:'thickbox.js')}"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'css',file:'thickbox.css')}" />
+        
         <g:set var="entityName" value="${message(code: 'institucion.label', default: 'Institucion')}" />
         <title><g:message code="default.edit.label" args="[entityName]" /></title>
+        <script type="text/javascript">
+        	$(document).ready(function(){
+		    	$('.cambiarlink').live('click',function(){
+			    	if($(this).attr('inputactivo')=='false'){
+				    	$(this).attr('inputactivo','true');
+				    	var link = $(this);
+				    	$('#image').fadeOut(function(){
+				    		$('#inputimage').fadeIn('slow',function(){
+				    			link.html('Cancelar');
+					    	});
+				    				
+					    });
+				    }else{
+				    	$(this).attr('inputactivo','false');
+				    	var link = $(this);
+				    	$('#inputimage').fadeOut(function(){
+					    	$('#image').fadeIn('slow',function(){
+					    		link.html('Cambiar Imagen');
+						    });
+					    	
+					    });
+					}
+		    	});
+		    	$('#inputimage').hide();	
+            });
+        </script>
     </head>
     <body>
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
-            <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
@@ -66,9 +93,17 @@
                         	<div class="span-2 spanlabel">
                            		  <label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
                             </div>
-                            <div class="span-4">      
+                            <div id="image" class="span-5">
+		            					<a class="thickbox" href="${g.resourceimgext(size:'large', bean:institucionInstance)}"><img src="${g.resourceimgext(size:'small', bean:institucionInstance)}"  alt=""> </img></a>
+	            			</div>
+                            <div id="inputimage" class="span-5">      
 								  <input class="ui-widget ui-corner-all ui-widget-content" type="file" name="imagen"/>                            	
                         	</div>
+							<div  class="span-5">
+		            					<span>
+		            						<a  class="cambiarlink" inputactivo="false" href="" onclick="return false;">Cambiar Imagen</a>
+		            					</span>
+		            		</div>                        	
                             <div class="clear"></div>                        	
                         
                 </div>

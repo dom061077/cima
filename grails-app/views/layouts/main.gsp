@@ -106,7 +106,7 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div style="position:absolute;top:163px;left:165px;z-index:1000" id="exploradorId">
+			<div style="position:absolute;top:163px;left:160px;z-index:1000" id="exploradorId">
 					<div id="turnosesperaId">
 							<table id="listturnos"></table>
 					</div>
