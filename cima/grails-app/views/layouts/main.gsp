@@ -220,6 +220,7 @@
 						</li>
 						<li><a href="#" class="dir">Informes</a>
 							<ul>
+								<li><a href="${createLink(controller:"indicecorporal",action:"index")}">Indice de masa corporal</a> </li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>

@@ -134,7 +134,7 @@
 				jQuery("#listturnos").jqGrid('navGrid','#pagerlistturnos',{refresh:false,search:false,edit:false,add:false,del:false,pdf:true});
 				
 				jQuery("#listturnos").jqGrid('navButtonAdd','#pagerlistturnos',{
-				       caption:"Paciente", 
+				       caption:"Hist.Clínica", 
 				       onClickButton : function () { 
 				           //jQuery("#list").excelExport();
 				    	   var id = jQuery('#listturnos').jqGrid('getGridParam','selrow');
