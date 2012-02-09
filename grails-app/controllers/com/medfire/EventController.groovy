@@ -35,8 +35,13 @@ class EventController {
 			eq("activo",true)
 			order("nombre","asc")
 		}
+		def profsel
+		if(params.profesionalId) 
+			profsel=profList.find{it.id==params.profesionalId.toLong()}
+		else
+			profsel=profList.get(0)	 
 		log.debug "cantidad de profesionales que atiende: "+profList.size()
-        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profList.get(0),intervalo:(params.intervalo?params.intervalo:30)]
+        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profsel,intervalo:(params.intervalo?params.intervalo:30)]
     }
 
     def save = {
@@ -699,7 +704,7 @@ class EventController {
 				
 			if (flagaddcomilla)
 				result=result+','
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"hh:mm",date:it.fechaStart)+'","'+g.formatDate(format:"hh:mm",date:it.fechaEnd)+'","'+backgroundColor+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"HH:mm",date:it.fechaEnd)+'","'+backgroundColor+'"]}'
 			flagaddcomilla=true
 		}
 		
