@@ -20,7 +20,7 @@
 			<label for=""><g:message code="indice.corporal.estatura" default="Estatura (cm)"/> </label>
 		</div>
 		<div class="span-4">
-			<g:textField name="estatura" id="estaturaId" value="${estatura}" />		
+			<g:textField class="ui-widget ui-corner-all ui-widget-content" name="estatura" id="estaturaId" value="${estatura}" />		
 		</div>
 		
 		<div class="clear"></div>
@@ -29,13 +29,14 @@
 			<label for=""><g:message code="indice.corporal.estatura" default="Peso (kg)"/> </label>
 		</div>
 		<div class="span-4">
-			<g:textField name="peso"  id="pesoId" value="${peso}"/>
+			<g:textField class="ui-widget ui-corner-all ui-widget-content" name="peso"  id="pesoId" value="${peso}"/>
 		</div>
 		<div class="clear"></div>
 		
 		<div class="6">
-			<p>Indice: ${indice}</p>
-			<p>${leyenda}</p>
+			<g:
+			<p><H1>Indice: ${indice}</H1></p>
+			<p><H2>${leyenda}</H2></p>
 		</div>
 		
 		<div class="clear"></div>

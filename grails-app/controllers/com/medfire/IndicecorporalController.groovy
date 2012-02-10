@@ -38,10 +38,10 @@ class IndicecorporalController {
 				leyenda="Su peso es normal"
 			}else{
 				if(r>25 && r<=30){
-					leyenda="Usted está obeso"
+					leyenda="Usted tiene sobrepeso"
 				}else{
 					if(r>30 && r<=40)
-						leyenda="Usted esta"
+						leyenda="Usted está obeso"
 					else
 						leyenda="Usted sufre de obesidad severa"
 				}
