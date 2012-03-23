@@ -15,7 +15,7 @@
 			${flash.error}
 		</div>
 	</g:if>
-	<g:form action="calcular">
+	<g:form action="calcular">	
 		<div class="span-2 spanlabel">
 			<label for=""><g:message code="indice.corporal.estatura" default="Estatura (cm)"/> </label>
 		</div>
@@ -32,11 +32,13 @@
 			<g:textField class="ui-widget ui-corner-all ui-widget-content" name="peso"  id="pesoId" value="${peso}"/>
 		</div>
 		<div class="clear"></div>
-		
+		<div class="clear"></div>	
 		<div class="6">
-			<g:
-			<p><H1>Indice: ${indice}</H1></p>
-			<p><H2>${leyenda}</H2></p>
+			<g:if test="${indice}">
+				<p><H1>Indice: ${indice}</H1></p>
+				<p><H2>${leyenda}</H2></p>
+			</g:if>
+			
 		</div>
 		
 		<div class="clear"></div>

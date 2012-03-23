@@ -15,7 +15,7 @@ class IndicecorporalController {
 		log.info "PARAMETROS: $params"
 		if(!params.estatura){
 			flash.error = "Ingrese una estatura mayor a CERO"
-			render(view:"index")
+			render(view:"index",model:[estatura:params.estatura,peso:params.peso])
 			return
 		}
 		if(!params.peso){
@@ -47,8 +47,8 @@ class IndicecorporalController {
 				}
 			}
 		}	
-		
-		render(view:"index",model:[indice:r,leyenda:leyenda])
+		flash.error= null
+		render(view:"index",model:[indice:r,leyenda:leyenda,estatura:params.estatura,peso:params.peso])
 	}
 	
 }

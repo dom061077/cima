@@ -124,36 +124,6 @@
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path="fckeditor-0.9.5-grails-app-conf">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="fckeditor-0.9.5-grails-app-controllers">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="fckeditor-0.9.5-grails-app-i18n">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="fckeditor-0.9.5-grails-app-services">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="fckeditor-0.9.5-grails-app-taglib">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="fckeditor-0.9.5-src-groovy">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
 	<classpathentry kind="src" path="jasper-0.9-grails-app-controllers">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
@@ -175,46 +145,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="jasper-0.9-grails-app-views">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path="jquery-1.4.4-grails-app-conf">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-1.4.4-grails-app-i18n">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-1.4.4-grails-app-services">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-1.4.4-grails-app-taglib">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-1.4.4-src-groovy">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path="jquery-ui-1.8.7-grails-app-conf">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-ui-1.8.7-grails-app-i18n">
-		<attributes>
-			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
-		</attributes>
-	</classpathentry>
-	<classpathentry kind="src" path="jquery-ui-1.8.7-grails-app-taglib">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
@@ -244,27 +174,27 @@
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry excluding="BuildConfig.groovy|*DataSource.groovy|UrlMappings.groovy|Config.groovy|BootStrap.groovy|spring/resources.groovy" kind="src" path="quartz-0.4.2-grails-app-conf">
+	<classpathentry kind="src" path="mail-1.0-grails-app-i18n">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="quartz-0.4.2-grails-app-i18n">
+	<classpathentry kind="src" path="mail-1.0-grails-app-services">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="quartz-0.4.2-grails-app-services">
+	<classpathentry kind="src" path="mail-1.0-grails-app-taglib">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="quartz-0.4.2-src-java">
+	<classpathentry kind="src" path="mail-1.0-grails-app-views">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="quartz-0.4.2-src-groovy">
+	<classpathentry kind="src" path="mail-1.0-src-groovy">
 		<attributes>
 			<attribute name="com.springsource.sts.grails.core.SOURCE_FOLDER" value="true"/>
 		</attributes>

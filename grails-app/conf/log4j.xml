@@ -1,6 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
 <log4j:configuration xmlns:log4j='http://jakarta.apache.org/log4j/' debug='false'>
+  <appender name='EMAIL_LOG' class='org.apache.log4j.net.SMTPAppender'>
+    <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
+    <param name='threshold' value='TRACE' />
+    <param name='to' value='dom061077@gmail.com' />
+    <param name='from' value='from@pezon.com' />
+    <param name='subject' value='log4j' />
+    <param name='SMTPHost' value='smtp.gmail.com' />
+    <param name='SMTPUsername' value='dom061077@gmail.com' />
+    <param name='SMTPDebug' value='true' />
+    <param name='SMTPPassword' value='DiosTeNecesito2009' />
+    <layout class='org.apache.log4j.PatternLayout'>
+      <param name='ConversionPattern' value='%d %-5p [%-30.40c{1}] %2X{tid} %X{sid} %X{uid} %m%n' />
+    </layout>
+  </appender>
   <appender name='APP_LOG' class='org.apache.log4j.DailyRollingFileAppender'>
     <errorHandler class='org.apache.log4j.helpers.OnlyOnceErrorHandler' />
     <param name='File' value='logs/appcima.log' />
@@ -74,6 +88,10 @@
   </category>
   <category name='grails' additivity='false'>
     <priority value='INFO' />
+  </category>
+  <category name='grails.app' additivity='true'>
+    <priority value='TRACE' />
+    <appender-ref ref='EMAIL_LOG' />
   </category>
   <category name='grails.app' additivity='true'>
     <priority value='DEBUG' />

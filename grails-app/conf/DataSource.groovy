@@ -1,3 +1,6 @@
+System.setProperty 'mail.smtp.port', '587'
+System.setProperty 'mail.smtp.starttls.enable', 'true'
+
 dataSource {
 	//username="root"
 	//password="exito"
@@ -16,7 +19,7 @@ environments {
 			username = "root"
 			password = "exito"
 		
-            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
+            dbCreate = "update" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/medfireweb"
         }
     }

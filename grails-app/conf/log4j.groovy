@@ -3,6 +3,25 @@
 	  /**
 	   * Appender: single entry - file
 	   */
+	
+	  appender(name: "EMAIL_LOG", 'class': "org.apache.log4j.net.SMTPAppender") {
+		errorHandler 'class': "org.apache.log4j.helpers.OnlyOnceErrorHandler"
+		param name: "threshold", value: "TRACE"
+		param name: "to", value: "dom061077@gmail.com"
+		param name: "from", value:"from@pezon.com"
+		param name: "subject", value:"log4j"
+		param name: "SMTPHost", value:"smtp.gmail.com"
+		param name: "SMTPUsername", value:"xxx@gmail.com"
+		param name: "SMTPDebug",value:"true"
+		param name: "SMTPPassword", value:"xxx"
+		
+		layout('class': "org.apache.log4j.PatternLayout") {
+		  param name: "ConversionPattern", value: "%d %-5p [%-30.40c{1}] %2X{tid} %X{sid} %X{uid} %m%n"
+		}
+	  }
+	
+	
+	
 	  appender(name: "APP_LOG", 'class': "org.apache.log4j.DailyRollingFileAppender") {
 		errorHandler 'class': "org.apache.log4j.helpers.OnlyOnceErrorHandler"
 		param name: "File", value: "logs/appcima.log"
@@ -67,6 +86,14 @@
 	  /**
 	   * Category - shared definition by custom groupping
 	   */
+	  def appemail = ['grails.app']
+	  appemail.each {
+		'category'(name: it, additivity: 'true') {
+		  'priority'(value: 'TRACE'); 'appender-ref'('ref': "EMAIL_LOG");
+		}
+	  }
+
+	  
 	  def app = ['grails.app']
 	  app.each {
 		'category'(name: it, additivity: 'true') {
