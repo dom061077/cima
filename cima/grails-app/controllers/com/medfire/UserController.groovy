@@ -6,6 +6,7 @@ import com.medfire.util.GUtilDomainClass
 
 class UserController {  
 	def authenticateService
+	def emailerService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {  
@@ -345,6 +346,17 @@ class UserController {
 		}
 	}
 
+	
+	def sendmail = {
+		def email = [
+			to: ["dom061077@gmail.com"], // 'to' expects a List, NOT a single email address
+			subject: "MAIL DE PRUEBA",
+			text: "ESTE EL CUERPO DE UN MAIL DE PRUEBA" // 'text' is the email body
+		]
+		emailerService.sendEmails([email])
+	}
+
+	
 }
 
 

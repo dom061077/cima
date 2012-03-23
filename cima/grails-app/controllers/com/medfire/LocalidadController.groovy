@@ -102,11 +102,11 @@ class LocalidadController {
 		log.info "INGRESANDO AL CLOSURE listjsonautocomplete DEL CONTROLLER LocalidadController"
 		log.info "PARAMETROS: ${params}"
 		def list = []
-		if(params.provinciaId && params.term){
+		if(params.provinciaid && params.term){
 			list = Localidad.createCriteria().list({
-				if(params.provinciaId)
+				if(params.provinciaid)
 					provincia{
-						eq("id",params.provinciaId.toLong())
+						eq("id",params.provinciaid.toLong())
 					}
 				if(params.term)
 					ilike("nombre",params.term+"%")		

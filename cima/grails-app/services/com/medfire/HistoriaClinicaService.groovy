@@ -82,9 +82,7 @@ class HistoriaClinicaService {
 
 		params.consulta.estudio.each{
 			try{
-				log.debug "IT DE PARAMS: ${it.value.id}"
 				if(it.value.id){
-					log.debug "ESTUDIO A RECUPERAR: ${it.value.id}"
 					consultaInstance.estudios.each{estudio->
 						if(estudio.id.equals(it.value.id.toLong())){
 							log.debug "MODIFICANDO LOS DATOS CABECERA DEL ESTUDIO EXISTENTE, codigo: ${it.value.id}"
@@ -106,8 +104,6 @@ class HistoriaClinicaService {
 						}
 					}
 				}else{
-					log.debug "AGREGANDO ESTUDIO NUEVO"
-					log.debug "ESTUDIO NUEVO A AGREGAR: "+it.value
 					estudioInstance = new EstudioComplementario(consulta:consultaInstance,pedido:it.value.pedido,resultado:it.value.resultado,secuencia:it.key.toInteger())
 					if (!estudioInstance.validate())
 						log.debug "ERROR DE VALIDACION: "+estudioInstance.errors.allErrors
@@ -142,6 +138,7 @@ class HistoriaClinicaService {
 		else
 			consultaInstance.cie10=null
 		if(!consultaInstance.hasErrors()){
+			log.debug "NO TIENE ERRORES DE VALIDACION LACONSULTA DE INSTANCIA"
 			if(params.deletedEstSerialized){
 				deletedestjson = grails.converters.JSON.parse(params.deletedEstSerialized)
 				deletedestjson?.each{
@@ -181,10 +178,10 @@ class HistoriaClinicaService {
 					estudioImagenInstance.delete()
 				}
 			}
-			consultaInstance = consultaInstance.save(flush:true)
-			if( consultaInstance){
-				
-				consultaInstance.estudios.each{estudio->
+			def consultaInstanceSaved = consultaInstance.save(flush:true)
+			if( consultaInstanceSaved){
+				log.debug "CONSULTA SALVADA"
+				consultaInstanceSaved.estudios.each{estudio->
 					estudio.imagenes.each{img->
 						if(img.imagen){
 							log.debug "CLASE DE IMAGEN: ${img.imagen.class}"
@@ -193,11 +190,17 @@ class HistoriaClinicaService {
 						}
 					}
 				}
-				return consultaInstance
+				return consultaInstanceSaved
 			}else{
-			
+				log.error "NO SE SALVO LA INSTANCIA, ERRORES DE VALIDACION:"
+				consultaInstance.errors.allErrors.each{
+					log.error it
+				}
+				errorMessage="ERROR DE VALIDACION AL SALVAR LA INSTANCIA DE consultaInstance EN updateVisita HistoriaClinicaService"
+				throw new ConsultaException(errorMessage,consultaInstance)
 			}
 		}else{
+			log.debug "ERROR AL SALVAR LA CONSULTA"
 			errorMessage="ERROR AL SALVAR LA INSTANCIA DE consultaInstance EN registrarVisita EN HistoriaClinicaService"
 			throw new ConsultaException(errorMessage,consultaInstance)
 		}

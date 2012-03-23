@@ -742,8 +742,15 @@ class EventController {
 				return
 			}
 			
-			eventInstance.properties=params
+			if(eventInstance.paciente==null){
+				render(contentType:"text/json"){
+					result success:false,title:"Error, solo puede cambiar el esado a los turnos que esten vinculados con el paciente correspondiente"
+				}
+				return
+			}
 			
+			
+			eventInstance.properties=params
             if (!eventInstance.hasErrors() && eventInstance.save(flush: true)) {
                 render (contentType:"text/json"){
 					result success:true,title:eventInstance.titulo

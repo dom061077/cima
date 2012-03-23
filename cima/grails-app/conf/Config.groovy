@@ -56,6 +56,27 @@ grails.spring.bean.packages = []
 //grails.plugin.cloudfoundry.target = "http://api.cloudfoundry.com:3128"
 
 
+
+
+grails {
+    mail {
+        host = "smtp.gmail.com"
+        port = 587
+        username = "mimail@gmail.com"
+        password = "xxxxxx"
+        props = ["mail.debug": "true",
+                "mail.smtp.protocol": "smtps",
+                "mail.smtp.auth": "true",
+                "mail.smtp.starttls.enable": "true",
+                "mail.smtp.host": "smtp.gmail.com",
+                "mail.smtp.user": "mimail@gmail.com",
+                "mail.smtp.password": "xxxxx",
+				]
+    }
+}
+
+
+
 event.COLOR_ATENDIDO="#54de25"
 event.COLOR_AUSENTE="#fab7a0"
 event.COLOR_ANULADO="#D8D8D8"
