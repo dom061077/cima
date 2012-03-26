@@ -48,13 +48,14 @@
                 }
             }
         };	
-			$(document).ready(function() {
+
+$(document).ready(function() {
 					
-		
+					
 			var exploradorGrid = jQuery("#listturnos").jqGrid({ 
 						caption:'Turnos en Espera', 
 						//height:200, 
-						width: 400,
+						width: 190,
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
@@ -64,20 +65,20 @@
         				//rownumbers:true,
 				   		//rowList:[10,20,30],
 				   		//rowTotal:2000,
-				   		pager:"#pagerlistturnos",
+				   		//pager:"#pagerlistturnos",
 				   		 
 						//scrollOffset:0,
 						//viewrecords: true,
 						datatype: "json",
 						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin','BackgroundColor'],
 						colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
-								   {name:'titulo',index:'titulo', width:100,sorttype:'text',sortable:false},	
-								   {name:'cod_estado',index:'cod_estado', width:60,sortable:false,hidden:true,search:false},
-								   {name:'estado',index:'estado', width:60,sortable:false,hidden:false,search:false},
-								   {name:'version',index:'version', width:60,sortable:false,hidden:true,search:false},								   
-								   {name:'fechaStart',index:'fechaStart', width:60,sortable:false,hidden:false,search:false},
-								   {name:'fechaEnd',index:'fechaEnd', width:60,sortable:false,hidden:false,search:false},
-								   {name:'backgroundColor',index:'backgroundColor', width:60,sortable:false,hidden:true,search:false}
+								   {name:'titulo',index:'titulo', width:60,sorttype:'text',sortable:false},	
+								   {name:'cod_estado',index:'cod_estado', width:30,sortable:false,hidden:true,search:false},
+								   {name:'estado',index:'estado', width:20,sortable:false,hidden:false,search:false},
+								   {name:'version',index:'version', width:20,sortable:false,hidden:true,search:false},								   
+								   {name:'fechaStart',index:'fechaStart', width:20,sortable:false,hidden:false,search:false},
+								   {name:'fechaEnd',index:'fechaEnd', width:25,sortable:false,hidden:false,search:false},
+								   {name:'backgroundColor',index:'backgroundColor', width:20,sortable:false,hidden:true,search:false}
 								 ], 
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
 				                        //$('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
@@ -131,7 +132,7 @@
 			//for(var i=0;i<=mydata.length;i++) jQuery("#listturnos").jqGrid('addRowData',i+1,mydata[i]);
 			
 				jQuery("#listturnos").jqGrid('filterToolbar',{stringResult: true,searchOnEnter : true});
-				jQuery("#listturnos").jqGrid('navGrid','#pagerlistturnos',{refresh:false,search:false,edit:false,add:false,del:false,pdf:true});
+				//jQuery("#listturnos").jqGrid('navGrid','#pagerlistturnos',{refresh:false,search:false,edit:false,add:false,del:false,pdf:true});
 				
 				jQuery("#listturnos").jqGrid('navButtonAdd','#pagerlistturnos',{
 				       caption:"Hist.Clínica", 
@@ -145,12 +146,42 @@
 				       } 
 				});				
 				
-				$(".ui-jqgrid-titlebar-close",exploradorGrid[0].grid.cDiv).click()			
+				//$(".ui-jqgrid-titlebar-close",exploradorGrid[0].grid.cDiv).click()			
 
 						
 				timer = $.timer(25000, function() {
 						if (refrescarAtencion)
 							$("#listturnos").trigger("reloadGrid")
 						;
-					});			
-			});                
+					});	
+				var height=250;
+				var width=200;
+				var top=200;
+				var left=0;
+				
+				if($.cookie('atencionleft'))
+					left = $.cookie('atencionleft'); 
+				if($.cookie('atenciontop'))
+					top = $.cookie('atenciontop');
+				if($.cookie('atencionwidth'))
+					width = $.cookie('atencionwidth');
+				if($.cookie('atencionheight'))
+					height = $.cookie('atencionheight');
+				//alert('Ubicaciones: '+left+'-'+top+'-'+width+'-'+height);
+				
+				$('#exploradorId').dialog({height:300,width:215,position:[0,200]
+						/*,dragStop: function(event,ui){
+							//alert('PARO DE MOVERSE');
+							$.cookie('atencionleft',ui.position.left);
+							$.cookie('atenciontop',ui.position.top);
+						}
+						,resizeStop: function(event,ui){
+							$.cookie('atencionwidth',ui.size.width);
+							$.cookie('atencionheight',ui.size.height);
+						}*/
+					});
+					
+	
+				
+					
+});                

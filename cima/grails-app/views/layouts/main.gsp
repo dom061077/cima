@@ -40,6 +40,8 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'jquery.timer.js')}"></script> 
 		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.dropdown.js')}"></script>               
 		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.contextmenu.js')}"></script>
+		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.cookie.js')}"></script>
+		
         <script type="text/javascript">
 			var urlpacientes = '<%out << g.createLink(controller:'event',action:'listatencionjson');%>'
 			var urlsesion = '<%out << g.createLink(controller:"login",action:"auth")%>';
@@ -106,7 +108,7 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div style="position:absolute;top:163px;left:160px;z-index:1000" id="exploradorId">
+			<div  id="exploradorId">
 					<div id="turnosesperaId">
 							<table id="listturnos"></table>
 					</div>
