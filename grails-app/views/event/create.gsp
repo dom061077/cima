@@ -16,7 +16,6 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery-ui/js',file:'fullcalendar.min.js')}"></script>
         <script type="text/javascript" src="${resource(dir:'js/script',file:'jquicombobox.js')}"></script>
 		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
-		<script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.cookie.js')}"></script>
         
         <style type="text/css">
         	//div.ui-datepicker {
