@@ -46,6 +46,8 @@
 			var urlpacientes = '<%out << g.createLink(controller:'event',action:'listatencionjson');%>'
 			var urlsesion = '<%out << g.createLink(controller:"login",action:"auth")%>';
 			var profesionalesId=0;
+			var locconsultashistoria = '<%out << g.createLink(controller:"consulta",action:"listjson")%>';
+			var locconsultahistoriashow = '<%out << g.createLink(controller:"historiaClinica",action:"show")%>';
 			
 			
 			
@@ -99,6 +101,7 @@
 	<div id="panelEsperaId" style="position:absolute;top:150px;left:10px;display:none">
 		<a id="linkActivateEsperaId" href="#">Mostrar Turnos</a>
 	</div>
+	
     
 			<div style="display:none;z-index:5000" id="MenuJqGrid">
 		        <ul>
@@ -111,12 +114,27 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
+			<div id="panelConsultasHistoriaId" style="display:none">
+				<fieldset>
+					<legend>Paciente</legend>
+					<div class="span-2 spanlabel">H.C.Nro.:</div>
+					<div class="span-3 spanlabel">xxxxx</div>
+					<div class="clear"></div>
+					<div class="span-2 spanlabel">Apellido y Nombre:</div>
+					<div class="span-3 spanlabel">xxxxxxxx</div>
+					<div class="clear"></div>
+					
+				</fieldset>
+				<table id="listConsultasHistoriaId"></table>
+				<div id="pagerListCOnsultasHistoriaId"></div>				
+			</div>
+		    
+		    
 			<div  id="exploradorId" style="display:none">
-					<span id="toolbar" class="ui-widget-header ui-corner-all">
 						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId"></button>
 						<button title='Alta de Visita' id="menuExploradorNuevaConsultaId"></button>
 						<button title='Historia Clinica' id="menuExploradorHistId"></button>
-					</span>
+						
 					
 					<table id="listturnos"></table>
 					<div id="pagerlistturnos">

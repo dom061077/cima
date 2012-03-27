@@ -35,6 +35,7 @@ $(document).ready(function(){
 			subgrid_table_id = subgrid_id+"_t";
 			pager_id = "p_"+subgrid_table_id;
 			var obj=$('#listhistoria').getRowData(row_id);
+			
 			$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
 			jQuery("#"+subgrid_table_id).jqGrid({
 				url:locsubgridconsulta+'?pacienteId='+obj.id,
