@@ -96,8 +96,11 @@
     <body>
 
 <div class="container">
-
-			<div style="display:none;" id="MenuJqGrid">
+	<div id="panelEsperaId" style="position:absolute;top:150px;left:10px;display:none">
+		<a id="linkActivateEsperaId" href="#">Mostrar Turnos</a>
+	</div>
+    
+			<div style="display:none;z-index:5000" id="MenuJqGrid">
 		        <ul>
 		            <li id="atendido"><g:colorsList event='COLOR_ATENDIDO'/>${EstadoEvent.EVENT_ATENDIDO.name}</li>
 		            <li id="ausente"><g:colorsList event='COLOR_AUSENTE'/>${EstadoEvent.EVENT_AUSENTE.name}</li>
@@ -108,10 +111,14 @@
 		        </ul>
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
-			<div  id="exploradorId">
-					<div id="turnosesperaId">
-							<table id="listturnos"></table>
-					</div>
+			<div  id="exploradorId" style="display:none">
+					<span id="toolbar" class="ui-widget-header ui-corner-all">
+						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId"></button>
+						<button title='Alta de Visita' id="menuExploradorNuevaConsultaId"></button>
+						<button title='Historia Clinica' id="menuExploradorHistId"></button>
+					</span>
+					
+					<table id="listturnos"></table>
 					<div id="pagerlistturnos">
 					</div>
 			</div>
