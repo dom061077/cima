@@ -222,8 +222,8 @@ class HistoriaClinicaController {
 			redirect(action: "list")
 		}
 		else {
-			if(!consultaInstance.profesional.id.equals(userInstance.profesionalAsignado.id)){
-				flash.message = "Solo puede modificar las consultas que Ud. atendió "
+			if(!consultaInstance.profesional?.id?.equals(userInstance.profesionalAsignado?.id)){
+				flash.message = "${message(code:'historiaClinica.profesionalasignado.error')}"
 				redirect(action:"list")	
 			}else
 				return [consultaInstance: consultaInstance]
@@ -407,10 +407,10 @@ class HistoriaClinicaController {
 		
 		params.put("pathimage", pathimage);
 		params.put("nameimage", nameimage)
-		params.put("nombreInstitucion", institucionInstance.nombre);
-		params.put("telefonos", institucionInstance.telefonos);
-		params.put("email", institucionInstance.email);
-		params.put("direccion", institucionInstance.direccion);
+		params.put("nombreInstitucion", institucionInstance?.nombre);
+		params.put("telefonos", institucionInstance?.telefonos);
+		params.put("email", institucionInstance?.email);
+		params.put("direccion", institucionInstance?.direccion);
 		params.put("reportsDirPath",servletContext.getRealPath("/reports/"))
 		params.put("_format","PDF")
 		params.put("_name","historiacontenidovisita")
@@ -448,10 +448,10 @@ class HistoriaClinicaController {
 		
 		params.put("pathimage", pathimage);
 		params.put("nameimage", nameimage)
-		params.put("nombreInstitucion", institucionInstance.nombre);
-		params.put("telefonos", institucionInstance.telefonos);
-		params.put("email", institucionInstance.email);
-		params.put("direccion", institucionInstance.direccion);
+		params.put("nombreInstitucion", institucionInstance?.nombre);
+		params.put("telefonos", institucionInstance?.telefonos);
+		params.put("email", institucionInstance?.email);
+		params.put("direccion", institucionInstance?.direccion);
 		params.put("reportsDirPath",servletContext.getRealPath("/reports/"))
 		params.put("_format","PDF")
 		params.put("_name","historiacontenidovisita")

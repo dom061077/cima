@@ -1,6 +1,65 @@
 	var timer;
 	var refrescarAtencion=true;
+
+	function cargarturnos(){
+		$('#exploradorId').dialog({height:300,width:215,position:[0,200]
+			/*,dragStop: function(event,ui){
+				//alert('PARO DE MOVERSE');
+				$.cookie('atencionleft',ui.position.left);
+				$.cookie('atenciontop',ui.position.top);
+			}
+			,resizeStop: function(event,ui){
+				$.cookie('atencionwidth',ui.size.width);
+				$.cookie('atencionheight',ui.size.height);
+			}*/
+			,show: 'blind'
+			,hide: 'explode'
+			,close: function(event,ui){
+				$('#panelEsperaId').show();
+				$.cookie('flagShowTurnos','false',{path:'/'});
+			}
+		});
+	}
 	
+	function gotonuevaconsulta(){
+ 	   var id = jQuery('#listturnos').jqGrid('getGridParam','selrow');
+	   if(id)
+		   window.location=locpacientes+'/'+id;
+	   else
+		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+	}
+	
+	function gototocambiarestado(){
+		var rowid = $('#listturnos').getGridParam('selrow');
+		var row = jQuery("#listturnos").getRowData(rowid);
+		$("#estadoeventId option[value*='"+row.cod_estado+"']").attr('selected', 'selected');
+		$("#pacienteturnoId").val(row.titulo);
+		$("#turnoId").val(row.id);
+		$("#versionId").val(row.version);
+		$("#fechaturnoInicioId").val(row.fechaStart)
+		$("#fechaturnoFinId").val(row.fechaEnd)							
+		$( "#dialog-form" ).dialog({
+				autoOpen: true,
+				modal: true,
+				open:function(event,ui){
+					refrescarAtencion=false;
+				},
+				buttons: {
+					"Guardar": function() {
+						var id = $('#turnoId').val()
+						var estado = $('#estadoturnoId').val();
+						updateestadoturno(id,estado);
+						$(this).dialog( "close" );
+					},
+					"Cancelar": function() {
+						$( this ).dialog( "close" );
+					}
+				},
+				close: function() {
+					refrescarAtencion=true;
+				}
+			});
+	}
 	
 	function updateestadoturno(id,estado){
 		$.ajax({
@@ -83,38 +142,8 @@ $(document).ready(function() {
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
 				                        //$('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
 				                },
-						ondblClickRow:function( rowid) { // here is the code 		 
-								// var selr = jQuery('#grid').jqGrid('getGridParam','selrow')
-							var row = jQuery("#listturnos").getRowData(rowid);
-							
-							$("#estadoeventId option[value*='"+row.cod_estado+"']").attr('selected', 'selected');
-
-							$("#pacienteturnoId").val(row.titulo);
-							$("#turnoId").val(row.id);
-							$("#versionId").val(row.version);
-							$("#fechaturnoInicioId").val(row.fechaStart)
-							$("#fechaturnoFinId").val(row.fechaEnd)							
-							$( "#dialog-form" ).dialog({
-									autoOpen: true,
-									modal: true,
-									open:function(event,ui){
-										refrescarAtencion=false;
-									},
-									buttons: {
-										"Guardar": function() {
-											var id = $('#turnoId').val()
-											var estado = $('#estadoturnoId').val();
-											updateestadoturno(id,estado);
-											$(this).dialog( "close" );
-										},
-										"Cancelar": function() {
-											$( this ).dialog( "close" );
-										}
-									},
-									close: function() {
-										refrescarAtencion=true;
-									}
-								});
+						ondblClickRow:function( rowid) { // here is the code
+							gototocambiarestado();
 						},
 						multiselect: false,
 						gridComplete: function(){
@@ -169,19 +198,42 @@ $(document).ready(function() {
 					height = $.cookie('atencionheight');
 				//alert('Ubicaciones: '+left+'-'+top+'-'+width+'-'+height);
 				
-				$('#exploradorId').dialog({height:300,width:215,position:[0,200]
-						/*,dragStop: function(event,ui){
-							//alert('PARO DE MOVERSE');
-							$.cookie('atencionleft',ui.position.left);
-							$.cookie('atenciontop',ui.position.top);
-						}
-						,resizeStop: function(event,ui){
-							$.cookie('atencionwidth',ui.size.width);
-							$.cookie('atencionheight',ui.size.height);
-						}*/
-					});
-					
-	
+				$('#linkActivateEsperaId').click(function(){
+					$('#panelEsperaId').hide();
+					cargarturnos();
+					$.cookie('flagShowTurnos','true',{path:'/'});
+				});	
+				
+				if($.cookie('flagShowTurnos')=='true'){
+					$('#panelEsperaId').hide();
+					cargarturnos();
+				}else{
+					$('#panelEsperaId').show();
+				}
+				
+				$('#menuExploradorEstadoId').button({
+					icons:{primary:'ui-icon-person'}
+				});
+				
+				$('#menuExploradorHistId').button({
+					icons:{primary:'ui-icon-folder-open'}
+				});
+				
+				$('#menuExploradorNuevaConsultaId').button({
+					icons:{primary:'ui-icon-document'}
+				});
+				
+				$('#menuExploradorEstadoId').bind('click',function(){
+					gototocambiarestado();
+				});
+				
+				$('#menuExploradorNuevaConsultaId').bind('click',function(){
+					gotonuevaconsulta();
+				});
+				
+				$('#menuExploradorVisitaId').bind('click',function(){
+				});
+				
 				
 					
 });                
