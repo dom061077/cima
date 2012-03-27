@@ -704,7 +704,7 @@ class EventController {
 				
 			if (flagaddcomilla)
 				result=result+','
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"HH:mm",date:it.fechaEnd)+'","'+backgroundColor+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"HH:mm",date:it.fechaEnd)+'","'+backgroundColor+'","'+(it.paciente?it.paciente.id:0)+'"]}'
 			flagaddcomilla=true
 		}
 		

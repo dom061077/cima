@@ -1,5 +1,63 @@
 	var timer;
 	var refrescarAtencion=true;
+	
+	function mostrarconsultashistoria(){
+		var id = $('#listturnos').jqGrid('getGridParam','selrow');
+	    if(!id){
+		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+		   return;
+	    }
+	    var rowData = $("#listturnos").getRowData(id);
+		var pacienteId  = rowData.paciente_id;
+		$('#listConsultasHistoriaId').jqGrid({
+			caption:'Consultas del paciente'
+						//height:200, 
+			,width: 680,
+			url:locconsultashistoria,
+			rowNum:10,
+			//fillSpace: true,
+			postData: {pacienteId : pacienteId},
+			mtype:"POST",
+			loadtext:'',
+			//rownumbers:true,
+	   		//rowList:[10,20,30],
+	   		//rowTotal:2000,
+	   		pager:"#pagerListCOnsultasHistoriaId",
+	   		 
+			//scrollOffset:0,
+			//viewrecords: true,
+	   		subGrid:true,
+	   		subGridRowExpanded: function(subgrid_id, row_id){
+				var obj = $('#listConsultasHistoriaId').getRowData(row_id);
+	   			$.ajax({
+	   				url:locconsultahistoriashow+'/'+obj.id,
+	   				success: function(data){
+	   					$('#'+subgrid_id).html(data);
+	   				}
+	   			});
+				
+	   		},
+			datatype: "json",
+			colNames:['Id','Fecha Visita','CIE-10','CIE-10 Desc.','Profesional','Estado'],
+			colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
+					   {name:'fechaAlta',index:'titulo', width:60,sorttype:'text',sortable:true},	
+					   {name:'cie10',index:'cod_estado', width:30,sortable:false,hidden:false,search:false},
+					   {name:'cie10_descripcion',index:'cie10_descripcion',width:150,sortable:true},
+					   {name:'profesional_nombre',index:'profesional_nombre',hidden:true},
+					   {name:'estado',index:'estado',hidden:true}
+					 ] 
+
+		});
+		
+		$('#panelConsultasHistoriaId').dialog({
+			height:500,width:700
+			,modal:true
+			,show:'explode'
+			,resizable:false
+			,hide: 'explode'
+			
+		});
+	}
 
 	function cargarturnos(){
 		$('#exploradorId').dialog({height:300,width:215,position:[0,200]
@@ -129,7 +187,7 @@ $(document).ready(function() {
 						//scrollOffset:0,
 						//viewrecords: true,
 						datatype: "json",
-						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin','BackgroundColor'],
+						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin','BackgroundColor','Paciente Id'],
 						colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
 								   {name:'titulo',index:'titulo', width:60,sorttype:'text',sortable:false},	
 								   {name:'cod_estado',index:'cod_estado', width:30,sortable:false,hidden:true,search:false},
@@ -137,7 +195,8 @@ $(document).ready(function() {
 								   {name:'version',index:'version', width:20,sortable:false,hidden:true,search:false},								   
 								   {name:'fechaStart',index:'fechaStart', width:20,sortable:false,hidden:false,search:false},
 								   {name:'fechaEnd',index:'fechaEnd', width:25,sortable:false,hidden:false,search:false},
-								   {name:'backgroundColor',index:'backgroundColor', width:20,sortable:false,hidden:true,search:false}
+								   {name:'backgroundColor',index:'backgroundColor', width:20,sortable:false,hidden:true,search:false},
+								   {name:'paciente_id',index:'paciente_id',hidden:true}
 								 ], 
 					    afterInsertRow: function(rowid, rowdata, rowelem) {
 				                        //$('#' + rowid).contextMenu('MenuJqGrid', eventsMenu);
@@ -231,7 +290,8 @@ $(document).ready(function() {
 					gotonuevaconsulta();
 				});
 				
-				$('#menuExploradorVisitaId').bind('click',function(){
+				$('#menuExploradorHistId').bind('click',function(){
+					mostrarconsultashistoria();
 				});
 				
 				
