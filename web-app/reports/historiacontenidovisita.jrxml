@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pacientesatendidosgral" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="95"/>
 	<parameter name="pathimage" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="nombreInstitucion" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="telefonos" class="java.lang.String" isForPrompting="false"/>
@@ -26,6 +26,21 @@
 	<field name="cie10.descripcion" class="java.lang.String"/>
 	<field name="contenido" class="java.lang.String"/>
 	<field name="prescripciones" class="java.util.Collection"/>
+	<field name="pulso" class="java.lang.String"/>
+	<field name="fc" class="java.lang.String"/>
+	<field name="ta" class="java.lang.String"/>
+	<field name="fr" class="java.lang.String"/>
+	<field name="taxilar" class="java.lang.String"/>
+	<field name="trectal" class="java.lang.String"/>
+	<field name="pesoh" class="java.lang.String"/>
+	<field name="pesoa" class="java.lang.String"/>
+	<field name="impresion" class="java.lang.String"/>
+	<field name="habito" class="java.lang.String"/>
+	<field name="actitud" class="java.lang.String"/>
+	<field name="ubicacion" class="java.lang.String"/>
+	<field name="marcha" class="java.lang.String"/>
+	<field name="psiqui" class="java.lang.String"/>
+	<field name="facie" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -90,7 +105,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="155" splitType="Stretch">
+		<band height="288" splitType="Stretch">
 			<rectangle>
 				<reportElement x="5" y="39" width="120" height="20" backcolor="#CCCCCC"/>
 				<graphicElement>
@@ -118,7 +133,7 @@
 				</graphicElement>
 			</line>
 			<subreport>
-				<reportElement x="4" y="117" width="549" height="26"/>
+				<reportElement x="2" y="262" width="549" height="26"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{prescripciones})]]></dataSourceExpression>
 				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitasubreport.jasper")]]></subreportExpression>
 			</subreport>
@@ -171,6 +186,118 @@
 				</textElement>
 				<textFieldExpression class="java.lang.String"><![CDATA[$F{contenido}]]></textFieldExpression>
 			</textField>
+			<staticText>
+				<reportElement x="5" y="122" width="42" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Pulso:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="122" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pulso}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="196" y="122" width="42" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FC:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="122" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fc}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="141" width="42" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TA:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="141" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{ta}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="196" y="141" width="42" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FR:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="273" y="141" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{fr}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="93" y="160" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{taxilar}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="160" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{trectal}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="160" width="47" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T.Axilar:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="196" y="160" width="47" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[T.Rectal:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="93" y="180" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pesoh}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="273" y="180" width="73" height="14"/>
+				<textElement>
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pesoa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="5" y="180" width="81" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Peso Habitual:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="196" y="180" width="76" height="14"/>
+				<textElement>
+					<font fontName="Arial" size="11" isBold="true" isItalic="false"/>
+				</textElement>
+				<text><![CDATA[Peso Actual:]]></text>
+			</staticText>
 		</band>
 	</detail>
 	<pageFooter>

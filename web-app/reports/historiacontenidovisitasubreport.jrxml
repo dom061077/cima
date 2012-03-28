@@ -15,7 +15,7 @@
 			<staticText>
 				<reportElement x="2" y="11" width="593" height="13"/>
 				<textElement textAlignment="Center">
-					<font fontName="Arial" isBold="true"/>
+					<font fontName="Arial" isBold="true" isUnderline="true"/>
 				</textElement>
 				<text><![CDATA[Prescripciones]]></text>
 			</staticText>
