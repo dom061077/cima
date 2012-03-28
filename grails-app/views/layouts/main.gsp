@@ -28,6 +28,7 @@
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'ui.jqgrid.css')}" />
         <link rel="stylesheet" type="text/css" media="screen" href="${g.resource(dir:'js/jquery-ui/js/src/css',file:'jquery.searchFilter.css')}" />
         
+        <script type="text/javascript" src="${resource(dir:'js/editor',file:'ckeditor.js')}"></script>
 
 		
 		
@@ -47,7 +48,7 @@
 			var urlsesion = '<%out << g.createLink(controller:"login",action:"auth")%>';
 			var profesionalesId=0;
 			var locconsultashistoria = '<%out << g.createLink(controller:"consulta",action:"listjson")%>';
-			var locconsultahistoriashow = '<%out << g.createLink(controller:"historiaClinica",action:"show")%>';
+			var locconsultahistoriashow = '<%out << g.createLink(controller:"historiaClinica",action:"minshow")%>';
 			
 			
 			
