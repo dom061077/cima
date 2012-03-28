@@ -465,6 +465,42 @@ class HistoriaClinicaController {
 		chain(controller:'jasper',action:'index',model:[data:listReporte],params:params)
 		
 	}
+	
+	def minshow = {
+		log.info "INGRESANDO AL CLOSURE minshow"
+		log.info "PARAMETROS: $params"
+		def consultaInstance = Consulta.get(params.id)
+		def renderizacion=""
+		if(consultaInstance){
+			renderizacion="""
+				<div id='tabsConsultasHistoria'>
+					<ul>
+						<li><a href='#tabs-1'>Consulta</a></li>
+						<li><a href='#tabs-2'>Estudios Complementarios </a></li>
+						<li><a href='#tabs-3'>Prescripciones </a></li>
+					</ul>
+					<div id='tabs-1'>
+							<div style='height:250px'>
+									${consultaInstance?.contenido}
+									aaaaaa
+									adddddddd
+									ddddddddddddd
+									adfffffffff
+									adffff
+							</div>					
+					</div>
+					<div id='tabs-2'>
+					</div>
+					<div id='tabs-3'>
+					</div>
+					
+				</div>
+			"""
+			render renderizacion
+		}else{
+			render "No se pudo encontrar la consulta"
+		}
+	}
 
 		
 	

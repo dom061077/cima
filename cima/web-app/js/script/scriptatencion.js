@@ -10,9 +10,9 @@
 	    var rowData = $("#listturnos").getRowData(id);
 		var pacienteId  = rowData.paciente_id;
 		$('#listConsultasHistoriaId').jqGrid({
-			caption:'Consultas del paciente'
-						//height:200, 
-			,width: 680,
+			caption:'Consultas del paciente',
+			height:200, 
+			width: 800,
 			url:locconsultashistoria,
 			rowNum:10,
 			//fillSpace: true,
@@ -33,6 +33,14 @@
 	   				url:locconsultahistoriashow+'/'+obj.id,
 	   				success: function(data){
 	   					$('#'+subgrid_id).html(data);
+	   					/*CKEDITOR.on( 'instanceReady', function( ev )
+	   							{
+	   								editor = ev.editor;
+	   								editor.setReadOnly( true );
+	   							}); */	
+	   					
+	   					$('#tabsConsultasHistoria').tabs();
+	   					
 	   				}
 	   			});
 				
@@ -49,8 +57,10 @@
 
 		});
 		
+		$('#listConsultasHistoriaId').trigger("reloadGrid",[]);
+		
 		$('#panelConsultasHistoriaId').dialog({
-			height:500,width:700
+			height:500,width:820
 			,modal:true
 			,show:'explode'
 			,resizable:false
@@ -293,7 +303,6 @@ $(document).ready(function() {
 				$('#menuExploradorHistId').bind('click',function(){
 					mostrarconsultashistoria();
 				});
-				
 				
 					
 });                
