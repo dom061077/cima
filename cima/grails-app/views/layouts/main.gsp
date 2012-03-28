@@ -116,16 +116,12 @@
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
 			<div id="panelConsultasHistoriaId" style="display:none">
-				<fieldset>
-					<legend>Paciente</legend>
+
 					<div class="span-2 spanlabel">H.C.Nro.:</div>
 					<div class="span-3 spanlabel">xxxxx</div>
-					<div class="clear"></div>
 					<div class="span-2 spanlabel">Apellido y Nombre:</div>
 					<div class="span-3 spanlabel">xxxxxxxx</div>
 					<div class="clear"></div>
-					
-				</fieldset>
 				<table id="listConsultasHistoriaId"></table>
 				<div id="pagerListCOnsultasHistoriaId"></div>				
 			</div>

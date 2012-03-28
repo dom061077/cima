@@ -11,8 +11,8 @@
 		var pacienteId  = rowData.paciente_id;
 		$('#listConsultasHistoriaId').jqGrid({
 			caption:'Consultas del paciente',
-			height:200, 
-			width: 800,
+			height:100, 
+			width: 450,
 			url:locconsultashistoria,
 			rowNum:10,
 			//fillSpace: true,
@@ -60,7 +60,7 @@
 		grid.trigger("reloadGrid",[]);
 		
 		$('#panelConsultasHistoriaId').dialog({
-			height:500,width:820
+			height:300,width:500
 			,modal:true
 			,show:'explode'
 			,resizable:false

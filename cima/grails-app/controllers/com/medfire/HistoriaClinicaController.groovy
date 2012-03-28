@@ -474,17 +474,11 @@ class HistoriaClinicaController {
 		def estudios = ""
 		def i = 1
 		def j
-		def estudiosLiTabs=""
 		def prescripciones=""
 		if(consultaInstance){
 			consultaInstance.estudios?.each{estudio->
-				estudiosLiTabs += """
-									<li><a href="#tab-estudioconsultashistoria${i}">Estudio ${i}</a></li>
-								"""
 				estudios += """
-								<div id='tab-estudioconsultashistoria${i}'>
-									<div style="height:150px">
-					           				<div class="span-10">
+					           				<div class="span-7">
 											    <label for="consulta.estudio.1.pedido">Pedido:</label>
 											    <br/>
 												${estudio?.pedido}
@@ -514,25 +508,14 @@ class HistoriaClinicaController {
 				}
 				estudios+="""					       		
 											</div>
-									</div>	
-								</div>			
 							"""
 				i++
 			}
 			
-			estudios="""
-							<div style='height:200px'>
-								<div id='tabs-estudiosconsultashistoria'>
-									<ul>
-										${estudiosLiTabs}
-									</ul>	
-									${estudios}
-								</div>
-							</div>	
-					 """	
 			
 			prescripciones="""
-							<table>
+							<div class="span-7">
+							<table class="ui-jqgrid-htable">
 								<tr>
 									<th>Nombre Comercial</th>
 									<th>Nombre Generico</th>
@@ -553,26 +536,82 @@ class HistoriaClinicaController {
 								"""
 			}
 					 	
-			prescripciones+="</table>"
+			prescripciones+="""
+							</div>
+							</table>
+							"""
 				 
+			def estudiofisico="""
+								<fieldset>
+									<legend>Signos Vitales</legend>
+									<table>
+										<tr>
+											<td>Pulso:</td> <td>${consultaInstance.pulso}</td>	<td>FC:</td><td>${consultaInstance.fc}</td>
+										</tr>
+										<tr>
+											<td>TA:</td> <td>${consultaInstance.ta}</td>	<td>FR:</td><td>${consultaInstance.fr}</td>
+										</tr>
+										<tr>
+											<td>T.Axilar:</td> <td>${consultaInstance.taxilar}</td>	<td>T.Rectal:</td><td>${consultaInstance.trectal}</td>
+										</tr>
+										<tr>
+											<td>Peso Habitual:</td> <td>${consultaInstance.pesoh}</td>	<td>Peso Actual:</td><td>${consultaInstance.pesoa}</td>
+										</tr>
+									</table>
+								</fieldset>
+								
+								<fieldset>
+									<legend>Otros Datos</legend>
+									<label>Impresion:</label>
+									${consultaInstance.impresion}
+									<br/>
+									<table>
+										<tr>
+											<td>Habito:</td> <td>${consultaInstance.habito}</td> <td>Actitud:</td> <td>${consultaInstance.actitud}</td>
+										</tr>
+										
+										<tr>
+											<td>Ubicacion:</td> <td>${consultaInstance.habito}</td> <td>Marcha</td> <td>${consultaInstance.marcha}</td>
+										</tr>
+
+										<tr>
+											<td>Psiquismo:</td> <td>${consultaInstance.psiqui}</td> <td>Facie</td> <td>${consultaInstance.facie}</td>
+										</tr>
+
+										
+									</table>
+								</fieldset>
+				
+							"""
+							
+							
 			renderizacion="""
-				<div id='tabsConsultasHistoria'>
-					<ul>
-						<li><a href='#tabs-1'>Consulta</a></li>
-						<li><a href='#tabs-2'>Estudios Complementarios </a></li>
-						<li><a href='#tabs-3'>Prescripciones </a></li>
-					</ul>
-					<div id='tabs-1'>
-							<div style='height:250px'>
-									${consultaInstance?.contenido}
-							</div>					
+				<div class="span-8">
+					<div class="span-7">
+						<fieldset>
+						<legend>Contenido de la Consulta</legend>
+							${consultaInstance?.contenido}
+						</fieldset>
 					</div>
-					<div id='tabs-2'>
-									${estudios}
-					</div>
-					<div id='tabs-3'>
-							$prescripciones
-					</div>
+					
+					<div class"clear"></div>
+					
+					<fieldset>
+						<legend>Estudio Fisico</legend>
+						${estudiofisico}
+					</fieldset>
+					
+					<div class="clear"></div>
+					<fieldset>
+						<legend><center>Estudios Complementarios</center></legend>					
+						${estudios}
+					</fieldset>
+					<div class"clear"></div>
+						
+					<fieldset>	
+						<legend><center>Prescripciones</center></legend>
+						$prescripciones
+					</fieldset>
 					
 				</div>
 			"""
