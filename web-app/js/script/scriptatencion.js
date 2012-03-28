@@ -33,14 +33,9 @@
 	   				url:locconsultahistoriashow+'/'+obj.id,
 	   				success: function(data){
 	   					$('#'+subgrid_id).html(data);
-	   					/*CKEDITOR.on( 'instanceReady', function( ev )
-	   							{
-	   								editor = ev.editor;
-	   								editor.setReadOnly( true );
-	   							}); */	
 	   					
 	   					$('#tabsConsultasHistoria').tabs();
-	   					
+	   					$('#tabs-estudiosconsultashistoria').tabs();
 	   				}
 	   			});
 				
@@ -48,7 +43,7 @@
 			datatype: "json",
 			colNames:['Id','Fecha Visita','CIE-10','CIE-10 Desc.','Profesional','Estado'],
 			colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
-					   {name:'fechaAlta',index:'titulo', width:60,sorttype:'text',sortable:true},	
+					   {name:'fechaAlta',index:'fechaAlta', width:60,sorttype:'text',sortable:true},	
 					   {name:'cie10',index:'cod_estado', width:30,sortable:false,hidden:false,search:false},
 					   {name:'cie10_descripcion',index:'cie10_descripcion',width:150,sortable:true},
 					   {name:'profesional_nombre',index:'profesional_nombre',hidden:true},
@@ -56,8 +51,13 @@
 					 ] 
 
 		});
-		
-		$('#listConsultasHistoriaId').trigger("reloadGrid",[]);
+		var filter = { groupOp: "AND", rules: []};
+		filter.rules.push({field:"paciente_id",op:"eq",data:pacienteId});
+
+		var grid = $('#listConsultasHistoriaId') 
+		grid[0].p.search = filter.rules.length>0;
+		$.extend(grid[0].p.postData,{altfilters:JSON.stringify(filter)});
+		grid.trigger("reloadGrid",[]);
 		
 		$('#panelConsultasHistoriaId').dialog({
 			height:500,width:820

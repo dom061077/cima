@@ -471,7 +471,90 @@ class HistoriaClinicaController {
 		log.info "PARAMETROS: $params"
 		def consultaInstance = Consulta.get(params.id)
 		def renderizacion=""
+		def estudios = ""
+		def i = 1
+		def j
+		def estudiosLiTabs=""
+		def prescripciones=""
 		if(consultaInstance){
+			consultaInstance.estudios?.each{estudio->
+				estudiosLiTabs += """
+									<li><a href="#tab-estudioconsultashistoria${i}">Estudio ${i}</a></li>
+								"""
+				estudios += """
+								<div id='tab-estudioconsultashistoria${i}'>
+									<div style="height:150px">
+					           				<div class="span-10">
+											    <label for="consulta.estudio.1.pedido">Pedido:</label>
+											    <br/>
+												${estudio?.pedido}
+												<br/>	
+					           					<label for="consulta.estudioComplementarioObs"><g:message code="historia.estudioComplementarioObs.label" default="Resultado:" /></label>
+					           					<br/>
+					           					<label>Resultado:</label>
+					           					<br/>
+					           					<g:textArea readonly="readonly" class="ui-widget ui-corner-all ui-widget-content textareastudio" id="estudioComplementarioObsId" name="consulta.estudioComplementarioObs">
+												 	${estudio?.resultado}  
+					           					</g:textArea>
+					           				</div>
+					            			<div class="clear"> </div>
+					            			<div class="span-7">
+					            					"""
+				j=1
+				estudio.imagenes.each{imagen->
+					estudios +="""
+											<div class="span-2">
+						            					<label>Imagen ${j}:</label><br/>
+								            			<bi:hasImage bean="${imagen}">
+									    						<a class="thickbox" href="${bi.resource(size:'large', bean:imagen)}"><img src="${bi.resource(size:'small', bean:imagen)}" width="50" height="50" alt=""> </img></a>
+														</bi:hasImage>
+											</div>			
+					"""
+					j++
+				}
+				estudios+="""					       		
+											</div>
+									</div>	
+								</div>			
+							"""
+				i++
+			}
+			
+			estudios="""
+							<div style='height:200px'>
+								<div id='tabs-estudiosconsultashistoria'>
+									<ul>
+										${estudiosLiTabs}
+									</ul>	
+									${estudios}
+								</div>
+							</div>	
+					 """	
+			
+			prescripciones="""
+							<table>
+								<tr>
+									<th>Nombre Comercial</th>
+									<th>Nombre Generico</th>
+									<th>Presentación</th>														
+									<th>Cantidad</th>							
+									<th>Imprimir Por</th>							
+								</tr>
+							"""
+			consultaInstance.prescripciones.each{presc->
+				prescripciones+="""
+									<tr>
+										<td>${presc.nombreComercial}</td>
+										<td>${presc.nombreGenerico}</td>
+										<td>${presc.presentacion}</td>
+										<td>${presc.cantidad}</td>
+										<td>${presc.impresion.name}</td>
+									</tr>
+								"""
+			}
+					 	
+			prescripciones+="</table>"
+				 
 			renderizacion="""
 				<div id='tabsConsultasHistoria'>
 					<ul>
@@ -482,16 +565,13 @@ class HistoriaClinicaController {
 					<div id='tabs-1'>
 							<div style='height:250px'>
 									${consultaInstance?.contenido}
-									aaaaaa
-									adddddddd
-									ddddddddddddd
-									adfffffffff
-									adffff
 							</div>					
 					</div>
 					<div id='tabs-2'>
+									${estudios}
 					</div>
 					<div id='tabs-3'>
+							$prescripciones
 					</div>
 					
 				</div>

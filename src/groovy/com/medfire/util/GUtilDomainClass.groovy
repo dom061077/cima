@@ -158,6 +158,7 @@ class GUtilDomainClass{
 		def metaProperty
 		def fieldToken
 		def list = []
+		def filtersJson
 		def pagingConfing = [
 			max: Integer.parseInt(params.rows),
 			offset: Integer.parseInt(params.page)-1
@@ -166,7 +167,7 @@ class GUtilDomainClass{
 		
 		def closure = {
 			log.debug "INGRESANDO AL CLOSURE INTERNO QUE AGREGA LAS CONDICIONES DE BUSQUEDA DEL CRITERIA"
-			if(Boolean.parseBoolean(params._search)){
+			if(Boolean.parseBoolean(params._search )|| (params.search && Boolean.parseBoolean(params.search))){
 				if(params.searchOper){
 					log.debug "params.searchString ${params.searchString}, params.searchField: ${params.searchField}"
 					metaProperty=FilterUtils.getNestedMetaProperty(grailsApplication,domainClass,params.searchField)
@@ -176,7 +177,7 @@ class GUtilDomainClass{
 					criteria."${searchOper}"(params.searchField,searchValue)
 				}	
 				if(params.filters){
-					def filtersJson = JSON.parse(params.filters)
+					filtersJson = JSON.parse(params.filters)
 					criteria."${filtersJson.groupOp.toLowerCase()}"(){
 							filtersJson?.rules?.each{
 								log.info "REGLAS DE BUSQUEDA APLICADAS:"
@@ -187,18 +188,61 @@ class GUtilDomainClass{
 								searchValue=parseValue(it.data,metaProperty,params)
 								if(it.field.contains("_")){
 									fieldToken = it.field.tokenize("_")
-									criteria."${fieldToken[0]}"{
-										criteria."${searchOper}"(fieldToken[1],searchValue)
+									switch(fieldToken.size()){
+										case 2:
+											criteria."${fieldToken[0]}"{
+												criteria."${searchOper}"(fieldToken[1],searchValue)
+											}
+											break;
+										case 3:
+											criteria."${fieldToken[0]}"{
+												criteria."${fieldToken[1]}"{
+													criteria."${searchOper}"(fieldToken[2],searchValue)
+												}
+											}
+											break;
 									}
 								}else{
 									criteria."${searchOper}"(it.field,searchValue)
 								}
-
-								
-								
 							}
 						}	
 				}
+				if(params.altfilters){
+					filtersJson = JSON.parse(params.altfilters)
+					criteria."${filtersJson.groupOp.toLowerCase()}"(){
+							filtersJson?.rules?.each{
+								log.info "REGLAS DE BUSQUEDA APLICADAS:"
+								searchOper = operationSearch(it.op)
+								metaProperty = FilterUtils.getNestedMetaProperty(grailsApplication,domainClass,it.field)
+								
+
+								searchValue=parseValue(it.data,metaProperty,params)
+								if(it.field.contains("_")){
+									fieldToken = it.field.tokenize("_")
+									switch(fieldToken.size()){
+										case 2:
+											criteria."${fieldToken[0]}"{
+												criteria."${searchOper}"(fieldToken[1],searchValue)
+											}
+											break;
+										case 3:
+											criteria."${fieldToken[0]}"{
+												criteria."${fieldToken[1]}"{
+													criteria."${searchOper}"(fieldToken[2],searchValue)
+												}
+											}
+											break;
+									}
+									
+									
+								}else{
+									criteria."${searchOper}"(it.field,searchValue)
+								}
+							}
+						}
+				}
+				
 			}
 			log.info "paginacion en list refactor rows: ${params.rows.toInteger()}, pag: ${params.page.toInteger()}"
 			if(rowcount){
