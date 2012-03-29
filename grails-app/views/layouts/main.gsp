@@ -117,7 +117,7 @@
 		    
 			<div id="panelConsultasHistoriaId" style="display:none">
 
-					<div class="span-2 spanlabel">H.C.Nro.:</div>
+					<div id="hcnConsultaHistoriaId" class="span-2 spanlabel">H.C.Nro.:</div>
 					<div class="span-3 spanlabel">xxxxx</div>
 					<div class="span-2 spanlabel">Apellido y Nombre:</div>
 					<div class="span-3 spanlabel">xxxxxxxx</div>

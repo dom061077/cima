@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="pacientesatendidosgral" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="95"/>
+	<property name="ireport.y" value="42"/>
 	<parameter name="pathimage" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="nombreInstitucion" class="java.lang.String" isForPrompting="false"/>
 	<parameter name="telefonos" class="java.lang.String" isForPrompting="false"/>
@@ -41,6 +41,7 @@
 	<field name="marcha" class="java.lang.String"/>
 	<field name="psiqui" class="java.lang.String"/>
 	<field name="facie" class="java.lang.String"/>
+	<field name="estudios" class="java.util.Collection"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -105,7 +106,7 @@
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="288" splitType="Stretch">
+		<band height="239">
 			<rectangle>
 				<reportElement x="5" y="39" width="120" height="20" backcolor="#CCCCCC"/>
 				<graphicElement>
@@ -132,11 +133,6 @@
 					<pen lineStyle="Dashed"/>
 				</graphicElement>
 			</line>
-			<subreport>
-				<reportElement x="2" y="262" width="549" height="26"/>
-				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{prescripciones})]]></dataSourceExpression>
-				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitasubreport.jasper")]]></subreportExpression>
-			</subreport>
 			<staticText>
 				<reportElement x="12" y="43" width="55" height="13"/>
 				<textElement>
@@ -298,6 +294,18 @@
 				</textElement>
 				<text><![CDATA[Peso Actual:]]></text>
 			</staticText>
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="0" y="207" width="549" height="32"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{estudios})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitaestudiossubreport.jasper")]]></subreportExpression>
+			</subreport>
+		</band>
+		<band height="50">
+			<subreport>
+				<reportElement stretchType="RelativeToBandHeight" x="2" y="11" width="549" height="26"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{prescripciones})]]></dataSourceExpression>
+				<subreportExpression class="java.io.File"><![CDATA[new File($P{reportsDirPath},"historiacontenidovisitasubreport.jasper")]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<pageFooter>

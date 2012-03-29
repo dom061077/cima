@@ -14,7 +14,8 @@ class HistoriaClinicaController {
 
 	def imageUploadService
 	def historiaClinicaService
-	def authenticateService 
+	def authenticateService
+	def sessionFactory 
 	
 	static allowedMethods = [save:"POST",update: "POST", delete: "POST"]
 
@@ -392,6 +393,7 @@ class HistoriaClinicaController {
 		String pathimage
 		String nameimage
 		def config
+		
 		if(institucionInstance){
 			pathimage = bi.resource(size:'large',bean:institucionInstance)
 			if(pathimage.contains(".null")){
@@ -403,7 +405,12 @@ class HistoriaClinicaController {
 				nameimage = ContainerUtils.getFullName("large", institucionInstance, config)
 			}
 		
+		}else{
+			flash.message="Debe cargar los datos del membrete Institucional para generar el reporte"
+			render(view:"show",model:[consultaInstance:consultaInstance])
+			return
 		}
+		consultaInstance.estudios.each { }
 		
 		params.put("pathimage", pathimage);
 		params.put("nameimage", nameimage)
@@ -457,11 +464,21 @@ class HistoriaClinicaController {
 		params.put("_name","historiacontenidovisita")
 		params.put("_file","historiacontenidovisita")
 		def userLogged = authenticateService.userDomain()
+		log.debug "PROFESIONAL ASIGNADO: "+userLogged.profesionalAsignado.nombre
 		def listReporte = Consulta.createCriteria().list(){
 			profesional{
 				eq("id",userLogged.profesionalAsignado?.id)
 			}
 		} 
+		
+		def session = sessionFactory.getCurrentSession()
+		
+		listReporte.each{consulta->
+			consulta.estudios.each{estudio->
+				session.update(estudio)
+			}
+		}
+		log.debug "CANTIDAD DE CONSULTAS: "+listReporte.size()
 		chain(controller:'jasper',action:'index',model:[data:listReporte],params:params)
 		
 	}
@@ -514,22 +531,22 @@ class HistoriaClinicaController {
 			
 			
 			prescripciones="""
-							<div class="span-7">
-							<table class="ui-jqgrid-htable">
-								<tr>
-									<th>Nombre Comercial</th>
-									<th>Nombre Generico</th>
-									<th>Presentación</th>														
-									<th>Cantidad</th>							
-									<th>Imprimir Por</th>							
-								</tr>
+							<div class="span-8">
+							<table class="prescripcion">
+								<thead>
+									<tr>
+										<th>Nombre Comercial</th>
+										<th>Nombre Generico</th>
+										<th>Cantidad</th>							
+										<th>Imprimir Por</th>							
+									</tr>
+								</thead>	
 							"""
 			consultaInstance.prescripciones.each{presc->
 				prescripciones+="""
 									<tr>
 										<td>${presc.nombreComercial}</td>
 										<td>${presc.nombreGenerico}</td>
-										<td>${presc.presentacion}</td>
 										<td>${presc.cantidad}</td>
 										<td>${presc.impresion.name}</td>
 									</tr>
@@ -586,7 +603,9 @@ class HistoriaClinicaController {
 							
 							
 			renderizacion="""
-				<div class="span-8">
+				<div class="span-9">
+					<a id="impresionPanelEsperaId" href="#" onclick="window.location='${g.createLink(controller:'historiaClinica',action:'reportecontenidovisita',params:[id:consultaInstance.id])}'">Imprimir</>
+					<br/>
 					<div class="span-7">
 						<fieldset>
 						<legend>Contenido de la Consulta</legend>
