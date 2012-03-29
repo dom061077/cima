@@ -117,10 +117,10 @@
 		    
 			<div id="panelConsultasHistoriaId" style="display:none">
 
-					<div id="hcnConsultaHistoriaId" class="span-2 spanlabel">H.C.Nro.:</div>
-					<div class="span-3 spanlabel">xxxxx</div>
+					<div  class="span-2 spanlabel">H.C.Nro.:</div>
+					<div id="hcnConsultaHistoriaId" class="span-3 spanlabel">xxxxx</div>
 					<div class="span-2 spanlabel">Apellido y Nombre:</div>
-					<div class="span-3 spanlabel">xxxxxxxx</div>
+					<div id="apellidoNombreConsultaHistoriaId" class="span-3 spanlabel">xxxxxxxx</div>
 					<div class="clear"></div>
 				<table id="listConsultasHistoriaId"></table>
 				<div id="pagerListCOnsultasHistoriaId"></div>				
@@ -245,6 +245,7 @@
 						<li><a href="#" class="dir">Informes</a>
 							<ul>
 								<li><a href="${createLink(controller:"indicecorporal",action:"index")}">Indice de masa corporal</a> </li>
+								<li><a href="${createLink(controller:"consulta",action:"consultaspropias")}">Visitas de mis Pacientes</a> </li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
 								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
