@@ -9,6 +9,9 @@
 	    }
 	    var rowData = $("#listturnos").getRowData(id);
 		var pacienteId  = rowData.paciente_id;
+		$('#hcnConsultaHistoriaId').html(pacienteId);
+		$('#apellidoNombreConsultaHistoriaId').html(rowData.titulo);
+		
 		$('#listConsultasHistoriaId').jqGrid({
 			caption:'Consultas del paciente',
 			height:100, 

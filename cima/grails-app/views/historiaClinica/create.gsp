@@ -531,7 +531,7 @@
             
                 
                 <div style="padding: 10px 15px 15px 15px;">
-                    <g:submitButton id="submitButtonId" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="${message(code: 'default.button.create.label', default: 'Create')}" />
+                    <g:submitButton id="submitButtonId" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" value="Guardar" />
                 </div>
             </form>
         </div>

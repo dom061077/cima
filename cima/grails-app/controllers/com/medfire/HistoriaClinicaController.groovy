@@ -615,22 +615,30 @@ class HistoriaClinicaController {
 					
 					<div class"clear"></div>
 					
-					<fieldset>
-						<legend>Estudio Fisico</legend>
-						${estudiofisico}
-					</fieldset>
+					<div class="span-7">
+						<fieldset>
+							<legend>Estudio Fisico</legend>
+							${estudiofisico}
+						</fieldset>
+					</div>	
 					
 					<div class="clear"></div>
-					<fieldset>
-						<legend><center>Estudios Complementarios</center></legend>					
-						${estudios}
-					</fieldset>
+					
+					<div class="span-7">
+						<fieldset>
+							<legend><center>Estudios Complementarios</center></legend>					
+							${estudios}
+						</fieldset>
+					</div>	
 					<div class"clear"></div>
 						
-					<fieldset>	
-						<legend><center>Prescripciones</center></legend>
-						$prescripciones
-					</fieldset>
+						
+					<div class="span-7">	
+						<fieldset>	
+							<legend><center>Prescripciones</center></legend>
+							$prescripciones
+						</fieldset>
+					</div>
 					
 				</div>
 			"""

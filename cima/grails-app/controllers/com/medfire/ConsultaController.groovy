@@ -22,6 +22,7 @@ import org.hibernate.SessionFactory
 import org.hibernate.Session
 
 class ConsultaController {
+	def authenticateService
 
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -143,6 +144,103 @@ class ConsultaController {
             redirect(action: "list")
         }
     }
+	
+	def consultaspropias = {
+		log.info "INGRESANDO AL CLOSURE consultaspropias"
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		return [cmdInstance:new ConsultaCommand(fechaDesde:sdf.format(Calendar.getInstance().getTime()),fechaHasta:sdf.format(Calendar.getInstance().getTime()))]
+	}
+	
+	def listjsonconsultaspropias = {
+		log.info "INGRESANDO AL CLOSURE listjsonconsultaspropias"
+		log.info "PARAMETROS: $params"
+		
+		def result
+		
+		def flagcomilla=false
+		def totalregistros
+		def totalpaginas
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		def usuario = authenticateService.userDomain()
+		def list=Consulta.createCriteria().list(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+			if(params.pacienteId){
+				paciente{
+					eq("id",params.pacienteId.toLong())
+				}
+			}
+			
+			profesional{
+				eq("id",usuario.profesionalAsignado?.id)
+			}
+
+			firstResult((params.page.toInteger()-1)*params.rows.toInteger())
+			maxResults(params.rows.toInteger())
+
+			
+		}
+		totalregistros=Consulta.createCriteria().get(){
+			if(params.fechaDesde){
+				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
+			}
+			if(params.fechaHasta){
+				java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+				le("fechaConsulta",new java.sql.Date(fechaHasta.getTime()))
+			}
+			if(params.pacienteId){
+				paciente{
+					eq("id",params.pacienteId.toLong())
+				}
+			}
+			projections{
+				rowCount()
+			}
+
+		}
+
+		
+
+		if(list){
+			totalpaginas = new Float(totalregistros/Integer.parseInt(params.rows))
+			if (totalpaginas>0 && totalpaginas<1)
+				totalpaginas=1
+			totalpaginas = totalpaginas.intValue()
+			result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+			list.each{
+				if(flagcomilla)
+					result=result+','
+				result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+it.paciente.apellido+'","'+it.paciente.nombre+'","'+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'","'+(it.estado.name!=null?it.estado.name:"")+'"]}'
+				flagcomilla=true
+			}
+			result=result+']}'
+			render result
+		}else{
+			result='{"page":0,"total":"0","records":"0","rows":['
+			result=result+']}'
+			render result
+		}
+		
+	}
+	
+	def consultaspropiasbuscar = {ConsultaCommand cmd->
+		log.info "INGRESANDO AL CLOSURE consultaspropiasbuscar"
+		log.info "PARAMETROS $params"
+		if(cmd.validate()){
+			render(view:"consultaspropias", model:[cmdInstance:cmd])
+			
+		}else{
+			render(view:"consultaspropias", model:[cmdInstance:cmd])
+		}
+
+	}
 	
 	def listjson = {
 		log.info "INGRESANDO AL CLOSURE listjson"
