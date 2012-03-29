@@ -113,3 +113,52 @@ h1,h2{
 	border-top:solid 1px #c0c0c0;
 	border-right:none;
 }
+
+/**********************************************table design*********/
+/* TABLES */
+
+.prescripciones.table thead th {
+    background: none repeat scroll 0 0 #C3D9FF;
+}
+
+.prescripcion.table {
+    /*border: 1px solid #ccc;*/
+    width: 100%
+}
+.prescripcion.table tr {
+    border: 0;
+}
+.prescripcion.table td, th {
+    font: 11px verdana, arial, helvetica, sans-serif;
+    line-height: 12px;
+    padding: 5px 6px;
+    text-align: left;
+    vertical-align: top;
+}
+.prescripcion.table th {
+    background: #fff url(../images/skin/shadow.jpg);
+    color: #666;
+    font-size: 11px;
+    font-weight: bold;
+    line-height: 17px;
+    padding: 2px 6px;
+}
+.prescripcion.table th a:link, th a:visited, th a:hover {
+    color: #333;
+    display: block;
+    font-size: 10px;
+    text-decoration: none;
+    width: 100%;
+}
+.prescripcion.table th.asc a, th.desc a {
+    background-position: right;
+    background-repeat: no-repeat;
+}
+.prescripcion.table th.asc a {
+    background-image: url(../images/skin/sorted_asc.gif);
+}
+.prescripcion.table th.desc a {
+    background-image: url(../images/skin/sorted_desc.gif);
+}
+
+

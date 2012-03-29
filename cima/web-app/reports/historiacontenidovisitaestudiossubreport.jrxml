@@ -6,7 +6,7 @@
 	<field name="pedido" class="java.lang.String"/>
 	<field name="resultado" class="java.lang.String"/>
 	<columnHeader>
-		<band height="44" splitType="Stretch">
+		<band height="48" splitType="Stretch">
 			<line>
 				<reportElement x="10" y="10" width="571" height="1"/>
 				<graphicElement>
@@ -34,6 +34,12 @@
 				</textElement>
 				<text><![CDATA[Resultado]]></text>
 			</staticText>
+			<line>
+				<reportElement x="10" y="44" width="571" height="1"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
 		</band>
 	</columnHeader>
 	<detail>
