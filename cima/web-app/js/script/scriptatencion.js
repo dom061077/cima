@@ -26,7 +26,8 @@
 	   		//rowList:[10,20,30],
 	   		//rowTotal:2000,
 	   		pager:"#pagerListCOnsultasHistoriaId",
-	   		 
+			sortname:'fechaAlta',
+			sortorder:'desc',
 			//scrollOffset:0,
 			//viewrecords: true,
 	   		subGrid:true,
@@ -102,6 +103,11 @@
 	
 	function gototocambiarestado(){
 		var rowid = $('#listturnos').getGridParam('selrow');
+	    if(!rowid){
+		   $('<div>Seleccione una fila para activar esta opción</div>').dialog({title:'Mensaje',modal: true});
+		   return;
+	    }
+		
 		var row = jQuery("#listturnos").getRowData(rowid);
 		$("#estadoeventId option[value*='"+row.cod_estado+"']").attr('selected', 'selected');
 		$("#pacienteturnoId").val(row.titulo);
