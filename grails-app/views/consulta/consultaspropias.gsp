@@ -108,17 +108,15 @@
 							<div class="span-2 spanlabel">
 								<label for="fechaDesde">Desde:</label>
 							</div>
-							<div class="span-2">
+							<div class="span-3">
 								<g:textField id="fechaDesdeId" class="ui-widget ui-corner-all ui-widget-content" name="fechaDesde" value="${cmdInstance.fechaDesde}"/>
 							</div>        				
-							<div class="clear"></div>
 							<div class="span-2 spanlabel">
 								<label for="fechaHasta">Hasta:</label>
 							</div>
 							<div class="span-3">
 								<g:textField id="fechaHastaId" class="ui-widget ui-corner-all ui-widget-content" name="fechaHasta" value="${cmdInstance.fechaHasta}"/>
 							</div>        				
-							<div class="clear"></div>
 							
 							<div class="span-2 spanlabel">
 								<label for="profesional">Paciente:</label>
@@ -127,7 +125,6 @@
 								<g:textField id="pacienteId" class="ui-widget ui-corner-all ui-widget-content" name="paciente" value="${cmdInstance.paciente}"/>
 								<g:hiddenField id="pacienteIdId" name="pacienteId" value="${cmdInstance.pacienteId}"/>
 							</div>        				
-							<div class="clear"></div>
 							<div class="span-3  prepend-2"><g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" 
 															value="${message(code: 'default.button.search.label', default: 'Create')}"/> </div>
 							

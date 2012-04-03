@@ -5,6 +5,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 
+import com.medfire.enums.EstadoConsultaEnum
 import com.medfire.enums.ImpresionVademecumEnum
 import com.medfire.util.GUtilDomainClass
 import pl.burningice.plugins.image.container.ContainerUtils
@@ -14,7 +15,7 @@ class HistoriaClinicaController {
 
 	def imageUploadService
 	def historiaClinicaService
-	def authenticateService
+	def authenticateService 
 	def sessionFactory 
 	
 	static allowedMethods = [save:"POST",update: "POST", delete: "POST"]
@@ -203,12 +204,21 @@ class HistoriaClinicaController {
 
 	def show = {
 		def consultaInstance = Consulta.get(params.id)
+		def userInstance = authenticateService.userDomain()
 		if (!consultaInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Consulta'), params.id])}"
 			redirect(action: "list")
 		}
 		else {
-			[consultaInstance: consultaInstance]
+			if(!consultaInstance.profesional?.id?.equals(userInstance.profesionalAsignado?.id)){
+				if(consultaInstance.estado==EstadoConsultaEnum.ESTADO_PRIVADO){
+					flash.message = "La consulta es de caracter privado"
+					redirect(action:"list")
+				}else{
+					[consultaInstance: consultaInstance]
+				}
+			}else
+				[consultaInstance: consultaInstance]
 		}
 	}
 
