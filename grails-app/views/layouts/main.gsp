@@ -116,7 +116,7 @@
 		    </div> <!-- tag cierre del div MenuJqGrid -->
 		    
 			<div id="panelConsultasHistoriaId" style="display:none">
-
+					
 					<div  class="span-2 spanlabel">H.C.Nro.:</div>
 					<div id="hcnConsultaHistoriaId" class="span-3 spanlabel">xxxxx</div>
 					<div class="span-2 spanlabel">Apellido y Nombre:</div>
@@ -131,8 +131,8 @@
 						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId"></button>
 						<button title='Alta de Visita' id="menuExploradorNuevaConsultaId"></button>
 						<button title='Historia Clinica' id="menuExploradorHistId"></button>
-						
-					
+						<a href="#" title='Fecha de los turnos' id="menuExploradorHistFechaId"></a>
+						<div id="menuExplorardorHistFechaDatePickerId"></div>
 					<table id="listturnos"></table>
 					<div id="pagerlistturnos">
 					</div>
