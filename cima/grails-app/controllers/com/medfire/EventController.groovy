@@ -625,6 +625,12 @@ class EventController {
 		def filtersJson 
 		def oper
 		
+		if(params.fechaFiltro){
+			cal.set(Calendar.DATE,params.fechaFiltro.substring(0,2).toInteger()) 
+			cal.set(Calendar.MONTH,params.fechaFiltro.substring(3,5).toInteger())
+			cal.set(Calendar.YEAR,params.fechaFiltro.substring(6,10).toInteger())
+		}
+		
 		//log.debug "PROFESIONAL ASIGNADO ID: "+user?.profesionalAsignado?.id
 		//def list = new GUtilDomainClass(Event,params,grailsApplication).listrefactor()
 		def criteria = Event.createCriteria()

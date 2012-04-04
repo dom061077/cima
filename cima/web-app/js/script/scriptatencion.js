@@ -313,5 +313,45 @@ $(document).ready(function() {
 					mostrarconsultashistoria();
 				});
 				
+				
+				$('#menuExploradorHistFechaId').click(function(){
+					$('#menuExplorardorHistFechaDatePickerId').show();					
+				});
+				
+				
+				$('#menuExplorardorHistFechaDatePickerId').datepicker({
+					onSelect:function(dateText, inst){
+						$('#menuExploradorHistFechaId').html(dateText);
+						$('#menuExplorardorHistFechaDatePickerId').hide();
+						var grid = $('#listturnos'); 
+						$.extend(grid[0].p.postData,{fechaFiltro:dateText});
+						grid.trigger("reloadGrid",[]);
+
+					}
+					,dateFormat:'dd/mm/yy'
+					,changeYear:true,
+	                closeText: 'Cerrar',
+	                prevText: '&#x3c;Ant',
+	                nextText: 'Sig&#x3e;',
+	                currentText: 'Hoy',
+	                monthNames: ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+	                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'],
+	                monthNamesShort: ['Ene','Feb','Mar','Abr','May','Jun',
+	                'Jul','Ago','Sep','Oct','Nov','Dic'],
+	                dayNames: ['Domingo','Lunes','Martes','Mi&eacute;rcoles','Jueves','Viernes','S&aacute;bado'],
+	                dayNamesShort: ['Dom','Lun','Mar','Mi&eacute;','Juv','Vie','S&aacute;b'],
+	                dayNamesMin: ['Do','Lu','Ma','Mi','Ju','Vi','S&aacute;'],
+	                weekHeader: 'Sm',
+	                dateFormat: 'dd/mm/yy',
+	                firstDay: 1,
+	                isRTL: false,
+	                showMonthAfterYear: false,
+	                yearSuffix: ''					
+				});
+				var fecha = new Date();
+				fecha.setDate(fecha.getDate());
+				$('#menuExplorardorHistFechaDatePickerId').hide();
+				$('#menuExplorardorHistFechaDatePickerId').datepicker("setDate",fecha);
+				$('#menuExploradorHistFechaId').html($.datepicker.formatDate('dd/mm/yy', fecha));
 					
 });                
