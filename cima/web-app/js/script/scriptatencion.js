@@ -74,16 +74,20 @@
 	}
 
 	function cargarturnos(){
-		$('#exploradorId').dialog({height:300,width:215,position:[0,200]
-			/*,dragStop: function(event,ui){
+		var left = parseInt($.cookie('atencionleft'));
+		$('body').append('PARAMETRO LEFT: '+left);
+		$('#exploradorId').dialog({height:300,width:215,position:[left,200]
+			,dragStop: function(event,ui){
 				//alert('PARO DE MOVERSE');
-				$.cookie('atencionleft',ui.position.left);
-				$.cookie('atenciontop',ui.position.top);
+				$('body').append('LEFT: '+ui.position.left);
+				$.cookie('atencionleft',ui.position.left,{path:'/'});
+				$.cookie('atenciontop',ui.position.top,{path:'/'});
+				$('body').append('LEFT con cookie: '+$.cookie('atencionleft'));
 			}
 			,resizeStop: function(event,ui){
-				$.cookie('atencionwidth',ui.size.width);
-				$.cookie('atencionheight',ui.size.height);
-			}*/
+				$.cookie('atencionwidth',ui.size.width,{path:'/'});
+				$.cookie('atencionheight',ui.size.height,{path:'/'});
+			}
 			,show: 'blind'
 			,hide: 'explode'
 			,close: function(event,ui){
@@ -113,8 +117,8 @@
 		$("#pacienteturnoId").val(row.titulo);
 		$("#turnoId").val(row.id);
 		$("#versionId").val(row.version);
-		$("#fechaturnoInicioId").val(row.fechaStart)
-		$("#fechaturnoFinId").val(row.fechaEnd)							
+		$("#fechaturnoInicioId").val(row.fechaStartLarge)
+		$("#fechaturnoFinId").val(row.fechaEndLarge)							
 		$( "#dialog-form" ).dialog({
 				autoOpen: true,
 				modal: true,
@@ -189,7 +193,7 @@ $(document).ready(function() {
 					
 					
 			var exploradorGrid = jQuery("#listturnos").jqGrid({ 
-						caption:'Turnos en Espera', 
+						//caption:'Turnos en Espera', 
 						//height:200, 
 						width: 190,
 						url:locturnos,
@@ -206,14 +210,16 @@ $(document).ready(function() {
 						//scrollOffset:0,
 						//viewrecords: true,
 						datatype: "json",
-						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Fin','BackgroundColor','Paciente Id'],
+						colNames:['Id','Paciente','Cod_Estado','Estado','Version','Inicio','Inicio Large','Fin','Fin Large','BackgroundColor','Paciente Id'],
 						colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
 								   {name:'titulo',index:'titulo', width:60,sorttype:'text',sortable:false},	
 								   {name:'cod_estado',index:'cod_estado', width:30,sortable:false,hidden:true,search:false},
 								   {name:'estado',index:'estado', width:20,sortable:false,hidden:false,search:false},
 								   {name:'version',index:'version', width:20,sortable:false,hidden:true,search:false},								   
 								   {name:'fechaStart',index:'fechaStart', width:20,sortable:false,hidden:false,search:false},
+								   {name:'fechaStartLarge',index:'fechaStart', width:20,sortable:false,hidden:true,search:false},
 								   {name:'fechaEnd',index:'fechaEnd', width:25,sortable:false,hidden:false,search:false},
+								   {name:'fechaEndLarge',index:'fechaEnd', width:25,sortable:false,hidden:true,search:false},
 								   {name:'backgroundColor',index:'backgroundColor', width:20,sortable:false,hidden:true,search:false},
 								   {name:'paciente_id',index:'paciente_id',hidden:true}
 								 ], 
@@ -266,8 +272,10 @@ $(document).ready(function() {
 				var top=200;
 				var left=0;
 				
-				if($.cookie('atencionleft'))
-					left = $.cookie('atencionleft'); 
+				if($.cookie('atencionleft')){
+					left = $.cookie('atencionleft');
+					
+				}
 				if($.cookie('atenciontop'))
 					top = $.cookie('atenciontop');
 				if($.cookie('atencionwidth'))
