@@ -174,7 +174,7 @@
 								<label for="fechaturno">Estado:</label>
 							</td>
 							<td>
-								<g:select  id="estadoturnoId" class="ui-widget ui-corner-all ui-widget-content"  name="estado" from="${com.medfire.enums.EstadoEvent?.list()}" 
+								<g:select  id="estadoturnoId" class="ui-widget ui-corner-all ui-widget-content"  name="estado" from="${com.medfire.enums.EstadoEvent?.list().findAll{it!=com.medfire.enums.EstadoEvent.EVENT_ATENDIDO}}" 
 			                           	optionValue="name" />
 							</td>
 						</tr>													

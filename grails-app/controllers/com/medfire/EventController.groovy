@@ -607,14 +607,23 @@ class EventController {
 	}
 	
 	def atenciondeldia= {
-		//log.info "INGRESANDO AL CLOSURE atenciondeldia"
-		//log.info "PARAMETROS ${params}"
-		//log.info "INGRESANDO"
+		log.info "INGRESANDO AL CLOSURE atenciondeldia"
+		log.info "PARAMETROS ${params}"
+		log.info "INGRESANDO"
 		Calendar cal= Calendar.getInstance()
+		
+		if(params.fechaFiltro){
+			cal.set(Calendar.DATE,params.fechaFiltro.substring(0,2).toInteger())
+			cal.set(Calendar.MONTH,params.fechaFiltro.substring(3,5).toInteger()-1)
+			cal.set(Calendar.YEAR,params.fechaFiltro.substring(6,10).toInteger())
+		}
+
+		
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
 		cal.set(Calendar.SECOND, 0);
 		cal.set(Calendar.MILLISECOND, 0);
+
 		def dateStart = cal.getTime();
 		cal.set(Calendar.HOUR_OF_DAY, 24);
 		cal.set(Calendar.MINUTE, 0);
@@ -625,14 +634,10 @@ class EventController {
 		def filtersJson 
 		def oper
 		
-		if(params.fechaFiltro){
-			cal.set(Calendar.DATE,params.fechaFiltro.substring(0,2).toInteger()) 
-			cal.set(Calendar.MONTH,params.fechaFiltro.substring(3,5).toInteger())
-			cal.set(Calendar.YEAR,params.fechaFiltro.substring(6,10).toInteger())
-		}
 		
 		//log.debug "PROFESIONAL ASIGNADO ID: "+user?.profesionalAsignado?.id
 		//def list = new GUtilDomainClass(Event,params,grailsApplication).listrefactor()
+		log.debug "LA FECHAS DESDE HASTA SON: ${dateStart} ${dateEnd}"
 		def criteria = Event.createCriteria()
 		def closure = {
 			criteria.and(){
@@ -710,7 +715,7 @@ class EventController {
 				
 			if (flagaddcomilla)
 				result=result+','
-			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"HH:mm",date:it.fechaEnd)+'","'+backgroundColor+'","'+(it.paciente?it.paciente.id:0)+'"]}'
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+ (it.paciente?it.paciente?.apellido+'-'+it.paciente?.nombre:it.titulo)+'","'+it.estado+'","'+it.estado.name+'","'+it.version+'","'+g.formatDate(format:"HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"dd/MM/yyyy HH:mm",date:it.fechaStart)+'","'+g.formatDate(format:"HH:mm",date:it.fechaEnd)+'","'+g.formatDate(format:"dd/MM/yyyy HH:mm",date:it.fechaEnd)+'","'+backgroundColor+'","'+(it.paciente?it.paciente.id:0)+'"]}'
 			flagaddcomilla=true
 		}
 		
