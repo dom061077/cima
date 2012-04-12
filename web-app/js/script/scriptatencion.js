@@ -75,14 +75,21 @@
 
 	function cargarturnos(){
 		var left = parseInt($.cookie('atencionleft'));
-		$('body').append('PARAMETRO LEFT: '+left);
-		$('#exploradorId').dialog({height:300,width:215,position:[left,200]
+		var top = parseInt($.cookie('atenciontop'));
+		var width = parseInt($.cookie('atencionwidth'));
+		var height = parseInt($.cookie('atencionheight'));
+		
+		if(!$.cookie('atencionwidth')){
+			width=250;
+			height=200;
+		}
+		
+		$('#exploradorId').dialog({height:height,width:width,position:[left,top]
+			,title:'Turnos en Espera'
 			,dragStop: function(event,ui){
 				//alert('PARO DE MOVERSE');
-				$('body').append('LEFT: '+ui.position.left);
 				$.cookie('atencionleft',ui.position.left,{path:'/'});
 				$.cookie('atenciontop',ui.position.top,{path:'/'});
-				$('body').append('LEFT con cookie: '+$.cookie('atencionleft'));
 			}
 			,resizeStop: function(event,ui){
 				$.cookie('atencionwidth',ui.size.width,{path:'/'});
@@ -299,6 +306,7 @@ $(document).ready(function() {
 				
 				$('#menuExploradorEstadoId').button({
 					icons:{primary:'ui-icon-person'}
+					,width:50
 				});
 				
 				$('#menuExploradorHistId').button({
@@ -334,7 +342,9 @@ $(document).ready(function() {
 						var grid = $('#listturnos'); 
 						$.extend(grid[0].p.postData,{fechaFiltro:dateText});
 						grid.trigger("reloadGrid",[]);
-
+						var fecha = $('#menuExplorardorHistFechaDatePickerId').datepicker('getDate');
+						$.cookie('atencionfecha',$.datepicker.formatDate('dd/mm/yy',fecha),{path:'/'});
+						
 					}
 					,dateFormat:'dd/mm/yy'
 					,changeYear:true,
@@ -357,7 +367,15 @@ $(document).ready(function() {
 	                yearSuffix: ''					
 				});
 				var fecha = new Date();
-				fecha.setDate(fecha.getDate());
+				if($.cookie('atencionfecha')){
+					var mes = parseInt($.cookie('atencionfecha').substring(3,5));
+					fecha.setMonth(mes-1);
+					fecha.setDate($.cookie('atencionfecha').substring(0,2));
+					fecha.setYear($.cookie('atencionfecha').substring(6,10));
+				}else{
+					fecha.setDate(fecha.getDate());	
+				}
+				
 				$('#menuExplorardorHistFechaDatePickerId').hide();
 				$('#menuExplorardorHistFechaDatePickerId').datepicker("setDate",fecha);
 				$('#menuExploradorHistFechaId').html($.datepicker.formatDate('dd/mm/yy', fecha));
