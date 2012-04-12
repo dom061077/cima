@@ -99,7 +99,7 @@
     <body>
 
 <div class="container">
-	<div id="panelEsperaId" style="position:absolute;top:150px;left:10px;display:none">
+	<div id="panelEsperaId" style="position:absolute;top:200px;left:10px;display:none">
 		<a id="linkActivateEsperaId" href="#">Mostrar Turnos</a>
 	</div>
 	
@@ -128,9 +128,9 @@
 		    
 		    
 			<div  id="exploradorId" style="display:none">
-						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId"></button>
-						<button title='Alta de Visita' id="menuExploradorNuevaConsultaId"></button>
-						<button title='Historia Clinica' id="menuExploradorHistId"></button>
+						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId">Estado</button>
+						<button title='Alta de Consulta' id="menuExploradorNuevaConsultaId">Alta</button>
+						<button title='Historia Clinica' id="menuExploradorHistId">Hist.</button>
 						<a href="#" title='Fecha de los turnos' id="menuExploradorHistFechaId"></a>
 						<div id="menuExplorardorHistFechaDatePickerId"></div>
 					<table id="listturnos"></table>
