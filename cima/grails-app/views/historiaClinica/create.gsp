@@ -51,7 +51,7 @@
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
         </div>
 		<div class="body">
-            <h1><g:message code="default.create.label" args="[entityName]" /></h1>
+            <h2 style="margin-bottom:0px"><g:message code="default.create.label" args="[entityName]" /></h2>
             <g:if test="${flash.message}">
             <div class="message">${flash.message}</div>
             </g:if>

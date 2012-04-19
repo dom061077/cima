@@ -11,7 +11,7 @@
 		var pacienteId  = rowData.paciente_id;
 		$('#hcnConsultaHistoriaId').html(pacienteId);
 		$('#apellidoNombreConsultaHistoriaId').html(rowData.titulo);
-		
+				
 		$('#listConsultasHistoriaId').jqGrid({
 			caption:'Consultas del paciente',
 			height:100, 
@@ -19,7 +19,7 @@
 			url:locconsultashistoria,
 			rowNum:10,
 			//fillSpace: true,
-			postData: {pacienteId : pacienteId},
+			//postData: {pacienteId : pacienteId},
 			mtype:"POST",
 			loadtext:'',
 			//rownumbers:true,
@@ -55,12 +55,12 @@
 					 ] 
 
 		});
-		var filter = { groupOp: "AND", rules: []};
+		var grid = $('#listConsultasHistoriaId');
+		/*var filter = { groupOp: "AND", rules: []};
 		filter.rules.push({field:"paciente_id",op:"eq",data:pacienteId});
-
-		var grid = $('#listConsultasHistoriaId') 
 		grid[0].p.search = filter.rules.length>0;
-		$.extend(grid[0].p.postData,{altfilters:JSON.stringify(filter)});
+		$.extend(grid[0].p.postData,{altfilters:JSON.stringify(filter)});*/
+		$.extend(grid[0].p.postData,{pacienteId:pacienteId});
 		grid.trigger("reloadGrid",[]);
 		
 		$('#panelConsultasHistoriaId').dialog({
@@ -206,7 +206,7 @@ $(document).ready(function() {
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
-						//postData: {profesionalId : profesionalId,cmd:'list'},
+						postData: {fechaFiltro : $.cookie('atencionfecha')},
         				mtype:"POST",
         				loadtext:'',
         				//rownumbers:true,
@@ -367,7 +367,9 @@ $(document).ready(function() {
 	                yearSuffix: ''					
 				});
 				var fecha = new Date();
+				
 				if($.cookie('atencionfecha')){
+					
 					var mes = parseInt($.cookie('atencionfecha').substring(3,5));
 					fecha.setMonth(mes-1);
 					fecha.setDate($.cookie('atencionfecha').substring(0,2));
