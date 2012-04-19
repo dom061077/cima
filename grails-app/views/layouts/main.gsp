@@ -129,7 +129,7 @@
 		    
 			<div  id="exploradorId" style="display:none">
 						<button title='Cambiar Estado Turno' id="menuExploradorEstadoId">Estado</button>
-						<button title='Alta de Consulta' id="menuExploradorNuevaConsultaId">Alta</button>
+						<button title='Alta de Consulta' id="menuExploradorNuevaConsultaId">Consulta</button>
 						<button title='Historia Clinica' id="menuExploradorHistId">Hist.</button>
 						<a href="#" title='Fecha de los turnos' id="menuExploradorHistFechaId"></a>
 						<div id="menuExplorardorHistFechaDatePickerId"></div>
