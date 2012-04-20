@@ -607,14 +607,15 @@ class EventController {
 	}
 	
 	def atenciondeldia= {
+		log.info "INGRESANDO AL CLOSURE atenciondeldia"
+		log.info "PARAMETROS: $params"
 		Calendar cal= Calendar.getInstance()
 		
-		if(params.fechaFiltro){
+		if(params.fechaFiltro && params.fechaFiltro.toLowerCase()!='null'){
 			cal.set(Calendar.DATE,params.fechaFiltro.substring(0,2).toInteger())
 			cal.set(Calendar.MONTH,params.fechaFiltro.substring(3,5).toInteger()-1)
 			cal.set(Calendar.YEAR,params.fechaFiltro.substring(6,10).toInteger())
 		}
-
 		
 		cal.set(Calendar.HOUR_OF_DAY, 0);
 		cal.set(Calendar.MINUTE, 0);
@@ -634,7 +635,6 @@ class EventController {
 		
 		//log.debug "PROFESIONAL ASIGNADO ID: "+user?.profesionalAsignado?.id
 		//def list = new GUtilDomainClass(Event,params,grailsApplication).listrefactor()
-		log.debug "LA FECHAS DESDE HASTA SON: ${dateStart} ${dateEnd}"
 		def criteria = Event.createCriteria()
 		def closure = {
 			criteria.and(){

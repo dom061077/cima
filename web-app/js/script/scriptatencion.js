@@ -12,54 +12,12 @@
 		$('#hcnConsultaHistoriaId').html(pacienteId);
 		$('#apellidoNombreConsultaHistoriaId').html(rowData.titulo);
 				
-		$('#listConsultasHistoriaId').jqGrid({
-			caption:'Consultas del paciente',
-			height:100, 
-			width: 450,
-			url:locconsultashistoria,
-			rowNum:10,
-			//fillSpace: true,
-			//postData: {pacienteId : pacienteId},
-			mtype:"POST",
-			loadtext:'',
-			//rownumbers:true,
-	   		//rowList:[10,20,30],
-	   		//rowTotal:2000,
-	   		pager:"#pagerListCOnsultasHistoriaId",
-			sortname:'fechaAlta',
-			sortorder:'desc',
-			//scrollOffset:0,
-			//viewrecords: true,
-	   		subGrid:true,
-	   		subGridRowExpanded: function(subgrid_id, row_id){
-				var obj = $('#listConsultasHistoriaId').getRowData(row_id);
-	   			$.ajax({
-	   				url:locconsultahistoriashow+'/'+obj.id,
-	   				success: function(data){
-	   					$('#'+subgrid_id).html(data);
-	   					
-	   					$('#tabsConsultasHistoria').tabs();
-	   					$('#tabs-estudiosconsultashistoria').tabs();
-	   				}
-	   			});
-				
-	   		},
-			datatype: "json",
-			colNames:['Id','Fecha Visita','CIE-10','CIE-10 Desc.','Profesional','Estado'],
-			colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
-					   {name:'fechaAlta',index:'fechaAlta', width:60,sorttype:'text',sortable:true},	
-					   {name:'cie10',index:'cod_estado', width:30,sortable:false,hidden:false,search:false},
-					   {name:'cie10_descripcion',index:'cie10_descripcion',width:150,sortable:true},
-					   {name:'profesional_nombre',index:'profesional_nombre',hidden:true},
-					   {name:'estado',index:'estado',hidden:true}
-					 ] 
-
-		});
 		var grid = $('#listConsultasHistoriaId');
 		/*var filter = { groupOp: "AND", rules: []};
 		filter.rules.push({field:"paciente_id",op:"eq",data:pacienteId});
 		grid[0].p.search = filter.rules.length>0;
 		$.extend(grid[0].p.postData,{altfilters:JSON.stringify(filter)});*/
+		//alert('Paciente Id: '+pacienteId);
 		$.extend(grid[0].p.postData,{pacienteId:pacienteId});
 		grid.trigger("reloadGrid",[]);
 		
@@ -206,7 +164,7 @@ $(document).ready(function() {
 						url:locturnos,
 						//rowNum:10,
 						//fillSpace: true,
-						postData: {fechaFiltro : $.cookie('atencionfecha')},
+						//postData: {fechaFiltro : $.cookie('atencionfecha')},
         				mtype:"POST",
         				loadtext:'',
         				//rownumbers:true,
@@ -271,7 +229,10 @@ $(document).ready(function() {
 						
 				timer = $.timer(25000, function() {
 						if (refrescarAtencion)
-							$("#listturnos").trigger("reloadGrid")
+							var grid = $('#listturnos');
+							var dateText = $.cookie('atencionfecha') 
+							$.extend(grid[0].p.postData,{fechaFiltro:dateText});
+							grid.trigger("reloadGrid",[]);
 						;
 					});	
 				var height=250;
@@ -377,6 +338,54 @@ $(document).ready(function() {
 				}else{
 					fecha.setDate(fecha.getDate());	
 				}
+				
+				
+				
+				$('#listConsultasHistoriaId').jqGrid({
+					caption:'Consultas del paciente',
+					height:100, 
+					width: 450,
+					url:locconsultashistoria,
+					rowNum:10,
+					//fillSpace: true,
+					//postData: {pacienteId : pacienteId},
+					mtype:"POST",
+					loadtext:'',
+					//rownumbers:true,
+			   		//rowList:[10,20,30],
+			   		//rowTotal:2000,
+			   		pager:"#pagerListCOnsultasHistoriaId",
+					sortname:'fechaAlta',
+					sortorder:'desc',
+					//scrollOffset:0,
+					//viewrecords: true,
+			   		subGrid:true,
+			   		subGridRowExpanded: function(subgrid_id, row_id){
+						var obj = $('#listConsultasHistoriaId').getRowData(row_id);
+			   			$.ajax({
+			   				url:locconsultahistoriashow+'/'+obj.id,
+			   				success: function(data){
+			   					$('#'+subgrid_id).html(data);
+			   					
+			   					$('#tabsConsultasHistoria').tabs();
+			   					$('#tabs-estudiosconsultashistoria').tabs();
+			   				}
+			   			});
+						
+			   		},
+					datatype: "json",
+					colNames:['Id','Fecha Visita','CIE-10','CIE-10 Desc.','Profesional','Estado'],
+					colModel:[ {name:'id',index:'id', width:10, sorttype:"int", sortable:false,hidden:true},
+							   {name:'fechaAlta',index:'fechaAlta', width:60,sorttype:'text',sortable:true},	
+							   {name:'cie10',index:'cod_estado', width:30,sortable:false,hidden:false,search:false},
+							   {name:'cie10_descripcion',index:'cie10_descripcion',width:150,sortable:true},
+							   {name:'profesional_nombre',index:'profesional_nombre',hidden:true},
+							   {name:'estado',index:'estado',hidden:true}
+							 ] 
+
+				});
+				
+				
 				
 				$('#menuExplorardorHistFechaDatePickerId').hide();
 				$('#menuExplorardorHistFechaDatePickerId').datepicker("setDate",fecha);
