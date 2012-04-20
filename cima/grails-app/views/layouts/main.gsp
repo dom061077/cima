@@ -10,7 +10,26 @@
 <html>
     <head>
         <title><g:layoutTitle default="Grails" /></title>
-		<META HTTP-EQUIV="Cache-Control" CONTENT ="no-cache"/>        
+		<META HTTP-EQUIV="Cache-Control" CONTENT ="no-cache"/> 
+		
+		<meta content='Complemento, Informatico, Administrativo, cima, online, web, sistema, complemento informatico administrativo, supra' name='Keywords'/>
+		<meta content='Administración Online de Consultorios' name='Description'/>
+		<meta content='I.N.A.P' name='Author'/>
+		<meta content='http://www.inap.com.ar:8080/cima' name='Identifier' scheme='URI'/>
+		<meta content='http://www.inap.com.ar:8080/cima' name='Publisher'/>
+		<meta content='I.N.A.P' name='Creator'/>
+		<meta content='Argentina' name='Coverage.jurisdiction'/>
+		<meta content='Argentina, Latinoamerica, informatica,online' name='page-topic'/>
+		<meta content='All' name='audience'/>
+		<meta content='General' name='Rating'/>
+		<meta content='Global' name='Distribution'/>
+		<meta content='Document' name='ObjectType'/>
+		<meta content='index follow' name='googlebot'/>
+		<meta content='index,follow,all' name='robots'/>
+		<meta content='7 Days' name='revisit-after'/>
+		<meta content='7 days' name='revisit'/>		
+		
+		       
 	    <link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'screen.css')}" type="text/css" media="screen, projection">
     	<link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'print.css')}" media="print">
     	<!--[if lt IE 8]><link rel="stylesheet" href="${resource(dir:'css/blueprint',file:'ie.css')}" type="text/css" media="screen, projection"><![endif]-->
