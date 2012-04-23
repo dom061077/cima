@@ -29,7 +29,7 @@ class Paciente {
 	
 	//static belongsTo = [obrasocial:ObraSocial,estadocivil:EstadoCivil,localidad:Localidad,tipodocumento:TipoDocumento]
 	
-	static hasMany = [consultas:Consulta]
+	static hasMany = [consultas:Consulta,antecedentes:Antecedente]
 	
 	def beforeInsert = {
 		apellido = apellido?.toUpperCase()
@@ -67,7 +67,7 @@ class Paciente {
 		//telefono(matches:'[0-9]{3}-[0-9]{7}')
 		obraSocial(blank:true,nullable:true)
 		localidad(blank:true,nullable:true)
-		antecedente(nullable:true)
+		//antecedente(nullable:true)
 		/*dateOfBirth(blank:false, validator: { val, obj ->
 			// Ensure that the date of birth is before the enrollment date
 			return ! val.after(obj.enrollmentDate)
@@ -76,6 +76,6 @@ class Paciente {
 	
 	static mapping = {
 		obraSocial lazy:false
-		antecedente lazy:false
+		antecedentes lazy:false
 	}
 }
