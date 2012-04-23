@@ -49,7 +49,7 @@ class Antecedente {
 	String antecedenteFamiliar
 	
 	
-	static belongsTo = [paciente:Paciente]
+
 	
 	
 	
