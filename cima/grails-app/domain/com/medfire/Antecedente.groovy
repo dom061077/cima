@@ -50,7 +50,7 @@ class Antecedente {
 	
 	
 
-	
+	//cambio de antecedente
 	
 	
     static constraints = {
