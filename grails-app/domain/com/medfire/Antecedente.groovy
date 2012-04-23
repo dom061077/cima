@@ -47,11 +47,14 @@ class Antecedente {
 	String t22
 	boolean t22Check = false
 	String antecedenteFamiliar
-	
+	Paciente paciente
+	Profesional profesional
 	
 
 	//cambio de antecedente
 	
+	
+	static belongsTo = [paciente:Paciente]
 	
     static constraints = {
 		 t1(nullable:true,blank:true)

@@ -116,6 +116,13 @@ class HistoriaClinicaController {
 
 				
 		pacienteInstance.properties = params.paciente
+		def antecedentes = Antecedente.findByPacienteAndProfesional(pacienteInstance,profesionalInstance)
+		if(!antecedentes){
+			log.debug "DOY DE ALTA EL ANTECEDENTE"
+		}else{
+			log.debug "MODIFICO EL ANTECEDENTE"
+		}
+		
 		if(params.pacienteVersion){
 			def pacienteVersion = params.pacienteVersion.toLong()
 				if(pacienteInstance.version > pacienteVersion){
