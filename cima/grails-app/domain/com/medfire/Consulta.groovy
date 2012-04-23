@@ -31,6 +31,7 @@ class Consulta {
 	String marcha
 	String psiqui
 	String facie
+	Antecedente antecedente
 	
 
 	
