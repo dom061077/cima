@@ -80,10 +80,12 @@ class Antecedente {
 		 t21(nullable:true,blank:true)
 		 t22(nullable:true,blank:true)
 		 antecedenteFamiliar(nullable:true,blank:true)
+		 paciente(unique:'profesional')
 	
     }
 	
 	static mapping = {
 		antecedenteFamiliar type:"text"
+		
 	}
 }

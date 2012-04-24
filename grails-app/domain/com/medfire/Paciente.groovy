@@ -72,6 +72,9 @@ class Paciente {
 			// Ensure that the date of birth is before the enrollment date
 			return ! val.after(obj.enrollmentDate)
 		}))*/
+		antecedentes validator : {
+			it?.every { it?.validate()}
+		}
     }
 	
 	static mapping = {

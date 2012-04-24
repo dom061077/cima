@@ -607,8 +607,6 @@ class EventController {
 	}
 	
 	def atenciondeldia= {
-		log.info "INGRESANDO AL CLOSURE atenciondeldia"
-		log.info "PARAMETROS: $params"
 		Calendar cal= Calendar.getInstance()
 		
 		if(params.fechaFiltro && params.fechaFiltro.toLowerCase()!='null'){
