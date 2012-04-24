@@ -116,12 +116,23 @@ class HistoriaClinicaController {
 
 				
 		pacienteInstance.properties = params.paciente
-		def antecedentes = Antecedente.findByPacienteAndProfesional(pacienteInstance,profesionalInstance)
-		if(!antecedentes){
-			log.debug "DOY DE ALTA EL ANTECEDENTE"
-		}else{
-			log.debug "MODIFICO EL ANTECEDENTE"
+		def antecedenteInstance
+		def flagantecedente = false
+		 
+		pacienteInstance.antecedentes?.each{
+			if(it.profesional.equals(profesionalInstance)){
+				flagantecedente = true
+				it.properties = params.paciente.antecedente
+				return
+			} 
 		}
+		
+		if(!flagantecedente){
+			antecedenteInstance = new Antecedente(params.paciente.antecedente)
+			antecedenteInstance.profesional = profesionalInstance
+			pacienteInstance.addToAntecedentes(antecedenteInstance)
+		}
+			
 		
 		if(params.pacienteVersion){
 			def pacienteVersion = params.pacienteVersion.toLong()
@@ -139,9 +150,6 @@ class HistoriaClinicaController {
 		def secuencia=1
 		params.consulta.estudio.each{
 			try{
-				log.debug "PEDIDO: "+it.value.pedido
-				log.debug "RESULTADO: "+it.value.resultado
-				log.debug "KEY: "+it.key
 				estudio = new EstudioComplementario(pedido:it.value.pedido,resultado:it.value.resultado,secuencia:it.key.toInteger()) 	
 				it.value?.imagen?.each{ image ->
 					log.debug "ITERANDO IMAGENES: "+image.class
@@ -212,6 +220,7 @@ class HistoriaClinicaController {
 	def show = {
 		def consultaInstance = Consulta.get(params.id)
 		def userInstance = authenticateService.userDomain()
+		def antecedenteInstance
 		if (!consultaInstance) {
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'consulta.label', default: 'Consulta'), params.id])}"
 			redirect(action: "list")
@@ -222,10 +231,19 @@ class HistoriaClinicaController {
 					flash.message = "La consulta es de caracter privado"
 					redirect(action:"list")
 				}else{
-					[consultaInstance: consultaInstance]
+					 
+					consultaInstance.paciente.antecedentes.each{
+						if(it.profesional.equals(consultaInstance.profesional))
+							antecedenteInstance = it
+					}
+					[consultaInstance: consultaInstance, antecedenteInstance:antecedenteInstance]
 				}
 			}else
-				[consultaInstance: consultaInstance]
+				consultaInstance.paciente.antecedentes.each{
+					if(it.profesional.equals(consultaInstance.profesional))
+						antecedenteInstance = it
+				}
+				[consultaInstance: consultaInstance, antecedenteInstance:antecedenteInstance]
 		}
 	}
 
@@ -272,6 +290,29 @@ class HistoriaClinicaController {
 
 		
 		def consultaInstance = Consulta.get(params.id)
+		
+		
+		def flagantecedente = false
+		
+		def userInstance = User.load(authenticateService.userDomain().id)
+		def profesionalInstance = Profesional.load(userInstance.profesionalAsignado.id)
+
+		
+	    consultaInstance.paciente.antecedentes?.each{
+		   if(it.profesional.equals(profesionalInstance)){
+			   flagantecedente = true
+			   it.properties = params.paciente.antecedente
+			   return
+		   }
+	    }
+	   
+	   if(!flagantecedente){
+		   antecedenteInstance = new Antecedente(params.paciente.antecedente)
+		   antecedenteInstance.profesional = profesionalInstance
+		   consultaIntance.paciente.addToAntecedentes(antecedenteInstance)
+	   }
+
+		
 		def estudioInstance
 		def estudioImagenInstance
 		if (consultaInstance) { 
