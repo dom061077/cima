@@ -61,7 +61,7 @@ environments {
 			username = "root"
 			password = "exito"
 			dbCreate = "create-drop"
-			url = "jdbc:mysql://localhost/cimainap"
+			url = "jdbc:mysql://10.0.0.199/medfireweb"
 			dbCreate = "create-drop"
 		}
 		

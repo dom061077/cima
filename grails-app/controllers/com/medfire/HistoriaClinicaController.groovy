@@ -261,8 +261,16 @@ class HistoriaClinicaController {
 			if(!consultaInstance.profesional?.id?.equals(userInstance.profesionalAsignado?.id)){
 				flash.message = "${message(code:'historiaClinica.profesionalasignado.error')}"
 				redirect(action:"list")	
-			}else
-				return [consultaInstance: consultaInstance]
+			}else{
+				def antecedenteInstance 
+				consultaInstance.paciente.antecedentes.each{
+					if(it.profesional.equals(consultaInstance.profesional)){
+						antecedenteInstance = it
+						return
+					}
+				}
+				return [consultaInstance: consultaInstance,antecedenteInstance:antecedenteInstance]
+			}
 		}
 	}
 
