@@ -390,7 +390,7 @@
 	            						<label for="paciente.antecedente.t5"><g:antecedenteLabel field="t5Label"/>:</label>
 	            						<br/>
 	            						<g:checkBox id="checklabel5Id" indice="5"   name="paciente.antecedente.t5Check" value="${antecedenteInstance?.t5Check}"></g:checkBox>
-	            						<g:textField id="antecedentet5Id" class="inputlarge" name="paciente.antecedente.asmaBronquial" value="${antecedenteInstance?.t5}"></g:textField>
+	            						<g:textField id="antecedentet5Id" class="inputlarge" name="paciente.antecedente.t5" value="${antecedenteInstance?.t5}"></g:textField>
 	            					</div>
 	            					<div class="span-9">
 	            						<label for="paciente.antecedente.t6"><g:antecedenteLabel field="t6Label"/>:</label>
