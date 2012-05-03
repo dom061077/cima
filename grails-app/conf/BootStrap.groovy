@@ -10,6 +10,7 @@ import com.medfire.Localidad
 import com.medfire.Paciente
 import com.medfire.Profesional
 import com.medfire.AntecedenteLabel
+import com.medfire.Institucion
 import org.apache.commons.io.FileUtils;
 import groovy.sql.Sql;
 import org.codehaus.groovy.grails.commons.ConfigurationHolder as CH
@@ -96,37 +97,46 @@ class BootStrap {
 			
 			new Requestmap(url:"/profesional/**",configAttribute:"ROLE_ADMIN").save()
 			
+			def institucionInstance = new Institucion(nombre:"ALIVIAR",email:"correo@noexite.com").save(failOnError:true)
+			
 			def userprof=new User(username:"zalazar",passwd: authenticateService.encodePassword('zalazar')
-				,email:"zazalar@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false).save()
+				,email:"zazalar@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false
+				,institucion:institucionInstance).save()
 			
 			def user = new User(username:"admin",passwd: authenticateService.encodePassword('admin')
-				,email:"dom061077@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false).save()
+				,email:"dom061077@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false
+				,institucion:institucionInstance).save()
 			
-			def prof = new Profesional(nombre:"RUBEN ZALAZAR",matricula:new Integer(22334)).save(failOnError:true)
+			def prof = new Profesional(nombre:"RUBEN ZALAZAR",matricula:new Integer(22334),institucion:institucionInstance).save(failOnError:true)
 				
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
 							
 			userprof = new User(username:"ortega",passwd: authenticateService.encodePassword("ortega")
-				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"ORTEGA ANDRES DAVID",esProfesional:false).save()
+				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"ORTEGA ANDRES DAVID",esProfesional:false
+				,institucion:institucionInstance).save()
 			
-			prof=new Profesional(nombre:"DANIEL GONZALEZ",matricula:new Integer(77689)).save(failOnError:true)	
+			prof=new Profesional(nombre:"DANIEL GONZALEZ",matricula:new Integer(77689)
+				,institucion:institucionInstance).save(failOnError:true)	
 					 	
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
 					
 			userprof = new User(username:"skiby",passwd: authenticateService.encodePassword("skiby")
-				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"JORGE SKIBY",esProfesional:false).save()
-			prof=new Profesional(nombre:"skiby",matricula:new Integer(9999)).save()		
+				,email:"medico@noexiste.com.ar",enabled:true,userRealName:"JORGE SKIBY",esProfesional:false
+				,institucion:institucionInstance).save()
+			prof=new Profesional(nombre:"skiby",matricula:new Integer(9999),institucion:institucionInstance).save()		
 			user.addToMedicos(prof)
 			roleprofesional.addToPeople(userprof)
 						
 			role.addToPeople(user)
 			
 			def obsocial=new ObraSocial(descripcion:"Prensa",razonSocial:"Prensa S.R.L",domicilio:"junin 750",codigoPostal:"4000"
-				,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)).save()
+				,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)
+				,institucion:institucionInstance).save()
 			new ObraSocial(descripcion:"Subsidio de Salud",razonSocial:"IPSST DE TUCUMAN",domicilio:"junin 750",codigoPostal:"4000"
-					,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)).save()
+					,telefono:"381-4228823",contacto:"NO TIENE",habilitada:new Boolean(true)
+					,institucion:institucionInstance).save()
 	
 			
 			def provtucuman = new Provincia(nombre:"TUCUMAN").save()
@@ -137,11 +147,16 @@ class BootStrap {
 			new Localidad(nombre:"SALTA CAPITAL",provincia:provsalta,codigoPostal:5000).save()
 			new Localidad(nombre:"ORAN",provincia:provsalta,codigoPostal:5000).save()
 
-			new Paciente(apellido:"POMO",nombre:"CRISTIAN MIGUEL",obraSocial:obsocial,localidad:loc).save()
-			new Paciente(apellido:"BRIGA",nombre:"ANGEL ANDRES",obraSocial:obsocial,localidad:loc).save()
-			new Paciente(apellido:"JUAREZ",nombre:"LUIS GUSTAVO",obraSocial:obsocial,localidad:loc).save()
-			new Paciente(apellido:"VALDEZ",nombre:"raul armando",obraSocial:obsocial,localidad:loc).save()
-			new Paciente(apellido:"aguilar",nombre:"jose luis",obraSocial:obsocial,localidad:loc).save()
+			new Paciente(apellido:"POMO",nombre:"CRISTIAN MIGUEL",obraSocial:obsocial,localidad:loc
+				,institucion:institucionInstance).save()
+			new Paciente(apellido:"BRIGA",nombre:"ANGEL ANDRES",obraSocial:obsocial,localidad:loc
+				,institucion:institucionInstance).save()
+			new Paciente(apellido:"JUAREZ",nombre:"LUIS GUSTAVO",obraSocial:obsocial,localidad:loc
+				,institucion:institucionInstance).save()
+			new Paciente(apellido:"VALDEZ",nombre:"raul armando",obraSocial:obsocial,localidad:loc
+				,institucion:institucionInstance).save()
+			new Paciente(apellido:"aguilar",nombre:"jose luis",obraSocial:obsocial,localidad:loc
+				,institucion:institucionInstance).save()
 			
 						
 			//inicializaTablas()

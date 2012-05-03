@@ -1,5 +1,7 @@
 package com.medfire
 
+import com.medfire.util.GUtilDomainClass
+
 class InstitucionController {
 	def imageUploadService
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
@@ -119,4 +121,59 @@ class InstitucionController {
 		
 		
 	}
+	
+	def listjson = {
+		log.info "INGRESANDO AL CLOSURE listjson"
+		log.info "PARAMETROS: $params"
+		def gud=new GUtilDomainClass(Institucion,params,grailsApplication)
+		def list=gud.listrefactor(false)
+		def totalregistros=gud.listrefactor(true)
+		
+		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
+		if (totalpaginas>0 && totalpaginas<1)
+			totalpaginas=1;
+		totalpaginas=totalpaginas.intValue()
+
+		
+		
+		def result='{"page":'+params.page+',"total":"'+totalpaginas+'","records":"'+totalregistros+'","rows":['
+
+		def flagaddcomilla=false
+		def urlimg
+		def urllargeimg
+		list.each{
+			
+			if (flagaddcomilla)
+				result=result+','
+				
+			urlimg = bi.resource(size:'small',bean:it)
+			urllargeimg = bi.resource(size:'large',bean:it)
+			if(urlimg.contains(".null")){
+				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')
+				urllargeimg = g.resource(dir:'images',file:'noDisponibleLarge.jpg')
+			}
+			result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.nombre==null?"":it.nombre)+'","'+urllargeimg+'","'+urlimg+'"]}'
+			 
+			flagaddcomilla=true
+		}
+		result=result+']}'
+		render result
+
+	}
+	
+	def listjsonautocomplete = {
+		log.info "INGRESANDO AL CLOSURE listjsonautocomplete"
+		log.info "PARAMETROS: $params"
+		def instituciones = Institucion.createCriteria().list(){
+			like('nombre','%'+params.term+'%')
+		}
+		render(contentType:"text/json"){
+			array{
+				for (inst in instituciones){
+					institucion id:inst.id,label:inst.nombre,value:inst.nombre
+				}
+			}
+		}
+	}
+	
 }

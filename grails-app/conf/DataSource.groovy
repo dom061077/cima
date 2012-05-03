@@ -60,9 +60,9 @@ environments {
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "root"
 			password = "exito"
-			dbCreate = "create-drop"
+			dbCreate = "update"
 			url = "jdbc:mysql://10.0.0.199/medfireweb"
-			dbCreate = "create-drop"
+			dbCreate = "update"
 		}
 		
 	}

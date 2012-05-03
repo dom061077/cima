@@ -23,7 +23,7 @@
 					   		{name:'nombre',index:'nombre', width:150, sortable:true},
 					   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
 					   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
-					   		{name:'foto',index:'foto', width:80, align:"center",hidden:true,search:false, sortable:false}						   		
+					   		{name:'foto',index:'foto', width:80,hidden:true, align:"center",hidden:true,search:false, sortable:false}						   		
 						],
 					hiddenid:'profesionalId',
 					descid:'profesionalDescId',
@@ -42,6 +42,35 @@
     				}
     	
     			});
+
+    			//-----------------institucion search------------
+                $("#institucionDescId").lookupfield({
+                	source:"<% out << g.createLink(controller:"institucion",action:'listjson')%>",
+					title:'Búsqueda de Instituciones',
+					colnames:['Id','Nombre'],
+					colModel:[
+							{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+					   		{name:'nombre',index:'nombre', width:150, sortable:true}
+						],
+					hiddenid:'institucionId',
+					descid:'institucionDescId',
+					hiddenfield:'id',
+					descfield:['nombre']	
+                 });	
+
+               	
+    			$("#institucionDescId").autocomplete({
+    				source: "<% out << g.createLink(controller:"institucion",action:'listjsonautocomplete')%>",
+    				minLength:2,
+    				select: function(event,ui){
+    					if(ui.item){
+    						$("#institucionId").val(ui.item.id);
+    					}
+    				}
+    	
+    			});
+
+    			
             });
         
         </script>
@@ -51,7 +80,7 @@
         <div class="nav">
             <span class="menuButton"><a class="home" href="${createLink(uri: '/')}"><g:message code="default.home.label"/></a></span>
             <span class="menuButton"><g:link class="list" action="list"><g:message code="default.list.label" args="[entityName]" /></g:link></span>
-            <span class="menuButton"><g:link class="create" action="create"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
+            <span class="menuButton"><g:link class="create" action="createrefactor"><g:message code="default.new.label" args="[entityName]" /></g:link></span>
         </div>
         <div class="span-10 prepend-3 body">
             <h1><g:message code="default.edit.label" args="[entityName]" /></h1>
@@ -126,6 +155,23 @@
                                  <g:hiddenField id="profesionalId" name="profesionalAsignadoId" value="${userInstance?.profesionalAsignado?.id}" />
 							 <g:hasErrors bean="${userInstance}" field="profesionalAsignado">
 								<g:renderErrors bean="${userInstance}" as="list" field="profesionalAsignado"/>
+								</div>
+							 </g:hasErrors>	
+                        			
+							 <div class="clear"></div>
+							 
+                             <g:hasErrors bean="${userInstance}" field="institucion">
+                            	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+	                         </g:hasErrors>
+		                         <div class="span-3 spanlabel">	
+	                                    <label for="institucionDesc"><g:message code="user.institucion.label" default="Institucion" /></label>
+								 </div>
+								 <div class="span-4">                                    
+                                    <g:textField name="institucionDesc" id="institucionDescId"  class="ui-widget ui-corner-all ui-widget-content" value="${userInstance?.institucion?.nombre}" />
+                                 </div>   
+                                 <g:hiddenField id="institucionId" name="institucion.id" value="${userInstance?.institucion?.id}" />
+							 <g:hasErrors bean="${userInstance}" field="institucion">
+								<g:renderErrors bean="${userInstance}" as="list" field="institucion"/>
 								</div>
 							 </g:hasErrors>	
                         			

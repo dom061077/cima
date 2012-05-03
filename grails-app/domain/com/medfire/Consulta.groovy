@@ -31,6 +31,8 @@ class Consulta {
 	String marcha
 	String psiqui
 	String facie
+	Institucion institucion
+	
 	
 
 	
