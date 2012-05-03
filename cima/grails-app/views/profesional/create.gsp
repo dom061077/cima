@@ -16,17 +16,6 @@
 
 	        
         	$(document).ready(function(){
-            	/*$("#usuarioAsignadoDescId").lookupfield({
-                		source:"<% out << g.createLink(controller:"user",action:'listsearchjson')%>",
-						title:'Busqueda de Usuarios',
-						colnames:['Id','Nombre'],
-						colModel:[
-								{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-								{name:'userRealName',index:'userRealName', width:100,  sortable:true,search:true},	
-							],
-						hiddenid:'especialidadId',
-						descid:'especialidadDescId'	
-                	});*/
 
                 $("#especialidadDescId").lookupfield({
                 	source:"<% out << g.createLink(controller:"especialidadMedica",action:'listjson')%>",
@@ -144,6 +133,34 @@
 	                yearSuffix: ''
 	                //buttonImage:'<%  out << g.resource(dir:'images',file:'calendar.gif') %>'
 					});
+    			//-----------------institucion search------------
+                $("#institucionDescId").lookupfield({
+                	source:"<% out << g.createLink(controller:"institucion",action:'listjson')%>",
+					title:'Búsqueda de Instituciones',
+					colnames:['Id','Nombre'],
+					colModel:[
+							{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+					   		{name:'nombre',index:'nombre', width:150, sortable:true}
+						],
+					hiddenid:'institucionId',
+					descid:'institucionDescId',
+					hiddenfield:'id',
+					descfield:['nombre']	
+                 });	
+
+               	
+    			$("#institucionDescId").autocomplete({
+    				source: "<% out << g.createLink(controller:"institucion",action:'listjsonautocomplete')%>",
+    				minLength:2,
+    				select: function(event,ui){
+    					if(ui.item){
+    						$("#institucionId").val(ui.item.id);
+    					}
+    				}
+    	
+    			});
+
+				
 				$("#tabs").tabs();
             });
         </script>
@@ -171,6 +188,25 @@
                 	</ul>
                 	<div id="tabs-1">
                 		<fieldset>
+                		
+								<div class="span-3 spanlabel">		                                    
+		                                    <label style="float:left" for="institucion.id"><g:message code="profesional.institucion.label" default="Institución:" /></label>
+								</div>
+								<div class="span-4">		                                    
+											<g:textField style="float:left" id="institucionDescId" class="ui-widget ui-corner-all ui-widget-content" name="institucionDesc" value="${profesionalInstance?.institucion?.nombre}" />
+		                                    <g:hiddenField name="institucion.id" id="institucionId" value="${profesionalInstance?.institucion?.id}"></g:hiddenField>		                                    
+								</div>		      
+								<br/>
+								<div class="clear"></div>
+								<div class="span-3 spanlabel">                 
+		                                    <label for="activo"><g:message code="profesional.activo.label" default="Activo:" /></label>
+								</div>		                
+								<div class="span-4">                    
+		                                    <g:checkBox class="ui-widget ui-corner-all ui-widget-content" name="activo" value="${profesionalInstance?.activo}" />
+								</div>		      
+								<div class="clear"></div>
+                		
+                		
                             	<g:hasErrors bean="${profesionalInstance}" field="matricula">
                                 	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
                                 </g:hasErrors>	

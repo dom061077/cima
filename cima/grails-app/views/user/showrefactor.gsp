@@ -60,6 +60,15 @@
                             ${userInstance?.profesionalAsignado?.nombre?.encodeAsHTML()}
 						</div>
 
+						<div class="clear"></div>                            
+            			<div class="span-3">                            
+                            <g:message code="user.institucion.label" default="Institucion" />
+                        </div>
+                        <div class="span-4">    
+                            ${userInstance?.institucion?.nombre?.encodeAsHTML()}
+						</div>
+
+
 						<div class="clear"></div>
             			<div class="span-3">                            
                             <g:message code="user.email.label" default="Email" />

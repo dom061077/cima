@@ -11,6 +11,7 @@ class ObraSocial {
 	String contacto
 	String cuit
 	Boolean habilitada= new Boolean(true)
+	Institucion institucion
 	
 	static hasMany = [pacientes:Paciente]
 

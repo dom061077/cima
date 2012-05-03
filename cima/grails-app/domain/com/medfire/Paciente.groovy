@@ -24,7 +24,7 @@ class Paciente {
 	IvaEnum estadoIva
 	ObraSocial obraSocial
 	
-	
+	Institucion institucion
 	
 	
 	//static belongsTo = [obrasocial:ObraSocial,estadocivil:EstadoCivil,localidad:Localidad,tipodocumento:TipoDocumento]

@@ -11,6 +11,8 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery',file:'jquery.jlookupfield.js')}"></script>
         <script type="text/javascript">
         	$(document).ready(function(){
+				//------------profesional search----------------
+            	
                 $("#profesionalDescId").lookupfield({
                 	source:"<% out << g.createLink(controller:"profesional",action:'listjson')%>",
 					title:'Búsqueda de Profesionales',
@@ -22,7 +24,7 @@
 					   		{name:'nombre',index:'nombre', width:150, sortable:true},
 					   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
 					   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
-					   		{name:'foto',index:'foto', width:80, align:"center",search:false, sortable:false}						   		
+					   		{name:'foto',index:'foto', width:80,hidden:true, align:"center",search:false, sortable:false}						   		
 						],
 					hiddenid:'profesionalId',
 					descid:'profesionalDescId',
@@ -41,6 +43,35 @@
     				}
     	
     			});
+
+    			//-----------------institucion search------------
+                $("#institucionDescId").lookupfield({
+                	source:"<% out << g.createLink(controller:"institucion",action:'listjson')%>",
+					title:'Búsqueda de Instituciones',
+					colnames:['Id','Nombre'],
+					colModel:[
+							{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+					   		{name:'nombre',index:'nombre', width:150, sortable:true}
+						],
+					hiddenid:'institucionId',
+					descid:'institucionDescId',
+					hiddenfield:'id',
+					descfield:['nombre']	
+                 });	
+
+               	
+    			$("#institucionDescId").autocomplete({
+    				source: "<% out << g.createLink(controller:"institucion",action:'listjsonautocomplete')%>",
+    				minLength:2,
+    				select: function(event,ui){
+    					if(ui.item){
+    						$("#institucionId").val(ui.item.id);
+    					}
+    				}
+    	
+    			});
+    			
+    			
             });
         </script>
         <style type="text/css">
@@ -127,6 +158,23 @@
 								<g:renderErrors bean="${userInstance}" as="list" field="profesionalAsignado"/>
 								</div>
 							 </g:hasErrors>	
+							 <div class="clear"></div>
+							 
+                             <g:hasErrors bean="${userInstance}" field="institucion">
+                            	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+	                         </g:hasErrors>
+		                         <div class="span-3 spanlabel">	
+	                                    <label for="institucionDesc"><g:message code="user.institucion.label" default="Institucion" /></label>
+								 </div>
+								 <div class="span-4">                                    
+                                    <g:textField name="institucionDesc" id="institucionDescId"  class="ui-widget ui-corner-all ui-widget-content" value="${userInstance?.institucion?.nombre}" />
+                                 </div>   
+                                 <g:hiddenField id="institucionId" name="institucion.id" value="${userInstance?.institucion?.id}" />
+							 <g:hasErrors bean="${userInstance}" field="institucion">
+								<g:renderErrors bean="${userInstance}" as="list" field="institucion"/>
+								</div>
+							 </g:hasErrors>	
+							 
                         			
                         
                         	 <div class="clear"></div>

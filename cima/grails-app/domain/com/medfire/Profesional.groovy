@@ -26,11 +26,12 @@ class Profesional {
 	//User usuarioAsignado
 	EspecialidadMedica especialidad
 	//foto agregar la foto
-	Boolean activo = true
+	boolean activo = true
 	TipoMatriculaEnum tipoMatricula//tipo enum
 	SexoEnum sexo
 	
 	AntecedenteLabel antecedenteLabel
+	Institucion institucion
 
     static constraints = {
 		matricula(nullable:false,blank:false)

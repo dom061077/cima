@@ -31,6 +31,9 @@ class User {
 	/** plain password to create a MD5 password */
 	String pass = '[secret]'
 	Profesional profesionalAsignado
+	Institucion institucion
+	
+	
 	static constraints = {
 		username(blank: false, unique: true)
 		userRealName(blank: false)
