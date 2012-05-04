@@ -10,7 +10,8 @@ import grails.converters.JSON
 import org.springframework.transaction.TransactionStatus
 
 class PacienteController {
-	def grailsApplication	
+	def grailsApplication
+	def authenticateService	
 
 	
 	
@@ -71,6 +72,8 @@ class PacienteController {
 			eventInstance = Event.get(params.eventId)
 		
 		def pacienteInstance = new Paciente(params)
+		
+		pacienteInstance.institucion = authenticateService.userDomain().institucion
 		
 		if(fechaNacimientoError){
 			pacienteInstance.validate()
@@ -275,6 +278,10 @@ class PacienteController {
 			 filtersJson = JSON.parse(params.filters)
 		
 		log.debug "JSON GENERADO: ${filtersJson}"
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
+
 		
 		def list
 		def gud = new GUtilDomainClass(Paciente,params,grailsApplication) 

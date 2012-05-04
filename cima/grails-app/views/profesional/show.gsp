@@ -38,7 +38,15 @@
 						</div>                                                 
 						<div class="span-4">						       
                             ${fieldValue(bean: profesionalInstance, field: "id")}
-						</div>                            
+						</div>
+						<div class="clear"></div>
+						
+						<div class="span-3">
+							<g:message code="profesional.institucion.label" default="Institucion:"/>
+						</div>   
+						<div class="span-4">
+							${fieldValue(bean:profesionalInstance,field:"institucion.nombre")}
+						</div>                         
 
 						<div class="clear"></div>
                     	<div class="span-3">

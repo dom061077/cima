@@ -75,6 +75,7 @@ class Paciente {
 		antecedentes validator : {
 			it?.every { it?.validate()}
 		}
+		institucion(nullable:false,blank:false)
     }
 	
 	static mapping = {

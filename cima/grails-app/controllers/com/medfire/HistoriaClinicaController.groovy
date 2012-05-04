@@ -113,7 +113,7 @@ class HistoriaClinicaController {
 		def userInstance = User.load(authenticateService.userDomain().id)
 		def profesionalInstance = Profesional.load(userInstance.profesionalAsignado.id)
 		consultaInstance.profesional=profesionalInstance
-
+		consultaInstance.institucion = authenticateService.userDomain().institucion
 				
 		pacienteInstance.properties = params.paciente
 		def antecedenteInstance
@@ -384,9 +384,15 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE listjson DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS ${params}"
 		def list
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
+
 		def gud = new GUtilDomainClass(Paciente,params,grailsApplication)
 		list=gud.listrefactor(false)
 		def totalregistros=gud.listrefactor(true)
+		
+
 		
 			
 		def totalpaginas=new Float(totalregistros/Integer.parseInt(params.rows))
