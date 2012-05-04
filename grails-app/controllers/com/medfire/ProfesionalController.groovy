@@ -8,6 +8,7 @@ import org.springframework.web.multipart.commons .CommonsMultipartFile
 
 class ProfesionalController {
 	def imageUploadService
+	def authenticateService
 	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
@@ -74,6 +75,8 @@ class ProfesionalController {
 				
         def profesionalInstance = new Profesional(params)
 		//profesionalInstance.antecedenteLabel= new AntecedenteLabel()
+		
+		profesionalInstance.institucion = authenticateService.userDomain().institucion
 		
 		if(fechaIngresoError){
 			profesionalInstance.validate()
@@ -252,6 +255,11 @@ class ProfesionalController {
 	def listjson = {
 		log.info "INGRESANDO AL CLOSURE listjson DEL CONTROLLER ProfesionalController"
 		log.info "PARAMETROS: ${params}"
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
+
+		
 		def gud=new GUtilDomainClass(Profesional,params,grailsApplication)
     	def list=gud.listrefactor(false)	
 		def totalregistros=gud.listrefactor(true)
@@ -299,7 +307,12 @@ class ProfesionalController {
 		log.info "INGRESANDO AL CLOSURE listjsonautocomplete"
 		log.info "PARAMETROS: ${params}"
 		def profesionales = Profesional.createCriteria().list(){
+			and{
 				like('nombre','%'+params.term+'%')
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
+			}
 		}
 		log.debug "PROFESIONALES LISTADOS: "+profesionales.size()
 		render(contentType:"text/json"){
@@ -323,6 +336,11 @@ class ProfesionalController {
 	def listsearchjson = {
 		log.info "INGRESANDO AL METODO listsearchjson"
 		log.info "PARAMETROS: ${params}"
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
+
+		
 		def gud=new GUtilDomainClass(Profesional,params,grailsApplication)
 		list=gud.listrefactor(false)
 		def totalregistros=gud.listrefactor(true)

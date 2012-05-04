@@ -5,6 +5,8 @@ import com.medfire.util.GUtilDomainClass
 
 class ObraSocialController {
 	def grailsApplication
+	def authenticateService
+	
     static allowedMethods = [save: "POST", update: "POST", delete: "POST"]
 
     def index = {
@@ -26,6 +28,7 @@ class ObraSocialController {
 		log.info "INGRESANDO AL CLOSURE save DEL CONTROLLER ObraSocialController"
 		log.info "PARAMETROS: $params"
         def obraSocialInstance = new ObraSocial(params)
+		obraSocialInstance.institucion = authenticateService.userDomain().institucion
         if (obraSocialInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'obraSocial.label', default: 'ObraSocial'), obraSocialInstance.id])}"
             redirect(action: "show", id: obraSocialInstance.id)
@@ -106,6 +109,12 @@ class ObraSocialController {
 	def listsearchjson = {
 		log.info "INGRESANDO AL METODO listsearchjson DEL CONTROLLER ObraSocialController"
 		log.info "PARAMETROS: ${params}"
+		
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
+
+		
 		def gud=new GUtilDomainClass(ObraSocial,params,grailsApplication)
 		list=gud.listrefactor(false)
 		def totalregistros=gud.listrefactor(true)
@@ -139,43 +148,11 @@ class ObraSocialController {
     	log.info "PARAMETROS: $params"
     	def list
     	
-		
-		
-    	/*
-    	def pagingConfig = [
-    		max: Integer.parseInt(params.rows),
-    		offset: Integer.parseInt(params.page)-1
-    	] 
-		def list
-		def searchOp
-		def searchValue
-		 
-		
-		
-		
-		if((Boolean.parseBoolean(params._search))){
-			searchOp = GUtilClass.criteriaSearch(params.searchOper)
-			searchValue = GUtilClass.getDomainClassFieldValue(ObraSocial,params.searchField,params.searchString)
-			log.debug "SearchOp: $searchOp, SearchValue: $searchValue"
-			list = ObraSocial.createCriteria().list(pagingConfig){
-					if(params.searchOper.equals(GUtilClass.CONTAINS) || searchOp.equals(GUtilClass.DOESNOTCONTAIN) )
-						searchValue="%"+searchValue+"%"
+		def institucionInstance = authenticateService.userDomain().institucion
+		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+		params._search = "true"
 
-					log.debug "OPERACION DE BUSQUEDA: "+searchOp+" VALOR DE BUSQUEDA: $searchValue"				
-					if(params.searchOper.equals(GUtilClass.DOESNOTCONTAIN)){
-						log.debug "NEGACION DE LA BUSQUEDA LIKE"
-						not {
-							"${searchOp}"(params.searchField,searchValue)
-						}
-					}else{
-						"${searchOp}"(params.searchField,searchValue)
-					}	
-					
-					
-				}
-		}else{
-			list=ObraSocial.createCriteria().list(pagingConfig){}
-		}*/
+		
 		def gud=new GUtilDomainClass(ObraSocial,params,grailsApplication)
     	list=gud.listrefactor(false)	
 		def totalregistros=gud.listrefactor(true)
@@ -212,7 +189,12 @@ class ObraSocialController {
 		
 		
 		def list = ObraSocial.createCriteria().list(){
-			like('descripcion','%'+params.term+'%')
+			and{
+				like('descripcion','%'+params.term+'%')
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
+			}
 		}
 		log.debug "CONSULTA DE OBRA SOCIALES: $list"
 

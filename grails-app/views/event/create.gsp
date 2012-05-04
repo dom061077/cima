@@ -286,13 +286,17 @@
 					<table id="pacienteseventId"></table>
 		</div>
 		
+        <g:if test="${flash.message}">
+        <div class="ui-state-highlight ui-corner-all"><h3>${flash.message}</h3></div>
+        </g:if>
+		
 		
 		
 		<div style="float:left">
 		<div id='datepicker'></div>
 		</div>
 			
-		
+		 
 		<div class="clear"></div>
 		<div class="span-2" style="padding: 100px 0px 0px 0px">
 				<g:colorsList/>								
@@ -326,6 +330,8 @@
 									</form>									
 			</div>			
 		</div>
+		
+		
 		        
         <div style="display: none" id="event-form" title="Crear Turno" >
         	
@@ -335,7 +341,7 @@
 					Profesional:
 				</div>
 				<div class="span-4 spanlabel">
-					${profsel.nombre}
+					${profsel?.nombre}
 				</div>
 					
 				<div class="clear"></div>				      	

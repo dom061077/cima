@@ -180,7 +180,9 @@ class ConsultaController {
 			profesional{
 				eq("id",usuario.profesionalAsignado?.id)
 			}
-
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			firstResult((params.page.toInteger()-1)*params.rows.toInteger())
 			maxResults(params.rows.toInteger())
 
@@ -199,6 +201,10 @@ class ConsultaController {
 				paciente{
 					eq("id",params.pacienteId.toLong())
 				}
+			}
+			
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
 			}
 			projections{
 				rowCount()
@@ -291,6 +297,9 @@ class ConsultaController {
 		log.info "INGRESANDO AL METODO PRIVADO porprofesionalesgraph"
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		list = Consulta.createCriteria().list(){
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			createAlias("paciente","p")
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
@@ -349,6 +358,9 @@ class ConsultaController {
 		list = Consulta.createCriteria().list(){
 			createAlias("paciente","p")
 			
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -408,6 +420,9 @@ class ConsultaController {
 		list = Consulta.createCriteria().list(){
 			createAlias("paciente","p")
 			
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -517,6 +532,9 @@ class ConsultaController {
 						eq("id",params.cie10Id.toLong())
 					}
 				}
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
 				maxResults(params.rows.toInteger())
 
@@ -549,7 +567,9 @@ class ConsultaController {
 					}
 				}
 
-
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				projections{
 					rowCount()
 				}
@@ -618,6 +638,9 @@ class ConsultaController {
 						}
 					}
 		
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 					if(params.cie10Id){
 						cie10{
 							eq("id",params.cie10Id.toLong())
@@ -666,6 +689,9 @@ class ConsultaController {
 		
 		if(cmd.validate()){
 				list = Consulta.createCriteria().list(){
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 					if(params.fechaDesde){
 						java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 						ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -759,6 +785,9 @@ class ConsultaController {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listPacientes=Consulta.createCriteria().list(){
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde){
 					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -825,6 +854,9 @@ class ConsultaController {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listporprof = Consulta.createCriteria().list(){
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -894,6 +926,9 @@ class ConsultaController {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listdiagnostico = Consulta.createCriteria().list(){
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -963,6 +998,9 @@ class ConsultaController {
 		
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listdiagnostico = Consulta.createCriteria().list(){
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -1026,6 +1064,10 @@ class ConsultaController {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		if(cmd.validate()){
 			list=Consulta.createCriteria().list(){
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
+				
 				if(params.fechaDesde){
 					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -1044,6 +1086,9 @@ class ConsultaController {
 				paciente{
 					order("apellido","desc")
 				}
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 
 				firstResult((params.page.toInteger()-1)*params.rows.toInteger())
 				maxResults(params.rows.toInteger())
@@ -1051,6 +1096,9 @@ class ConsultaController {
 				
 			}
 			totalregistros=Consulta.createCriteria().get(){
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde){
 					java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -1065,6 +1113,9 @@ class ConsultaController {
 							eq("id",params.obraSocialId.toLong())
 						}
 					}
+				}
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
 				}
 				projections{
 					rowCount()
@@ -1167,6 +1218,9 @@ class ConsultaController {
 			}	*/
 			list = Consulta.createCriteria().list(){
 				and{
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 					if(params.fechaDesde)
 						ge("fechaConsulta",fechaDesde)
 					if(params.fechaHasta)	
@@ -1195,6 +1249,9 @@ class ConsultaController {
 				
 			totalregistros=Consulta.createCriteria().get(){
 				createAlias("paciente","p")
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde){
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
 				}
@@ -1285,6 +1342,9 @@ class ConsultaController {
 		if(cmd.validate()){
 			list = Consulta.createCriteria().list(){
 				and{
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 					if(params.fechaDesde)
 						ge("fechaConsulta",fechaDesde)
 					if(params.fechaHasta)
@@ -1313,6 +1373,9 @@ class ConsultaController {
 				
 			totalregistros=Consulta.createCriteria().get(){
 				createAlias("paciente","p")
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde){
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
 				}
@@ -1409,6 +1472,9 @@ class ConsultaController {
 		if(cmd.validate()){
 			list = Consulta.createCriteria().list(){
 				and{
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 					if(params.fechaDesde)
 						ge("fechaConsulta",fechaDesde)
 					if(params.fechaHasta)
@@ -1427,6 +1493,9 @@ class ConsultaController {
 				
 			totalregistros=Consulta.createCriteria().get(){
 				createAlias("paciente","p")
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde){
 					ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
 				}
@@ -1504,6 +1573,9 @@ class ConsultaController {
 
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listos=Consulta.createCriteria().list(){
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -1559,7 +1631,9 @@ class ConsultaController {
 		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
 		def listos=Consulta.createCriteria().list(){
 			createAlias("paciente","p")
-			
+			institucion{
+				eq("id",authenticateService.userDomain().institucion.id)
+			}
 			if(params.fechaDesde){
 				java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
 				ge("fechaConsulta",new java.sql.Date(fechaDesde.getTime()))
@@ -1632,6 +1706,9 @@ class ConsultaController {
 
 		listPrimeravez = Consulta.createCriteria().list(){
 			and{
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde)
 					ge("fechaConsulta",fechaDesde)
 				if(params.fechaHasta)
@@ -1706,6 +1783,9 @@ class ConsultaController {
 
 		listPrimeravez = Consulta.createCriteria().list(){
 			and{
+				institucion{
+					eq("id",authenticateService.userDomain().institucion.id)
+				}
 				if(params.fechaDesde)
 					ge("fechaConsulta",fechaDesde)
 				if(params.fechaHasta)
