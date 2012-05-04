@@ -20,13 +20,14 @@
 						   	url:'listjson',
 							datatype: "json",
 							width:680,
-						   	colNames:['Id','C.U.I.T', 'Matricula', 'Nombre','Telófono','Large Url','Url','Foto','Operaciones'],
+						   	colNames:['Id','C.U.I.T', 'Matricula', 'Nombre','Institución','Telófono','Large Url','Url','Foto','Operaciones'],
 						   	colModel:[
 						   		
 						   		{name:'id',index:'id', width:40,searchoptions:{sopt:['eq']}},
 						   		{name:'cuit',index:'cuit', width:92,sortable:false,searchoptions:{sopt:['eq']}},
 						   		{name:'matricula',index:'matricula', width:100,search:false,searchoptions:{sopt:['eq']}},
 						   		{name:'nombre',index:'nombre', width:150, sortable:true},
+						   		{name:'institucion_nombre',index:'institucion_nombre',width:150,sortable:true,search:true},
 						   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
 						   		{name:'urllargephoto',index:'urllargephoto', hidden:true, width:80,search:false, align:"right", sortable:false},
 						   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		

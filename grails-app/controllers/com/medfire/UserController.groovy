@@ -185,6 +185,11 @@ class UserController {
 				userInstance.profesionalAsignado = Profesional.load(params.profesionalAsignadoId.toLong())
 			else
 				userInstance.profesionalAsignado=null
+				
+			if(params.institucionId)
+				userInstance.institucion = Institucion.load(params.institucionId.toLong())
+			else
+				userInstance.institucion = null		
 
 			if(!oldPasswd.equals(params.passwd)){
 				log.info "PASSWORD DISTINTA DE LA ANTERIOR"

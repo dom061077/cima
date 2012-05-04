@@ -188,6 +188,9 @@
                 	</ul>
                 	<div id="tabs-1">
                 		<fieldset>
+                            	<g:hasErrors bean="${profesionalInstance}" field="institucion">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	                		
                 		
 								<div class="span-3 spanlabel">		                                    
 		                                    <label style="float:left" for="institucion.id"><g:message code="profesional.institucion.label" default="Institución:" /></label>
@@ -195,7 +198,13 @@
 								<div class="span-4">		                                    
 											<g:textField style="float:left" id="institucionDescId" class="ui-widget ui-corner-all ui-widget-content" name="institucionDesc" value="${profesionalInstance?.institucion?.nombre}" />
 		                                    <g:hiddenField name="institucion.id" id="institucionId" value="${profesionalInstance?.institucion?.id}"></g:hiddenField>		                                    
-								</div>		      
+								</div>
+                                <g:hasErrors bean="${profesionalInstance}" field="institucion">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="institucion"/>
+                               		</div>
+                                </g:hasErrors>	
+								
+										      
 								<br/>
 								<div class="clear"></div>
 								<div class="span-3 spanlabel">                 
@@ -427,14 +436,6 @@
 								<div class="span-4">		                                    
 											<g:textField style="float:left" id="especialidadDescId" class="ui-widget ui-corner-all ui-widget-content" name="especialidadDesc" value="${profesionalInstance?.especialidad?.descripcion}" />
 		                                    <g:hiddenField name="especialidad.id" id="especialidadId" value="${profesionalInstance?.especialidad?.id}"></g:hiddenField>		                                    
-								</div>		      
-								<br/>
-								<div class="clear"></div>
-								<div class="span-3 spanlabel">                 
-		                                    <label for="activo"><g:message code="profesional.activo.label" default="Activo:" /></label>
-								</div>		                
-								<div class="span-4">                    
-		                                    <g:checkBox class="ui-widget ui-corner-all ui-widget-content" name="activo" value="${profesionalInstance?.activo}" />
 								</div>		      
 								
 

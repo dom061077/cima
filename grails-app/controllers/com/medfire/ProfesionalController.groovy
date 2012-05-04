@@ -155,6 +155,7 @@ class ProfesionalController {
                 }
             }
 
+			
 			if (params.fechaNacimiento){
 				if (params.fechaNacimiento.length()<6){
 					fechaNacimientoError=true
@@ -200,7 +201,11 @@ class ProfesionalController {
 				render(view: "edit", model: [profesionalInstance: profesionalInstance])
 				return
 			}
-	
+
+			if(params.institucionId)
+				profesionalInstance.institucion = Institucion.load(params.institucionId.toLong())	
+			else
+				profesionalInstance.institucion = null	
 			
             profesionalInstance.properties = params
             if (!profesionalInstance.hasErrors() && profesionalInstance.save(flush: true)) {
@@ -279,9 +284,9 @@ class ProfesionalController {
 			urllargeimg = bi.resource(size:'large',bean:it)
 			if(urlimg.contains(".null")){
 				urlimg = g.resource(dir:'images',file:'noDisponible.jpg')
-				urllargeimg = g.resource(dir:'images',file:'noDisponibleLarge.jpg')
+				urllargeimg = g.resource(dir:'images',file:'noDisponibleLarge.jpg') 
 			}
-    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.cuit==null?"":it.cuit)+'","'+(it.matricula==null?"":it.matricula)+'","'+(it.nombre==null?"":it.nombre)+'","'+(it.telefono==null?"":it.telefono)+'","'+urllargeimg+'","'+urlimg+'"]}'
+    		result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.cuit==null?"":it.cuit)+'","'+(it.matricula==null?"":it.matricula)+'","'+(it.nombre==null?"":it.nombre)+'","'+it.institucion.nombre+'","'+(it.telefono==null?"":it.telefono)+'","'+urllargeimg+'","'+urlimg+'"]}'
     		 
     		flagaddcomilla=true
     	}

@@ -167,6 +167,33 @@
 
 					$('#inputimage').hide();
 
+	    			//-----------------institucion search------------
+	                $("#institucionDescId").lookupfield({
+	                	source:"<% out << g.createLink(controller:"institucion",action:'listjson')%>",
+						title:'Búsqueda de Instituciones',
+						colnames:['Id','Nombre'],
+						colModel:[
+								{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+						   		{name:'nombre',index:'nombre', width:150, sortable:true}
+							],
+						hiddenid:'institucionId',
+						descid:'institucionDescId',
+						hiddenfield:'id',
+						descfield:['nombre']	
+	                 });	
+
+	               	
+	    			$("#institucionDescId").autocomplete({
+	    				source: "<% out << g.createLink(controller:"institucion",action:'listjsonautocomplete')%>",
+	    				minLength:2,
+	    				select: function(event,ui){
+	    					if(ui.item){
+	    						$("#institucionId").val(ui.item.id);
+	    					}
+	    				}
+	    	
+	    			});
+					
 		        });
 
 		    	
@@ -200,6 +227,24 @@
                 	</ul>
                 	<div id="tabs-1">
                 		<fieldset>
+                            	<g:hasErrors bean="${profesionalInstance}" field="institucion">
+                                	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
+                                </g:hasErrors>	                		
+                		
+								<div class="span-3 spanlabel">		                                    
+		                                    <label style="float:left" for="institucion.id"><g:message code="profesional.institucion.label" default="Institución:" /></label>
+								</div>
+								<div class="span-4">		                                    
+											<g:textField style="float:left" id="institucionDescId" class="ui-widget ui-corner-all ui-widget-content" name="institucionDesc" value="${profesionalInstance?.institucion?.nombre}" />
+		                                    <g:hiddenField name="institucionId" id="institucionId" value="${profesionalInstance?.institucion?.id}"></g:hiddenField>		                                    
+								</div>
+                                <g:hasErrors bean="${profesionalInstance}" field="institucion">
+                               		<g:renderErrors bean="${profesionalInstance}" as="list" field="institucion"/>
+                               		</div>
+                                </g:hasErrors>	
+                		
+								<div class="clear"></div>                		
+                		
                             	<g:hasErrors bean="${profesionalInstance}" field="matricula">
                                 	<div class="ui-state-error ui-corner-all" style="padding: 0pt 0.7em;">
                                 </g:hasErrors>	
