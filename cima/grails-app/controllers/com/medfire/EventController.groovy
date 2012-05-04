@@ -32,14 +32,23 @@ class EventController {
 		
 		def usuario = User.load( authenticateService.userDomain()?.id)
 		def profList = Profesional.createCriteria().list{
-			eq("activo",true)
+			and{
+				eq("activo",true)
+				institucion{
+					eq("id",usuario.institucion.id)
+				}
+			}
 			order("nombre","asc")
 		}
 		def profsel
 		if(params.profesionalId) 
 			profsel=profList.find{it.id==params.profesionalId.toLong()}
-		else
-			profsel=profList.get(0)	 
+		else{
+			if(profList?.size()>0)
+				profsel=profList.get(0)
+			else
+				flash.message=g.message(code:"com.medfire.Event.sin.profesionales",args:[usuario.institucion.nombre])		 
+		}
 		log.debug "cantidad de profesionales que atiende: "+profList.size()
         return [profesionales:profList,profesionalId:params.profesionalId,profsel:profsel,intervalo:(params.intervalo?params.intervalo:30)]
     }
