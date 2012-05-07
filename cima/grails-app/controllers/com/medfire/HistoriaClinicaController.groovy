@@ -9,6 +9,7 @@ import com.medfire.enums.EstadoConsultaEnum
 import com.medfire.enums.ImpresionVademecumEnum
 import com.medfire.util.GUtilDomainClass
 import pl.burningice.plugins.image.container.ContainerUtils
+import org.codehaus.groovy.grails.plugins.springsecurity.AuthorizeTools
 
 
 class HistoriaClinicaController {
@@ -385,8 +386,10 @@ class HistoriaClinicaController {
 		log.info "PARAMETROS ${params}"
 		def list
 		def institucionInstance = authenticateService.userDomain().institucion
-		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
-		params._search = "true"
+		if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+			params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+			params._search = "true"
+		}
 
 		def gud = new GUtilDomainClass(Paciente,params,grailsApplication)
 		list=gud.listrefactor(false)

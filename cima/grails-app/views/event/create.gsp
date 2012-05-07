@@ -226,8 +226,9 @@
  					$("#profesionalId").change(function(){
  								document.profesionales.submit();
  	 					});
+	 					
  					$("#intervalosId").change(function(){
- 								$.cookie('intervaloihistclinica', $('#intervalosId').val());
+ 								$.cookie('intervaloihistclinica'+$('#intervalosId').val(), $('#intervalosId').val());
  	 							document.intervalo.submit();
  	 				});	
 					

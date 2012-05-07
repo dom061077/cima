@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.text.DateFormat;
 import java.text.ParseException;
 import org.springframework.web.multipart.commons .CommonsMultipartFile
+import org.codehaus.groovy.grails.plugins.springsecurity.AuthorizeTools
 
 class ProfesionalController {
 	def imageUploadService
@@ -256,8 +257,10 @@ class ProfesionalController {
 		log.info "INGRESANDO AL CLOSURE listjson DEL CONTROLLER ProfesionalController"
 		log.info "PARAMETROS: ${params}"
 		def institucionInstance = authenticateService.userDomain().institucion
-		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
-		params._search = "true"
+		if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+			params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+			params._search = "true"
+		}
 
 		
 		def gud=new GUtilDomainClass(Profesional,params,grailsApplication)
@@ -309,8 +312,10 @@ class ProfesionalController {
 		def profesionales = Profesional.createCriteria().list(){
 			and{
 				like('nombre','%'+params.term+'%')
-				institucion{
-					eq("id",authenticateService.userDomain().institucion.id)
+				if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
 				}
 			}
 		}

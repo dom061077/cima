@@ -118,9 +118,6 @@
     <body>
 
 <div class="container">
-	<div id="panelEsperaId" style="position:absolute;top:200px;left:10px;display:none">
-		<a id="linkActivateEsperaId" href="#">Mostrar Turnos</a>
-	</div>
 	
     
 			<div style="display:none;z-index:5000" id="MenuJqGrid">
@@ -218,6 +215,10 @@
 <%--					</div>--%>
 				</g:isLoggedIn>
 			</div>
+	<div id="panelEsperaId" style="display:none">
+		<a id="linkActivateEsperaId" href="#">Mostrar Turnos</a>
+	</div>
+			
            	<g:isLoggedIn>
            		<div style="background-color: #5C9CCC" class="span-14 prepend-10">
 		            <ul class="dropdown dropdown-horizontal" >

@@ -51,7 +51,7 @@ class Paciente {
 		nombre(blank:false,nullable:false)
 		telefono(blank:true,nullable:true)
 		email(email:true,blank:true,nullable:true)
-		dni(unique:true,blank:true,nullable:true)
+		dni(unique:'institucion',blank:true,nullable:true)
 		cuit(blank:true,nullable:true)
 		cuit(matches:'[0-9]{2}-[0-9]{8}-[0-9]{1}')
 		domicilio(blank:true,nullable:true)
