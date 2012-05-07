@@ -8,6 +8,7 @@ import java.util.Calendar;
 import com.medfire.util.GUtilDomainClass
 import grails.converters.JSON
 import org.springframework.transaction.TransactionStatus
+import org.codehaus.groovy.grails.plugins.springsecurity.AuthorizeTools
 
 class PacienteController {
 	def grailsApplication
@@ -279,8 +280,11 @@ class PacienteController {
 		
 		log.debug "JSON GENERADO: ${filtersJson}"
 		def institucionInstance = authenticateService.userDomain().institucion
-		params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
-		params._search = "true"
+		
+		if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+			params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+			params._search = "true"
+		}
 
 		
 		def list
@@ -322,9 +326,16 @@ class PacienteController {
 		log.info "PARAMETROS $params"
 		
 		def pacientes = Paciente.createCriteria().list(){
-			or{
-				like('apellido','%'+params.term+'%')
-				like('nombre','%'+params.term+'%')
+			and{
+				or{
+					like('apellido','%'+params.term+'%')
+					like('nombre','%'+params.term+'%')
+				}
+				if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+					institucion{
+						eq("id",authenticateService.userDomain().institucion.id)
+					}
+				}
 			}
 		}
 		log.debug "PACIENTES LISTADOS: "+pacientes.size()
@@ -341,6 +352,14 @@ class PacienteController {
 	def listsearchjson = {
 		log.info "INGRESANDO AL CLOSURE listsearchjson"
 		log.info "PARAMETROS ${params}"
+		
+		def institucionInstance = authenticateService.userDomain().institucion
+		if (AuthorizeTools.ifAnyGranted("ROLE_USER,ROLE_PROFESIONAL")){
+			params.altfilters = """{'groupOp':'AND','rules':[{'field':'institucion_id','op':'eq','data':'${institucionInstance.id}'}]}"""
+			params._search = "true"
+		}
+
+		
 		def gud=new GUtilDomainClass(Paciente,params,grailsApplication)
 		list=gud.listrefactor(false)
 		def totalregistros=gud.listrefactor(true)
