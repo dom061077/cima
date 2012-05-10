@@ -255,6 +255,11 @@
 <%--									<li><a href="${createLink(controller:'laboratorio',action:'list')}">Laboratorios</a> </li>--%>
 									<li><a href="${createLink(controller:'especialidadMedica',action:'list')}">Especialidades</a> </li>			
 								</g:ifAnyGranted>
+
+								<g:ifAnyGranted role="ROLE_ADMIN">
+									<li><a href="${createLink(controller:'institucion',action:'list')}">Institución</a></li>
+								</g:ifAnyGranted>
+
 								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">				
 									<li><a href="${createLink(controller:'paciente',action:'list')}">Pacientes</a></li>
 									<li><a href="${createLink(controller:'vademecum',action:'list')}">Vademecum</a></li>
