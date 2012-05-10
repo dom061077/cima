@@ -9,7 +9,8 @@ class Institucion {
 	String telefonos
 	String email
 	String web
-	
+	String descripcion
+
 	
     static constraints = {
 		nombre(nullable:false,blank:false)
@@ -17,5 +18,6 @@ class Institucion {
 		direccion nullable:true,blank:true
 		telefonos nullable:true, blank:true
 		web nullable:true, blank:true
+		descripcion(size:1..50)  
     }
 }

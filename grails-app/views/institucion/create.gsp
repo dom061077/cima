@@ -29,28 +29,19 @@
                         
                             <tr class="prop">
                                 <td valign="top" class="name">
-                                    <label for="email"><g:message code="institucion.email.label" default="Email:" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'email', 'errors')}">
-                                    <g:textField name="email" value="${institucionInstance?.email}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
-                                    <label for="direccion"><g:message code="institucion.direccion.label" default="Direccion:" /></label>
-                                </td>
-                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'direccion', 'errors')}">
-                                    <g:textField name="direccion" value="${institucionInstance?.direccion}" />
-                                </td>
-                            </tr>
-                        
-                            <tr class="prop">
-                                <td valign="top" class="name">
                                     <label for="nombre"><g:message code="institucion.nombre.label" default="Nombre:" /></label>
                                 </td>
                                 <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'nombre', 'errors')}">
                                     <g:textField name="nombre" value="${institucionInstance?.nombre}" />
+                                </td>
+                            </tr>
+                        
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="desripcion"><g:message code="institucion.descripcion.label" default="Descripcion:" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'descripcion', 'errors')}">
+                                    <g:textField name="descripcion" value="${institucionInstance?.descripcion}" />
                                 </td>
                             </tr>
                         
@@ -62,6 +53,7 @@
                                     <g:textField name="telefonos" value="${institucionInstance?.telefonos}" />
                                 </td>
                             </tr>
+
                             <tr class="prop">
                             	<td>
                             		<label for="imagen"><g:message code="institucion.telefonos.label" default="Imagen:" /></label>
@@ -70,7 +62,25 @@
 									<input type="file" name="imagen"/>                            	
                             	</td>
                             </tr>
+
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="direccion"><g:message code="institucion.direccion.label" default="Direccion:" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'direccion', 'errors')}">
+                                    <g:textField name="direccion" value="${institucionInstance?.direccion}" />
+                                </td>
+                            </tr>
                         
+                            <tr class="prop">
+                                <td valign="top" class="name">
+                                    <label for="email"><g:message code="institucion.email.label" default="Email:" /></label>
+                                </td>
+                                <td valign="top" class="value ${hasErrors(bean: institucionInstance, field: 'email', 'errors')}">
+                                    <g:textField name="email" value="${institucionInstance?.email}" />
+                                </td>
+                            </tr>
+
                         </tbody>
                     </table>
                 </div>
