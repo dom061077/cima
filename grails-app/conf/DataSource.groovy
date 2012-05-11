@@ -60,9 +60,7 @@ environments {
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "inap"
 			password = "exito"
-			dbCreate = "update"
 			url = "jdbc:mysql://10.0.0.199/cimahost"
-			dbCreate = "update"
 		}
 		
 	}

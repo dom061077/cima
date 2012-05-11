@@ -196,7 +196,7 @@ class HistoriaClinicaController {
 
 		try{
 			consultaInstance=historiaClinicaService.registrarVisita(consultaInstance,eventInstance)
-			flash.message = "${message(code: 'default.created.message', args: [message(code: 'consulta.label', default: 'Consulta'), consultaInstance.id])}"
+			flash.message = "${message(code: 'historiaclinica.default.created.message')}"
 			//redirect(action: "show", id: consultaInstance.id)
 			log.debug "REENDERIZANDO EL INPUT TEXT CON EL ID CARGADO, CONSULTA GUARDADA ${consultaInstance.id}"
 			render "<input type='text' id='consultasalvadaId'  name='consultasalvada' value='${consultaInstance.id}' />"
