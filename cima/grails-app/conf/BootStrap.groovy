@@ -23,7 +23,7 @@ import com.medfire.util.DataSourceUtils
 class BootStrap {
 	def authenticateService
     def init = { servletContext ->
-		//createAdminIfRequired()
+		createAdminIfRequired()
 		//DataSourceUtils.tune(servletContext)
     }
     def destroy = {
@@ -97,7 +97,7 @@ class BootStrap {
 			
 			new Requestmap(url:"/profesional/**",configAttribute:"ROLE_ADMIN").save()
 			
-			def institucionInstance = new Institucion(nombre:"ALIVIAR",email:"correo@noexite.com").save(failOnError:true)
+			def institucionInstance = new Institucion(nombre:"ALIVIAR",email:"correo@noexite.com",descripcion:"INSTITUCION UNO DE PRUEBA").save(failOnError:true)
 			
 			def userprof=new User(username:"zalazar",passwd: authenticateService.encodePassword('zalazar')
 				,email:"zazalar@yahoo.com.ar",enabled:true,userRealName:"Administrador gral.",esProfesional:false
