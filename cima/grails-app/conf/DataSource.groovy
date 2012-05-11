@@ -19,7 +19,7 @@ environments {
 			username = "root"
 			password = "exito"
 		
-            dbCreate = "update" // one of 'create', 'create-drop','update'
+            dbCreate = "create-drop" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/medfireweb"
         }
     }
@@ -40,7 +40,7 @@ environments {
 			username="root"//username = "inapcom_root"
 			password="exito"//password = "DomPomoSkiby2011"
             dbCreate = "update"
-            url = "jdbc:mysql://localhost/medfireweb"//url = "jdbc:mysql://localhost/inapcom_medfireweb"
+            url = "jdbc:mysql://localhost/cimahost"//url = "jdbc:mysql://localhost/inapcom_medfireweb"
 			properties {
 				maxActive = 50
 				maxIdle = 25
@@ -58,10 +58,10 @@ environments {
 		dataSource {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "root"
+			username = "inap"
 			password = "exito"
 			dbCreate = "update"
-			url = "jdbc:mysql://10.0.0.199/medfireweb"
+			url = "jdbc:mysql://10.0.0.199/cimahost"
 			dbCreate = "update"
 		}
 		

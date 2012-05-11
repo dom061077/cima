@@ -27,8 +27,8 @@
         <script type="text/javascript">
 			$(document).ready(function() {
 				var slot;
-				if($.cookie('intervaloihistclinica'))
-					slot=$.cookie('intervaloihistclinica')
+				if($.cookie('intervaloihistclinica'+$('#profesionalId').val()))
+					slot=$.cookie('intervaloihistclinica'+$('#profesionalId').val());
 				else
 					slot= <%out << "${intervalo}"%>;
 				slot = parseInt(slot);
@@ -228,7 +228,7 @@
  	 					});
 	 					
  					$("#intervalosId").change(function(){
- 								$.cookie('intervaloihistclinica'+$('#intervalosId').val(), $('#intervalosId').val());
+ 								$.cookie('intervaloihistclinica'+$('#profesionalId').val(), $('#intervalosId').val());
  	 							document.intervalo.submit();
  	 				});	
 					

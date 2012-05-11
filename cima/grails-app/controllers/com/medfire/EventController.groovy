@@ -50,7 +50,7 @@ class EventController {
 				flash.message=g.message(code:"com.medfire.Event.sin.profesionales",args:[usuario.institucion.nombre])		 
 		}
 		log.debug "cantidad de profesionales que atiende: "+profList.size()
-        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profsel,intervalo:(params.intervalo?params.intervalo:30)]
+        return [profesionales:profList,profesionalId:params.profesionalId,profsel:profsel,intervalo:30]
     }
 
     def save = {
