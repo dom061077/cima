@@ -225,8 +225,10 @@ class HistoriaClinicaService {
 				imageUploadService.delete(imagen)
 			}
 		}
-		consultaInstance.evento.consulta = null
-		consultaInstance.evento.save()
+		if(consultaInstance.evento){
+			consultaInstance.evento.consulta = null
+			consultaInstance.evento.save()
+		}		
 		consultaInstance.delete(flush:true)
 	}
 	
