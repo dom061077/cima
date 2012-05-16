@@ -246,13 +246,15 @@ class EventController {
 		eventInstance.titulo = params.title
 		eventInstance.sobreTurno = params.essobreturno.toBoolean()
 		
-		def sobreturno = esSobreturno(eventInstance)
 		
 		if(!params.pacienteId.trim().equals(""))
 			eventInstance.paciente = Paciente.load(new Long(params.pacienteId))
 			
 		if(params.profesionalId)	
 			eventInstance.profesional = Profesional.load(new Long(params.profesionalId))
+			
+		def sobreturno = esSobreturno(eventInstance)
+			
 		eventInstance.user = authenticateService.userDomain()
         if (eventInstance.save(flush: true)) {
             flash.message = "${message(code: 'default.created.message', args: [message(code: 'event.label', default: 'Event'), eventInstance.id])}"
@@ -309,6 +311,11 @@ class EventController {
 					gt("start",eventInstance.start)
 					eq("end",eventInstance.end)	
 				}
+
+				profesional {
+					eq("id",eventInstance.profesional.id)
+				}
+				
 				
 			}
 		}
