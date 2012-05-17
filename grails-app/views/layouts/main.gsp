@@ -229,7 +229,7 @@
 									<li><a href="${createLink(controller:'role')}">Roles</a></li>
 									<li><a href="${createLink(controller:'requestmap')}">Requestmap</a></li>
 								</g:ifAnyGranted>
-								<li><a href="${createLink(controller:"auditoria",action:"consulta")}">Auditoría</a></li>
+								<li><a href="${createLink(controller:"auditoria",action:"consultaaudit")}">Auditoría</a></li>
 								
 							</ul>
 						</li>
