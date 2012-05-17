@@ -51,7 +51,7 @@ class AuditoriaController {
 		log.debug "FECHA HASTA: "+fechaHasta
 		def param = [fechaDesde:fechaDesde,fechaHasta:fechaHasta]
 		//def sqlstr = "select * from audit_log where date_created >= '2011-10-01' and date_created <= :fechaHasta"
-		def sqlstr = "SELECT * FROM audit_log WHERE CONVERT(date_created,DATE) BETWEEN :fechaDesde AND :fechaHasta"
+		def sqlstr = "SELECT * FROM audit_log WHERE CONVERT(date_created,DATE) BETWEEN CONVERT(:fechaDesde,DATE) AND CONVERT(:fechaHasta,DATE)"
 
 		if(cmd.validate()){
 			

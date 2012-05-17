@@ -274,6 +274,7 @@ class EventController {
 	private boolean esSobreturno(def eventInstance){
 		log.debug "INGRESANDO AL METODO PRIVADO esSobreturno"
 		def listsobreturno = Event.createCriteria().list(){
+			and{
 				or{
 					and{
 						gt("start",eventInstance.start)
@@ -311,11 +312,14 @@ class EventController {
 						gt("start",eventInstance.start)
 						eq("end",eventInstance.end)	
 					}
-					
 				}
+				profesional{
+					eq("id",eventInstance.profesional.id)
+				}
+			}	
 		}
 		
-		if(listsobreturno.size()>1){
+		if(listsobreturno.size()>=1){
 			log.debug "ES UN SOBRETURNO"
 			return true
 		}else{
