@@ -274,50 +274,45 @@ class EventController {
 	private boolean esSobreturno(def eventInstance){
 		log.debug "INGRESANDO AL METODO PRIVADO esSobreturno"
 		def listsobreturno = Event.createCriteria().list(){
-			or{
-				and{
-					gt("start",eventInstance.start)
-					lt("end",eventInstance.end)
+				or{
+					and{
+						gt("start",eventInstance.start)
+						lt("end",eventInstance.end)
+					}
+					
+					and{
+						eq("start",eventInstance.start)
+						eq("end",eventInstance.end)
+					}
+					
+					and{
+						lt("start",eventInstance.start)
+						gt("end",eventInstance.end)
+					}
+					
+					and{
+						lt("start",eventInstance.start)
+						lt("end",eventInstance.end)
+						gt("end",eventInstance.start)
+					}
+					
+					and{
+						gt("start",eventInstance.start)
+						lt("start",eventInstance.end)
+						gt("end",eventInstance.end)
+					}
+					
+					and{
+						eq("start",eventInstance.start)
+						lt("end",eventInstance.end)
+					}
+					
+					and{
+						gt("start",eventInstance.start)
+						eq("end",eventInstance.end)	
+					}
+					
 				}
-				
-				and{
-					eq("start",eventInstance.start)
-					eq("end",eventInstance.end)
-				}
-				
-				and{
-					lt("start",eventInstance.start)
-					gt("end",eventInstance.end)
-				}
-				
-				and{
-					lt("start",eventInstance.start)
-					lt("end",eventInstance.end)
-					gt("end",eventInstance.start)
-				}
-				
-				and{
-					gt("start",eventInstance.start)
-					lt("start",eventInstance.end)
-					gt("end",eventInstance.end)
-				}
-				
-				and{
-					eq("start",eventInstance.start)
-					lt("end",eventInstance.end)
-				}
-				
-				and{
-					gt("start",eventInstance.start)
-					eq("end",eventInstance.end)	
-				}
-
-				profesional {
-					eq("id",eventInstance.profesional.id)
-				}
-				
-				
-			}
 		}
 		
 		if(listsobreturno.size()>1){

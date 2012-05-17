@@ -13,7 +13,7 @@ class AuditoriaController {
 
     def index = { }
 	
-	def consulta = {AuditoriaCommand cmd->
+	def consultaaudit = {AuditoriaCommand cmd->
 		log.info "INGRESANDO AL CLOSURE consulta"
 		log.info "PARAMETROS: $params"		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
