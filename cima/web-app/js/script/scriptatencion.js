@@ -162,7 +162,7 @@ $(document).ready(function() {
 						//height:200, 
 						width: 190,
 						url:locturnos,
-						//rowNum:10,
+						rowNum:-1,
 						//fillSpace: true,
 						//postData: {fechaFiltro : $.cookie('atencionfecha')},
         				mtype:"POST",
