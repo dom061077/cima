@@ -27,10 +27,10 @@ class AuditoriaController {
 		log.info "PARAMETROS: $params"
 		log.debug "COMMAND OBJECT: $cmd.properties"
 		if(cmd.validate()){
-			render(view:"consulta",model:[cmdInstance:cmd])
+			render(view:"consultaaudit",model:[cmdInstance:cmd])
 		}else{
 		
-			render(view:"consulta",model:[cmdInstance:cmd])
+			render(view:"consultaaudit",model:[cmdInstance:cmd])
 		}
 
 	}
