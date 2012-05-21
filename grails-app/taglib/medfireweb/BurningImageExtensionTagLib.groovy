@@ -4,6 +4,8 @@ import pl.burningice.plugins.image.container.ContainerWorkerFactory
 
 class BurningImageExtensionTagLib {
 	ContainerWorkerFactory containerWorkerFactory
+	def authenticateService
+	
 	def resourceimgext = { attrs ->
 		def tamanio = attrs.size
 		if(containerWorkerFactory.produce(attrs.bean).hasImage()){
@@ -16,6 +18,15 @@ class BurningImageExtensionTagLib {
 		}
 	}
 	
+	
+	def institucionimg = { attrs ->
+		//<bi:img size="large" bean="${imageContainer}" />
+		def institucionInstance = authenticateService.userDomain().institucion 
+
+		out << bi.img(size:"large",bean:institucionInstance)
+
+		
+	}
 
 	
 }

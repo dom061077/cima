@@ -26,12 +26,46 @@ class AuditoriaController {
 		log.info "INGRESANDO AL CLOSURE consultabuscar"
 		log.info "PARAMETROS: $params"
 		log.debug "COMMAND OBJECT: $cmd.properties"
-		if(cmd.validate()){
+		/*if(cmd.validate()){
 			render(view:"consultaaudit",model:[cmdInstance:cmd])
 		}else{
 		
 			render(view:"consultaaudit",model:[cmdInstance:cmd])
+		}*/
+		
+		def flagcomilla=false
+		def totalregistros=0
+		def totalpaginas=0
+		def list
+		SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy")
+		java.util.Date fechaDesde = df.parse(params.fechaDesde, new ParsePosition(0))
+		java.util.Date fechaHasta = df.parse(params.fechaHasta, new ParsePosition(0))
+		log.debug "FECHA DESDE: "+fechaDesde
+		log.debug "FECHA HASTA: "+fechaHasta
+		params.max = Math.min(params.max ? params.int('max') : 10, 100)
+		def param = [fechaDesde:fechaDesde,fechaHasta:fechaHasta,limit:params.max,offset:0]
+		log.debug "PARAM: "+param
+		//def sqlstr = "select * from audit_log where date_created >= '2011-10-01' and date_created <= :fechaHasta"
+		def sqlstr = "SELECT * FROM audit_log WHERE CONVERT(date_created,DATE) BETWEEN CONVERT(:fechaDesde,DATE) AND CONVERT(:fechaHasta,DATE)"
+
+		if(cmd.validate()){
+			
+			def sql = Sql.newInstance(dataSource)
+			if(params.usuarioId){
+				sqlstr = sqlstr + " and actor = :actor"
+				param.put("actor", cmd.userName)
+			}
+			if(params.tipoTransaccion){
+				sqlstr = sqlstr + " and event_name = :eventname"
+				param.put("eventname",params.tipoTransaccion.substring(9,15))
+			}
+			list = sql.rows(sqlstr,param)
+			render (view:"consultaaudit",model:[cmdInstance:cmd,list:list,totalList:list.size()])
+			
+		}else{
+			render(view:"consultaaudit",model:[cmdInstance:cmd,list:[],totalList:0])
 		}
+
 
 	}
 	

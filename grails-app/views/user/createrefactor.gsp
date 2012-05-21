@@ -16,12 +16,13 @@
                 $("#profesionalDescId").lookupfield({
                 	source:"<% out << g.createLink(controller:"profesional",action:'listjson')%>",
 					title:'Búsqueda de Profesionales',
-					colnames:['Id','Nombre'],
+					colnames:['Id','C.U.I.T','Matricula','Nombre','Institucion','Telefono','urlfoto','foto'],
 					colModel:[
-							{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
+							{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:true,search:false},
 					   		{name:'cuit',index:'cuit', width:92,sortable:false,searchoptions:{sopt:['eq']}},
 					   		{name:'matricula',index:'matricula', width:100,search:false,searchoptions:{sopt:['eq']}},
 					   		{name:'nombre',index:'nombre', width:150, sortable:true},
+					   		{name:'institucion_nombre',index:'institucion_nombre', width:150, sortable:true},					   		
 					   		{name:'telefono',index:'telefono', width:80, align:"right",search:false, sortable:false,searchoptions:{sopt:['eq']}},
 					   		{name:'urlphoto',index:'urlphoto', hidden:true, width:80,search:false, align:"right", sortable:false},						   		
 					   		{name:'foto',index:'foto', width:80,hidden:true, align:"center",search:false, sortable:false}						   		

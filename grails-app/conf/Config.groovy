@@ -145,7 +145,7 @@ bi.EstudioComplementarioImagen = [
 
 bi.Institucion = [
 	outputDir : 'institucional',
-	images: ['large':[scale:[width:500, height:500, type:ScaleType.APPROXIMATE]
+	images: ['large':[scale:[width:400, height:100, type:ScaleType.APPROXIMATE]
 					  //,watermark:[sign:'images/watermark.png', offset:[top:10, left:10]]
 					  ],
 			 'small':[scale:[width:50, height:50, type:ScaleType.ACCURATE]
