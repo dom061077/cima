@@ -275,19 +275,26 @@
 								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">				
 									<li><a href="${createLink(controller:'paciente',action:'list')}">Pacientes</a></li>
 									<li><a href="${createLink(controller:'vademecum',action:'list')}">Vademecum</a></li>
+								</g:ifAnyGranted>
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_PROFESIONAL">									
 									<li><a href="${createLink(controller:'historiaClinica',action:'list')}">Historia Cínica</a> </li>
 								</g:ifAnyGranted>
 							</ul>
 						</li>
 						<li><a href="#" class="dir">Informes</a>
 							<ul>
-								<li><a href="${createLink(controller:"indicecorporal",action:"index")}">Indice de masa corporal</a> </li>
-								<li><a href="${createLink(controller:"consulta",action:"consultaspropias")}">Visitas de mis Pacientes</a> </li>
-								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>								
-								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
-								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
-								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporgrupodiag")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
-<!--								<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								-->
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_PROFESIONAL">
+									<li><a href="${createLink(controller:"indicecorporal",action:"index")}">Indice de masa corporal</a> </li>
+									<li><a href="${createLink(controller:"consulta",action:"consultaspropias")}">Visitas de mis Pacientes</a> </li>
+								</g:ifAnyGranted>	
+								<li><a href="${createLink(controller:"consulta",action:"pacientesatendidos")}">Pacientes Atendidos</a></li>
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_USER,ROLE_PROFESIONAL">								
+									<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporos")}">Pacientes Atendidos por O.S</a></li>
+									<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporprimeravez")}">Pacientes Atendidos por Primera Vez</a></li>
+								</g:ifAnyGranted>
+								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_PROFESIONAL">	
+									<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporgrupodiag")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
+<!--							<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								-->
 							</ul>
 						</li>
 						
