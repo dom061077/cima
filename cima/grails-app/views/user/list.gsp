@@ -16,13 +16,13 @@
 							   	url:'listjson',
 								datatype: "json",
 								width:680,
-							   	colNames:['Id','Nombre de Usuario','Institución', 'Nombre Real', 'Habilitado','Es profesional','E-mail','Prof.Asignado','Operaciones'],
+							   	colNames:['Id','Nombre de Usuario','Institución' , 'Nombre Real', 'Habilitado','Es profesional','E-mail','Prof.Asignado','Operaciones'],
 							   	colModel:[
 							   		
 							   		{name:'id',index:'id', width:40,search:false},
 							   		{name:'username',index:'username', width:92,sortable:true},
-							   		{name:'userRealName',index:'userRealName', width:100,sortable:true},
 							   		{name:'intitucion_nombre',index:'institucion_nombre',width:100,sortable:true},
+							   		{name:'userRealName',index:'userRealName', width:100,sortable:true},
 							   		{name:'habilitado',index:'habilitado', width:80, align:"right", sortable:false,search:false},
 							   		{name:'esprofesional',index:'esprofesional', hidden:true, width:80, align:"right", sortable:false,search:false},						   		
 							   		{name:'email',index:'mail', width:80, search:false, align:"center", sortable:false},						   		

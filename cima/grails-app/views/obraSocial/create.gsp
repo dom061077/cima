@@ -44,7 +44,7 @@
                                    	</g:hasErrors>
                                     <div class="clear"></div>
 
-                                    <g:hasErrors>
+                                    <g:hasErrors bean="${obraSocialInstance}" field="razonSocial">
                                     	<div class="ui-state-error ui-corner-all">	
                                     </g:hasErrors>
                                     <div class="span-4">

@@ -8,63 +8,6 @@
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jgcharts.pack.js')}"></script>        
         <script type="text/javascript" src="${resource(dir:'js/jquery/chart',file:'jquery.metadata.pack.js')}"></script>        
         <title>Pacientes Atendidos por Grupo de Diagnóstico</title>
-        <script type="text/javascript">
-        	var buscar=<%out << "${buscar}"%>;
-        	$(document).ready(function(){
-        		$("#cie10Id").lookupfield({
-        			source:"<% out << g.createLink(controller:'cie10',action:'listsearchjson')%>",
-        			title:'Búsqueda de CIE10',
-        			colnames:['Id','Descripción'],
-        			colModel:[
-        					{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-        					{name:'cie10',index:'cie10', width:100,  sortable:true,search:true},
-        					{name:'descripcion',index:'descripcion', width:100,  sortable:true,search:true}	
-        				],
-        			hiddenid:'cie10IdId',
-        			descid:'cie10Id',
-        			hiddenfield:'id',
-        			descfield:['descripcion']	
-        		});	
-        		
-        		$("#cie10Id").autocomplete({
-        				source: "<% out << g.createLink(controller:"cie10",action:'listjsonautocomplete')%>",
-        				minLength:2,
-        				select: function(event,ui){
-        					if(ui.item){
-        						$("#cie10IdId").val(ui.item.id);
-        					}
-        				}
-        	        });
-				//------------------------------------
-        		$("#pacienteId").lookupfield({
-        			source:"<% out << g.createLink(controller:'paciente',action:'listsearchjson')%>",
-        			title:'Búsqueda de CIE10',
-        			colnames:['Id','Descripción'],
-        			colModel:[
-        					{name:'id',index:'id', width:10, sorttype:"int", sortable:true,hidden:false,search:false},
-        					{name:'apellido',index:'apellido', width:100,  sortable:true,search:true},
-        					{name:'nombre',index:'nombre', width:100,  sortable:true,search:true}	
-        				],
-        			hiddenid:'pacienteIdId',
-        			descid:'pacienteId',
-        			hiddenfield:'id',
-        			descfield:['apellido','nombre']	
-        		});	
-        		
-        		$("#pacienteId").autocomplete({
-        				source: "<% out << g.createLink(controller:"paciente",action:'listjsonautocomplete')%>",
-        				minLength:2,
-        				select: function(event,ui){
-        					if(ui.item){
-        						$("#pacienteIdId").val(ui.item.id);
-        					}
-        				}
-        	        });
-				
-
-    	         
-            });
-        </script>
 	</head>
 	<body>
         <div class="nav">
@@ -104,8 +47,8 @@
 							<div class="span-4">
 									<g:select class="ui-widget ui-corner-all ui-widget-content" id="usuarioIdId"  name="usuarioId" from="${com.medfire.User.list()}"
 											optionKey="id" 
-		                                 	optionValue="userRealName" value="${cmdInstance?.usuarioId}" noSelection="['': '']" />							</div>   
-							</div>   
+		                                 	optionValue="userRealName" value="${cmdInstance?.usuarioId}" noSelection="['': '']" />							
+		                    </div>   
 
 							<div class="clear"></div>
 							<div class="span-2 spanlabel">
@@ -120,18 +63,50 @@
 							
 							<div class="span-3  prepend-2"><g:submitButton class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"  name="create" 
 															value="${message(code: 'default.button.search.label', default: 'Create')}"/> </div>
+					</div>   
 												        				
-												        				
-		      		</div>
 	      			</fieldset>
 		      			
       		</g:form>
       		<div class="clear"></div>
-            <div class="span-20">
-	        			<table id="detallegrid">
-	        			</table>
-	        			<div id="pagerdetalle">
-            </div>
+            
+			<table>
+				<thead>
+					<tr>
+						<g:sortableColumn property="actor" title="Usuario" />
+						<g:sortableColumn property="class_name" title="Clase de Dominio" />
+						<g:sortableColumn property="date_created" title="Fecha Creación" />
+						<g:sortableColumn property="event_name" title="Tipo Evento" />		
+						<g:sortableColumn property="last_updated" title="Fecha Modificación" />
+						<g:sortableColumn property="new_value" title="Nuevo Valor" />													
+						<g:sortableColumn property="old_value" title="Viejo Valor" />					
+						<g:sortableColumn property="persisted_object_id" title="Id Obj. Persistido" />					
+						<g:sortableColumn property="persisted_object_version" title="Versión objeto persistido" />
+						<g:sortableColumn property="property_name" title="Nombre de la Propiedad" />
+						<g:sortableColumn property="uri" title="URI" />															
+						<th>&nbsp;</th>
+					</tr>
+				</thead>
+				<tbody>
+					<g:each in="${list}" status="i" var="audit">
+						<tr>
+							<td>${audit["actor"]}</td>
+							<td>${audit["class_name"]}</td>
+							<td>${audit["date_created"]}</td>
+							<td>${audit["event_name"]}</td>
+							<td>${audit["last_updated"]}</td>							
+							<td>${audit["new_value"]}</td>
+							<td>${audit["old_value"]}</td>
+							<td>${audit["persisted_object_id"]}</td>
+							<td>${audit["persisted_object_version"]}</td>
+							<td>${audit["property_name"]}</td>
+							<td>${audit["uri"]}</td>																												
+						</tr>
+					</g:each>
+				</tbody>
+			</table>
+			
+            
 		</div>	
 	</body>
 </html>
