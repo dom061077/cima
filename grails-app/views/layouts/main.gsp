@@ -203,17 +203,19 @@
 <div class="span-24 last append-bottom" >
 			<div class="span-24">
 				<a href="${createLink(uri:'/')}">
-					<div class="span-5">
-						<g:isLoggedIn>
+					<g:isLoggedIn>
+						<div class="span-5">
 							<img style="float:left" alt="" src="${resource(dir:"images", file:"cabecera2_0log.png")}"/>
+						</div>
+						<div class="span-2 prepend-15">	
 							<g:institucionimg/>
-						</g:isLoggedIn>
-					</div>
-					<div class="span-5 prepend-6"
-						<g:isNotLoggedIn>
+						</div>
+					</g:isLoggedIn>
+					<g:isNotLoggedIn>
+						<div class="span-5">
 							<img  alt="" src="${resource(dir:"images", file:"cabecera2_0.png")}"/>
-						</g:isNotLoggedIn>
-					</div>
+						</div>
+					</g:isNotLoggedIn>
 				</a>	
 			</div>    
 
