@@ -202,12 +202,17 @@
 
 <div class="span-24 last append-bottom" >
 			<div class="span-24">
-				<a href="${createLink(uri:'/')}">
+				
 					<g:isLoggedIn>
-						<div class="span-5">
-							<img style="float:left" alt="" src="${resource(dir:"images", file:"cabecera2_0log.png")}"/>
+						<div class="span-9">
+							<a href="${createLink(uri:'/')}">
+								<img style="float:left" alt="" src="${resource(dir:"images", file:"cabecera2_0log.png")}"/>
+							</a>	
 						</div>
-						<div class="span-2 prepend-15">	
+						<div class="span-5">
+							<g:institucioninfo/>
+						</div>
+						<div class="span-2 prepend-6">	
 							<g:institucionimg/>
 						</div>
 					</g:isLoggedIn>
@@ -216,7 +221,7 @@
 							<img  alt="" src="${resource(dir:"images", file:"cabecera2_0.png")}"/>
 						</div>
 					</g:isNotLoggedIn>
-				</a>	
+					
 			</div>    
 
 	<div class="span-12">
@@ -295,6 +300,7 @@
 								<g:ifAnyGranted role="ROLE_ADMIN,ROLE_PROFESIONAL">	
 									<li><a href="${createLink(controller:"consulta",action:"pacientesatendidosporgrupodiag")}">Pacientes Atendidos por grupo diagnostico</a></li>																								
 <!--							<li><a href="${createLink(controller:"consulta",action:"cantidadvisitasporpaciente")}">Cantidad de visitas de un paciente</a></li>								-->
+								</g:ifAnyGranted>
 							</ul>
 						</li>
 						
