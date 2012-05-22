@@ -65,6 +65,7 @@ class Paciente {
 		tipoDocumento(blank:true,nullable:true)
 		estadoIva(blank:true,nullable:true)
 		//telefono(matches:'[0-9]{3}-[0-9]{7}')
+		telefono(matches:'[0-9]')
 		obraSocial(blank:true,nullable:true)
 		localidad(blank:true,nullable:true)
 		//antecedente(nullable:true)
