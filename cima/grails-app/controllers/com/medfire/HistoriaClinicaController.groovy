@@ -121,7 +121,9 @@ class HistoriaClinicaController {
 		def flagantecedente = false
 		 
 		pacienteInstance.antecedentes?.each{
-			if(it.profesional.equals(profesionalInstance)){
+			//if(it.profesional.equals(profesionalInstance)){
+			
+			if(it.profesional.id==profesionalInstance.id){
 				flagantecedente = true
 				it.properties = params.paciente.antecedente
 				return
@@ -464,7 +466,7 @@ class HistoriaClinicaController {
 		def consultaInstance = Consulta.load(params.id.toLong())
 		log.debug "PACIENTE: "+consultaInstance.paciente.apellido
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -511,7 +513,7 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE reportehistoriapropio"
 		log.info "PARAMETROS : $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -539,7 +541,6 @@ class HistoriaClinicaController {
 		params.put("_name","historiacontenidovisita")
 		params.put("_file","historiacontenidovisita")
 		def userLogged = authenticateService.userDomain()
-		log.debug "PROFESIONAL ASIGNADO: "+userLogged.profesionalAsignado.nombre
 		def listReporte = Consulta.createCriteria().list(){
 			profesional{
 				eq("id",userLogged.profesionalAsignado?.id)

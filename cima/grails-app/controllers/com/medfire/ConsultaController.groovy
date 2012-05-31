@@ -757,7 +757,7 @@ class ConsultaController {
 		log.info "PARAMETROS: $params"
 		//bi.resource(size:'large',bean:it)
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion  //list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -826,7 +826,7 @@ class ConsultaController {
 		log.info "PARAMETROS: $params"
 		
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion //list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -898,7 +898,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reportepordiag"
 		log.info "PARAMETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -970,7 +970,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reportepordiag"
 		log.info "PARAMETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -1545,7 +1545,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reporteporos"
 		log.info "PARAMETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -1602,7 +1602,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reporteporosranking"
 		log.info "PARAMETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -1665,7 +1665,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reporteporprimeravez"
 		log.info "PARAMEETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
@@ -1742,7 +1742,7 @@ class ConsultaController {
 		log.info "INGRESANDO AL CLOSURE reportepordiagranking"
 		log.info "PARAMETROS: $params"
 		def list = Institucion.findAll()
-		def institucionInstance = list.getAt(0)
+		def institucionInstance = authenticateService.userDomain().institucion//list.getAt(0)
 		String pathimage
 		String nameimage
 		def config
