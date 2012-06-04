@@ -82,6 +82,15 @@
 
 
                         	<div class="span-2 spanlabel">
+                                  <label for="nombre"><g:message code="institucion.descripcion.label" default="Descripción:" /></label>
+                            </div>
+                            <div class="span-4">      
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${institucionInstance?.descripcion}" />
+                        	</div>
+                            <div class="clear"></div>                        	
+
+
+                        	<div class="span-2 spanlabel">
                                   <label for="telefonos"><g:message code="institucion.telefonos.label" default="Teléfonos:" /></label>
                             </div>
                             <div class="span-4">      
