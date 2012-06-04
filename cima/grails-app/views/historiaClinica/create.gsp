@@ -361,7 +361,7 @@
 	            					<div class="span-9 colborder">
 	            						<label for="paciente.antecedente.t1"><g:antecedenteLabel field="t1Label"/>:</label>
 	            						<br/>
-	            						<input type="checkbox" id="checklabel1Id" indice="1" name="paciente.antecedente.t1Check" />
+	            						<g:checkBox type="checkbox" id="checklabel1Id" indice="1" name="paciente.antecedente.t1Check" value="${antecedenteInstance?.t1Check}" />
 	            						<g:textField id="antecedentet1Id" class="inputlarge" name="paciente.antecedente.t1" value="${antecedenteInstance?.t1}"></g:textField>
 	            					</div>
 	            					<div class="span-9">

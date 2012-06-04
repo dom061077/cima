@@ -30,7 +30,7 @@ class BurningImageExtensionTagLib {
 	
 	def institucioninfo = { attrs ->
 		out << "<CENTER>"
-		out << "<p><H1>"+authenticateService.userDomain().institucion.nombre+"</H1></p>"+"<p>"+(authenticateService.userDomain().institucion.direccion?authenticateService.userDomain().institucion.direccion:"")+"</p>"
+		out << "<p>"+authenticateService.userDomain().institucion.nombre+"</p>"+"<p>"+(authenticateService.userDomain().institucion.direccion?authenticateService.userDomain().institucion.direccion:"")+"</p>"
 		out << "<p><a href='${(authenticateService.userDomain().institucion.web?authenticateService.userDomain().institucion.web:"")}'>"+(authenticateService.userDomain().institucion.web?authenticateService.userDomain().institucion.web:"")+"</a>"
 		out << "</CENTER>"
 	}

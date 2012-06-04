@@ -17,7 +17,7 @@ environments {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
 			username = "root"
-			password = "exito"
+			password = "dolores123"
 		
             dbCreate = "create-drop" // one of 'create', 'create-drop','update'
             url = "jdbc:mysql://localhost/medfireweb"
@@ -37,10 +37,10 @@ environments {
         dataSource {
 			pooled = true
 			driverClassName = "com.mysql.jdbc.Driver"
-			username = "inap"//username = "inapcom_root"
-			password = "exito"//password = "DomPomoSkiby2011"
-            dbCreate = "update"
-            url = "jdbc:mysql://10.0.0.199/cimaweb"//url = "jdbc:mysql://localhost/inapcom_medfireweb"
+			username = "inapcom_root"
+			password = "DomPomoSkiby2011"
+            //dbCreate = "update"
+            url = "jdbc:mysql://localhost/inapcom_medfireweb"
 			properties {
 				maxActive = 50
 				maxIdle = 25
