@@ -24,6 +24,11 @@
 	</natures>
 	<linkedResources>
 		<link>
+			<name>.link_to_grails_plugins</name>
+			<type>2</type>
+			<locationURI>GRAILS_ROOT/1.3.9/projects/medfirewebant/plugins</locationURI>
+		</link>
+		<link>
 			<name>acegi-0.5.3-grails-app-conf</name>
 			<type>2</type>
 			<locationURI>GRAILS_ROOT/1.3.5/projects/medfirewebant/plugins/acegi-0.5.3/grails-app/conf</locationURI>
