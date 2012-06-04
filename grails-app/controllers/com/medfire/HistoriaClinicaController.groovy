@@ -37,6 +37,7 @@ class HistoriaClinicaController {
 		log.info "INGRESANDO AL CLOSURE create DEL CONTROLLER HistoriaClinicaController"
 		log.info "PARAMETROS $params"
 		def userInstance = User.load(authenticateService.userDomain().id)
+		def antecedenteInstance  
 
 		if(!userInstance.profesionalAsignado){
 			flash.message = "No tiene un profesional asignado"
@@ -45,6 +46,21 @@ class HistoriaClinicaController {
 		} 
 		def pacienteInstance
 		pacienteInstance= Paciente.get(params.pacienteId)
+		
+		pacienteInstance.antecedentes?.each{
+			if(it.profesional.id == authenticateService.userDomain().profesionalAsignado.id){
+				antecedenteInstance = it
+				return
+			}
+		}
+		
+		/*if(it.profesional.id==profesionalInstance.id){
+			flagantecedente = true
+			it.properties = params.paciente.antecedente
+			return
+		}*/
+
+		
 		if(!pacienteInstance){
 			log.error "PACIENTE CON ID $params.pacienteId NO ENCONTRADO"
 			flash.message = "${message(code: 'default.not.found.message', args: [message(code: 'paciente.label', default: 'Paciente'), params.id])}"
@@ -64,7 +80,7 @@ class HistoriaClinicaController {
 		
 		def consultaInstance = new Consulta()
 			
-		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance,eventInstance:eventInstance]
+		return [pacienteInstance: pacienteInstance, consultaInstance:consultaInstance,eventInstance:eventInstance,antecedenteInstance:antecedenteInstance]
 	}
 
 	def save = {

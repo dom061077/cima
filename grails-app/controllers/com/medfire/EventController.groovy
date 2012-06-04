@@ -276,42 +276,39 @@ class EventController {
 		def listsobreturno = Event.createCriteria().list(){
 			and{
 				or{
-					and{
-						gt("start",eventInstance.start)
-						lt("end",eventInstance.end)
-					}
-					
+					//caso 1
 					and{
 						eq("start",eventInstance.start)
 						eq("end",eventInstance.end)
 					}
 					
+					//caso 2
 					and{
-						lt("start",eventInstance.start)
+						gt("start",eventInstance.start)
 						gt("end",eventInstance.end)
+						lt("start",eventInstance.end)
 					}
 					
+					//caso 3
 					and{
 						lt("start",eventInstance.start)
 						lt("end",eventInstance.end)
 						gt("end",eventInstance.start)
+						
 					}
 					
-					and{
-						gt("start",eventInstance.start)
-						lt("start",eventInstance.end)
-						gt("end",eventInstance.end)
-					}
-					
+					//caso 4
 					and{
 						eq("start",eventInstance.start)
 						lt("end",eventInstance.end)
 					}
 					
+					//caso 5
 					and{
 						gt("start",eventInstance.start)
-						eq("end",eventInstance.end)	
+						lt("end",eventInstance.end)
 					}
+					
 				}
 				profesional{
 					eq("id",eventInstance.profesional.id)
@@ -319,7 +316,7 @@ class EventController {
 			}	
 		}
 		
-		if(listsobreturno.size()>=1){
+		if(listsobreturno.size()>1){
 			log.debug "ES UN SOBRETURNO"
 			return true
 		}else{
