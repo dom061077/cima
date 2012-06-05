@@ -85,7 +85,7 @@
                                   <label for="nombre"><g:message code="institucion.descripcion.label" default="Descripción:" /></label>
                             </div>
                             <div class="span-4">      
-                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="nombre" value="${institucionInstance?.descripcion}" />
+                                  <g:textField class="ui-widget ui-corner-all ui-widget-content" name="descripcion" value="${institucionInstance?.descripcion}" />
                         	</div>
                             <div class="clear"></div>                        	
 
