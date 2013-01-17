@@ -170,10 +170,14 @@ class EventController {
     private def read(def params){
 		//log.info "INGRESANDO AL METODO PRIVADO read"
 		def eventos = Event.createCriteria().list(){
-			
-			profesional{
-				eq('id',new Long(params.profesionalId?:0))
+			and{
+				profesional{
+					eq('id',new Long(params.profesionalId?:0))
+				}
+				ge("start",Integer.parseInt(params.start) )
+				le("end",Integer.parseInt(params.end))
 			}
+			
 		}
 		def backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
 		def borderColor = ""
