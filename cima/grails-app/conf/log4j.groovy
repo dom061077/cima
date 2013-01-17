@@ -107,12 +107,12 @@
 	
 	  def sql = ['org.hibernate.SQL', 'openjpa.jdbc.SQL']
 	  sql.each {
-		'category'(name: it, additivity: 'false') { 'priority'(value: 'DEBUG'); 'appender-ref'('ref': "ORM_SQL_LOG")}
+		'category'(name: it, additivity: 'false') { 'priority'(value: 'INFO'); 'appender-ref'('ref': "ORM_SQL_LOG")}
 	  }
 	
 	  def cache = ['org.jboss.cache']
 	  cache.each {
-		'category'(name: it, additivity: 'false') { 'priority'(value: 'DEBUG'); 'appender-ref'('ref': "CACHE_LOG")}
+		'category'(name: it, additivity: 'false') { 'priority'(value: 'INFO'); 'appender-ref'('ref': "CACHE_LOG")}
 	  }
 	
 	  /**
