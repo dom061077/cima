@@ -34,6 +34,8 @@ class PacienteController {
 		log.debug "FECHA $fecha"
         def pacienteInstance = new Paciente()
         pacienteInstance.properties = params
+		Localidad localidad = Localidad.get(new Long(22987))
+		pacienteInstance.localidad = localidad
 		def eventInstance 
 		if(params.eventId){
 			eventInstance = Event.load(params.eventId.toLong())
