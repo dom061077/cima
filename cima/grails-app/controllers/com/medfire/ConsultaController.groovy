@@ -585,7 +585,7 @@ class ConsultaController {
 				list.each{
 					if(flagcomilla)
 						result=result+','
-					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+(it.cie10?.cie10!=null?it.cie10?.cie10:"")+'","'+(it.cie10?.descripcion!=null?it.cie10?.descripcion:"")+'","'+(it.profesional?.nombre!=null?it.profesional?.nombre:"")+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+'"]}'
+					result=result+'{"id":"'+it.id+'","cell":["'+it.id+'","'+(it.fechaConsulta!=null?it.fechaConsulta:"")+'","'+it.paciente.apellido+'-'+it.paciente.nombre+'","'+(it.paciente.obraSocial?.descripcion!=null?it.paciente.obraSocial?.descripcion:"")+'","'+(it.paciente?.telefono!=null?it.paciente?.telefono:"")+'","'+(it.paciente?.email!=null?it.paciente?.email:"")+'","'+(it.paciente.id)+'"]}'
 					flagcomilla=true
 				}
 				result=result+']}'
