@@ -194,6 +194,8 @@ class EventController {
 						backgroundColor=grailsApplication.config.event.COLOR_AUSENTE
 					if(e.estado==EstadoEvent.EVENT_ANULADO)
 						backgroundColor=grailsApplication.config.event.COLOR_ANULADO
+					if(e.estado==EstadoEvent.EVENT_ENSALA)	
+						backgroundColor=grailsApplication.config.event.COLOR_ENSALA
 					
 					if(e.sobreTurno){
 						borderColor=grailsApplication.config.event.COLOR_SOBRETURNO
@@ -345,7 +347,8 @@ class EventController {
         def eventInstance = Event.get(params.id)
         if (eventInstance) {
             try {
-				if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
+				if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE && !eventInstance.estado.equals(EstadoEvent.EVENT_ENSALA)) 
+					|| eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
 					render(contentType:"text/json"){
 						result success:false,title:"Error, solo se pueden modificar los turnos pendientes y que no sean anteriores al día de hoy"
 					}
@@ -384,9 +387,10 @@ class EventController {
         def eventInstance = Event.get(params.id)
 		
         if (eventInstance) {
-			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
+			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) 
+				 || eventInstance.fechaStart.compareTo(gcHoy.getTime())<0 ){
 				render(contentType:"text/json"){
-					result success:false,title:"Error, solo se pueden modificar los turnos pendientes y que no sean anteriores al día de hoy"
+					result success:false,title:"Error, solo se pueden modificar los turnos pendientes y que no sean anteriores al d�a de hoy"
 				}
 				return
 			}
@@ -464,7 +468,8 @@ class EventController {
 				}
 			}
 			
-			if (!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) || eventInstance.fechaStart.compareTo(currentCal.getTime())<0){
+			if (!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE && !eventInstance.estado.equals(EstadoEvent.EVENT_ENSALA)) 
+					|| eventInstance.fechaStart.compareTo(currentCal.getTime())<0){
 				render(contentType:"text/json"){
 					result success:false,title:"Error, para mover un turno el mismo debe estar pendiente y que no sean anteriores al día de hoy"
 				}
@@ -715,14 +720,15 @@ class EventController {
 			
 			if(it.estado==EstadoEvent.EVENT_PENDIENTE)
 				backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE
+			if(it.estado==EstadoEvent.EVENT_ENSALA)
+				backgroundColor=grailsApplication.config.event.COLOR_ENSALA
+
 			if(it.estado==EstadoEvent.EVENT_ATENDIDO)
 				backgroundColor=grailsApplication.config.event.COLOR_ATENDIDO
 			if(it.estado==EstadoEvent.EVENT_AUSENTE)
 				backgroundColor=grailsApplication.config.event.COLOR_AUSENTE
 			if(it.estado==EstadoEvent.EVENT_ANULADO)
 				backgroundColor=grailsApplication.config.event.COLOR_ANULADO
-			if(it.estado==EstadoEvent.EVENT_PENDIENTE)
-				backgroundColor=grailsApplication.config.event.COLOR_PENDIENTE	
 				
 			if (flagaddcomilla)
 				result=result+','
@@ -757,7 +763,7 @@ class EventController {
 				return
 			}
 			
-			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE)){
+			if(!eventInstance.estado.equals(EstadoEvent.EVENT_PENDIENTE) && !eventInstance.estado.equals(EstadoEvent.EVENT_ENSALA)){
 				render(contentType:"text/json"){
 					result success:false,title:"Error, solo puede cambiar el estado a los turnos pendientes"
 				}
